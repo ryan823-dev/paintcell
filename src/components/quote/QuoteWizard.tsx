@@ -7,7 +7,9 @@ import { WizardSummary } from "./WizardSummary";
 import { ContactForm } from "./ContactForm";
 import { SubmissionSuccess } from "./SubmissionSuccess";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const TOTAL_STEPS = 8; // 6 question steps + summary + contact
 
@@ -15,6 +17,7 @@ export function QuoteWizard() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<QuoteFormData>(initialFormData);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateFormData = (field: keyof QuoteFormData, value: string | string[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -44,10 +47,29 @@ export function QuoteWizard() {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const handleSubmit = () => {
-    // In a real app, this would send to a backend
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      // Send email notification via edge function
+      const { error } = await supabase.functions.invoke('send-quote-notification', {
+        body: formData
+      });
+
+      if (error) {
+        console.error("Error sending notification:", error);
+        toast.error("Failed to send quote request. Please try again.");
+        return;
+      }
+
+      console.log("Quote submitted successfully");
+      toast.success("Quote request submitted successfully!");
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting quote:", error);
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -107,10 +129,17 @@ export function QuoteWizard() {
         {isContactStep ? (
           <Button
             onClick={handleSubmit}
-            disabled={!formData.contact_name || !formData.contact_email || !formData.contact_company}
+            disabled={!formData.contact_name || !formData.contact_email || !formData.contact_company || isSubmitting}
             className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
           >
-            Submit Request
+            {isSubmitting ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              "Submit Request"
+            )}
           </Button>
         ) : (
           <Button
