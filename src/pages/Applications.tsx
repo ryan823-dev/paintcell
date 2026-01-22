@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { ChevronRight, Car, Cpu, Building2, Plane, Truck, Package } from "lucide-react";
 import heroApplications from "@/assets/hero-applications.jpg";
 
@@ -78,14 +80,22 @@ export default function Applications() {
     <>
       {/* Header */}
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
-        <img 
+        <motion.img 
           src={heroApplications} 
           alt="Industrial robotic spray coating applications" 
           className="absolute inset-0 w-full h-full object-cover"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/60" />
         <div className="container-wide relative h-full flex items-center">
-          <div className="max-w-2xl">
+          <motion.div 
+            className="max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
               Applications
             </h1>
@@ -93,57 +103,59 @@ export default function Applications() {
               Robotic spray coating solutions across industries. Each application presents unique 
               challenges that industrial automation is engineered to solve.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Applications Grid */}
       <Section variant="default">
-        <div className="space-y-8">
+        <StaggerContainer className="space-y-8" staggerDelay={0.15}>
           {applications.map((app, index) => (
-            <div
-              key={app.title}
-              className={`bg-card rounded-xl border border-border overflow-hidden ${
-                index % 2 === 0 ? "" : "md:flex-row-reverse"
-              }`}
-            >
-              <div className="p-6 md:p-8">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <app.icon className="h-7 w-7 text-primary" />
+            <StaggerItem key={app.title}>
+              <motion.div
+                className={`bg-card rounded-xl border border-border overflow-hidden ${
+                  index % 2 === 0 ? "" : "md:flex-row-reverse"
+                }`}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <div className="p-6 md:p-8">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <app.icon className="h-7 w-7 text-primary" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-bold text-foreground mb-2">{app.title}</h2>
+                      <p className="text-muted-foreground">{app.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">{app.title}</h2>
-                    <p className="text-muted-foreground">{app.description}</p>
-                  </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-3">Typical Challenges</h3>
-                    <ul className="space-y-2">
-                      {app.challenges.map((challenge, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
-                          {challenge}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-3">Why Robotic Coating</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{app.whyRobotic}</p>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-3">Typical Challenges</h3>
+                      <ul className="space-y-2">
+                        {app.challenges.map((challenge, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
+                            {challenge}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-3">Why Robotic Coating</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{app.whyRobotic}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* CTA */}
       <Section variant="muted">
-        <div className="text-center max-w-2xl mx-auto">
+        <FadeIn className="text-center max-w-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Have a Specific Application in Mind?
           </h2>
@@ -151,13 +163,13 @@ export default function Applications() {
             Our configurator helps you define your requirements regardless of industry. 
             Start by answering a few questions about your coating needs.
           </p>
-          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground transition-transform hover:scale-105">
             <Link to="/quote" className="flex items-center gap-2">
               Configure Your Workstation
               <ChevronRight className="h-4 w-4" />
             </Link>
           </Button>
-        </div>
+        </FadeIn>
       </Section>
     </>
   );

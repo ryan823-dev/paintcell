@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { 
   ChevronRight, 
   Cog, 
@@ -107,14 +109,22 @@ export default function CoatingCells() {
     <>
       {/* Header */}
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
-        <img 
+        <motion.img 
           src={heroCoatingCells} 
           alt="Complete robotic spray coating workstation cell" 
           className="absolute inset-0 w-full h-full object-cover"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/60" />
         <div className="container-wide relative h-full flex items-center">
-          <div className="max-w-2xl">
+          <motion.div 
+            className="max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
               Coating Cell Solutions
             </h1>
@@ -122,95 +132,110 @@ export default function CoatingCells() {
               Integrated robotic spray coating workstations engineered for your production environment. 
               Every component designed to work together for optimal coating performance.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* System Components */}
       <Section variant="default">
-        <SectionHeader
-          title="System Architecture"
-          description="Four core subsystems engineered to work as one integrated solution."
-        />
-        <div className="grid md:grid-cols-2 gap-6">
+        <FadeIn>
+          <SectionHeader
+            title="System Architecture"
+            description="Four core subsystems engineered to work as one integrated solution."
+          />
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-2 gap-6">
           {systemComponents.map((component) => (
-            <div
-              key={component.title}
-              className="bg-card rounded-xl border border-border p-6"
-            >
-              <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <component.icon className="h-6 w-6 text-primary" />
+            <StaggerItem key={component.title}>
+              <motion.div
+                className="bg-card rounded-xl border border-border p-6 h-full"
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <component.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">{component.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{component.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">{component.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">{component.description}</p>
-                </div>
-              </div>
-              <ul className="space-y-2 pl-16">
-                {component.specs.map((spec, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
-                    {spec}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <ul className="space-y-2 pl-16">
+                  {component.specs.map((spec, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
+                      {spec}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* Automation Levels */}
       <Section variant="muted">
-        <SectionHeader
-          title="Automation Levels"
-          description="Choose the right level of automation for your current needs with a path to scale."
-        />
-        <div className="grid md:grid-cols-3 gap-6">
+        <FadeIn>
+          <SectionHeader
+            title="Automation Levels"
+            description="Choose the right level of automation for your current needs with a path to scale."
+          />
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-3 gap-6">
           {automationLevels.map((level) => (
-            <div
-              key={level.level}
-              className="bg-card rounded-xl border border-border p-6"
-            >
-              <h3 className="text-lg font-semibold text-foreground mb-2">{level.level}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{level.description}</p>
-              <ul className="space-y-2">
-                {level.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <StaggerItem key={level.level}>
+              <motion.div
+                className="bg-card rounded-xl border border-border p-6 h-full"
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <h3 className="text-lg font-semibold text-foreground mb-2">{level.level}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{level.description}</p>
+                <ul className="space-y-2">
+                  {level.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* Key Features */}
       <Section variant="default">
-        <SectionHeader
-          title="Why CoatingCell?"
-          description="Engineered advantages that set our solutions apart."
-        />
-        <div className="grid md:grid-cols-2 gap-6">
+        <FadeIn>
+          <SectionHeader
+            title="Why CoatingCell?"
+            description="Engineered advantages that set our solutions apart."
+          />
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-2 gap-6">
           {keyFeatures.map((feature) => (
-            <div key={feature.title} className="flex gap-4">
-              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                <feature.icon className="h-6 w-6 text-accent" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
-              </div>
-            </div>
+            <StaggerItem key={feature.title}>
+              <motion.div 
+                className="flex gap-4"
+                whileHover={{ x: 5, transition: { duration: 0.2 } }}
+              >
+                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                  <feature.icon className="h-6 w-6 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                </div>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* CTA */}
       <Section variant="primary">
-        <div className="text-center max-w-2xl mx-auto">
+        <FadeIn className="text-center max-w-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Ready to Configure Your Solution?
           </h2>
@@ -221,14 +246,14 @@ export default function CoatingCells() {
           <Button 
             asChild 
             size="lg" 
-            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-transform hover:scale-105"
           >
             <Link to="/quote" className="flex items-center gap-2">
               Start Configuration
               <ChevronRight className="h-5 w-5" />
             </Link>
           </Button>
-        </div>
+        </FadeIn>
       </Section>
     </>
   );
