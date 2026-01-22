@@ -118,7 +118,7 @@ export default function Index() {
                 asChild 
                 variant="outline" 
                 size="lg"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 h-14 px-8 transition-transform hover:scale-105"
+                className="border-white/40 bg-white/10 text-white hover:bg-white/20 h-14 px-8 transition-transform hover:scale-105"
               >
                 <Link to="/coating-cells">
                   Explore Solutions

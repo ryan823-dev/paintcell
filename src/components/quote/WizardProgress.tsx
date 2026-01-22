@@ -35,7 +35,7 @@ export function WizardProgress({ currentStep, totalSteps, stepTitles }: WizardPr
 
           return (
             <div key={index} className="flex items-center flex-1 last:flex-none">
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center min-w-[40px]">
                 <div
                   className={cn(
                     "step-indicator",
@@ -47,7 +47,7 @@ export function WizardProgress({ currentStep, totalSteps, stepTitles }: WizardPr
                   {isCompleted ? (
                     <Check className="h-5 w-5" />
                   ) : (
-                    <span>{index + 1}</span>
+                    <span className="leading-none">{index + 1}</span>
                   )}
                 </div>
                 <span
