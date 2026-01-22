@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import heroImage from "@/assets/hero-coating-cell.jpg";
 import { 
   ChevronRight, 
@@ -66,28 +68,46 @@ export default function Index() {
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img 
+          <motion.img 
             src={heroImage} 
             alt="Robotic spray coating workstation" 
             className="w-full h-full object-cover"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           />
           <div className="absolute inset-0 hero-gradient opacity-85" />
         </div>
         <div className="container-wide relative py-20 md:py-32">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
+            <motion.h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               Robotic Spray Coating
               <span className="block text-primary-foreground/80">Workstations</span>
-            </h1>
-            <p className="text-xl text-primary-foreground/80 mb-8 leading-relaxed max-w-2xl">
+            </motion.h1>
+            <motion.p 
+              className="text-xl text-primary-foreground/80 mb-8 leading-relaxed max-w-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Transform your coating operations with industrial automation. 
               Engineered for quality consistency, throughput, and operational excellence.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            </motion.p>
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg h-14 px-8"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg h-14 px-8 transition-transform hover:scale-105"
               >
                 <Link to="/quote" className="flex items-center gap-2">
                   Configure Your Workstation
@@ -98,73 +118,81 @@ export default function Index() {
                 asChild 
                 variant="outline" 
                 size="lg"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 h-14 px-8"
+                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 h-14 px-8 transition-transform hover:scale-105"
               >
                 <Link to="/coating-cells">
                   Explore Solutions
                 </Link>
               </Button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
       <Section variant="default">
-        <SectionHeader
-          title="Why Robotic Coating?"
-          description="Industrial automation delivers measurable improvements across quality, efficiency, and safety."
-        />
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <FadeIn>
+          <SectionHeader
+            title="Why Robotic Coating?"
+            description="Industrial automation delivers measurable improvements across quality, efficiency, and safety."
+          />
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((benefit) => (
-            <div
-              key={benefit.title}
-              className="bg-card rounded-xl p-6 border border-border card-elevated"
-            >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <benefit.icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-foreground">{benefit.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
-            </div>
+            <StaggerItem key={benefit.title}>
+              <motion.div
+                className="bg-card rounded-xl p-6 border border-border card-elevated h-full"
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <benefit.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-foreground">{benefit.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Section>
 
       {/* System Overview Section */}
       <Section variant="muted">
-        <SectionHeader
-          title="Complete Coating Cell Solution"
-          description="Every component engineered to work together for optimal coating performance."
-        />
-        <div className="grid md:grid-cols-2 gap-6">
+        <FadeIn>
+          <SectionHeader
+            title="Complete Coating Cell Solution"
+            description="Every component engineered to work together for optimal coating performance."
+          />
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-2 gap-6">
           {systemComponents.map((component) => (
-            <div
-              key={component.title}
-              className="bg-card rounded-xl p-6 border border-border flex gap-4"
-            >
-              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                <component.icon className="h-6 w-6 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground">{component.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{component.description}</p>
-              </div>
-            </div>
+            <StaggerItem key={component.title}>
+              <motion.div
+                className="bg-card rounded-xl p-6 border border-border flex gap-4 h-full"
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              >
+                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                  <component.icon className="h-6 w-6 text-accent" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-2 text-foreground">{component.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{component.description}</p>
+                </div>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Button asChild variant="outline" size="lg">
+        </StaggerContainer>
+        <FadeIn delay={0.4} className="mt-10 text-center">
+          <Button asChild variant="outline" size="lg" className="transition-transform hover:scale-105">
             <Link to="/coating-cells">
               Learn More About Our Solutions
             </Link>
           </Button>
-        </div>
+        </FadeIn>
       </Section>
 
       {/* CTA Section */}
       <Section variant="primary">
-        <div className="text-center max-w-3xl mx-auto">
+        <FadeIn className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Automate Your Coating Process?
           </h2>
@@ -175,14 +203,14 @@ export default function Index() {
           <Button 
             asChild 
             size="lg" 
-            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg h-14 px-8"
+            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg h-14 px-8 transition-transform hover:scale-105"
           >
             <Link to="/quote" className="flex items-center gap-2">
               Start Configuration
               <ChevronRight className="h-5 w-5" />
             </Link>
           </Button>
-        </div>
+        </FadeIn>
       </Section>
     </>
   );
