@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, Car, Cpu, Building2, Plane, Truck, Package } from "lucide-react";
+import heroApplications from "@/assets/hero-applications.jpg";
 
 const applications = [
   {
@@ -76,9 +77,14 @@ export default function Applications() {
   return (
     <>
       {/* Header */}
-      <section className="hero-gradient relative">
-        <div className="absolute inset-0 industrial-pattern opacity-30" />
-        <div className="container-wide relative py-12 md:py-16">
+      <section className="relative h-[300px] md:h-[400px] overflow-hidden">
+        <img 
+          src={heroApplications} 
+          alt="Industrial robotic spray coating applications" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/60" />
+        <div className="container-wide relative h-full flex items-center">
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
               Applications
