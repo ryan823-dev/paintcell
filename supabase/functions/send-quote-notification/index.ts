@@ -17,7 +17,7 @@ interface QuoteSubmission {
   
   // Form data
   application_industry: string;
-  coating_material_type: string[];
+  paint_type: string[];
   substrate_material: string[];
   part_geometry: string;
   part_dimensions: string;
@@ -66,7 +66,7 @@ const handler = async (req: Request): Promise<Response> => {
       <h2>Application Context</h2>
       <ul>
         <li><strong>Industry:</strong> ${data.application_industry}</li>
-        <li><strong>Coating Materials:</strong> ${Array.isArray(data.coating_material_type) ? data.coating_material_type.join(", ") : data.coating_material_type}</li>
+        <li><strong>Paint Types:</strong> ${Array.isArray(data.paint_type) ? data.paint_type.join(", ") : data.paint_type}</li>
         <li><strong>Substrate Materials:</strong> ${Array.isArray(data.substrate_material) ? data.substrate_material.join(", ") : data.substrate_material}</li>
       </ul>
 
@@ -120,7 +120,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "CoatingCell Quotes <onboarding@resend.dev>",
+        from: "PaintCell Quotes <onboarding@resend.dev>",
         to: [data.contact_email],
         subject: `Quote Request Received - ${data.contact_company}`,
         html: emailHtml,

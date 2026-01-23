@@ -20,7 +20,7 @@ const benefits = [
   {
     icon: Target,
     title: "Quality Consistency",
-    description: "Achieve repeatable, high-quality finishes with robotic precision that eliminates human variability.",
+    description: "Achieve repeatable, high-quality paint finishes with robotic precision that eliminates human variability.",
   },
   {
     icon: Zap,
@@ -35,7 +35,7 @@ const benefits = [
   {
     icon: Shield,
     title: "Safety & Compliance",
-    description: "Protect workers from hazardous environments while meeting stringent regulatory requirements.",
+    description: "Protect workers from hazardous paint fumes and overspray while meeting stringent regulatory requirements.",
   },
 ];
 
@@ -43,22 +43,22 @@ const systemComponents = [
   {
     icon: Cog,
     title: "Industrial Robot",
-    description: "6-axis articulated robot optimized for coating applications with extended reach and payload.",
+    description: "6-axis articulated robot optimized for spray painting applications with extended reach and payload.",
   },
   {
     icon: Box,
     title: "Spray Equipment",
-    description: "Integrated spray guns, pumps, and fluid handling systems for precise material delivery.",
+    description: "Integrated spray guns, pumps, and fluid handling systems for precise paint delivery.",
   },
   {
     icon: Settings,
-    title: "Enclosure & Ventilation",
+    title: "Paint Booth & Ventilation",
     description: "Purpose-built spray booth with exhaust systems meeting safety and environmental standards.",
   },
   {
     icon: Gauge,
     title: "Process Controls",
-    description: "Advanced HMI and recipe management for consistent coating parameters and traceability.",
+    description: "Advanced HMI and recipe management for consistent paint parameters and traceability.",
   },
 ];
 
@@ -86,7 +86,7 @@ export default function Index() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Robotic Spray Coating
+              Robotic Spray Painting
               <span className="block text-primary-foreground/80">Workstations</span>
             </motion.h1>
             <motion.p 
@@ -95,7 +95,7 @@ export default function Index() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Transform your coating operations with industrial automation. 
+              Transform your paint operations with industrial automation. 
               Engineered for quality consistency, throughput, and operational excellence.
             </motion.p>
             <motion.div 
@@ -120,7 +120,7 @@ export default function Index() {
                 size="lg"
                 className="border-white/40 bg-white/10 text-white hover:bg-white/20 h-14 px-8 transition-transform hover:scale-105"
               >
-                <Link to="/coating-cells">
+                <Link to="/paint-cells">
                   Explore Solutions
                 </Link>
               </Button>
@@ -133,7 +133,7 @@ export default function Index() {
       <Section variant="default">
         <FadeIn>
           <SectionHeader
-            title="Why Robotic Coating?"
+            title="Why Robotic Painting?"
             description="Industrial automation delivers measurable improvements across quality, efficiency, and safety."
           />
         </FadeIn>
@@ -159,8 +159,8 @@ export default function Index() {
       <Section variant="muted">
         <FadeIn>
           <SectionHeader
-            title="Complete Coating Cell Solution"
-            description="Every component engineered to work together for optimal coating performance."
+            title="Complete Paint Cell Solution"
+            description="Every component engineered to work together for optimal paint finish quality."
           />
         </FadeIn>
         <StaggerContainer className="grid md:grid-cols-2 gap-6">
@@ -183,7 +183,7 @@ export default function Index() {
         </StaggerContainer>
         <FadeIn delay={0.4} className="mt-10 text-center">
           <Button asChild variant="outline" size="lg" className="transition-transform hover:scale-105">
-            <Link to="/coating-cells">
+            <Link to="/paint-cells">
               Learn More About Our Solutions
             </Link>
           </Button>
@@ -194,7 +194,7 @@ export default function Index() {
       <Section variant="primary">
         <FadeIn className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Automate Your Coating Process?
+            Ready to Automate Your Paint Process?
           </h2>
           <p className="text-lg text-primary-foreground/80 mb-8">
             Our guided configurator helps you define your requirements in minutes. 

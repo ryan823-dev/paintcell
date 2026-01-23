@@ -9,7 +9,7 @@ const caseStudies = [
     title: "Automotive Tier 1 Supplier",
     industry: "Automotive",
     challenge: "Manual spray booth struggling with Class A finish requirements and increasing production demands. Reject rate at 8% with significant rework labor.",
-    solution: "Deployed fully automatic coating cell with dual robot configuration, electrostatic spray system, and integrated quality inspection.",
+    solution: "Deployed fully automatic paint cell with dual robot configuration, electrostatic spray system, and integrated quality inspection.",
     outcomes: [
       "Reject rate reduced to 1.2%",
       "Throughput increased 40%",
@@ -20,9 +20,9 @@ const caseStudies = [
   {
     id: 2,
     title: "Heavy Equipment Manufacturer",
-    challenge: "Large parts requiring thick protective coatings. Manual process led to inconsistent film build and coating failures in field.",
+    challenge: "Large parts requiring thick protective paint. Manual process led to inconsistent film build and paint failures in field.",
     industry: "Industrial",
-    solution: "Custom cell design with rail-mounted robot for extended reach. Recipe-based control ensures consistent coating thickness across all part geometries.",
+    solution: "Custom cell design with rail-mounted robot for extended reach. Recipe-based control ensures consistent paint thickness across all part geometries.",
     outcomes: [
       "Film build variation reduced 75%",
       "Field warranty claims down 60%",
@@ -47,12 +47,12 @@ const caseStudies = [
     id: 4,
     title: "Aerospace Component Supplier",
     industry: "Aerospace",
-    challenge: "Specialized coatings on high-value parts with stringent documentation requirements. Manual process couldn't meet traceability standards.",
+    challenge: "Specialized paints on high-value parts with stringent documentation requirements. Manual process couldn't meet traceability standards.",
     solution: "Semi-automatic cell with comprehensive data logging, barcode tracking, and automatic process verification.",
     outcomes: [
       "Full compliance with AS9100 requirements",
       "Zero documentation non-conformances",
-      "Coating consistency improved significantly",
+      "Paint consistency improved significantly",
       "Audit preparation time reduced 90%",
     ],
   },
@@ -142,7 +142,7 @@ export default function CaseStudies() {
             See How Automation Applies to Your Operation
           </h2>
           <p className="text-muted-foreground mb-6">
-            Every coating challenge is unique. Our configurator helps you define your specific 
+            Every painting challenge is unique. Our configurator helps you define your specific 
             requirements so we can identify the right solution approach.
           </p>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
