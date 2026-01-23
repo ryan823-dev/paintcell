@@ -14,7 +14,7 @@ import {
   RefreshCw,
   Settings
 } from "lucide-react";
-import heroCoatingCells from "@/assets/hero-coating-cells.jpg";
+import heroPaintCells from "@/assets/hero-paint-cells.jpg";
 
 const systemComponents = [
   {
@@ -110,7 +110,7 @@ export default function PaintCells() {
       {/* Header */}
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <motion.img 
-          src={heroCoatingCells} 
+          src={heroPaintCells}
           alt="Complete robotic spray painting workstation cell" 
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
