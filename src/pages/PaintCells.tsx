@@ -20,7 +20,7 @@ const systemComponents = [
   {
     icon: Cog,
     title: "Industrial Robot",
-    description: "6-axis articulated robots from leading manufacturers, optimized for spray coating applications.",
+    description: "6-axis articulated robots from leading manufacturers, optimized for spray painting applications.",
     specs: [
       "Extended reach configurations (2-3.5m)",
       "Explosion-proof variants available",
@@ -31,7 +31,7 @@ const systemComponents = [
   {
     icon: Layers,
     title: "Spray Equipment",
-    description: "Complete fluid handling systems matched to your coating material and application requirements.",
+    description: "Complete fluid handling systems matched to your paint type and application requirements.",
     specs: [
       "Electrostatic and conventional spray options",
       "Automatic gun cleaning and purge systems",
@@ -41,7 +41,7 @@ const systemComponents = [
   },
   {
     icon: Wind,
-    title: "Enclosure & Ventilation",
+    title: "Paint Booth & Ventilation",
     description: "Purpose-built spray environments meeting safety and environmental standards.",
     specs: [
       "Downdraft and crossdraft configurations",
@@ -53,7 +53,7 @@ const systemComponents = [
   {
     icon: Gauge,
     title: "Process Controls",
-    description: "Advanced control systems for consistent coating parameters and full traceability.",
+    description: "Advanced control systems for consistent paint parameters and full traceability.",
     specs: [
       "Touch-screen HMI with recipe management",
       "Real-time process monitoring",
@@ -66,7 +66,7 @@ const systemComponents = [
 const automationLevels = [
   {
     level: "Semi-Automatic",
-    description: "Operator loads and unloads parts manually while robot executes coating cycle.",
+    description: "Operator loads and unloads parts manually while robot executes painting cycle.",
     features: ["Manual part loading", "Automatic spray cycle", "Operator supervision required"],
   },
   {
@@ -104,14 +104,14 @@ const keyFeatures = [
   },
 ];
 
-export default function CoatingCells() {
+export default function PaintCells() {
   return (
     <>
       {/* Header */}
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <motion.img 
           src={heroCoatingCells} 
-          alt="Complete robotic spray coating workstation cell" 
+          alt="Complete robotic spray painting workstation cell" 
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
@@ -126,11 +126,11 @@ export default function CoatingCells() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Coating Cell Solutions
+              Paint Cell Solutions
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Integrated robotic spray coating workstations engineered for your production environment. 
-              Every component designed to work together for optimal coating performance.
+              Integrated robotic spray painting workstations engineered for your production environment. 
+              Every component designed to work together for optimal paint finish quality.
             </p>
           </motion.div>
         </div>
@@ -209,7 +209,7 @@ export default function CoatingCells() {
       <Section variant="default">
         <FadeIn>
           <SectionHeader
-            title="Why CoatingCell?"
+            title="Why PaintCell?"
             description="Engineered advantages that set our solutions apart."
           />
         </FadeIn>

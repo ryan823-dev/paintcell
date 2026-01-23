@@ -14,7 +14,7 @@ const values = [
   {
     icon: Award,
     title: "Engineering Excellence",
-    description: "Every solution is designed by experienced engineers who understand both coating technology and industrial automation.",
+    description: "Every solution is designed by experienced engineers who understand both paint technology and industrial automation.",
   },
   {
     icon: Users,
@@ -42,11 +42,11 @@ export default function About() {
         <div className="container-wide relative py-12 md:py-16">
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              About CoatingCell
+              About PaintCell
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Specialists in robotic spray coating automation with decades of experience 
-              solving complex coating challenges.
+              Specialists in robotic spray painting automation with decades of experience 
+              solving complex painting challenges.
             </p>
           </div>
         </div>
@@ -74,18 +74,18 @@ export default function About() {
           </h2>
           <div className="prose prose-lg text-muted-foreground space-y-4">
             <p>
-              CoatingCell was founded on a simple observation: industrial spray coating is 
+              PaintCell was founded on a simple observation: industrial spray painting is 
               too important to leave to inconsistent manual processes, yet too complex for 
               generic automation solutions.
             </p>
             <p>
-              Our team brings together expertise in robotics, coating technology, and 
+              Our team brings together expertise in robotics, paint technology, and 
               manufacturing operations. We've worked with customers across automotive, 
               aerospace, electronics, and heavy industry—learning from every project and 
               continuously improving our solutions.
             </p>
             <p>
-              Today, we offer a focused portfolio of robotic coating workstations that 
+              Today, we offer a focused portfolio of robotic painting workstations that 
               deliver the quality consistency, throughput, and operational reliability 
               that modern manufacturing demands.
             </p>
@@ -121,7 +121,7 @@ export default function About() {
             Let's Discuss Your Project
           </h2>
           <p className="text-primary-foreground/80 mb-6">
-            Start with our configurator to tell us about your coating requirements. 
+            Start with our configurator to tell us about your painting requirements. 
             Our engineering team will review and follow up to explore solutions.
           </p>
           <Button 

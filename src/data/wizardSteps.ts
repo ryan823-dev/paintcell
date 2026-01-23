@@ -3,11 +3,11 @@ import { WizardStep } from "@/types/quote";
 export const wizardSteps: WizardStep[] = [
   {
     title: "Application Context",
-    description: "Help us understand your coating application and project goals.",
+    description: "Help us understand your painting application and project goals.",
     questions: [
       {
         id: "application_material",
-        label: "What type of material will be coated?",
+        label: "What type of material will be painted?",
         type: "radio",
         required: true,
         options: [
@@ -49,7 +49,7 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     title: "Part Characteristics",
-    description: "Tell us about the parts you need to coat.",
+    description: "Tell us about the parts you need to paint.",
     questions: [
       {
         id: "part_size",
@@ -90,7 +90,7 @@ export const wizardSteps: WizardStep[] = [
       },
       {
         id: "part_presentation",
-        label: "How are parts presented for coating?",
+        label: "How are parts presented for painting?",
         type: "radio",
         required: true,
         options: [
@@ -144,7 +144,7 @@ export const wizardSteps: WizardStep[] = [
       },
       {
         id: "changeover_frequency",
-        label: "How often do you change products or recipes?",
+        label: "How often do you change products or colors?",
         type: "radio",
         required: true,
         options: [
@@ -305,16 +305,17 @@ export const wizardSteps: WizardStep[] = [
         ],
       },
       {
-        id: "coating_material_type",
-        label: "What type of coating material will be used? (Select all that apply)",
+        id: "paint_type",
+        label: "What type of paint will be used? (Select all that apply)",
         type: "checkbox",
         required: true,
         minSelections: 1,
         options: [
-          { value: "liquid_paint", label: "Liquid Paint" },
-          { value: "powder", label: "Powder Coating" },
-          { value: "functional_coating", label: "Functional Coating" },
-          { value: "multiple_materials", label: "Multiple Materials" },
+          { value: "solvent_based", label: "Solvent-Based Paint" },
+          { value: "water_based", label: "Water-Based Paint" },
+          { value: "powder_paint", label: "Powder Paint" },
+          { value: "uv_curable", label: "UV Curable Paint" },
+          { value: "multiple_types", label: "Multiple Types" },
           { value: "not_sure", label: "Not Sure" },
         ],
       },

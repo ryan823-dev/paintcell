@@ -6,7 +6,7 @@ import { Menu, X, ChevronRight } from "lucide-react";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Applications", href: "/applications" },
-  { name: "Coating Cells", href: "/coating-cells" },
+  { name: "Paint Cells", href: "/paint-cells" },
   { name: "Case Studies", href: "/case-studies" },
   { name: "About", href: "/about" },
 ];
@@ -26,9 +26,9 @@ export function Header() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">C</span>
+            <span className="text-lg font-bold text-primary-foreground">P</span>
           </div>
-          <span className="text-xl font-semibold text-foreground">CoatingCell</span>
+          <span className="text-xl font-semibold text-foreground">PaintCell</span>
         </Link>
 
         {/* Desktop Navigation */}

@@ -10,32 +10,32 @@ const applications = [
   {
     icon: Car,
     title: "Automotive Components",
-    description: "High-volume coating of body panels, trim, and structural components with Class A finish requirements.",
+    description: "High-volume painting of body panels, trim, and structural components with Class A finish requirements.",
     challenges: [
       "Complex geometries requiring multi-angle spray",
       "High cosmetic standards with zero tolerance for defects",
       "Takt-time constraints in synchronized production",
     ],
-    whyRobotic: "Robotic coating ensures consistent film build and surface finish across thousands of parts while maintaining cycle time targets.",
+    whyRobotic: "Robotic painting ensures consistent film build and surface finish across thousands of parts while maintaining cycle time targets.",
   },
   {
     icon: Cpu,
     title: "Electronics & Appliances",
-    description: "Precision coating of housings, enclosures, and consumer product components.",
+    description: "Precision painting of housings, enclosures, and consumer product components.",
     challenges: [
       "Mixed materials (metal and plastic) on same line",
       "Frequent color and product changeovers",
-      "EMI shielding and functional coating requirements",
+      "Decorative finish and color matching requirements",
     ],
-    whyRobotic: "Flexible robot programming handles part variety while recipe management ensures coating specification compliance.",
+    whyRobotic: "Flexible robot programming handles part variety while recipe management ensures paint specification compliance.",
   },
   {
     icon: Building2,
     title: "Industrial Equipment",
-    description: "Protective and decorative coating of machinery, enclosures, and heavy equipment.",
+    description: "Protective and decorative painting of machinery, enclosures, and heavy equipment.",
     challenges: [
       "Large part dimensions requiring extended reach",
-      "Thick coating builds for corrosion protection",
+      "Thick paint builds for corrosion protection",
       "Batch production with part-to-part variation",
     ],
     whyRobotic: "6-axis robots with high payload capacity handle large parts with consistent coverage in all orientations.",
@@ -43,10 +43,10 @@ const applications = [
   {
     icon: Plane,
     title: "Aerospace Components",
-    description: "Specialized coatings for structural and interior aerospace parts.",
+    description: "Specialized painting for structural and interior aerospace parts.",
     challenges: [
       "Stringent traceability and documentation requirements",
-      "Exotic materials and precise coating specifications",
+      "Exotic materials and precise paint specifications",
       "Low volume with high part value",
     ],
     whyRobotic: "Process control and data logging ensure full compliance while robotic precision minimizes rework on high-value parts.",
@@ -54,13 +54,13 @@ const applications = [
   {
     icon: Truck,
     title: "Commercial Vehicles",
-    description: "Coating of truck bodies, trailers, and construction equipment components.",
+    description: "Painting of truck bodies, trailers, and construction equipment components.",
     challenges: [
       "Very large part sizes",
       "Outdoor exposure durability requirements",
       "Mixed production with custom configurations",
     ],
-    whyRobotic: "Gantry or rail-mounted robots extend reach for oversized parts while maintaining coating quality standards.",
+    whyRobotic: "Gantry or rail-mounted robots extend reach for oversized parts while maintaining paint quality standards.",
   },
   {
     icon: Package,
@@ -82,7 +82,7 @@ export default function Applications() {
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <motion.img 
           src={heroApplications} 
-          alt="Industrial robotic spray coating applications" 
+          alt="Industrial robotic spray painting applications" 
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
@@ -100,7 +100,7 @@ export default function Applications() {
               Applications
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Robotic spray coating solutions across industries. Each application presents unique 
+              Robotic spray painting solutions across industries. Each application presents unique 
               challenges that industrial automation is engineered to solve.
             </p>
           </motion.div>
@@ -142,7 +142,7 @@ export default function Applications() {
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Why Robotic Coating</h3>
+                      <h3 className="font-semibold text-foreground mb-3">Why Robotic Painting</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{app.whyRobotic}</p>
                     </div>
                   </div>
@@ -161,7 +161,7 @@ export default function Applications() {
           </h2>
           <p className="text-muted-foreground mb-6">
             Our configurator helps you define your requirements regardless of industry. 
-            Start by answering a few questions about your coating needs.
+            Start by answering a few questions about your painting needs.
           </p>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground transition-transform hover:scale-105">
             <Link to="/quote" className="flex items-center gap-2">

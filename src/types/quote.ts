@@ -32,7 +32,7 @@ export interface QuoteFormData {
   installation_environment: string;
   available_floor_space: string;
   utilities_availability: string[];
-  coating_material_type: string[];
+  paint_type: string[];
 
   // Step 6 - Project Readiness
   project_timeline: string;
@@ -71,7 +71,7 @@ export const initialFormData: QuoteFormData = {
   installation_environment: "",
   available_floor_space: "",
   utilities_availability: [],
-  coating_material_type: [],
+  paint_type: [],
   project_timeline: "",
   decision_structure: "",
   current_need: "",
@@ -236,11 +236,12 @@ export const optionLabels: Record<string, string> = {
   exhaust_ventilation: "Exhaust / Ventilation",
   to_be_provided: "To Be Provided",
 
-  // Coating Material Type
-  liquid_paint: "Liquid Paint",
-  powder: "Powder Coating",
-  functional_coating: "Functional Coating",
-  multiple_materials: "Multiple Materials",
+  // Paint Type
+  solvent_based: "Solvent-Based Paint",
+  water_based: "Water-Based Paint",
+  powder_paint: "Powder Paint",
+  uv_curable: "UV Curable Paint",
+  multiple_types: "Multiple Types",
 
   // Project Timeline
   lt_6_months: "< 6 Months",

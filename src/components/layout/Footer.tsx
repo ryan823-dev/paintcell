@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const footerLinks = {
   solutions: [
-    { name: "Coating Cells", href: "/coating-cells" },
+    { name: "Paint Cells", href: "/paint-cells" },
     { name: "Applications", href: "/applications" },
     { name: "Case Studies", href: "/case-studies" },
   ],
@@ -21,13 +21,13 @@ export function Footer() {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground">
-                <span className="text-lg font-bold text-primary">C</span>
+                <span className="text-lg font-bold text-primary">P</span>
               </div>
-              <span className="text-xl font-semibold">CoatingCell</span>
+              <span className="text-xl font-semibold">PaintCell</span>
             </Link>
             <p className="text-primary-foreground/70 max-w-md text-sm leading-relaxed">
-              Professional robotic spray coating workstations engineered for quality, 
-              throughput, and operational excellence. Transform your coating operations 
+              Professional robotic spray painting workstations engineered for quality, 
+              throughput, and operational excellence. Transform your paint operations 
               with industrial automation.
             </p>
           </div>
@@ -69,7 +69,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-primary-foreground/10">
           <p className="text-sm text-primary-foreground/50 text-center">
-            © {new Date().getFullYear()} CoatingCell. All rights reserved.
+            © {new Date().getFullYear()} PaintCell. All rights reserved.
           </p>
         </div>
       </div>

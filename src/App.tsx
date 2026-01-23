@@ -7,7 +7,7 @@ import { Layout } from "@/components/layout/Layout";
 import Index from "./pages/Index";
 import Quote from "./pages/Quote";
 import Applications from "./pages/Applications";
-import CoatingCells from "./pages/CoatingCells";
+import PaintCells from "./pages/PaintCells";
 import CaseStudies from "./pages/CaseStudies";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
@@ -25,7 +25,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/quote" element={<Quote />} />
             <Route path="/applications" element={<Applications />} />
-            <Route path="/coating-cells" element={<CoatingCells />} />
+            <Route path="/paint-cells" element={<PaintCells />} />
             <Route path="/case-studies" element={<CaseStudies />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
