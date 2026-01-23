@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
-import heroImage from "@/assets/hero-coating-cell.jpg";
+import heroImage from "@/assets/hero-paint-cell.jpg";
 import { 
   ChevronRight, 
   Target, 
