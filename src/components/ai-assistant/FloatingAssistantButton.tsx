@@ -47,11 +47,10 @@ export function FloatingAssistantButton() {
                 onClick={() => setIsOpen(true)}
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
-                  "bg-primary hover:bg-primary/90",
-                  "text-primary-foreground font-medium text-sm",
+                  "bg-accent hover:bg-accent/90",
+                  "text-accent-foreground font-semibold text-sm",
                   "shadow-lg hover:shadow-xl",
-                  "transition-all duration-200",
-                  "border border-primary/20"
+                  "transition-all duration-200"
                 )}
               >
                 Start a project consultation
