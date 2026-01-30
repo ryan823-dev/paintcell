@@ -1,9 +1,42 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+
+// Input validation schemas
+const MAX_MESSAGE_LENGTH = 2000;
+const MAX_MESSAGES = 50;
+
+const MessageSchema = z.object({
+  role: z.enum(["user", "assistant", "system"]),
+  content: z.string()
+    .min(1, "Message cannot be empty")
+    .max(MAX_MESSAGE_LENGTH, `Message cannot exceed ${MAX_MESSAGE_LENGTH} characters`)
+    .transform(str => str.trim())
+});
+
+const RequestSchema = z.object({
+  messages: z.array(MessageSchema)
+    .min(1, "At least one message is required")
+    .max(MAX_MESSAGES, `Cannot exceed ${MAX_MESSAGES} messages`),
+  action: z.enum(["extract_requirements", "generate_summary"]).optional()
+});
+
+// Sanitize user input to prevent prompt injection
+function sanitizeMessage(content: string): string {
+  // Remove potential prompt injection patterns
+  return content
+    .replace(/\[INST\]/gi, "")
+    .replace(/\[\/INST\]/gi, "")
+    .replace(/<<SYS>>/gi, "")
+    .replace(/<\/SYS>>/gi, "")
+    .replace(/\bsystem\s*:/gi, "")
+    .replace(/\bignore\s+(previous|above|all)\s+(instructions?|prompts?)/gi, "")
+    .trim();
+}
 
 // System prompt for the AI Pre-Sales Engineer
 const SYSTEM_PROMPT = `You are a Pre-Sales Automation Engineer for PaintCell, a company specializing in robotic spray painting workstation cells for industrial applications.
@@ -60,11 +93,37 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, action } = await req.json();
+    const rawBody = await req.json();
+    
+    // Validate request body
+    const validationResult = RequestSchema.safeParse(rawBody);
+    if (!validationResult.success) {
+      const errorMessage = validationResult.error.errors
+        .map(e => e.message)
+        .join(", ");
+      console.error("Validation error:", errorMessage);
+      return new Response(
+        JSON.stringify({ error: "Invalid request format" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    
+    const { messages: rawMessages, action } = validationResult.data;
+    
+    // Sanitize all user messages to prevent prompt injection
+    const messages = rawMessages.map(msg => ({
+      ...msg,
+      content: msg.role === "user" ? sanitizeMessage(msg.content) : msg.content
+    }));
+    
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+      console.error("Missing API key configuration");
+      return new Response(
+        JSON.stringify({ error: "Service configuration error" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Handle requirement extraction action
@@ -265,10 +324,12 @@ Keep it concise and professional.`;
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
-    console.error("Chat error:", e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    // Log detailed error server-side only
+    console.error("Chat error:", e instanceof Error ? e.message : "Unknown error");
+    // Return generic error to client
+    return new Response(
+      JSON.stringify({ error: "Unable to process your request. Please try again." }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 });
