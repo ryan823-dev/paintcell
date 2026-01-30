@@ -13,16 +13,17 @@ import { QuoteFormData, initialFormData } from "@/types/quote";
 
 interface AIChatPanelProps {
   onClose: () => void;
+  initialMessage?: string | null;
 }
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-presales-chat`;
 
-export function AIChatPanel({ onClose }: AIChatPanelProps) {
+export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessageType[]>([
     {
       role: "assistant",
-      content: "Hello! I'm here to help you explore your robotic spray painting automation needs. I can answer general questions and help document your requirements for our engineering team.\n\nWhat brings you here today?",
+      content: "Thank you for starting this consultation. I'll help you evaluate your painting application and prepare a structured summary for our engineering team.\n\nLet me understand your project better. Could you tell me more about the parts or products you're looking to paint?",
       timestamp: new Date(),
     },
   ]);
@@ -41,6 +42,14 @@ export function AIChatPanel({ onClose }: AIChatPanelProps) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, showSummary]);
+
+  // Send initial message if provided
+  useEffect(() => {
+    if (initialMessage && messages.length === 1) {
+      streamChat(initialMessage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialMessage]);
 
   // Count turns for summary suggestion
   const userTurnCount = messages.filter(m => m.role === "user").length;
