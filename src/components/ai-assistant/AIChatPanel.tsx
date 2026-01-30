@@ -124,8 +124,11 @@ export function AIChatPanel({ onClose }: AIChatPanelProps) {
         }
       }
     } catch (error) {
-      console.error("Chat error:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to send message");
+      // Log error without exposing details to console in production
+      if (import.meta.env.DEV) {
+        console.error("Chat error:", error);
+      }
+      toast.error("Failed to send message. Please try again.");
       // Remove the empty assistant message if error
       setMessages(prev => prev.filter(m => m.content !== ""));
     } finally {
@@ -188,7 +191,10 @@ export function AIChatPanel({ onClose }: AIChatPanelProps) {
       setExtractedRequirements(extractData.requirements || {});
       setShowSummary(true);
     } catch (error) {
-      console.error("Summary error:", error);
+      // Log error without exposing details to console in production
+      if (import.meta.env.DEV) {
+        console.error("Summary error:", error);
+      }
       toast.error("Failed to generate summary. Please try again.");
     } finally {
       setIsLoading(false);
