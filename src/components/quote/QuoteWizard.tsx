@@ -56,16 +56,21 @@ export function QuoteWizard() {
       });
 
       if (error) {
-        console.error("Error sending notification:", error);
+        // Log error only in development
+        if (import.meta.env.DEV) {
+          console.error("Error sending notification:", error);
+        }
         toast.error("Failed to send quote request. Please try again.");
         return;
       }
 
-      console.log("Quote submitted successfully");
       toast.success("Quote request submitted successfully!");
       setSubmitted(true);
     } catch (error) {
-      console.error("Error submitting quote:", error);
+      // Log error only in development
+      if (import.meta.env.DEV) {
+        console.error("Error submitting quote:", error);
+      }
       toast.error("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);

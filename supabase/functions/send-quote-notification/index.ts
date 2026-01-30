@@ -49,7 +49,33 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Validate API key is configured
+    if (!RESEND_API_KEY) {
+      console.error("Missing RESEND_API_KEY configuration");
+      return new Response(
+        JSON.stringify({ error: "Service configuration error. Please contact support." }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const data: QuoteSubmission = await req.json();
+
+    // Basic input validation
+    if (!data.contact_name || !data.contact_email || !data.contact_company) {
+      return new Response(
+        JSON.stringify({ error: "Missing required contact information." }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.contact_email)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid email format." }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     // Format the email content
     const emailHtml = `
@@ -130,26 +156,26 @@ const handler = async (req: Request): Promise<Response> => {
     const result = await emailResponse.json();
 
     if (!emailResponse.ok) {
-      throw new Error(result.message || "Failed to send email");
+      // Log detailed error server-side only
+      console.error("Email service error:", result);
+      return new Response(
+        JSON.stringify({ error: "Unable to send email notification. Please try again later." }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
     }
 
-    console.log("Email sent successfully:", result);
+    console.log("Email sent successfully");
 
-    return new Response(JSON.stringify({ success: true, emailResponse: result }), {
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   } catch (error: any) {
-    console.error("Error in send-quote-notification function:", error);
+    // Log detailed error server-side only
+    console.error("Error in send-quote-notification:", error instanceof Error ? error.message : "Unknown error");
     return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      JSON.stringify({ error: "Unable to process your request. Please try again later." }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };
