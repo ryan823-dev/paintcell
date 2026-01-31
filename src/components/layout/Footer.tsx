@@ -6,6 +6,12 @@ const footerLinks = {
     { name: "Applications", href: "/applications" },
     { name: "Case Studies", href: "/case-studies" },
   ],
+  resources: [
+    { name: "Engineering Library", href: "/resources/engineering-library" },
+    { name: "Standards & Compliance", href: "/resources/standards-compliance" },
+    { name: "Glossary", href: "/resources/glossary" },
+    { name: "Tools & Templates", href: "/resources/tools-templates" },
+  ],
   company: [
     { name: "About", href: "/about" },
     { name: "Contact", href: "/quote" },
@@ -16,7 +22,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
       <div className="container-wide py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
@@ -37,6 +43,23 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Solutions</h3>
             <ul className="space-y-3">
               {footerLinks.solutions.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className="font-semibold mb-4">Resources</h3>
+            <ul className="space-y-3">
+              {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
