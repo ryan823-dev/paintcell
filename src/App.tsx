@@ -12,6 +12,37 @@ import CaseStudies from "./pages/CaseStudies";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
+// Engineering Library pages
+import EngineeringLibrary from "./pages/resources/EngineeringLibrary";
+import GuidesChecklists from "./pages/resources/GuidesChecklists";
+import Insights from "./pages/resources/Insights";
+import FAQs from "./pages/resources/FAQs";
+import PaintCellFeasibilityChecks from "./pages/resources/PaintCellFeasibilityChecks";
+import AutomationBoundary from "./pages/resources/AutomationBoundary";
+
+// Standards & Compliance pages
+import StandardsCompliance from "./pages/resources/StandardsCompliance";
+import VentilationAirflow from "./pages/resources/VentilationAirflow";
+import VOCSolventHandling from "./pages/resources/VOCSolventHandling";
+import GroundingStaticControl from "./pages/resources/GroundingStaticControl";
+
+// Glossary pages
+import Glossary from "./pages/resources/Glossary";
+import TaktTime from "./pages/resources/glossary/TaktTime";
+import Overspray from "./pages/resources/glossary/Overspray";
+import TransferEfficiency from "./pages/resources/glossary/TransferEfficiency";
+import FilmBuild from "./pages/resources/glossary/FilmBuild";
+import ColorChangeover from "./pages/resources/glossary/ColorChangeover";
+import Atomization from "./pages/resources/glossary/Atomization";
+import BoothAirflow from "./pages/resources/glossary/BoothAirflow";
+import TwoKPaint from "./pages/resources/glossary/TwoKPaint";
+
+// Tools & Templates pages
+import ToolsTemplates from "./pages/resources/ToolsTemplates";
+import PaintCellRFQTemplate from "./pages/resources/tools/PaintCellRFQTemplate";
+import SiteReadinessChecklist from "./pages/resources/tools/SiteReadinessChecklist";
+import FeasibilityChecklist from "./pages/resources/tools/FeasibilityChecklist";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -28,6 +59,38 @@ const App = () => (
             <Route path="/paint-cells" element={<PaintCells />} />
             <Route path="/case-studies" element={<CaseStudies />} />
             <Route path="/about" element={<About />} />
+            
+            {/* Engineering Library routes */}
+            <Route path="/resources/engineering-library" element={<EngineeringLibrary />} />
+            <Route path="/resources/engineering-library/guides-checklists" element={<GuidesChecklists />} />
+            <Route path="/resources/engineering-library/insights" element={<Insights />} />
+            <Route path="/resources/engineering-library/faqs" element={<FAQs />} />
+            <Route path="/resources/guides/paint-cell-feasibility-checks" element={<PaintCellFeasibilityChecks />} />
+            <Route path="/resources/insights/automation-boundary-spray-painting" element={<AutomationBoundary />} />
+            
+            {/* Standards & Compliance routes */}
+            <Route path="/resources/standards-compliance" element={<StandardsCompliance />} />
+            <Route path="/resources/standards-compliance/ventilation-airflow" element={<VentilationAirflow />} />
+            <Route path="/resources/standards-compliance/voc-solvent-handling" element={<VOCSolventHandling />} />
+            <Route path="/resources/standards-compliance/grounding-static-control" element={<GroundingStaticControl />} />
+            
+            {/* Glossary routes */}
+            <Route path="/resources/glossary" element={<Glossary />} />
+            <Route path="/resources/glossary/takt-time" element={<TaktTime />} />
+            <Route path="/resources/glossary/overspray" element={<Overspray />} />
+            <Route path="/resources/glossary/transfer-efficiency" element={<TransferEfficiency />} />
+            <Route path="/resources/glossary/film-build" element={<FilmBuild />} />
+            <Route path="/resources/glossary/color-changeover" element={<ColorChangeover />} />
+            <Route path="/resources/glossary/atomization" element={<Atomization />} />
+            <Route path="/resources/glossary/booth-airflow" element={<BoothAirflow />} />
+            <Route path="/resources/glossary/2k-paint" element={<TwoKPaint />} />
+            
+            {/* Tools & Templates routes */}
+            <Route path="/resources/tools-templates" element={<ToolsTemplates />} />
+            <Route path="/resources/tools-templates/paint-cell-rfq-template" element={<PaintCellRFQTemplate />} />
+            <Route path="/resources/tools-templates/site-readiness-checklist" element={<SiteReadinessChecklist />} />
+            <Route path="/resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
