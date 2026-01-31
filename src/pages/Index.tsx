@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import { BenefitDetailModal, BenefitModalContent } from "@/components/home/BenefitDetailModal";
 import heroImage from "@/assets/hero-paint-cell.jpg";
 import { 
   ChevronRight, 
@@ -21,24 +23,53 @@ const benefits = [
     icon: Target,
     title: "Quality Consistency",
     description: "Achieve repeatable, high-quality paint finishes with robotic precision that eliminates human variability.",
-    constraint: "Depends on part geometry and surface preparation.",
+    microLine: "Driven by part presentation and path repeatability.",
+    modalContent: {
+      title: "Quality Consistency",
+      engineeringAnchor: "Repeatability depends on fixturing, path control, and paint stability.",
+      typicalUseCase: "Tight appearance requirements, reduced rework, stable finish across shifts.",
+      keyConstraints: "Part presentation/fixturing, spray distance & angle, edge coverage, paint viscosity/atomization, booth airflow & temperature.",
+      whatWeNeedToAssess: "Part CAD or photos, finish spec (visual vs functional), target film build range, acceptable touch-up level, current defect/rework drivers.",
+    },
   },
   {
     icon: Zap,
     title: "Increased Throughput",
     description: "Maximize production capacity with faster cycle times and continuous operation capabilities.",
-    constraint: "Varies by part complexity and color change frequency.",
+    microLine: "Takt time and changeover define real capacity.",
+    modalContent: {
+      title: "Increased Throughput",
+      engineeringAnchor: "True capacity is limited by takt, changeovers, and handling time.",
+      typicalUseCase: "Increase line output, stabilize cycle time, enable longer unattended operation.",
+      keyConstraints: "Robot path length vs takt time, loading/unloading method, curing/dry time, color change & cleaning time, buffer/conveyor logic.",
+      whatWeNeedToAssess: "Required parts/hour (or takt), shift pattern, batch size & changeover frequency, current bottleneck step, handling/conveyor constraints.",
+    },
   },
   {
     icon: Users,
     title: "Labor Reduction",
     description: "Reduce dependency on skilled manual painters and reallocate workforce to higher-value tasks.",
+    microLine: "Automation boundary determines operator workload.",
+    modalContent: {
+      title: "Labor Reduction",
+      engineeringAnchor: "Labor savings come from a clear automation boundary.",
+      typicalUseCase: "Reduce dependency on skilled painters, shift labor to prep/QA, improve staffing stability.",
+      keyConstraints: "Masking/prep workload, manual touch-up expectations, paint mixing/refill routine, maintenance & daily checks, inspection and rework loop.",
+      whatWeNeedToAssess: "Which tasks must remain manual, acceptable manual touch-up %, paint supply method, operator skill availability, current staffing pain points.",
+    },
   },
   {
     icon: Shield,
     title: "Safety & Compliance",
     description: "Protect workers from hazardous paint fumes and overspray while meeting stringent regulatory requirements.",
-    constraint: "Subject to local ATEX/ventilation codes.",
+    microLine: "Ventilation and site constraints set the baseline.",
+    modalContent: {
+      title: "Safety & Compliance",
+      engineeringAnchor: "Compliance is defined by ventilation, fire risk, and site conditions.",
+      typicalUseCase: "Reduce exposure to fumes/overspray, standardize safety controls, meet plant and local compliance requirements.",
+      keyConstraints: "Booth ventilation & airflow, VOC/solvent handling, grounding & static control, fire suppression, hazardous area classification (if applicable).",
+      whatWeNeedToAssess: "Paint type (liquid), booth/room dimensions, ventilation/exhaust capacity, plant safety standards required (e.g., NFPA/ATEX where relevant), waste handling constraints.",
+    },
   },
 ];
 
@@ -69,10 +100,28 @@ interface Benefit {
   icon: typeof Target;
   title: string;
   description: string;
-  constraint?: string;
+  microLine: string;
+  modalContent: BenefitModalContent;
 }
 
 export default function Index() {
+  const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCardClick = (benefit: Benefit) => {
+    setSelectedBenefit(benefit);
+    setIsModalOpen(true);
+  };
+
+  const handleStartConsultation = () => {
+    setIsModalOpen(false);
+    // Trigger the floating assistant button click
+    const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
+    if (assistantButton) {
+      assistantButton.click();
+    }
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -151,19 +200,26 @@ export default function Index() {
           {benefits.map((benefit: Benefit) => (
             <StaggerItem key={benefit.title}>
               <motion.div
-                className="bg-card rounded-xl p-6 border border-border card-elevated h-full flex flex-col"
+                className="bg-card rounded-xl p-6 border border-border card-elevated h-full flex flex-col cursor-pointer"
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                onClick={() => handleCardClick(benefit)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCardClick(benefit);
+                  }
+                }}
               >
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                   <benefit.icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-foreground">{benefit.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed flex-1">{benefit.description}</p>
-                {benefit.constraint && (
-                  <p className="text-xs text-muted-foreground/60 mt-3 pt-3 border-t border-border italic">
-                    {benefit.constraint}
-                  </p>
-                )}
+                <p className="text-xs text-muted-foreground/60 mt-3 pt-3 border-t border-border italic">
+                  {benefit.microLine}
+                </p>
               </motion.div>
             </StaggerItem>
           ))}
@@ -227,6 +283,14 @@ export default function Index() {
           </Button>
         </FadeIn>
       </Section>
+
+      {/* Benefit Detail Modal */}
+      <BenefitDetailModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        content={selectedBenefit?.modalContent || null}
+        onStartConsultation={handleStartConsultation}
+      />
     </>
   );
 }
