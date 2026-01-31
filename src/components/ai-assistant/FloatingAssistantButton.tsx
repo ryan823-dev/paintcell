@@ -45,6 +45,7 @@ export function FloatingAssistantButton() {
             >
               <Button
                 onClick={() => setIsOpen(true)}
+                data-assistant-trigger
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
                   "bg-accent hover:bg-accent/90",
