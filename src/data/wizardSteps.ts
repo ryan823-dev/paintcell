@@ -3,7 +3,8 @@ import { WizardStep } from "@/types/quote";
 export const wizardSteps: WizardStep[] = [
   {
     title: "Application Context",
-    description: "Help us understand your painting application and project goals.",
+    description: "Defines the scope and objectives for your paint cell project.",
+    helperText: "Helps determine robot reach, booth sizing, and automation complexity.",
     questions: [
       {
         id: "application_material",
@@ -49,7 +50,8 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     title: "Part Characteristics",
-    description: "Tell us about the parts you need to paint.",
+    description: "Defines physical constraints for fixturing and robot motion planning.",
+    helperText: "Part geometry and presentation affect spray path complexity and cycle time.",
     questions: [
       {
         id: "part_size",
@@ -116,7 +118,8 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     title: "Production & Throughput",
-    description: "Help us understand your production requirements.",
+    description: "Establishes takt time targets and cell capacity requirements.",
+    helperText: "Volume and schedule drive booth sizing, robot speed, and color change strategy.",
     questions: [
       {
         id: "production_volume",
@@ -169,7 +172,7 @@ export const wizardSteps: WizardStep[] = [
       },
       {
         id: "production_flow",
-        label: "How will this cell fit into your production flow?",
+        label: "How will this paint cell fit into your production flow?",
         type: "radio",
         required: true,
         options: [
@@ -183,7 +186,8 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     title: "Automation Boundary",
-    description: "Define the level of automation you need.",
+    description: "Defines integration scope between manual and automated operations.",
+    helperText: "Loading method and operator role affect cell layout and safety design.",
     questions: [
       {
         id: "automation_level",
@@ -250,7 +254,8 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     title: "Compliance & Site Conditions",
-    description: "Tell us about your site and compliance requirements.",
+    description: "Identifies regulatory requirements and site integration constraints.",
+    helperText: "Booth ventilation, ATEX zones, and paint chemistry affect equipment selection.",
     questions: [
       {
         id: "compliance_requirements",
@@ -273,7 +278,7 @@ export const wizardSteps: WizardStep[] = [
         required: true,
         options: [
           { value: "existing_booth", label: "Existing Spray Booth" },
-          { value: "standalone_cell", label: "Standalone Cell (New)" },
+          { value: "standalone_cell", label: "Standalone Paint Cell (New)" },
           { value: "integrated_line", label: "Integrated Production Line" },
           { value: "brownfield_retrofit", label: "Brownfield Retrofit" },
         ],
@@ -306,14 +311,13 @@ export const wizardSteps: WizardStep[] = [
       },
       {
         id: "paint_type",
-        label: "What type of paint will be used? (Select all that apply)",
+        label: "What type of liquid paint will be sprayed? (Select all that apply)",
         type: "checkbox",
         required: true,
         minSelections: 1,
         options: [
           { value: "solvent_based", label: "Solvent-Based Paint" },
           { value: "water_based", label: "Water-Based Paint" },
-          { value: "powder_paint", label: "Powder Paint" },
           { value: "uv_curable", label: "UV Curable Paint" },
           { value: "multiple_types", label: "Multiple Types" },
           { value: "not_sure", label: "Not Sure" },
@@ -323,7 +327,8 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     title: "Project Readiness",
-    description: "Help us understand your timeline and decision process.",
+    description: "Helps us align engineering resources with your timeline and stakeholders.",
+    helperText: "Timeline and decision structure guide the proposal and review process.",
     questions: [
       {
         id: "project_timeline",

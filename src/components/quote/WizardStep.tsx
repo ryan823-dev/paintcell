@@ -25,6 +25,9 @@ export function WizardStep({ step, formData, updateFormData }: WizardStepProps) 
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground mb-2">{step.title}</h2>
         <p className="text-muted-foreground">{step.description}</p>
+        {step.helperText && (
+          <p className="text-sm text-muted-foreground/70 mt-2 italic">{step.helperText}</p>
+        )}
       </div>
 
       <div className="space-y-8">

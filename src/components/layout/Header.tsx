@@ -52,7 +52,7 @@ export function Header() {
         <div className="hidden md:flex md:items-center md:gap-4">
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
             <Link to="/quote" className="flex items-center gap-2">
-              Configure Your Workstation
+              Configure Paint Cell
               <ChevronRight className="h-4 w-4" />
             </Link>
           </Button>
@@ -89,7 +89,7 @@ export function Header() {
             <div className="pt-4 border-t border-border">
               <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
                 <Link to="/quote" onClick={() => setMobileMenuOpen(false)}>
-                  Configure Your Workstation
+                  Configure Paint Cell
                 </Link>
               </Button>
             </div>

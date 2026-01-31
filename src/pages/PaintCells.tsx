@@ -249,7 +249,7 @@ export default function PaintCells() {
             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-transform hover:scale-105"
           >
             <Link to="/quote" className="flex items-center gap-2">
-              Start Configuration
+              Start Assessment
               <ChevronRight className="h-5 w-5" />
             </Link>
           </Button>

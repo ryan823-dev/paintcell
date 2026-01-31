@@ -10,11 +10,10 @@ export default function Quote() {
         <div className="container-wide relative py-12 md:py-16">
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Configure Your Workstation
+              Paint Cell Pre-Engineering Assessment
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Answer a few questions about your coating requirements. 
-              Our engineering team will use this information to prepare a tailored proposal.
+              A structured feasibility and readiness check for robotic spray painting (not a pricing tool).
             </p>
           </div>
         </div>

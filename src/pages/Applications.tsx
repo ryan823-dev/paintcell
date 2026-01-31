@@ -165,7 +165,7 @@ export default function Applications() {
           </p>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground transition-transform hover:scale-105">
             <Link to="/quote" className="flex items-center gap-2">
-              Configure Your Workstation
+              Configure Paint Cell
               <ChevronRight className="h-4 w-4" />
             </Link>
           </Button>
