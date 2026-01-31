@@ -87,8 +87,8 @@ export function QuoteWizard() {
 
   const stepTitles = [
     ...wizardSteps.map((s) => s.title),
-    "Review Summary",
-    "Contact Information",
+    "Engineering Review",
+    "Contact",
   ];
 
   return (

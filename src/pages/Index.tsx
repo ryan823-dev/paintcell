@@ -21,11 +21,13 @@ const benefits = [
     icon: Target,
     title: "Quality Consistency",
     description: "Achieve repeatable, high-quality paint finishes with robotic precision that eliminates human variability.",
+    constraint: "Depends on part geometry and surface preparation.",
   },
   {
     icon: Zap,
     title: "Increased Throughput",
     description: "Maximize production capacity with faster cycle times and continuous operation capabilities.",
+    constraint: "Varies by part complexity and color change frequency.",
   },
   {
     icon: Users,
@@ -36,6 +38,7 @@ const benefits = [
     icon: Shield,
     title: "Safety & Compliance",
     description: "Protect workers from hazardous paint fumes and overspray while meeting stringent regulatory requirements.",
+    constraint: "Subject to local ATEX/ventilation codes.",
   },
 ];
 
@@ -61,6 +64,13 @@ const systemComponents = [
     description: "Advanced HMI and recipe management for consistent paint parameters and traceability.",
   },
 ];
+
+interface Benefit {
+  icon: typeof Target;
+  title: string;
+  description: string;
+  constraint?: string;
+}
 
 export default function Index() {
   return (
@@ -110,7 +120,7 @@ export default function Index() {
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg h-14 px-8 transition-transform hover:scale-105"
               >
                 <Link to="/quote" className="flex items-center gap-2">
-                  Configure Your Workstation
+                  Configure Paint Cell
                   <ChevronRight className="h-5 w-5" />
                 </Link>
               </Button>
@@ -138,17 +148,22 @@ export default function Index() {
           />
         </FadeIn>
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {benefits.map((benefit) => (
+          {benefits.map((benefit: Benefit) => (
             <StaggerItem key={benefit.title}>
               <motion.div
-                className="bg-card rounded-xl p-6 border border-border card-elevated h-full"
+                className="bg-card rounded-xl p-6 border border-border card-elevated h-full flex flex-col"
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                   <benefit.icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2 text-foreground">{benefit.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed flex-1">{benefit.description}</p>
+                {benefit.constraint && (
+                  <p className="text-xs text-muted-foreground/60 mt-3 pt-3 border-t border-border italic">
+                    {benefit.constraint}
+                  </p>
+                )}
               </motion.div>
             </StaggerItem>
           ))}
@@ -206,7 +221,7 @@ export default function Index() {
             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold text-lg h-14 px-8 transition-transform hover:scale-105"
           >
             <Link to="/quote" className="flex items-center gap-2">
-              Start Configuration
+              Start Assessment
               <ChevronRight className="h-5 w-5" />
             </Link>
           </Button>

@@ -2,7 +2,7 @@ import { QuoteFormData } from "@/types/quote";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { User, Mail, Phone, Building2, Briefcase } from "lucide-react";
+import { User, Mail, Phone, Building2, Briefcase, ArrowRight, MessageSquare, CheckCircle2 } from "lucide-react";
 
 interface ContactFormProps {
   formData: QuoteFormData;
@@ -15,7 +15,7 @@ export function ContactForm({ formData, updateFormData }: ContactFormProps) {
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground mb-2">Contact Information</h2>
         <p className="text-muted-foreground">
-          Complete your request by providing your contact details. We'll reach out to discuss your project.
+          Complete your assessment by providing your contact details. We'll reach out to discuss your Paint Cell project.
         </p>
       </div>
 
@@ -105,6 +105,24 @@ export function ContactForm({ formData, updateFormData }: ContactFormProps) {
             placeholder="Any additional information about your project..."
             rows={4}
           />
+        </div>
+
+        {/* What happens next */}
+        <div className="mt-4 p-4 bg-muted/50 rounded-lg border border-border">
+          <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+            <ArrowRight className="h-4 w-4 text-primary" />
+            What happens next
+          </h3>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+              <span>Reviewed by human automation engineers</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <MessageSquare className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+              <span>We follow up with clarification questions if needed</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

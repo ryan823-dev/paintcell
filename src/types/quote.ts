@@ -100,6 +100,7 @@ export interface Question {
 export interface WizardStep {
   title: string;
   description: string;
+  helperText?: string;
   questions: Question[];
 }
 
@@ -236,10 +237,9 @@ export const optionLabels: Record<string, string> = {
   exhaust_ventilation: "Exhaust / Ventilation",
   to_be_provided: "To Be Provided",
 
-  // Paint Type
+  // Paint Type (spray painting only - no powder)
   solvent_based: "Solvent-Based Paint",
   water_based: "Water-Based Paint",
-  powder_paint: "Powder Paint",
   uv_curable: "UV Curable Paint",
   multiple_types: "Multiple Types",
 

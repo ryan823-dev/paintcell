@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, ClipboardCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface WizardProgressProps {
@@ -13,14 +13,15 @@ export function WizardProgress({ currentStep, totalSteps, stepTitles }: WizardPr
       {/* Step indicator for mobile */}
       <div className="md:hidden mb-4">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-foreground">
-            Step {currentStep + 1} of {totalSteps}
+          <span className="font-semibold text-foreground flex items-center gap-2">
+            <ClipboardCheck className="h-4 w-4 text-primary" />
+            Phase {currentStep + 1} of {totalSteps}
           </span>
-          <span className="text-muted-foreground">{stepTitles[currentStep]}</span>
+          <span className="text-muted-foreground text-xs">{stepTitles[currentStep]}</span>
         </div>
-        <div className="mt-2 h-2 bg-muted rounded-full overflow-hidden">
+        <div className="mt-3 h-2.5 bg-muted rounded-full overflow-hidden border border-border">
           <div
-            className="h-full bg-primary transition-all duration-300"
+            className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300"
             style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
           />
         </div>
@@ -47,13 +48,13 @@ export function WizardProgress({ currentStep, totalSteps, stepTitles }: WizardPr
                   {isCompleted ? (
                     <Check className="h-5 w-5" />
                   ) : (
-                    <span className="leading-none">{index + 1}</span>
+                    <span className="leading-none font-semibold">{index + 1}</span>
                   )}
                 </div>
                 <span
                   className={cn(
                     "mt-2 text-xs font-medium text-center max-w-[80px]",
-                    isCurrent ? "text-foreground" : "text-muted-foreground"
+                    isCurrent ? "text-foreground font-semibold" : "text-muted-foreground"
                   )}
                 >
                   {title}

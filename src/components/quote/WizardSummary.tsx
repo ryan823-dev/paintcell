@@ -21,9 +21,9 @@ export function WizardSummary({ formData }: WizardSummaryProps) {
           <FileText className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-foreground mb-2">Review Your Configuration</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-2">Preliminary Engineering Review</h2>
           <p className="text-muted-foreground">
-            Please review your selections before proceeding. You can go back to make changes if needed.
+            Review your Paint Cell configuration below. This summary will be evaluated by our engineering team. You can go back to make changes if needed.
           </p>
         </div>
       </div>

@@ -10,11 +10,11 @@ export function SubmissionSuccess() {
       </div>
 
       <h2 className="text-3xl font-bold text-foreground mb-4">
-        Request Submitted Successfully
+        Assessment Submitted Successfully
       </h2>
 
       <p className="text-lg text-muted-foreground mb-8">
-        Thank you for your interest in our robotic spray coating solutions. 
+        Thank you for your interest in our robotic spray painting solutions.
         Our engineering team will review your requirements and contact you within 1-2 business days 
         to discuss your project in detail.
       </p>
