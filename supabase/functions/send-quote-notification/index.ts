@@ -1,6 +1,9 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -39,32 +42,38 @@ interface QuoteSubmission {
   contact_email: string;
   contact_company: string;
   contact_phone?: string;
+  contact_role?: string;
+  contact_message?: string;
   
   // Form data
-  application_industry: string;
-  paint_type: string[];
-  substrate_material: string[];
-  part_geometry: string;
-  part_dimensions: string;
-  throughput_requirement: string;
-  batch_size: string;
-  production_type: string;
-  upstream_integration: string;
-  downstream_integration: string;
-  material_handling: string;
-  robot_loading: string;
-  color_change_frequency: string;
-  automation_level: string;
-  industry_standards: string[];
-  hazardous_environment: string;
-  floor_space: string;
-  ceiling_height: string;
-  power_availability: string;
-  utility_access: string;
-  project_timeline: string;
-  budget_range: string;
-  decision_stage: string;
+  application_industry?: string;
+  paint_type?: string[];
+  substrate_material?: string[];
+  part_geometry?: string;
+  part_dimensions?: string;
+  throughput_requirement?: string;
+  batch_size?: string;
+  production_type?: string;
+  upstream_integration?: string;
+  downstream_integration?: string;
+  material_handling?: string;
+  robot_loading?: string;
+  color_change_frequency?: string;
+  automation_level?: string;
+  industry_standards?: string[];
+  hazardous_environment?: string;
+  floor_space?: string;
+  ceiling_height?: string;
+  power_availability?: string;
+  utility_access?: string;
+  project_timeline?: string;
+  budget_range?: string;
+  decision_stage?: string;
   additional_requirements?: string;
+  
+  // Source tracking
+  source?: string; // 'wizard' or 'chat'
+  conversation_id?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -74,9 +83,17 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Validate API key is configured
+    // Validate API keys are configured
     if (!RESEND_API_KEY) {
       console.error("Missing RESEND_API_KEY configuration");
+      return new Response(
+        JSON.stringify({ error: "Service configuration error. Please contact support." }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      console.error("Missing Supabase configuration");
       return new Response(
         JSON.stringify({ error: "Service configuration error. Please contact support." }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -102,6 +119,45 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Create Supabase client with service role key (bypasses RLS)
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // Build requirements summary from form data
+    const requirementsParts: string[] = [];
+    if (data.application_industry) requirementsParts.push(`Industry: ${data.application_industry}`);
+    if (data.paint_type?.length) requirementsParts.push(`Paint: ${data.paint_type.join(", ")}`);
+    if (data.throughput_requirement) requirementsParts.push(`Throughput: ${data.throughput_requirement}`);
+    if (data.project_timeline) requirementsParts.push(`Timeline: ${data.project_timeline}`);
+    if (data.budget_range) requirementsParts.push(`Budget: ${data.budget_range}`);
+    
+    const requirementsSummary = requirementsParts.length > 0 
+      ? requirementsParts.join(" | ")
+      : data.contact_message || null;
+
+    // Insert lead into database using service role
+    const { data: insertedLead, error: insertError } = await supabase
+      .from("leads")
+      .insert({
+        name: data.contact_name,
+        email: data.contact_email,
+        company: data.contact_company,
+        phone: data.contact_phone || null,
+        source: data.source || "wizard",
+        conversation_id: data.conversation_id || null,
+        requirements_summary: requirementsSummary,
+        raw_payload: data,
+        status: "new",
+      })
+      .select("id")
+      .single();
+
+    if (insertError) {
+      console.error("Database insert error:", insertError.message);
+      // Continue with email even if DB insert fails - don't lose the lead
+    } else {
+      console.log("Lead saved to database:", insertedLead?.id);
+    }
+
     // Format the email content
     // All user-submitted data is HTML-escaped to prevent XSS attacks
     const emailHtml = `
@@ -113,8 +169,15 @@ const handler = async (req: Request): Promise<Response> => {
         <li><strong>Email:</strong> ${escapeHtml(data.contact_email)}</li>
         <li><strong>Company:</strong> ${escapeHtml(data.contact_company)}</li>
         <li><strong>Phone:</strong> ${escapeHtml(data.contact_phone) || "Not provided"}</li>
+        ${data.contact_role ? `<li><strong>Role:</strong> ${escapeHtml(data.contact_role)}</li>` : ""}
       </ul>
 
+      ${data.contact_message ? `
+      <h2>Message</h2>
+      <p>${escapeHtml(data.contact_message).replace(/\n/g, "<br>")}</p>
+      ` : ""}
+
+      ${data.application_industry ? `
       <h2>Application Context</h2>
       <ul>
         <li><strong>Industry:</strong> ${escapeHtml(data.application_industry)}</li>
@@ -162,6 +225,10 @@ const handler = async (req: Request): Promise<Response> => {
         <li><strong>Decision Stage:</strong> ${escapeHtml(data.decision_stage)}</li>
         <li><strong>Additional Requirements:</strong> ${escapeHtml(data.additional_requirements) || "None"}</li>
       </ul>
+      ` : ""}
+
+      <hr>
+      <p><small>Source: ${escapeHtml(data.source || "wizard")} | Lead ID: ${insertedLead?.id || "N/A"}</small></p>
     `;
 
     // Send email notification using Resend API directly
@@ -173,8 +240,9 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "PaintCell Quotes <onboarding@resend.dev>",
-        to: [data.contact_email],
-        subject: `Quote Request Received - ${data.contact_company}`,
+        to: ["engineering@tdpaintcell.com"],
+        reply_to: data.contact_email,
+        subject: `[${escapeHtml(data.source || "Quote")}] New Lead: ${escapeHtml(data.contact_company)}`,
         html: emailHtml,
       }),
     });
@@ -184,19 +252,36 @@ const handler = async (req: Request): Promise<Response> => {
     if (!emailResponse.ok) {
       // Log detailed error server-side only
       console.error("Email service error:", result);
+      
+      // Update lead status if we have one
+      if (insertedLead?.id) {
+        await supabase
+          .from("leads")
+          .update({ status: "email_failed" })
+          .eq("id", insertedLead.id);
+      }
+      
       return new Response(
         JSON.stringify({ error: "Unable to send email notification. Please try again later." }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    console.log("Email sent successfully");
+    console.log("Email sent successfully to engineering@tdpaintcell.com");
 
-    return new Response(JSON.stringify({ success: true }), {
+    // Update lead with email sent timestamp
+    if (insertedLead?.id) {
+      await supabase
+        .from("leads")
+        .update({ last_emailed_at: new Date().toISOString() })
+        .eq("id", insertedLead.id);
+    }
+
+    return new Response(JSON.stringify({ success: true, leadId: insertedLead?.id }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Log detailed error server-side only
     console.error("Error in send-quote-notification:", error instanceof Error ? error.message : "Unknown error");
     return new Response(
