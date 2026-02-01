@@ -15,6 +15,9 @@ const footerLinks = {
   company: [
     { name: "About", href: "/about" },
     { name: "Contact", href: "/quote" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms of Use", href: "/terms" },
+    { name: "Cookie Policy", href: "/cookies" },
   ],
 };
 
@@ -24,17 +27,30 @@ export function Footer() {
       <div className="container-wide py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 flex flex-col">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground">
                 <span className="text-lg font-bold text-primary">P</span>
               </div>
-              <span className="text-xl font-semibold">PaintCell</span>
+              <span className="text-xl font-semibold">TDPaintCell</span>
             </Link>
-            <p className="text-primary-foreground/70 max-w-md text-sm leading-relaxed">
+            <p className="text-primary-foreground/70 max-w-md text-sm leading-relaxed mb-5">
               Professional robotic spray painting workstations engineered for quality, 
               throughput, and operational excellence. Transform your paint operations 
               with industrial automation.
+            </p>
+            
+            {/* Contact & Trust */}
+            <div className="text-primary-foreground/60 text-xs leading-relaxed space-y-1 mb-5">
+              <p>Email: engineering@tdpaintcell.com</p>
+              <p>Response: Engineering review within 1–2 business days.</p>
+              <p>Hours: Mon–Fri, GMT+8</p>
+              <p>Engineering-led project assessment (not instant pricing).</p>
+            </div>
+            
+            {/* Location */}
+            <p className="text-primary-foreground/50 text-xs mt-auto">
+              Location: Shanghai, China
             </p>
           </div>
 
@@ -92,7 +108,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-primary-foreground/10">
           <p className="text-sm text-primary-foreground/50 text-center">
-            © {new Date().getFullYear()} PaintCell. All rights reserved.
+            © 2026 TDPaintCell. All rights reserved.
           </p>
         </div>
       </div>
