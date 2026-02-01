@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import tdLogo from "@/assets/td-logo.png";
 const footerLinks = {
   solutions: [{
     name: "Paint Cells",
@@ -46,10 +47,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="md:col-span-2 flex flex-col">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-foreground">
-                <span className="text-lg font-bold text-primary">P</span>
-              </div>
+            <Link to="/" className="flex items-center gap-2.5 mb-4">
+              <img 
+                src={tdLogo} 
+                alt="TDPaintCell Logo" 
+                className="h-10 w-10 rounded-lg object-cover"
+              />
               <span className="text-xl font-semibold">PaintCell</span>
             </Link>
             <p className="text-primary-foreground/70 max-w-md text-sm leading-relaxed mb-5">
