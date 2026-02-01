@@ -236,7 +236,7 @@ export default function PaintCells() {
       {/* CTA */}
       <Section variant="primary">
         <FadeIn className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary-foreground">
             Ready to Configure Your Solution?
           </h2>
           <p className="text-primary-foreground/80 mb-6">
