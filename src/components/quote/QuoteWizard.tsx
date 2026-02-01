@@ -50,9 +50,12 @@ export function QuoteWizard() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Send email notification via edge function
+      // Submit lead via edge function (handles DB insert + email notification)
       const { error } = await supabase.functions.invoke('send-quote-notification', {
-        body: formData
+        body: {
+          ...formData,
+          source: 'wizard'
+        }
       });
 
       if (error) {

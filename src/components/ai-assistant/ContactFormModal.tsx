@@ -59,15 +59,19 @@ export function ContactFormModal({
         contact_role: contact.role,
         contact_phone: "", // Not collected in AI flow
         contact_message: `[AI Assistant Inquiry]\n\n--- Summary ---\n${summary}\n\n--- Chat Transcript ---\n${transcriptText}`,
+        source: 'chat', // Mark as chat source for lead tracking
       };
 
-      // Send via edge function (same as quote wizard)
+      // Submit lead via edge function (handles DB insert + email notification)
       const { error } = await supabase.functions.invoke('send-quote-notification', {
         body: submissionData
       });
 
       if (error) {
-        console.error("Submission error:", error);
+        // Log only in development
+        if (import.meta.env.DEV) {
+          console.error("Submission error:", error);
+        }
         toast.error("Failed to submit inquiry. Please try again.");
         return;
       }
@@ -75,7 +79,10 @@ export function ContactFormModal({
       toast.success("Inquiry submitted successfully! Our team will be in touch.");
       onSuccess();
     } catch (error) {
-      console.error("Submit error:", error);
+      // Log only in development
+      if (import.meta.env.DEV) {
+        console.error("Submit error:", error);
+      }
       toast.error("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
