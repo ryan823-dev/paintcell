@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import tdLogo from "@/assets/td-logo.png";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -38,10 +39,12 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <nav className="container-wide flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">P</span>
-          </div>
+        <Link to="/" className="flex items-center gap-2.5">
+          <img 
+            src={tdLogo} 
+            alt="TDPaintCell Logo" 
+            className="h-10 w-10 rounded-lg object-cover"
+          />
           <span className="text-xl font-semibold text-foreground">PaintCell</span>
         </Link>
 
