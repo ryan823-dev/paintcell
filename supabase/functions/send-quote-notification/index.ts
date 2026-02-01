@@ -8,6 +8,31 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+/**
+ * Escapes HTML special characters to prevent XSS attacks in email content.
+ * User-submitted data must be escaped before embedding in HTML templates.
+ */
+function escapeHtml(text: string | undefined): string {
+  if (!text) return "";
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
+ * Escapes an array of strings for safe HTML embedding.
+ */
+function escapeHtmlArray(arr: string[] | string | undefined): string {
+  if (!arr) return "";
+  if (Array.isArray(arr)) {
+    return arr.map(escapeHtml).join(", ");
+  }
+  return escapeHtml(arr);
+}
+
 interface QuoteSubmission {
   // Contact info
   contact_name: string;
@@ -78,63 +103,64 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Format the email content
+    // All user-submitted data is HTML-escaped to prevent XSS attacks
     const emailHtml = `
-      <h1>New Quote Request from ${data.contact_name}</h1>
+      <h1>New Quote Request from ${escapeHtml(data.contact_name)}</h1>
       
       <h2>Contact Information</h2>
       <ul>
-        <li><strong>Name:</strong> ${data.contact_name}</li>
-        <li><strong>Email:</strong> ${data.contact_email}</li>
-        <li><strong>Company:</strong> ${data.contact_company}</li>
-        <li><strong>Phone:</strong> ${data.contact_phone || "Not provided"}</li>
+        <li><strong>Name:</strong> ${escapeHtml(data.contact_name)}</li>
+        <li><strong>Email:</strong> ${escapeHtml(data.contact_email)}</li>
+        <li><strong>Company:</strong> ${escapeHtml(data.contact_company)}</li>
+        <li><strong>Phone:</strong> ${escapeHtml(data.contact_phone) || "Not provided"}</li>
       </ul>
 
       <h2>Application Context</h2>
       <ul>
-        <li><strong>Industry:</strong> ${data.application_industry}</li>
-        <li><strong>Paint Types:</strong> ${Array.isArray(data.paint_type) ? data.paint_type.join(", ") : data.paint_type}</li>
-        <li><strong>Substrate Materials:</strong> ${Array.isArray(data.substrate_material) ? data.substrate_material.join(", ") : data.substrate_material}</li>
+        <li><strong>Industry:</strong> ${escapeHtml(data.application_industry)}</li>
+        <li><strong>Paint Types:</strong> ${escapeHtmlArray(data.paint_type)}</li>
+        <li><strong>Substrate Materials:</strong> ${escapeHtmlArray(data.substrate_material)}</li>
       </ul>
 
       <h2>Part Characteristics</h2>
       <ul>
-        <li><strong>Part Geometry:</strong> ${data.part_geometry}</li>
-        <li><strong>Part Dimensions:</strong> ${data.part_dimensions}</li>
+        <li><strong>Part Geometry:</strong> ${escapeHtml(data.part_geometry)}</li>
+        <li><strong>Part Dimensions:</strong> ${escapeHtml(data.part_dimensions)}</li>
       </ul>
 
       <h2>Production & Throughput</h2>
       <ul>
-        <li><strong>Throughput Requirement:</strong> ${data.throughput_requirement}</li>
-        <li><strong>Batch Size:</strong> ${data.batch_size}</li>
-        <li><strong>Production Type:</strong> ${data.production_type}</li>
+        <li><strong>Throughput Requirement:</strong> ${escapeHtml(data.throughput_requirement)}</li>
+        <li><strong>Batch Size:</strong> ${escapeHtml(data.batch_size)}</li>
+        <li><strong>Production Type:</strong> ${escapeHtml(data.production_type)}</li>
       </ul>
 
       <h2>Automation Boundary</h2>
       <ul>
-        <li><strong>Upstream Integration:</strong> ${data.upstream_integration}</li>
-        <li><strong>Downstream Integration:</strong> ${data.downstream_integration}</li>
-        <li><strong>Material Handling:</strong> ${data.material_handling}</li>
-        <li><strong>Robot Loading:</strong> ${data.robot_loading}</li>
-        <li><strong>Color Change Frequency:</strong> ${data.color_change_frequency}</li>
-        <li><strong>Automation Level:</strong> ${data.automation_level}</li>
+        <li><strong>Upstream Integration:</strong> ${escapeHtml(data.upstream_integration)}</li>
+        <li><strong>Downstream Integration:</strong> ${escapeHtml(data.downstream_integration)}</li>
+        <li><strong>Material Handling:</strong> ${escapeHtml(data.material_handling)}</li>
+        <li><strong>Robot Loading:</strong> ${escapeHtml(data.robot_loading)}</li>
+        <li><strong>Color Change Frequency:</strong> ${escapeHtml(data.color_change_frequency)}</li>
+        <li><strong>Automation Level:</strong> ${escapeHtml(data.automation_level)}</li>
       </ul>
 
       <h2>Compliance & Site</h2>
       <ul>
-        <li><strong>Industry Standards:</strong> ${Array.isArray(data.industry_standards) ? data.industry_standards.join(", ") : data.industry_standards}</li>
-        <li><strong>Hazardous Environment:</strong> ${data.hazardous_environment}</li>
-        <li><strong>Floor Space:</strong> ${data.floor_space}</li>
-        <li><strong>Ceiling Height:</strong> ${data.ceiling_height}</li>
-        <li><strong>Power Availability:</strong> ${data.power_availability}</li>
-        <li><strong>Utility Access:</strong> ${data.utility_access}</li>
+        <li><strong>Industry Standards:</strong> ${escapeHtmlArray(data.industry_standards)}</li>
+        <li><strong>Hazardous Environment:</strong> ${escapeHtml(data.hazardous_environment)}</li>
+        <li><strong>Floor Space:</strong> ${escapeHtml(data.floor_space)}</li>
+        <li><strong>Ceiling Height:</strong> ${escapeHtml(data.ceiling_height)}</li>
+        <li><strong>Power Availability:</strong> ${escapeHtml(data.power_availability)}</li>
+        <li><strong>Utility Access:</strong> ${escapeHtml(data.utility_access)}</li>
       </ul>
 
       <h2>Project Readiness</h2>
       <ul>
-        <li><strong>Project Timeline:</strong> ${data.project_timeline}</li>
-        <li><strong>Budget Range:</strong> ${data.budget_range}</li>
-        <li><strong>Decision Stage:</strong> ${data.decision_stage}</li>
-        <li><strong>Additional Requirements:</strong> ${data.additional_requirements || "None"}</li>
+        <li><strong>Project Timeline:</strong> ${escapeHtml(data.project_timeline)}</li>
+        <li><strong>Budget Range:</strong> ${escapeHtml(data.budget_range)}</li>
+        <li><strong>Decision Stage:</strong> ${escapeHtml(data.decision_stage)}</li>
+        <li><strong>Additional Requirements:</strong> ${escapeHtml(data.additional_requirements) || "None"}</li>
       </ul>
     `;
 
