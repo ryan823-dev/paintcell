@@ -58,6 +58,13 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      textColor: {
+        "heading": "hsl(var(--text-primary))",
+        "body": "hsl(var(--text-body))",
+        "helper": "hsl(var(--text-muted))",
+        "inverse": "hsl(var(--text-inverse))",
+        "inverse-muted": "hsl(var(--text-inverse-muted))",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
