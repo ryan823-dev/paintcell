@@ -62,11 +62,11 @@ export function Footer() {
             </p>
             
             {/* Contact & Trust */}
-            <div className="text-primary-foreground/60 text-xs leading-relaxed space-y-1 mb-5">
-              <p>Email: engineering@tdpaintcell.com</p>
-              <p>Response: Engineering review within 1–2 business days.</p>
-              <p>Hours: Mon–Fri, GMT+8</p>
-              <p>Engineering-led project assessment (not instant pricing).</p>
+            <div className="text-xs leading-relaxed space-y-1 mb-5">
+              <p className="text-primary-foreground/60">Email: engineering@tdpaintcell.com</p>
+              <p className="text-primary-foreground/60">Response: Engineering review within 1–2 business days.</p>
+              <p className="text-primary-foreground/60">Hours: Mon–Fri, GMT+8</p>
+              <p className="text-primary-foreground/60">Engineering-led project assessment (not instant pricing).</p>
             </div>
             
             {/* Location */}
