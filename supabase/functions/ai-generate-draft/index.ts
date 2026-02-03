@@ -16,44 +16,46 @@ serve(async (req) => {
   }
 
   try {
-    // Get auth header
+    // JWT is automatically verified by Supabase (verify_jwt = true in config.toml)
+    // Get the Authorization header to extract user info
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: "Missing authorization header" }),
-        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // Initialize Supabase client
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    
-    // Create a client with the user's JWT to verify auth
-    const supabaseUser = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-
-    // Verify user is authenticated
-    const { data: { user }, error: authError } = await supabaseUser.auth.getUser();
-    if (authError || !user) {
-      console.error("Auth error:", authError?.message);
+      // This shouldn't happen with verify_jwt=true, but handle gracefully
       return new Response(
         JSON.stringify({ error: "Unauthorized" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Create service role client for admin operations
+    // Initialize Supabase clients
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    
+    // Create a client with the verified JWT to get user info
+    const supabaseUser = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+
+    // Get user from the verified JWT context
+    const { data: { user }, error: userError } = await supabaseUser.auth.getUser();
+    if (userError || !user) {
+      console.error("Failed to get user from verified JWT:", userError?.message);
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Create service role client for admin operations (role check)
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if user is admin or editor
+    // Authorization: Check if user has admin or editor role
     const { data: roleCheck, error: roleError } = await supabaseAdmin
       .rpc("is_admin_or_editor", { _user_id: user.id });
     
     if (roleError || !roleCheck) {
-      console.error("Role check failed:", roleError?.message);
+      console.error("Authorization failed - user lacks admin/editor role:", user.id);
       return new Response(
         JSON.stringify({ error: "Forbidden: Admin or editor role required" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
