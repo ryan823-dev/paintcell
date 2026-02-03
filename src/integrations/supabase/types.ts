@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      case_studies: {
+        Row: {
+          answer_box: string | null
+          constraints: string[] | null
+          created_at: string
+          goals: string | null
+          id: string
+          images: string[] | null
+          industry: string | null
+          last_ai_generation_at: string | null
+          meta_description: string | null
+          meta_title: string | null
+          paint_type: string | null
+          part_type: string | null
+          published_at: string | null
+          slug: string
+          solution_scope: string[] | null
+          status: Database["public"]["Enums"]["content_status"]
+          summary: string | null
+          title: string
+          updated_at: string
+          validation_acceptance: string[] | null
+        }
+        Insert: {
+          answer_box?: string | null
+          constraints?: string[] | null
+          created_at?: string
+          goals?: string | null
+          id?: string
+          images?: string[] | null
+          industry?: string | null
+          last_ai_generation_at?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          paint_type?: string | null
+          part_type?: string | null
+          published_at?: string | null
+          slug: string
+          solution_scope?: string[] | null
+          status?: Database["public"]["Enums"]["content_status"]
+          summary?: string | null
+          title: string
+          updated_at?: string
+          validation_acceptance?: string[] | null
+        }
+        Update: {
+          answer_box?: string | null
+          constraints?: string[] | null
+          created_at?: string
+          goals?: string | null
+          id?: string
+          images?: string[] | null
+          industry?: string | null
+          last_ai_generation_at?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          paint_type?: string | null
+          part_type?: string | null
+          published_at?: string | null
+          slug?: string
+          solution_scope?: string[] | null
+          status?: Database["public"]["Enums"]["content_status"]
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          validation_acceptance?: string[] | null
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string
@@ -79,6 +148,39 @@ export type Database = {
         }
         Relationships: []
       }
+      home_content: {
+        Row: {
+          created_at: string
+          cta_configure_hint: string
+          cta_consult_hint: string
+          hero_audience_line: string
+          hero_subtitle: string
+          hero_title: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          cta_configure_hint?: string
+          cta_consult_hint?: string
+          hero_audience_line?: string
+          hero_subtitle?: string
+          hero_title?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          cta_configure_hint?: string
+          cta_consult_hint?: string
+          hero_audience_line?: string
+          hero_subtitle?: string
+          hero_title?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           company: string | null
@@ -132,15 +234,159 @@ export type Database = {
           },
         ]
       }
+      legal_pages: {
+        Row: {
+          cookie_policy: string | null
+          id: string
+          privacy_policy: string | null
+          terms_of_use: string | null
+          updated_at: string
+        }
+        Insert: {
+          cookie_policy?: string | null
+          id?: string
+          privacy_policy?: string | null
+          terms_of_use?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cookie_policy?: string | null
+          id?: string
+          privacy_policy?: string | null
+          terms_of_use?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      resources_posts: {
+        Row: {
+          answer_box: string | null
+          body: string | null
+          category: Database["public"]["Enums"]["resource_category"] | null
+          created_at: string
+          id: string
+          last_ai_generation_at: string | null
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          slug: string
+          status: Database["public"]["Enums"]["content_status"]
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          answer_box?: string | null
+          body?: string | null
+          category?: Database["public"]["Enums"]["resource_category"] | null
+          created_at?: string
+          id?: string
+          last_ai_generation_at?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["content_status"]
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          answer_box?: string | null
+          body?: string | null
+          category?: Database["public"]["Enums"]["resource_category"] | null
+          created_at?: string
+          id?: string
+          last_ai_generation_at?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["content_status"]
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      why_cards: {
+        Row: {
+          card_gray_line: string
+          created_at: string
+          id: string
+          modal_engineering_anchor: string | null
+          modal_key_constraints: string[] | null
+          modal_typical_use_case: string | null
+          modal_what_we_need_to_assess: string[] | null
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          card_gray_line: string
+          created_at?: string
+          id?: string
+          modal_engineering_anchor?: string | null
+          modal_key_constraints?: string[] | null
+          modal_typical_use_case?: string | null
+          modal_what_we_need_to_assess?: string[] | null
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          card_gray_line?: string
+          created_at?: string
+          id?: string
+          modal_engineering_anchor?: string | null
+          modal_key_constraints?: string[] | null
+          modal_typical_use_case?: string | null
+          modal_what_we_need_to_assess?: string[] | null
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin_or_editor: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "editor"
+      content_status: "draft" | "review" | "published"
+      resource_category: "learning-center" | "tools-templates" | "glossary"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -267,6 +513,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "editor"],
+      content_status: ["draft", "review", "published"],
+      resource_category: ["learning-center", "tools-templates", "glossary"],
+    },
   },
 } as const
