@@ -53,7 +53,7 @@ export function Footer() {
                 alt="TDPaintCell Logo" 
                 className="h-10 w-10 rounded-lg object-cover"
               />
-              <span className="text-xl font-semibold">PaintCell</span>
+              <span className="text-xl font-semibold text-primary-foreground">PaintCell</span>
             </Link>
             <p className="text-primary-foreground/70 max-w-md text-sm leading-relaxed mb-5">
               Professional robotic spray painting workstations engineered for quality, 
