@@ -11,15 +11,41 @@ import {
   BookOpen, 
   Scale,
   Menu,
-  X
+  X,
+  Info,
+  Droplets,
+  Factory,
+  MessageSquareQuote,
+  Settings
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { href: "/console/home", label: "Home Content", icon: Home },
-  { href: "/console/case-studies", label: "Case Studies", icon: FileText },
-  { href: "/console/resources", label: "Resources", icon: BookOpen },
-  { href: "/console/policies", label: "Legal Pages", icon: Scale },
+// Navigation organized by section
+const navSections = [
+  {
+    title: "页面内容 / Page Content",
+    items: [
+      { href: "/console/home", label: "首页 / Home", icon: Home },
+      { href: "/console/about", label: "关于我们 / About", icon: Info },
+      { href: "/console/paint-cells", label: "喷涂单元 / Paint Cells", icon: Droplets },
+      { href: "/console/applications", label: "应用场景 / Applications", icon: Factory },
+      { href: "/console/quote", label: "询价表单 / Quote", icon: MessageSquareQuote },
+    ],
+  },
+  {
+    title: "内容管理 / Content",
+    items: [
+      { href: "/console/case-studies", label: "案例研究 / Case Studies", icon: FileText },
+      { href: "/console/resources", label: "资源库 / Resources", icon: BookOpen },
+    ],
+  },
+  {
+    title: "系统设置 / System",
+    items: [
+      { href: "/console/settings", label: "全站设置 / Site Settings", icon: Settings },
+      { href: "/console/policies", label: "法律条款 / Legal Pages", icon: Scale },
+    ],
+  },
 ];
 
 export default function ConsoleLayout() {
@@ -73,6 +99,36 @@ export default function ConsoleLayout() {
     );
   }
 
+  const NavContent = ({ onItemClick }: { onItemClick?: () => void }) => (
+    <nav className="p-4 space-y-6">
+      {navSections.map((section) => (
+        <div key={section.title}>
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-3">
+            {section.title}
+          </h3>
+          <div className="space-y-1">
+            {section.items.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                onClick={onItemClick}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
+                  location.pathname.startsWith(item.href)
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      ))}
+    </nav>
+  );
+
   return (
     <>
       <Helmet>
@@ -90,36 +146,20 @@ export default function ConsoleLayout() {
                 {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
               <Link to="/console/home" className="font-semibold text-lg">
-                PaintCell Console
+                PaintCell 管理后台
               </Link>
             </div>
             <Button variant="ghost" size="sm" onClick={handleLogout}>
               <LogOut className="h-4 w-4 mr-2" />
-              Logout
+              退出 / Logout
             </Button>
           </div>
         </header>
 
         <div className="flex">
           {/* Sidebar - Desktop */}
-          <aside className="hidden md:block w-56 border-r bg-muted/30 min-h-[calc(100vh-3.5rem)]">
-            <nav className="p-4 space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                    location.pathname.startsWith(item.href)
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-muted text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+          <aside className="hidden md:block w-64 border-r bg-muted/30 min-h-[calc(100vh-3.5rem)] overflow-y-auto">
+            <NavContent />
           </aside>
 
           {/* Mobile Menu */}
@@ -129,31 +169,14 @@ export default function ConsoleLayout() {
                 className="fixed inset-0 bg-black/50" 
                 onClick={() => setMobileMenuOpen(false)} 
               />
-              <aside className="fixed left-0 top-14 bottom-0 w-64 bg-background border-r">
-                <nav className="p-4 space-y-1">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      to={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                        location.pathname.startsWith(item.href)
-                          ? "bg-primary text-primary-foreground"
-                          : "hover:bg-muted text-muted-foreground hover:text-foreground"
-                      )}
-                    >
-                      <item.icon className="h-4 w-4" />
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
+              <aside className="fixed left-0 top-14 bottom-0 w-72 bg-background border-r overflow-y-auto">
+                <NavContent onItemClick={() => setMobileMenuOpen(false)} />
               </aside>
             </div>
           )}
 
           {/* Main Content */}
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 overflow-y-auto">
             <Outlet />
           </main>
         </div>

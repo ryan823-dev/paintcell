@@ -50,6 +50,11 @@ import FeasibilityChecklist from "./pages/resources/tools/FeasibilityChecklist";
 import ConsoleLogin from "./pages/console/ConsoleLogin";
 import ConsoleLayout from "./pages/console/ConsoleLayout";
 import HomeContent from "./pages/console/HomeContent";
+import AboutContent from "./pages/console/AboutContent";
+import PaintCellsContent from "./pages/console/PaintCellsContent";
+import ApplicationsContent from "./pages/console/ApplicationsContent";
+import QuoteContent from "./pages/console/QuoteContent";
+import SiteSettings from "./pages/console/SiteSettings";
 import ResourcesList from "./pages/console/ResourcesList";
 import ResourceEditor from "./pages/console/ResourceEditor";
 import CaseStudiesList from "./pages/console/CaseStudiesList";
@@ -70,6 +75,11 @@ const App = () => (
             <Route path="/console" element={<ConsoleLogin />} />
             <Route element={<ConsoleLayout />}>
               <Route path="/console/home" element={<HomeContent />} />
+              <Route path="/console/about" element={<AboutContent />} />
+              <Route path="/console/paint-cells" element={<PaintCellsContent />} />
+              <Route path="/console/applications" element={<ApplicationsContent />} />
+              <Route path="/console/quote" element={<QuoteContent />} />
+              <Route path="/console/settings" element={<SiteSettings />} />
               <Route path="/console/resources" element={<ResourcesList />} />
               <Route path="/console/resources/:id" element={<ResourceEditor />} />
               <Route path="/console/case-studies" element={<CaseStudiesList />} />
