@@ -68,13 +68,13 @@ const App = () => (
           <Routes>
             {/* Console routes (no public layout) */}
             <Route path="/console" element={<ConsoleLogin />} />
-            <Route path="/console" element={<ConsoleLayout />}>
-              <Route path="home" element={<HomeContent />} />
-              <Route path="resources" element={<ResourcesList />} />
-              <Route path="resources/:id" element={<ResourceEditor />} />
-              <Route path="case-studies" element={<CaseStudiesList />} />
-              <Route path="case-studies/:id" element={<CaseStudyEditor />} />
-              <Route path="policies" element={<LegalPages />} />
+            <Route element={<ConsoleLayout />}>
+              <Route path="/console/home" element={<HomeContent />} />
+              <Route path="/console/resources" element={<ResourcesList />} />
+              <Route path="/console/resources/:id" element={<ResourceEditor />} />
+              <Route path="/console/case-studies" element={<CaseStudiesList />} />
+              <Route path="/console/case-studies/:id" element={<CaseStudyEditor />} />
+              <Route path="/console/policies" element={<LegalPages />} />
             </Route>
 
             {/* Public routes */}
