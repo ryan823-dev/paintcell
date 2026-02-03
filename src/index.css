@@ -149,18 +149,18 @@
     line-height: 1.3;
   }
 
-  /* Paragraphs use body text */
-  p {
+  /* Paragraphs use body text - only as default, Tailwind classes override */
+  p:not([class*="text-"]) {
     color: hsl(var(--text-body));
   }
 
-  /* Links with consistent styling */
-  a {
+  /* Links with consistent styling - only as default, Tailwind classes override */
+  a:not([class*="text-"]) {
     color: hsl(var(--primary));
     transition: color 0.2s ease;
   }
 
-  a:hover {
+  a:not([class*="text-"]):hover {
     color: hsl(212 55% 30%);
   }
 
