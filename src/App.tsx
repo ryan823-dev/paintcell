@@ -46,6 +46,16 @@ import PaintCellRFQTemplate from "./pages/resources/tools/PaintCellRFQTemplate";
 import SiteReadinessChecklist from "./pages/resources/tools/SiteReadinessChecklist";
 import FeasibilityChecklist from "./pages/resources/tools/FeasibilityChecklist";
 
+// Console pages
+import ConsoleLogin from "./pages/console/ConsoleLogin";
+import ConsoleLayout from "./pages/console/ConsoleLayout";
+import HomeContent from "./pages/console/HomeContent";
+import ResourcesList from "./pages/console/ResourcesList";
+import ResourceEditor from "./pages/console/ResourceEditor";
+import CaseStudiesList from "./pages/console/CaseStudiesList";
+import CaseStudyEditor from "./pages/console/CaseStudyEditor";
+import LegalPages from "./pages/console/LegalPages";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -55,9 +65,21 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Index />} />
+          <Routes>
+            {/* Console routes (no public layout) */}
+            <Route path="/console" element={<ConsoleLogin />} />
+            <Route path="/console" element={<ConsoleLayout />}>
+              <Route path="home" element={<HomeContent />} />
+              <Route path="resources" element={<ResourcesList />} />
+              <Route path="resources/:id" element={<ResourceEditor />} />
+              <Route path="case-studies" element={<CaseStudiesList />} />
+              <Route path="case-studies/:id" element={<CaseStudyEditor />} />
+              <Route path="policies" element={<LegalPages />} />
+            </Route>
+
+            {/* Public routes */}
+            <Route element={<Layout />}>
+              <Route index element={<Index />} />
               <Route path="/quote" element={<Quote />} />
               <Route path="/applications" element={<Applications />} />
               <Route path="/paint-cells" element={<PaintCells />} />
@@ -101,8 +123,8 @@ const App = () => (
               <Route path="/resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
               
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
+            </Route>
+          </Routes>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

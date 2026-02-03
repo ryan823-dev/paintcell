@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.ai-presales-chat]
 verify_jwt = false
+
+[functions.ai-generate-draft]
+verify_jwt = false
