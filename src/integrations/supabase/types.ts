@@ -14,18 +14,238 @@ export type Database = {
   }
   public: {
     Tables: {
+      about_content: {
+        Row: {
+          created_at: string
+          hero_image_url: string | null
+          hero_subtitle_en: string | null
+          hero_subtitle_zh: string | null
+          hero_title_en: string | null
+          hero_title_zh: string | null
+          id: string
+          meta_description_en: string | null
+          meta_description_zh: string | null
+          meta_title_en: string | null
+          meta_title_zh: string | null
+          mission_body_en: string | null
+          mission_body_zh: string | null
+          mission_title_en: string | null
+          mission_title_zh: string | null
+          story_body_en: string | null
+          story_body_zh: string | null
+          story_image_url: string | null
+          story_title_en: string | null
+          story_title_zh: string | null
+          updated_at: string
+          values_title_en: string | null
+          values_title_zh: string | null
+        }
+        Insert: {
+          created_at?: string
+          hero_image_url?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          mission_body_en?: string | null
+          mission_body_zh?: string | null
+          mission_title_en?: string | null
+          mission_title_zh?: string | null
+          story_body_en?: string | null
+          story_body_zh?: string | null
+          story_image_url?: string | null
+          story_title_en?: string | null
+          story_title_zh?: string | null
+          updated_at?: string
+          values_title_en?: string | null
+          values_title_zh?: string | null
+        }
+        Update: {
+          created_at?: string
+          hero_image_url?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          mission_body_en?: string | null
+          mission_body_zh?: string | null
+          mission_title_en?: string | null
+          mission_title_zh?: string | null
+          story_body_en?: string | null
+          story_body_zh?: string | null
+          story_image_url?: string | null
+          story_title_en?: string | null
+          story_title_zh?: string | null
+          updated_at?: string
+          values_title_en?: string | null
+          values_title_zh?: string | null
+        }
+        Relationships: []
+      }
+      about_values: {
+        Row: {
+          created_at: string
+          description_en: string | null
+          description_zh: string | null
+          icon: string | null
+          id: string
+          is_visible: boolean
+          sort_order: number
+          title_en: string
+          title_zh: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description_en?: string | null
+          description_zh?: string | null
+          icon?: string | null
+          id?: string
+          is_visible?: boolean
+          sort_order?: number
+          title_en: string
+          title_zh?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description_en?: string | null
+          description_zh?: string | null
+          icon?: string | null
+          id?: string
+          is_visible?: boolean
+          sort_order?: number
+          title_en?: string
+          title_zh?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      application_industries: {
+        Row: {
+          created_at: string
+          description_en: string | null
+          description_zh: string | null
+          icon: string | null
+          id: string
+          image_url: string | null
+          is_visible: boolean
+          name_en: string
+          name_zh: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description_en?: string | null
+          description_zh?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean
+          name_en: string
+          name_zh?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description_en?: string | null
+          description_zh?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean
+          name_en?: string
+          name_zh?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      applications_content: {
+        Row: {
+          created_at: string
+          hero_image_url: string | null
+          hero_subtitle_en: string | null
+          hero_subtitle_zh: string | null
+          hero_title_en: string | null
+          hero_title_zh: string | null
+          id: string
+          intro_body_en: string | null
+          intro_body_zh: string | null
+          intro_title_en: string | null
+          intro_title_zh: string | null
+          meta_description_en: string | null
+          meta_description_zh: string | null
+          meta_title_en: string | null
+          meta_title_zh: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          hero_image_url?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          intro_body_en?: string | null
+          intro_body_zh?: string | null
+          intro_title_en?: string | null
+          intro_title_zh?: string | null
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          hero_image_url?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          intro_body_en?: string | null
+          intro_body_zh?: string | null
+          intro_title_en?: string | null
+          intro_title_zh?: string | null
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       case_studies: {
         Row: {
           answer_box: string | null
+          answer_box_zh: string | null
           constraints: string[] | null
           created_at: string
           goals: string | null
+          goals_zh: string | null
           id: string
           images: string[] | null
           industry: string | null
           last_ai_generation_at: string | null
           meta_description: string | null
+          meta_description_zh: string | null
           meta_title: string | null
+          meta_title_zh: string | null
           paint_type: string | null
           part_type: string | null
           published_at: string | null
@@ -33,21 +253,27 @@ export type Database = {
           solution_scope: string[] | null
           status: Database["public"]["Enums"]["content_status"]
           summary: string | null
+          summary_zh: string | null
           title: string
+          title_zh: string | null
           updated_at: string
           validation_acceptance: string[] | null
         }
         Insert: {
           answer_box?: string | null
+          answer_box_zh?: string | null
           constraints?: string[] | null
           created_at?: string
           goals?: string | null
+          goals_zh?: string | null
           id?: string
           images?: string[] | null
           industry?: string | null
           last_ai_generation_at?: string | null
           meta_description?: string | null
+          meta_description_zh?: string | null
           meta_title?: string | null
+          meta_title_zh?: string | null
           paint_type?: string | null
           part_type?: string | null
           published_at?: string | null
@@ -55,21 +281,27 @@ export type Database = {
           solution_scope?: string[] | null
           status?: Database["public"]["Enums"]["content_status"]
           summary?: string | null
+          summary_zh?: string | null
           title: string
+          title_zh?: string | null
           updated_at?: string
           validation_acceptance?: string[] | null
         }
         Update: {
           answer_box?: string | null
+          answer_box_zh?: string | null
           constraints?: string[] | null
           created_at?: string
           goals?: string | null
+          goals_zh?: string | null
           id?: string
           images?: string[] | null
           industry?: string | null
           last_ai_generation_at?: string | null
           meta_description?: string | null
+          meta_description_zh?: string | null
           meta_title?: string | null
+          meta_title_zh?: string | null
           paint_type?: string | null
           part_type?: string | null
           published_at?: string | null
@@ -77,7 +309,9 @@ export type Database = {
           solution_scope?: string[] | null
           status?: Database["public"]["Enums"]["content_status"]
           summary?: string | null
+          summary_zh?: string | null
           title?: string
+          title_zh?: string | null
           updated_at?: string
           validation_acceptance?: string[] | null
         }
@@ -148,35 +382,125 @@ export type Database = {
         }
         Relationships: []
       }
+      home_banners: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          is_visible: boolean
+          link_text_en: string | null
+          link_text_zh: string | null
+          link_url: string | null
+          sort_order: number
+          subtitle_en: string | null
+          subtitle_zh: string | null
+          title_en: string | null
+          title_zh: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          is_visible?: boolean
+          link_text_en?: string | null
+          link_text_zh?: string | null
+          link_url?: string | null
+          sort_order?: number
+          subtitle_en?: string | null
+          subtitle_zh?: string | null
+          title_en?: string | null
+          title_zh?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          is_visible?: boolean
+          link_text_en?: string | null
+          link_text_zh?: string | null
+          link_url?: string | null
+          sort_order?: number
+          subtitle_en?: string | null
+          subtitle_zh?: string | null
+          title_en?: string | null
+          title_zh?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       home_content: {
         Row: {
           created_at: string
           cta_configure_hint: string
+          cta_configure_hint_zh: string | null
           cta_consult_hint: string
+          cta_consult_hint_zh: string | null
           hero_audience_line: string
+          hero_audience_line_zh: string | null
+          hero_cta_primary_text_en: string | null
+          hero_cta_primary_text_zh: string | null
+          hero_cta_secondary_text_en: string | null
+          hero_cta_secondary_text_zh: string | null
+          hero_image_url: string | null
           hero_subtitle: string
+          hero_subtitle_zh: string | null
           hero_title: string
+          hero_title_zh: string | null
           id: string
+          meta_description_en: string | null
+          meta_description_zh: string | null
+          meta_title_en: string | null
+          meta_title_zh: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           cta_configure_hint?: string
+          cta_configure_hint_zh?: string | null
           cta_consult_hint?: string
+          cta_consult_hint_zh?: string | null
           hero_audience_line?: string
+          hero_audience_line_zh?: string | null
+          hero_cta_primary_text_en?: string | null
+          hero_cta_primary_text_zh?: string | null
+          hero_cta_secondary_text_en?: string | null
+          hero_cta_secondary_text_zh?: string | null
+          hero_image_url?: string | null
           hero_subtitle?: string
+          hero_subtitle_zh?: string | null
           hero_title?: string
+          hero_title_zh?: string | null
           id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           cta_configure_hint?: string
+          cta_configure_hint_zh?: string | null
           cta_consult_hint?: string
+          cta_consult_hint_zh?: string | null
           hero_audience_line?: string
+          hero_audience_line_zh?: string | null
+          hero_cta_primary_text_en?: string | null
+          hero_cta_primary_text_zh?: string | null
+          hero_cta_secondary_text_en?: string | null
+          hero_cta_secondary_text_zh?: string | null
+          hero_image_url?: string | null
           hero_subtitle?: string
+          hero_subtitle_zh?: string | null
           hero_title?: string
+          hero_title_zh?: string | null
           id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -258,54 +582,297 @@ export type Database = {
         }
         Relationships: []
       }
+      paint_cells_content: {
+        Row: {
+          created_at: string
+          cta_button_text_en: string | null
+          cta_button_text_zh: string | null
+          cta_title_en: string | null
+          cta_title_zh: string | null
+          hero_image_url: string | null
+          hero_subtitle_en: string | null
+          hero_subtitle_zh: string | null
+          hero_title_en: string | null
+          hero_title_zh: string | null
+          id: string
+          meta_description_en: string | null
+          meta_description_zh: string | null
+          meta_title_en: string | null
+          meta_title_zh: string | null
+          overview_body_en: string | null
+          overview_body_zh: string | null
+          overview_title_en: string | null
+          overview_title_zh: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          cta_button_text_en?: string | null
+          cta_button_text_zh?: string | null
+          cta_title_en?: string | null
+          cta_title_zh?: string | null
+          hero_image_url?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          overview_body_en?: string | null
+          overview_body_zh?: string | null
+          overview_title_en?: string | null
+          overview_title_zh?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          cta_button_text_en?: string | null
+          cta_button_text_zh?: string | null
+          cta_title_en?: string | null
+          cta_title_zh?: string | null
+          hero_image_url?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          overview_body_en?: string | null
+          overview_body_zh?: string | null
+          overview_title_en?: string | null
+          overview_title_zh?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      paint_cells_features: {
+        Row: {
+          created_at: string
+          description_en: string | null
+          description_zh: string | null
+          icon: string | null
+          id: string
+          image_url: string | null
+          is_visible: boolean
+          sort_order: number
+          title_en: string
+          title_zh: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description_en?: string | null
+          description_zh?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean
+          sort_order?: number
+          title_en: string
+          title_zh?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description_en?: string | null
+          description_zh?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean
+          sort_order?: number
+          title_en?: string
+          title_zh?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quote_content: {
+        Row: {
+          created_at: string
+          form_intro_en: string | null
+          form_intro_zh: string | null
+          hero_subtitle_en: string | null
+          hero_subtitle_zh: string | null
+          hero_title_en: string | null
+          hero_title_zh: string | null
+          id: string
+          meta_description_en: string | null
+          meta_description_zh: string | null
+          meta_title_en: string | null
+          meta_title_zh: string | null
+          submit_button_text_en: string | null
+          submit_button_text_zh: string | null
+          success_message_en: string | null
+          success_message_zh: string | null
+          success_title_en: string | null
+          success_title_zh: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          form_intro_en?: string | null
+          form_intro_zh?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          submit_button_text_en?: string | null
+          submit_button_text_zh?: string | null
+          success_message_en?: string | null
+          success_message_zh?: string | null
+          success_title_en?: string | null
+          success_title_zh?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          form_intro_en?: string | null
+          form_intro_zh?: string | null
+          hero_subtitle_en?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title_en?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description_en?: string | null
+          meta_description_zh?: string | null
+          meta_title_en?: string | null
+          meta_title_zh?: string | null
+          submit_button_text_en?: string | null
+          submit_button_text_zh?: string | null
+          success_message_en?: string | null
+          success_message_zh?: string | null
+          success_title_en?: string | null
+          success_title_zh?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       resources_posts: {
         Row: {
           answer_box: string | null
+          answer_box_zh: string | null
           body: string | null
+          body_zh: string | null
           category: Database["public"]["Enums"]["resource_category"] | null
           created_at: string
           id: string
           last_ai_generation_at: string | null
           meta_description: string | null
+          meta_description_zh: string | null
           meta_title: string | null
+          meta_title_zh: string | null
           published_at: string | null
           slug: string
           status: Database["public"]["Enums"]["content_status"]
           summary: string | null
+          summary_zh: string | null
           title: string
+          title_zh: string | null
           updated_at: string
         }
         Insert: {
           answer_box?: string | null
+          answer_box_zh?: string | null
           body?: string | null
+          body_zh?: string | null
           category?: Database["public"]["Enums"]["resource_category"] | null
           created_at?: string
           id?: string
           last_ai_generation_at?: string | null
           meta_description?: string | null
+          meta_description_zh?: string | null
           meta_title?: string | null
+          meta_title_zh?: string | null
           published_at?: string | null
           slug: string
           status?: Database["public"]["Enums"]["content_status"]
           summary?: string | null
+          summary_zh?: string | null
           title: string
+          title_zh?: string | null
           updated_at?: string
         }
         Update: {
           answer_box?: string | null
+          answer_box_zh?: string | null
           body?: string | null
+          body_zh?: string | null
           category?: Database["public"]["Enums"]["resource_category"] | null
           created_at?: string
           id?: string
           last_ai_generation_at?: string | null
           meta_description?: string | null
+          meta_description_zh?: string | null
           meta_title?: string | null
+          meta_title_zh?: string | null
           published_at?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["content_status"]
           summary?: string | null
+          summary_zh?: string | null
           title?: string
+          title_zh?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          contact_address_en: string | null
+          contact_address_zh: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          copyright_text_en: string | null
+          copyright_text_zh: string | null
+          created_at: string
+          footer_tagline_en: string | null
+          footer_tagline_zh: string | null
+          id: string
+          linkedin_url: string | null
+          updated_at: string
+          wechat_id: string | null
+        }
+        Insert: {
+          contact_address_en?: string | null
+          contact_address_zh?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          copyright_text_en?: string | null
+          copyright_text_zh?: string | null
+          created_at?: string
+          footer_tagline_en?: string | null
+          footer_tagline_zh?: string | null
+          id?: string
+          linkedin_url?: string | null
+          updated_at?: string
+          wechat_id?: string | null
+        }
+        Update: {
+          contact_address_en?: string | null
+          contact_address_zh?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          copyright_text_en?: string | null
+          copyright_text_zh?: string | null
+          created_at?: string
+          footer_tagline_en?: string | null
+          footer_tagline_zh?: string | null
+          id?: string
+          linkedin_url?: string | null
+          updated_at?: string
+          wechat_id?: string | null
         }
         Relationships: []
       }
@@ -333,38 +900,59 @@ export type Database = {
       why_cards: {
         Row: {
           card_gray_line: string
+          card_gray_line_zh: string | null
           created_at: string
           id: string
+          is_visible: boolean
           modal_engineering_anchor: string | null
+          modal_engineering_anchor_zh: string | null
           modal_key_constraints: string[] | null
+          modal_key_constraints_zh: string[] | null
           modal_typical_use_case: string | null
+          modal_typical_use_case_zh: string | null
           modal_what_we_need_to_assess: string[] | null
+          modal_what_we_need_to_assess_zh: string[] | null
           sort_order: number
           title: string
+          title_zh: string | null
           updated_at: string
         }
         Insert: {
           card_gray_line: string
+          card_gray_line_zh?: string | null
           created_at?: string
           id?: string
+          is_visible?: boolean
           modal_engineering_anchor?: string | null
+          modal_engineering_anchor_zh?: string | null
           modal_key_constraints?: string[] | null
+          modal_key_constraints_zh?: string[] | null
           modal_typical_use_case?: string | null
+          modal_typical_use_case_zh?: string | null
           modal_what_we_need_to_assess?: string[] | null
+          modal_what_we_need_to_assess_zh?: string[] | null
           sort_order?: number
           title: string
+          title_zh?: string | null
           updated_at?: string
         }
         Update: {
           card_gray_line?: string
+          card_gray_line_zh?: string | null
           created_at?: string
           id?: string
+          is_visible?: boolean
           modal_engineering_anchor?: string | null
+          modal_engineering_anchor_zh?: string | null
           modal_key_constraints?: string[] | null
+          modal_key_constraints_zh?: string[] | null
           modal_typical_use_case?: string | null
+          modal_typical_use_case_zh?: string | null
           modal_what_we_need_to_assess?: string[] | null
+          modal_what_we_need_to_assess_zh?: string[] | null
           sort_order?: number
           title?: string
+          title_zh?: string | null
           updated_at?: string
         }
         Relationships: []
