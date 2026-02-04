@@ -1,10 +1,15 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW_MINUTES = 60; // 1 hour window
+const MAX_REQUESTS_PER_WINDOW = 30; // Max 30 requests per hour per IP
 
 // Input validation schemas
 const MAX_MESSAGE_LENGTH = 2000;
@@ -27,7 +32,6 @@ const RequestSchema = z.object({
 
 // Sanitize user input to prevent prompt injection
 function sanitizeMessage(content: string): string {
-  // Remove potential prompt injection patterns
   return content
     .replace(/\[INST\]/gi, "")
     .replace(/\[\/INST\]/gi, "")
@@ -36,6 +40,149 @@ function sanitizeMessage(content: string): string {
     .replace(/\bsystem\s*:/gi, "")
     .replace(/\bignore\s+(previous|above|all)\s+(instructions?|prompts?)/gi, "")
     .trim();
+}
+
+// Get client IP from request headers
+function getClientIP(req: Request): string {
+  // Check various headers for the real client IP
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    // x-forwarded-for can contain multiple IPs, the first is the client
+    return forwardedFor.split(",")[0].trim();
+  }
+  
+  const realIP = req.headers.get("x-real-ip");
+  if (realIP) {
+    return realIP.trim();
+  }
+  
+  // Fallback - use a hash of user-agent + other headers as fingerprint
+  const userAgent = req.headers.get("user-agent") || "unknown";
+  const acceptLanguage = req.headers.get("accept-language") || "unknown";
+  return `fingerprint-${hashString(userAgent + acceptLanguage)}`;
+}
+
+// Simple hash function for fingerprinting
+function hashString(str: string): string {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(36);
+}
+
+// Rate limit tracking record type
+interface RateLimitRecord {
+  id: string;
+  identifier: string;
+  endpoint: string;
+  request_count: number;
+  window_start: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Check and update rate limit using database
+// deno-lint-ignore no-explicit-any
+async function checkRateLimit(supabase: any, identifier: string, endpoint: string): Promise<{ allowed: boolean; remaining: number; resetAt: Date }> {
+  const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MINUTES * 60 * 1000);
+  
+  // Get or create rate limit record
+  const { data: existing, error: selectError } = await supabase
+    .from("rate_limit_tracking")
+    .select("*")
+    .eq("identifier", identifier)
+    .eq("endpoint", endpoint)
+    .single() as { data: RateLimitRecord | null; error: { code?: string; message?: string } | null };
+  
+  if (selectError && selectError.code !== "PGRST116") {
+    // PGRST116 = not found, which is fine
+    console.error("Rate limit check error:", selectError);
+    // On error, allow the request but log it
+    return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW, resetAt: new Date(Date.now() + RATE_LIMIT_WINDOW_MINUTES * 60 * 1000) };
+  }
+  
+  const now = new Date();
+  
+  if (!existing) {
+    // First request from this identifier - create record
+    const { error: insertError } = await supabase
+      .from("rate_limit_tracking")
+      .insert({
+        identifier,
+        endpoint,
+        request_count: 1,
+        window_start: now.toISOString()
+      });
+    
+    if (insertError) {
+      console.error("Rate limit insert error:", insertError);
+    }
+    
+    return { 
+      allowed: true, 
+      remaining: MAX_REQUESTS_PER_WINDOW - 1, 
+      resetAt: new Date(now.getTime() + RATE_LIMIT_WINDOW_MINUTES * 60 * 1000) 
+    };
+  }
+  
+  const recordWindowStart = new Date(existing.window_start);
+  
+  // Check if window has expired
+  if (recordWindowStart < windowStart) {
+    // Window expired - reset counter
+    const { error: updateError } = await supabase
+      .from("rate_limit_tracking")
+      .update({
+        request_count: 1,
+        window_start: now.toISOString()
+      })
+      .eq("id", existing.id);
+    
+    if (updateError) {
+      console.error("Rate limit reset error:", updateError);
+    }
+    
+    return { 
+      allowed: true, 
+      remaining: MAX_REQUESTS_PER_WINDOW - 1, 
+      resetAt: new Date(now.getTime() + RATE_LIMIT_WINDOW_MINUTES * 60 * 1000) 
+    };
+  }
+  
+  // Window still active - check count
+  const currentCount = existing.request_count;
+  
+  if (currentCount >= MAX_REQUESTS_PER_WINDOW) {
+    // Rate limit exceeded
+    const resetAt = new Date(recordWindowStart.getTime() + RATE_LIMIT_WINDOW_MINUTES * 60 * 1000);
+    return { 
+      allowed: false, 
+      remaining: 0, 
+      resetAt 
+    };
+  }
+  
+  // Increment counter
+  const { error: updateError } = await supabase
+    .from("rate_limit_tracking")
+    .update({
+      request_count: currentCount + 1
+    })
+    .eq("id", existing.id);
+  
+  if (updateError) {
+    console.error("Rate limit increment error:", updateError);
+  }
+  
+  const resetAt = new Date(recordWindowStart.getTime() + RATE_LIMIT_WINDOW_MINUTES * 60 * 1000);
+  return { 
+    allowed: true, 
+    remaining: MAX_REQUESTS_PER_WINDOW - currentCount - 1, 
+    resetAt 
+  };
 }
 
 // System prompt for the AI Pre-Sales Engineer
@@ -92,7 +239,36 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Initialize Supabase client with service role for rate limit tracking
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
   try {
+    // Get client IP for rate limiting
+    const clientIP = getClientIP(req);
+    
+    // Check rate limit using persistent database tracking
+    const rateLimitResult = await checkRateLimit(supabase, clientIP, "ai-presales-chat");
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for ${clientIP}`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Too many requests. Please try again later.",
+          retryAfter: Math.ceil((rateLimitResult.resetAt.getTime() - Date.now()) / 1000)
+        }),
+        { 
+          status: 429, 
+          headers: { 
+            ...corsHeaders, 
+            "Content-Type": "application/json",
+            "Retry-After": Math.ceil((rateLimitResult.resetAt.getTime() - Date.now()) / 1000).toString()
+          } 
+        }
+      );
+    }
+
     const rawBody = await req.json();
     
     // Validate request body
@@ -220,7 +396,6 @@ Valid values for each field:
       // Try to parse JSON from response
       let requirements;
       try {
-        // Extract JSON from response (may be wrapped in markdown code blocks)
         const jsonMatch = content.match(/\{[\s\S]*\}/);
         requirements = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
       } catch {
@@ -324,9 +499,7 @@ Keep it concise and professional.`;
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
-    // Log detailed error server-side only
     console.error("Chat error:", e instanceof Error ? e.message : "Unknown error");
-    // Return generic error to client
     return new Response(
       JSON.stringify({ error: "Unable to process your request. Please try again." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
