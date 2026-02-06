@@ -239,7 +239,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "PaintCell Quotes <onboarding@resend.dev>",
+        from: "PaintCell <noreply@tdpaintcell.com>",
         to: ["engineering@tdpaintcell.com"],
         reply_to: data.contact_email,
         subject: `[${escapeHtml(data.source || "Quote")}] New Lead: ${escapeHtml(data.contact_company)}`,
