@@ -103,7 +103,7 @@ export default function Index() {
   };
 
   return <>
-    {/* Project Interface — PRIMARY */}
+    {/* Three-zone engineering console — PRIMARY */}
     <ProjectInterfacePanel />
 
     {/* Project Entry Points — SECONDARY */}
