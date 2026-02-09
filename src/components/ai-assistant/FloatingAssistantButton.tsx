@@ -8,6 +8,7 @@ import { AIChatDrawer } from "./AIChatDrawer";
 export function FloatingAssistantButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [projectMessage, setProjectMessage] = useState<string | null>(null);
 
   // Only animate on first page load per session
   useEffect(() => {
@@ -44,7 +45,15 @@ export function FloatingAssistantButton() {
               onAnimationComplete={() => setHasAnimated(true)}
             >
               <Button
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                  // Check for project init message from homepage panel
+                  const msg = sessionStorage.getItem("project-init-message");
+                  if (msg) {
+                    setProjectMessage(msg);
+                    sessionStorage.removeItem("project-init-message");
+                  }
+                  setIsOpen(true);
+                }}
                 data-assistant-trigger
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
@@ -83,7 +92,14 @@ export function FloatingAssistantButton() {
       </AnimatePresence>
 
       {/* Chat Drawer */}
-      <AIChatDrawer open={isOpen} onOpenChange={setIsOpen} />
+      <AIChatDrawer
+        open={isOpen}
+        onOpenChange={(open) => {
+          setIsOpen(open);
+          if (!open) setProjectMessage(null);
+        }}
+        initialProjectMessage={projectMessage}
+      />
     </>
   );
 }

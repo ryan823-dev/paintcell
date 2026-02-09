@@ -6,11 +6,15 @@ import { ConsultationIntroScreen } from "./ConsultationIntroScreen";
 interface AIChatDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialProjectMessage?: string | null;
 }
 
-export function AIChatDrawer({ open, onOpenChange }: AIChatDrawerProps) {
+export function AIChatDrawer({ open, onOpenChange, initialProjectMessage }: AIChatDrawerProps) {
   const [hasStarted, setHasStarted] = useState(false);
   const [initialMessage, setInitialMessage] = useState<string | null>(null);
+
+  const effectiveStarted = hasStarted || !!initialProjectMessage;
+  const effectiveMessage = initialMessage || initialProjectMessage || null;
 
   const handleSelectOption = (option: string) => {
     setInitialMessage(option);
@@ -32,7 +36,7 @@ export function AIChatDrawer({ open, onOpenChange }: AIChatDrawerProps) {
         side="right" 
         className="w-full sm:max-w-lg p-0 flex flex-col"
       >
-        {hasStarted ? (
+        {effectiveStarted ? (
           <>
             <SheetHeader className="px-6 pt-6 pb-4 border-b bg-muted/30">
               <SheetTitle className="text-lg font-semibold flex items-center gap-2">
@@ -43,7 +47,7 @@ export function AIChatDrawer({ open, onOpenChange }: AIChatDrawerProps) {
                 No pricing. Human engineers confirm final scope.
               </SheetDescription>
             </SheetHeader>
-            <AIChatPanel onClose={handleClose} initialMessage={initialMessage} />
+            <AIChatPanel onClose={handleClose} initialMessage={effectiveMessage} />
           </>
         ) : (
           <ConsultationIntroScreen onSelectOption={handleSelectOption} />
