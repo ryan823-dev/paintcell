@@ -20,9 +20,9 @@ export function ProjectInterfacePanel() {
   };
 
   return (
-    <section className="bg-primary text-primary-foreground min-h-[85vh] flex flex-col">
-      {/* Main — vertically centered */}
-      <div className="flex-1 flex flex-col items-center justify-center container-wide py-12 lg:py-16">
+    <section className="bg-primary text-primary-foreground h-[calc(100vh-3.5rem)] flex flex-col">
+      {/* Main — vertically centered, ~3/4 of viewport */}
+      <div className="flex-[3] flex flex-col items-center justify-center container-wide py-6 lg:py-10">
         {/* Status bar — prominent */}
         <div className="flex items-center gap-4 mb-10 text-xs font-medium tracking-[0.15em] uppercase">
           <span className="flex items-center gap-2 text-accent">
