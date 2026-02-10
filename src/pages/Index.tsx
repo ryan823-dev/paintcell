@@ -168,7 +168,7 @@ export default function Index() {
             ))}
           </StaggerContainer>
           <FadeIn delay={0.4} className="mt-8 text-center">
-            <Button asChild variant="outline" className="border-primary-foreground/15 text-primary-foreground/60 hover:bg-primary-foreground/5 hover:text-primary-foreground">
+            <Button asChild variant="outline" className="bg-transparent border-primary-foreground/15 text-primary-foreground/60 hover:bg-primary-foreground/5 hover:text-primary-foreground">
               <Link to="/paint-cells">
                 Explore solutions →
               </Link>
@@ -188,7 +188,7 @@ export default function Index() {
             </div>
           </FadeIn>
           <FadeIn delay={0.2} className="text-center">
-            <Button asChild variant="outline" className="border-primary-foreground/15 text-primary-foreground/60 hover:bg-primary-foreground/5 hover:text-primary-foreground">
+            <Button asChild variant="outline" className="bg-transparent border-primary-foreground/15 text-primary-foreground/60 hover:bg-primary-foreground/5 hover:text-primary-foreground">
               <Link to="/case-studies" className="flex items-center gap-2">
                 View Case Studies
                 <ChevronRight className="h-4 w-4" />
