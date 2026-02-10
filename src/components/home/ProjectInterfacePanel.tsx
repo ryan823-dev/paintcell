@@ -24,7 +24,7 @@ export function ProjectInterfacePanel() {
       {/* Main — vertically centered, ~3/4 of viewport */}
       <div className="flex-[3] flex flex-col items-center justify-center container-wide py-6 lg:py-10">
         {/* Status bar — prominent */}
-        <div className="flex items-center gap-4 mb-10 text-xs font-medium tracking-[0.15em] uppercase">
+        <div className="flex items-center gap-4 mb-6 text-xs font-medium tracking-[0.15em] uppercase">
           <span className="flex items-center gap-2 text-accent">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
@@ -39,7 +39,7 @@ export function ProjectInterfacePanel() {
         </div>
 
         {/* Central AI greeting */}
-        <div className="text-center mb-8 max-w-2xl">
+        <div className="text-center mb-5 max-w-2xl">
           <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
             <Sparkles className="h-3 w-3" />
             AI-Powered Engineering
@@ -75,10 +75,10 @@ export function ProjectInterfacePanel() {
                 }
               }}
               className={cn(
-                "min-h-[120px] md:min-h-[140px] resize-none border-0 bg-transparent",
+                "min-h-[80px] md:min-h-[100px] resize-none border-0 bg-transparent",
                 "text-primary-foreground placeholder:text-primary-foreground/25",
                 "focus-visible:ring-0 focus-visible:ring-offset-0",
-                "text-[15px] leading-relaxed rounded-xl px-5 py-4"
+                "text-[15px] leading-relaxed rounded-xl px-5 py-3"
               )}
             />
             {/* Action row inside card */}
@@ -106,7 +106,7 @@ export function ProjectInterfacePanel() {
           </div>
 
           {/* Quick starters */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-5">
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
             {[
               "Automate manual spraying",
               "Improve finish consistency",
