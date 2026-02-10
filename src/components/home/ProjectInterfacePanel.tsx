@@ -53,13 +53,13 @@ export function ProjectInterfacePanel() {
         </div>
 
         {/* Chat input — glowing card */}
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-4xl">
           <div
             className={cn(
               "rounded-2xl border transition-all duration-300 p-1",
               isFocused
-                ? "border-accent/60 shadow-[0_0_30px_-5px_hsl(32_95%_50%/0.25)]"
-                : "border-primary-foreground/15 hover:border-primary-foreground/25"
+                ? "border-primary-foreground/40 shadow-[0_0_30px_-5px_hsl(32_95%_50%/0.25)]"
+                : "border-primary-foreground/25 hover:border-primary-foreground/35"
             )}
           >
             <Textarea
