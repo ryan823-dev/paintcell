@@ -89,16 +89,31 @@ export function WizardProgress({ currentStep, totalSteps, stepTitles }: WizardPr
                 {/* Connector */}
                 {index < totalSteps - 1 && (
                   <div className="flex-1 flex items-center pt-[18px] px-1">
-                    <div className="relative w-full h-px">
+                    <div className="relative w-full h-px overflow-hidden">
                       <div className={cn(
                         "absolute inset-0",
                         isCompleted ? "bg-accent/30" : "bg-primary-foreground/8"
                       )} />
                       {isCompleted && (
-                        <div className="absolute inset-0 bg-accent/15 blur-sm" />
+                        <>
+                          <div className="absolute inset-0 bg-accent/15 blur-sm" />
+                          <div
+                            className="absolute top-1/2 -translate-y-1/2 w-3 h-[3px] rounded-full bg-accent/60 blur-[2px]"
+                            style={{ animation: 'flowRight 1.5s linear infinite', animationDelay: `${index * 0.3}s` }}
+                          />
+                        </>
                       )}
                       {isCurrent && (
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent/50 animate-pulse" />
+                        <>
+                          <div
+                            className="absolute top-1/2 -translate-y-1/2 w-4 h-[3px] rounded-full bg-accent/70 blur-[2px]"
+                            style={{ animation: 'flowRight 2s ease-in-out infinite' }}
+                          />
+                          <div
+                            className="absolute top-1/2 -translate-y-1/2 w-2 h-[2px] rounded-full bg-accent/40 blur-[1px]"
+                            style={{ animation: 'flowRight 2s ease-in-out infinite', animationDelay: '0.8s' }}
+                          />
+                        </>
                       )}
                     </div>
                   </div>
