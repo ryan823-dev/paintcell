@@ -104,7 +104,7 @@ export function QuoteWizard() {
       />
 
       {/* Step Content */}
-      <div className="bg-card rounded-xl border border-border p-6 md:p-8 shadow-sm min-h-[400px]">
+      <div className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 md:p-8 min-h-[400px]">
         {isQuestionStep && (
           <WizardStep
             step={wizardSteps[currentStep]}
@@ -128,7 +128,7 @@ export function QuoteWizard() {
           variant="outline"
           onClick={handlePrev}
           disabled={currentStep === 0}
-          className="gap-2"
+          className="gap-2 border-primary-foreground/15 text-primary-foreground/60 hover:text-primary-foreground hover:bg-primary-foreground/5"
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
@@ -153,7 +153,7 @@ export function QuoteWizard() {
           <Button
             onClick={handleNext}
             disabled={!validateCurrentStep()}
-            className="gap-2"
+            className="gap-2 bg-accent hover:bg-accent/90 text-accent-foreground"
           >
             {isSummaryStep ? "Continue to Contact" : "Next"}
             <ChevronRight className="h-4 w-4" />

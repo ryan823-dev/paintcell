@@ -1,28 +1,27 @@
-import { Section } from "@/components/ui/section";
 import { QuoteWizard } from "@/components/quote/QuoteWizard";
 
 export default function Quote() {
   return (
-    <>
+    <div className="bg-primary min-h-screen">
       {/* Header */}
-      <section className="hero-gradient relative">
-        <div className="absolute inset-0 industrial-pattern opacity-30" />
-        <div className="container-wide relative py-12 md:py-16">
-          <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Paint Cell Pre-Engineering Assessment
-            </h1>
-            <p className="text-lg text-primary-foreground/80">
-              A structured feasibility and readiness check for robotic spray painting (not a pricing tool).
-            </p>
-          </div>
+      <div className="container-wide pt-10 md:pt-14 pb-8">
+        <div className="max-w-3xl">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent/70 mb-3">
+            Pre-Engineering Assessment
+          </p>
+          <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-3">
+            Paint Cell Project Assessment
+          </h1>
+          <p className="text-primary-foreground/50 text-sm">
+            A structured feasibility and readiness check for robotic spray painting (not a pricing tool).
+          </p>
         </div>
-      </section>
+      </div>
 
       {/* Wizard */}
-      <Section variant="default" className="py-8 md:py-12">
+      <div className="container-wide pb-16">
         <QuoteWizard />
-      </Section>
-    </>
+      </div>
+    </div>
   );
 }
