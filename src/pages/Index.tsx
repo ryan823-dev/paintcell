@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Section, SectionHeader } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { BenefitDetailModal, BenefitModalContent } from "@/components/home/BenefitDetailModal";
 import { ProjectInterfacePanel } from "@/components/home/ProjectInterfacePanel";
-import { ProjectEntryPoints } from "@/components/home/ProjectEntryPoints";
 import { ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge } from "lucide-react";
 
 const benefits = [{
@@ -85,7 +83,6 @@ interface Benefit {
 }
 
 export default function Index() {
-  const navigate = useNavigate();
   const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -107,78 +104,96 @@ export default function Index() {
     <ProjectInterfacePanel />
 
     {/* Engineering Benefits */}
-    <Section variant="default">
-      <FadeIn>
-        <SectionHeader title="Why Robotic Painting?" description="Industrial automation delivers measurable improvements across quality, efficiency, and safety." />
-      </FadeIn>
-      <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {benefits.map((benefit: Benefit) => <StaggerItem key={benefit.title}>
-          <div
-            className="bg-card rounded-lg p-6 border border-border hover:border-primary/20 hover:shadow-md transition-all duration-200 h-full flex flex-col cursor-pointer"
-            onClick={() => handleCardClick(benefit)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleCardClick(benefit);
-              }
-            }}
-          >
-            <div className="w-10 h-10 rounded-md bg-primary/8 flex items-center justify-center mb-4">
-              <benefit.icon className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-base font-semibold mb-2 text-foreground">{benefit.title}</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed flex-1">{benefit.description}</p>
-            <p className="text-xs text-muted-foreground/60 mt-3 pt-3 border-t border-border italic">
-              {benefit.microLine}
-            </p>
+    <section className="bg-primary/[0.03] py-16 md:py-20">
+      <div className="container-wide">
+        <FadeIn>
+          <div className="mb-10">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground/60 mb-2">Engineering Rationale</p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Why Robotic Painting?</h2>
+            <div className="h-px w-12 bg-accent/50" />
           </div>
-        </StaggerItem>)}
-      </StaggerContainer>
-    </Section>
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {benefits.map((benefit: Benefit) => <StaggerItem key={benefit.title}>
+            <div
+              className="rounded-lg p-5 border border-border/60 hover:border-accent/30 transition-all duration-200 h-full flex flex-col cursor-pointer bg-background"
+              onClick={() => handleCardClick(benefit)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleCardClick(benefit);
+                }
+              }}
+            >
+              <div className="w-9 h-9 rounded-md bg-primary/8 flex items-center justify-center mb-3">
+                <benefit.icon className="h-4 w-4 text-primary" />
+              </div>
+              <h3 className="text-sm font-semibold mb-1.5">{benefit.title}</h3>
+              <p className="text-muted-foreground text-xs leading-relaxed flex-1">{benefit.description}</p>
+              <p className="text-[11px] text-muted-foreground/50 mt-3 pt-2.5 border-t border-border/40 italic">
+                {benefit.microLine}
+              </p>
+            </div>
+          </StaggerItem>)}
+        </StaggerContainer>
+      </div>
+    </section>
 
     {/* System Overview */}
-    <Section variant="muted">
-      <FadeIn>
-        <SectionHeader title="Complete Paint Cell Solution" description="Every component engineered to work together for optimal paint finish quality." />
-      </FadeIn>
-      <StaggerContainer className="grid md:grid-cols-2 gap-6">
-        {systemComponents.map(component => <StaggerItem key={component.title}>
-          <div className="bg-card rounded-lg p-6 border border-border flex gap-4 h-full hover:border-primary/20 hover:shadow-md transition-all duration-200">
-            <div className="w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center shrink-0">
-              <component.icon className="h-5 w-5 text-accent" />
-            </div>
-            <div>
-              <h3 className="text-base font-semibold mb-2 text-foreground">{component.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{component.description}</p>
-            </div>
+    <section className="bg-primary text-primary-foreground py-16 md:py-20">
+      <div className="container-wide">
+        <FadeIn>
+          <div className="mb-10">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-primary-foreground/40 mb-2">System Architecture</p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-primary-foreground mb-2">Complete Paint Cell Solution</h2>
+            <div className="h-px w-12 bg-accent/50" />
           </div>
-        </StaggerItem>)}
-      </StaggerContainer>
-      <FadeIn delay={0.4} className="mt-10 text-center">
-        <Button asChild variant="outline" size="lg">
-          <Link to="/paint-cells">
-            Learn More About Our Solutions
-          </Link>
-        </Button>
-      </FadeIn>
-    </Section>
+        </FadeIn>
+        <StaggerContainer className="grid md:grid-cols-2 gap-4">
+          {systemComponents.map(component => <StaggerItem key={component.title}>
+            <div className="rounded-lg p-5 border border-primary-foreground/10 flex gap-4 h-full hover:border-primary-foreground/20 transition-all duration-200 bg-primary-foreground/5">
+              <div className="w-9 h-9 rounded-md bg-accent/15 flex items-center justify-center shrink-0">
+                <component.icon className="h-4 w-4 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold mb-1.5 text-primary-foreground">{component.title}</h3>
+                <p className="text-primary-foreground/60 text-xs leading-relaxed">{component.description}</p>
+              </div>
+            </div>
+          </StaggerItem>)}
+        </StaggerContainer>
+        <FadeIn delay={0.4} className="mt-8 text-center">
+          <Button asChild variant="outline" className="border-primary-foreground/20 text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground">
+            <Link to="/paint-cells">
+              Explore solutions →
+            </Link>
+          </Button>
+        </FadeIn>
+      </div>
+    </section>
 
     {/* Case Studies */}
-    <Section variant="default">
-      <FadeIn>
-        <SectionHeader title="Project References" description="Real robotic painting deployments across industries." />
-      </FadeIn>
-      <FadeIn delay={0.2} className="text-center">
-        <Button asChild variant="outline" size="lg">
-          <Link to="/case-studies" className="flex items-center gap-2">
-            View Case Studies
-            <ChevronRight className="h-4 w-4" />
-          </Link>
-        </Button>
-      </FadeIn>
-    </Section>
+    <section className="bg-primary/[0.03] py-16 md:py-20">
+      <div className="container-wide">
+        <FadeIn>
+          <div className="mb-8">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground/60 mb-2">Deployment Reference</p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Project References</h2>
+            <div className="h-px w-12 bg-accent/50" />
+          </div>
+        </FadeIn>
+        <FadeIn delay={0.2} className="text-center">
+          <Button asChild variant="outline">
+            <Link to="/case-studies" className="flex items-center gap-2">
+              View Case Studies
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </FadeIn>
+      </div>
+    </section>
 
     {/* Benefit Detail Modal */}
     <BenefitDetailModal open={isModalOpen} onOpenChange={setIsModalOpen} content={selectedBenefit?.modalContent || null} onStartConsultation={handleStartConsultation} />
