@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Send } from "lucide-react";
+import { ArrowRight, Send, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HomepageWizardStrip } from "./HomepageWizardStrip";
 
 export function ProjectInterfacePanel() {
   const [inputValue, setInputValue] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmitToAssistant = () => {
@@ -19,44 +20,54 @@ export function ProjectInterfacePanel() {
   };
 
   return (
-    <section className="bg-primary text-primary-foreground">
-      {/* Main consultation panel */}
-      <div className="container-wide py-10 lg:py-14">
-        {/* System bar */}
-        <div className="flex items-center gap-3 mb-8 text-[10px] uppercase tracking-widest text-primary-foreground/40">
-          <span className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+    <section className="bg-primary text-primary-foreground min-h-[85vh] flex flex-col">
+      {/* Main — vertically centered */}
+      <div className="flex-1 flex flex-col items-center justify-center container-wide py-12 lg:py-16">
+        {/* Status bar — prominent */}
+        <div className="flex items-center gap-4 mb-10 text-xs font-medium tracking-[0.15em] uppercase">
+          <span className="flex items-center gap-2 text-accent">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+            </span>
             System Active
           </span>
           <span className="text-primary-foreground/20">·</span>
-          <span>AI Online</span>
+          <span className="text-primary-foreground/70">AI Online</span>
           <span className="text-primary-foreground/20">·</span>
-          <span>Project Interface Ready</span>
+          <span className="text-primary-foreground/70">Project Interface Ready</span>
         </div>
 
-        {/* Consultation panel */}
-        <div className="max-w-4xl">
-          {/* AI greeting */}
-          <div className="mb-6">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-primary-foreground/40 mb-2">
-              System Message
-            </p>
-            <div className="border-l-2 border-accent/50 pl-4">
-              <p className="text-primary-foreground/90 leading-relaxed text-lg md:text-xl font-medium">
-                Start your robotic painting project.
-              </p>
-              <p className="text-primary-foreground/60 leading-relaxed text-[15px] mt-1">
-                Tell me about your application, parts, or production line.
-              </p>
-            </div>
+        {/* Central AI greeting */}
+        <div className="text-center mb-8 max-w-2xl">
+          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
+            <Sparkles className="h-3 w-3" />
+            AI-Powered Engineering
           </div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-3 leading-tight">
+            Start your robotic painting project
+          </h1>
+          <p className="text-primary-foreground/50 text-base md:text-lg">
+            Describe your application, parts, or production line — our AI will guide you through the assessment.
+          </p>
+        </div>
 
-          {/* Input area */}
-          <div className="mb-4">
+        {/* Chat input — glowing card */}
+        <div className="w-full max-w-3xl">
+          <div
+            className={cn(
+              "rounded-2xl border transition-all duration-300 p-1",
+              isFocused
+                ? "border-accent/60 shadow-[0_0_30px_-5px_hsl(32_95%_50%/0.25)]"
+                : "border-primary-foreground/15 hover:border-primary-foreground/25"
+            )}
+          >
             <Textarea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Describe your project — material, part geometry, throughput, quality targets…"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder="e.g. We need to automate spray painting of aluminium housings, ~200 parts/shift, Class A finish…"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -64,41 +75,58 @@ export function ProjectInterfacePanel() {
                 }
               }}
               className={cn(
-                "min-h-[130px] md:min-h-[160px] resize-none",
-                "bg-primary-foreground/5 border-primary-foreground/15",
+                "min-h-[120px] md:min-h-[140px] resize-none border-0 bg-transparent",
                 "text-primary-foreground placeholder:text-primary-foreground/25",
-                "focus-visible:ring-accent/40 focus-visible:border-accent/40",
-                "text-[15px] leading-relaxed rounded-lg"
+                "focus-visible:ring-0 focus-visible:ring-offset-0",
+                "text-[15px] leading-relaxed rounded-xl px-5 py-4"
               )}
             />
+            {/* Action row inside card */}
+            <div className="flex items-center justify-between px-3 pb-3 pt-1">
+              <p className="text-[11px] text-primary-foreground/25 hidden sm:block">
+                No pricing provided · Human engineers confirm scope
+              </p>
+              <div className="flex items-center gap-2 ml-auto">
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate("/quote")}
+                  className="h-9 px-4 text-[11px] font-medium text-primary-foreground/35 hover:text-primary-foreground/60 hover:bg-primary-foreground/5 uppercase tracking-wider"
+                >
+                  Use form instead
+                </Button>
+                <Button
+                  onClick={handleSubmitToAssistant}
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-9 px-5 gap-2 rounded-xl"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                  Start
+                </Button>
+              </div>
+            </div>
           </div>
 
-          {/* Action row */}
-          <div className="flex items-center justify-between">
-            <Button
-              onClick={handleSubmitToAssistant}
-              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-7 gap-2"
-            >
-              <Send className="h-4 w-4" />
-              Start consultation
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/quote")}
-              className="h-11 px-5 text-xs font-medium text-primary-foreground/40 hover:text-primary-foreground/70 hover:bg-primary-foreground/5 uppercase tracking-wider"
-            >
-              Traditional form →
-            </Button>
+          {/* Quick starters */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-5">
+            {[
+              "Automate manual spraying",
+              "Improve finish consistency",
+              "Feasibility check for my parts",
+            ].map((text) => (
+              <button
+                key={text}
+                onClick={() => {
+                  setInputValue(text);
+                }}
+                className="text-xs px-3.5 py-1.5 rounded-full border border-primary-foreground/12 text-primary-foreground/45 hover:text-primary-foreground/70 hover:border-primary-foreground/25 hover:bg-primary-foreground/5 transition-all"
+              >
+                {text}
+              </button>
+            ))}
           </div>
-
-          {/* Disclaimer */}
-          <p className="mt-4 text-[11px] text-primary-foreground/25">
-            No pricing provided. Human engineers confirm final scope.
-          </p>
         </div>
       </div>
 
-      {/* Wizard Strip */}
+      {/* Wizard Strip — bottom layer */}
       <div className="border-t border-primary-foreground/8">
         <div className="container-wide py-5">
           <HomepageWizardStrip variant="dark" />
