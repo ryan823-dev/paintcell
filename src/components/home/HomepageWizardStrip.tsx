@@ -50,8 +50,8 @@ export function HomepageWizardStrip({ variant = "light" }: HomepageWizardStripPr
               "rounded-md px-3 py-3 text-center transition-colors border",
               index === 0
                 ? isDark
-                  ? "bg-accent/15 border-accent/40 text-accent"
-                  : "bg-primary/10 border-primary/30 text-primary"
+                  ? "bg-accent text-accent-foreground border-accent"
+                  : "bg-primary text-primary-foreground border-primary"
                 : isDark
                   ? "bg-primary-foreground/5 border-primary-foreground/10 text-primary-foreground/40"
                   : "bg-muted/50 border-border text-muted-foreground"
@@ -60,7 +60,7 @@ export function HomepageWizardStrip({ variant = "light" }: HomepageWizardStripPr
             <span className={cn(
               "block text-lg font-bold mb-1",
               index === 0
-                ? isDark ? "text-accent" : "text-primary"
+                ? isDark ? "text-accent-foreground" : "text-primary-foreground"
                 : isDark ? "text-primary-foreground/30" : "text-muted-foreground/60"
             )}>
               {index + 1}
