@@ -8,12 +8,22 @@ const stepTitles = [
   "Contact",
 ];
 
-export function HomepageWizardStrip() {
+interface HomepageWizardStripProps {
+  variant?: "light" | "dark";
+}
+
+export function HomepageWizardStrip({ variant = "light" }: HomepageWizardStripProps) {
   const navigate = useNavigate();
+  const isDark = variant === "dark";
 
   return (
     <div
-      className="bg-card border border-border rounded-xl p-6 cursor-pointer hover:border-primary/20 hover:shadow-sm transition-all duration-200"
+      className={cn(
+        "rounded-lg p-4 cursor-pointer transition-all duration-200",
+        isDark
+          ? "hover:bg-primary-foreground/5"
+          : "bg-card border border-border hover:border-primary/20 hover:shadow-sm p-6"
+      )}
       onClick={() => navigate("/quote")}
       role="button"
       tabIndex={0}
@@ -25,11 +35,17 @@ export function HomepageWizardStrip() {
       }}
     >
       {/* Label */}
-      <div className="flex items-center justify-between mb-5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <div className="flex items-center justify-between mb-4">
+        <p className={cn(
+          "text-[10px] font-semibold uppercase tracking-[0.2em]",
+          isDark ? "text-primary-foreground/40" : "text-muted-foreground"
+        )}>
           Pre-Engineering Assessment — 8 Steps
         </p>
-        <span className="text-xs text-primary font-medium hidden sm:inline">
+        <span className={cn(
+          "text-xs font-medium hidden sm:inline",
+          isDark ? "text-accent/80" : "text-primary"
+        )}>
           Start assessment →
         </span>
       </div>
@@ -41,20 +57,30 @@ export function HomepageWizardStrip() {
             <div className="flex flex-col items-center min-w-[40px]">
               <div
                 className={cn(
-                  "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-colors",
+                  "w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold border transition-colors",
                   index === 0
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-muted text-muted-foreground border-border"
+                    ? isDark
+                      ? "bg-accent text-accent-foreground border-accent"
+                      : "bg-primary text-primary-foreground border-primary"
+                    : isDark
+                      ? "bg-primary-foreground/8 text-primary-foreground/50 border-primary-foreground/15"
+                      : "bg-muted text-muted-foreground border-border"
                 )}
               >
                 {index + 1}
               </div>
-              <span className="mt-2 text-[11px] font-medium text-muted-foreground text-center max-w-[80px] leading-tight">
+              <span className={cn(
+                "mt-1.5 text-[10px] font-medium text-center max-w-[72px] leading-tight",
+                isDark ? "text-primary-foreground/40" : "text-muted-foreground"
+              )}>
                 {title}
               </span>
             </div>
             {index < stepTitles.length - 1 && (
-              <div className="flex-1 h-0.5 mx-2 bg-border" />
+              <div className={cn(
+                "flex-1 h-px mx-1.5",
+                isDark ? "bg-primary-foreground/10" : "bg-border"
+              )} />
             )}
           </div>
         ))}
@@ -63,16 +89,24 @@ export function HomepageWizardStrip() {
       {/* Step indicators — mobile */}
       <div className="md:hidden">
         <div className="flex items-center justify-between text-sm mb-2">
-          <span className="font-medium text-foreground">8 assessment steps</span>
-          <span className="text-muted-foreground text-xs">~4 min</span>
+          <span className={cn(
+            "font-medium",
+            isDark ? "text-primary-foreground/70" : "text-foreground"
+          )}>8 assessment steps</span>
+          <span className={cn(
+            "text-xs",
+            isDark ? "text-primary-foreground/40" : "text-muted-foreground"
+          )}>~4 min</span>
         </div>
         <div className="flex gap-1">
           {stepTitles.map((_, index) => (
             <div
               key={index}
               className={cn(
-                "flex-1 h-2 rounded-full",
-                index === 0 ? "bg-primary" : "bg-border"
+                "flex-1 h-1.5 rounded-full",
+                index === 0
+                  ? "bg-accent"
+                  : isDark ? "bg-primary-foreground/10" : "bg-border"
               )}
             />
           ))}
