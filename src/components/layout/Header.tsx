@@ -23,14 +23,16 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/8 bg-primary/95 backdrop-blur supports-[backdrop-filter]:bg-primary/85">
       <nav className="container-wide flex h-14 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5">
+        <Link to="/" className="flex items-center gap-3">
           <img 
             src={tdLogo} 
             alt="TDPaintCell Logo" 
-            className="h-8 w-8 rounded-lg object-cover"
+            className="h-9 w-9 rounded-lg object-cover"
           />
-          <span className="text-lg font-semibold text-primary-foreground">PaintCell</span>
-          <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-medium text-accent/80 bg-accent/10 border border-accent/20 rounded-full px-2 py-0.5 ml-1">
+          <span className="text-2xl md:text-3xl font-bold tracking-tight text-primary-foreground leading-none">
+            Painting System
+          </span>
+          <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-medium text-accent/80 bg-accent/10 border border-accent/20 rounded-full px-2 py-0.5">
             <Sparkles className="h-2.5 w-2.5" />
             AI
           </span>
