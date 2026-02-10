@@ -48,7 +48,7 @@ export function ProjectInterfacePanel() {
             Start your robotic painting project
           </h1>
           <p className="text-primary-foreground/50 text-base md:text-lg">
-            Our AI Agent
+            Describe your application, parts, or production line — our AI agent will guide you through the assessment.
           </p>
         </div>
 
