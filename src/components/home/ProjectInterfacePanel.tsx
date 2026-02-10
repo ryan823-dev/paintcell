@@ -126,9 +126,9 @@ export function ProjectInterfacePanel() {
         </div>
       </div>
 
-      {/* Wizard Strip — bottom layer */}
-      <div className="border-t border-primary-foreground/8">
-        <div className="container-wide py-5">
+      {/* Wizard Strip — bottom layer, ~1/4 of viewport */}
+      <div className="flex-[1] border-t border-primary-foreground/8 flex items-center">
+        <div className="container-wide w-full py-5">
           <HomepageWizardStrip variant="dark" />
         </div>
       </div>
