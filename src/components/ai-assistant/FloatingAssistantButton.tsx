@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,8 +10,10 @@ export function FloatingAssistantButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [projectMessage, setProjectMessage] = useState<string | null>(null);
+  const location = useLocation();
 
-  // Only animate on first page load per session
+  const isHomepage = location.pathname === "/";
+
   useEffect(() => {
     const animated = sessionStorage.getItem("assistant-animated");
     if (!animated) {
@@ -20,11 +23,39 @@ export function FloatingAssistantButton() {
     }
   }, []);
 
+  // Listen for programmatic trigger from homepage panel
+  useEffect(() => {
+    const handleTrigger = () => {
+      const msg = sessionStorage.getItem("project-init-message");
+      if (msg) {
+        setProjectMessage(msg);
+        sessionStorage.removeItem("project-init-message");
+      }
+      setIsOpen(true);
+    };
+
+    const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
+    if (btn) {
+      btn.addEventListener('click', handleTrigger);
+      return () => btn.removeEventListener('click', handleTrigger);
+    }
+  }, []);
+
   return (
     <>
-      {/* Floating CTA Button */}
+      {/* Hidden trigger element for programmatic opening */}
+      <button data-assistant-trigger className="hidden" onClick={() => {
+        const msg = sessionStorage.getItem("project-init-message");
+        if (msg) {
+          setProjectMessage(msg);
+          sessionStorage.removeItem("project-init-message");
+        }
+        setIsOpen(true);
+      }} />
+
+      {/* Floating CTA — hidden on homepage since the panel IS the entry */}
       <AnimatePresence>
-        {!isOpen && (
+        {!isOpen && !isHomepage && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -34,27 +65,12 @@ export function FloatingAssistantButton() {
           >
             <motion.div
               initial={!hasAnimated ? { scale: 1 } : false}
-              animate={!hasAnimated ? { 
-                scale: [1, 1.03, 1],
-              } : {}}
-              transition={!hasAnimated ? { 
-                duration: 2,
-                repeat: 1,
-                ease: "easeInOut"
-              } : {}}
+              animate={!hasAnimated ? { scale: [1, 1.03, 1] } : {}}
+              transition={!hasAnimated ? { duration: 2, repeat: 1, ease: "easeInOut" } : {}}
               onAnimationComplete={() => setHasAnimated(true)}
             >
               <Button
-                onClick={() => {
-                  // Check for project init message from homepage panel
-                  const msg = sessionStorage.getItem("project-init-message");
-                  if (msg) {
-                    setProjectMessage(msg);
-                    sessionStorage.removeItem("project-init-message");
-                  }
-                  setIsOpen(true);
-                }}
-                data-assistant-trigger
+                onClick={() => setIsOpen(true)}
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
                   "bg-accent hover:bg-accent/90",
