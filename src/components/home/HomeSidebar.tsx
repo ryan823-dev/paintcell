@@ -27,7 +27,7 @@ export function HomeSidebar() {
   };
 
   return (
-    <aside className="hidden lg:flex flex-col w-[220px] shrink-0 border-r border-primary-foreground/8 h-full">
+    <aside className="hidden lg:flex flex-col w-[240px] shrink-0 border-r border-primary-foreground/8 h-full">
       <nav className="flex flex-col gap-0.5 p-3 pt-6">
         {sidebarItems.map((item) => (
           <button
@@ -36,7 +36,7 @@ export function HomeSidebar() {
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-primary-foreground/50 hover:text-primary-foreground hover:bg-primary-foreground/5 transition-colors text-left"
           >
             <item.icon className="h-4 w-4 shrink-0" />
-            <span className="truncate">{item.label}</span>
+            <span>{item.label}</span>
           </button>
         ))}
       </nav>
