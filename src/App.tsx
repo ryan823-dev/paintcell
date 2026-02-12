@@ -47,9 +47,18 @@ import PaintCellRFQTemplate from "./pages/resources/tools/PaintCellRFQTemplate";
 import SiteReadinessChecklist from "./pages/resources/tools/SiteReadinessChecklist";
 import FeasibilityChecklist from "./pages/resources/tools/FeasibilityChecklist";
 
+// Knowledge articles
+import HowToChoosePaintRobot from "./pages/resources/knowledge/HowToChoosePaintRobot";
+import RoboticPaintingCostGuide from "./pages/resources/knowledge/RoboticPaintingCostGuide";
+import PaintBoothDesignBasics from "./pages/resources/knowledge/PaintBoothDesignBasics";
+
 // Industry pages
 import IndustryPage from "./pages/IndustryPage";
 import Industries from "./pages/Industries";
+
+// Solution pages
+import Solutions from "./pages/Solutions";
+import SolutionPage from "./pages/SolutionPage";
 
 // Console pages
 import ConsoleLogin from "./pages/console/ConsoleLogin";
@@ -137,6 +146,15 @@ const App = () => (
               <Route path="/resources/tools-templates/paint-cell-rfq-template" element={<PaintCellRFQTemplate />} />
               <Route path="/resources/tools-templates/site-readiness-checklist" element={<SiteReadinessChecklist />} />
               <Route path="/resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
+              
+              {/* Knowledge articles */}
+              <Route path="/resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
+              <Route path="/resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
+              <Route path="/resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
+              
+              {/* Solution pages */}
+              <Route path="/solutions" element={<Solutions />} />
+              <Route path="/solutions/:slug" element={<SolutionPage />} />
               
               {/* Industry pages */}
               <Route path="/industries" element={<Industries />} />
