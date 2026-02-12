@@ -21,9 +21,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/8 bg-primary/95 backdrop-blur supports-[backdrop-filter]:bg-primary/85">
-      <nav className="container-wide flex h-14 items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3">
+      <nav className="flex h-14 items-center">
+        {/* Logo — aligned with sidebar width */}
+        <Link to="/" className="flex items-center gap-3 w-[220px] shrink-0 pl-4">
           <img 
             src={tdLogo} 
             alt="TDPaintCell Logo" 
@@ -38,8 +38,11 @@ export function Header() {
           </span>
         </Link>
 
+        {/* Spacer */}
+        <div className="flex-1" />
+
         {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:gap-1">
+        <div className="hidden md:flex md:items-center md:gap-1 pr-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
