@@ -51,17 +51,17 @@ export function HomepageWizardStrip({ variant = "light" }: HomepageWizardStripPr
               index === 0
                 ? isDark
                   ? "bg-accent text-accent-foreground border-accent"
-                  : "bg-primary text-primary-foreground border-primary"
+                  : "bg-accent text-accent-foreground border-accent"
                 : isDark
                   ? "bg-primary-foreground/5 border-primary-foreground/10 text-primary-foreground/40"
-                  : "bg-muted/50 border-border text-muted-foreground"
+                  : "bg-white border-border/80 text-muted-foreground"
             )}
           >
             <span className={cn(
               "block text-lg font-bold mb-1",
               index === 0
-                ? isDark ? "text-accent-foreground" : "text-primary-foreground"
-                : isDark ? "text-primary-foreground/30" : "text-muted-foreground/60"
+                ? isDark ? "text-accent-foreground" : "text-accent-foreground"
+                : isDark ? "text-primary-foreground/30" : "text-muted-foreground/70"
             )}>
               {index + 1}
             </span>
