@@ -6,115 +6,110 @@
 
 @layer base {
   :root {
-    /* Industrial B2B Color Palette */
-    --background: 210 20% 98%;
-    --foreground: 215 25% 15%;
+    /* Industrial Gray Color Palette */
+    --background: 200 10% 97%;
+    --foreground: 200 10% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 200 10% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 200 10% 12%;
 
-    /* Deep Industrial Blue */
-    --primary: 212 55% 22%;
-    --primary-foreground: 210 40% 98%;
+    /* Industrial Charcoal */
+    --primary: 200 8% 18%;
+    --primary-foreground: 200 10% 96%;
 
     /* Light Industrial Gray */
-    --secondary: 210 15% 93%;
-    --secondary-foreground: 215 25% 20%;
+    --secondary: 200 6% 92%;
+    --secondary-foreground: 200 8% 22%;
 
-    --muted: 210 15% 95%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 200 6% 94%;
+    --muted-foreground: 200 5% 45%;
 
     /* Industrial Amber/Orange Accent */
     --accent: 32 95% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 200 10% 96%;
 
-    --border: 210 20% 88%;
-    --input: 210 20% 88%;
-    --ring: 212 55% 22%;
+    --border: 200 8% 86%;
+    --input: 200 8% 86%;
+    --ring: 200 8% 18%;
 
     --radius: 0.5rem;
 
     /* ========================================
        TYPOGRAPHY TOKENS - Unified text colors
        ======================================== */
-    /* Primary text: headings, key labels, important content */
-    --text-primary: 215 25% 15%;
-    /* Body text: paragraphs, normal content */
-    --text-body: 215 20% 25%;
-    /* Muted text: helpers, metadata, secondary info */
-    --text-muted: 215 15% 45%;
-    /* Inverse text: on dark/hero backgrounds */
-    --text-inverse: 210 40% 98%;
-    /* Inverse muted: secondary text on dark backgrounds */
-    --text-inverse-muted: 210 20% 80%;
+    --text-primary: 200 10% 12%;
+    --text-body: 200 8% 25%;
+    --text-muted: 200 5% 45%;
+    --text-inverse: 200 10% 96%;
+    --text-inverse-muted: 200 6% 78%;
 
     /* Custom tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(212 55% 18%) 0%, hsl(212 55% 28%) 100%);
-    --card-shadow: 0 4px 24px -4px hsl(215 25% 15% / 0.08);
-    --card-shadow-hover: 0 8px 32px -4px hsl(215 25% 15% / 0.12);
-    --section-gradient: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(210 15% 95%) 100%);
+    --hero-gradient: linear-gradient(135deg, hsl(200 8% 14%) 0%, hsl(200 8% 24%) 100%);
+    --card-shadow: 0 4px 24px -4px hsl(200 10% 12% / 0.08);
+    --card-shadow-hover: 0 8px 32px -4px hsl(200 10% 12% / 0.12);
+    --section-gradient: linear-gradient(180deg, hsl(200 10% 97%) 0%, hsl(200 6% 94%) 100%);
     
     /* Sidebar tokens */
-    --sidebar-background: 210 20% 98%;
-    --sidebar-foreground: 215 25% 15%;
-    --sidebar-primary: 212 55% 22%;
+    --sidebar-background: 200 10% 97%;
+    --sidebar-foreground: 200 10% 12%;
+    --sidebar-primary: 200 8% 18%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 15% 93%;
-    --sidebar-accent-foreground: 215 25% 20%;
-    --sidebar-border: 210 20% 88%;
-    --sidebar-ring: 212 55% 22%;
+    --sidebar-accent: 200 6% 92%;
+    --sidebar-accent-foreground: 200 8% 22%;
+    --sidebar-border: 200 8% 86%;
+    --sidebar-ring: 200 8% 18%;
   }
 
   .dark {
-    --background: 215 25% 10%;
-    --foreground: 210 20% 95%;
+    --background: 200 8% 10%;
+    --foreground: 200 6% 92%;
 
-    --card: 215 25% 14%;
-    --card-foreground: 210 20% 95%;
+    --card: 200 8% 14%;
+    --card-foreground: 200 6% 92%;
 
-    --popover: 215 25% 14%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 200 8% 14%;
+    --popover-foreground: 200 6% 92%;
 
-    --primary: 210 60% 60%;
-    --primary-foreground: 215 25% 10%;
+    --primary: 200 10% 55%;
+    --primary-foreground: 200 8% 10%;
 
-    --secondary: 215 20% 20%;
-    --secondary-foreground: 210 20% 95%;
+    --secondary: 200 6% 20%;
+    --secondary-foreground: 200 6% 92%;
 
-    --muted: 215 20% 18%;
-    --muted-foreground: 210 15% 60%;
+    --muted: 200 6% 18%;
+    --muted-foreground: 200 5% 58%;
 
     --accent: 32 95% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62% 50%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 200 10% 96%;
 
-    --border: 215 20% 22%;
-    --input: 215 20% 22%;
-    --ring: 210 60% 60%;
+    --border: 200 6% 22%;
+    --input: 200 6% 22%;
+    --ring: 200 10% 55%;
 
     /* Dark mode typography tokens */
-    --text-primary: 210 20% 95%;
-    --text-body: 210 15% 85%;
-    --text-muted: 210 15% 60%;
-    --text-inverse: 215 25% 15%;
-    --text-inverse-muted: 215 20% 30%;
+    --text-primary: 200 6% 92%;
+    --text-body: 200 5% 82%;
+    --text-muted: 200 5% 58%;
+    --text-inverse: 200 8% 14%;
+    --text-inverse-muted: 200 6% 28%;
 
-    --sidebar-background: 215 25% 12%;
-    --sidebar-foreground: 210 20% 95%;
-    --sidebar-primary: 210 60% 60%;
-    --sidebar-primary-foreground: 215 25% 10%;
-    --sidebar-accent: 215 20% 18%;
-    --sidebar-accent-foreground: 210 20% 95%;
-    --sidebar-border: 215 20% 22%;
-    --sidebar-ring: 210 60% 60%;
+    --sidebar-background: 200 8% 12%;
+    --sidebar-foreground: 200 6% 92%;
+    --sidebar-primary: 200 10% 55%;
+    --sidebar-primary-foreground: 200 8% 10%;
+    --sidebar-accent: 200 6% 18%;
+    --sidebar-accent-foreground: 200 6% 92%;
+    --sidebar-border: 200 6% 22%;
+    --sidebar-ring: 200 10% 55%;
   }
 }
 
@@ -161,7 +156,7 @@
   }
 
   a:not([class*="text-"]):hover {
-    color: hsl(212 55% 30%);
+    color: hsl(200 8% 28%);
   }
 
   /* Small/helper text */
@@ -190,7 +185,7 @@
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(212 55% 35%) 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(200 8% 32%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
