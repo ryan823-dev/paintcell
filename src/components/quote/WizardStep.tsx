@@ -23,17 +23,17 @@ export function WizardStep({ step, formData, updateFormData }: WizardStepProps) 
   return (
     <div className="animate-fade-in">
       <div className="mb-8">
-        <h2 className="text-xl font-bold text-primary-foreground mb-2">{step.title}</h2>
-        <p className="text-primary-foreground/50 text-sm">{step.description}</p>
+        <h2 className="text-xl font-bold mb-2">{step.title}</h2>
+        <p className="text-muted-foreground text-sm">{step.description}</p>
         {step.helperText && (
-          <p className="text-xs text-primary-foreground/30 mt-2 italic">{step.helperText}</p>
+          <p className="text-xs text-muted-foreground/60 mt-2 italic">{step.helperText}</p>
         )}
       </div>
 
       <div className="space-y-8">
         {step.questions.map((question) => (
           <div key={question.id} className="space-y-3">
-            <Label className="text-sm font-medium text-primary-foreground/80">
+            <Label className="text-sm font-medium">
               {question.label}
               {question.required && <span className="text-accent ml-1">*</span>}
             </Label>
@@ -50,11 +50,11 @@ export function WizardStep({ step, formData, updateFormData }: WizardStepProps) 
                     className={cn(
                       "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
                       formData[question.id] === option.value
-                        ? "border-accent/50 bg-accent/10 text-primary-foreground"
-                        : "border-primary-foreground/10 hover:border-primary-foreground/20 hover:bg-primary-foreground/5 text-primary-foreground/70"
+                        ? "border-accent/50 bg-accent/5"
+                        : "border-border hover:border-accent/20 hover:bg-muted/50"
                     )}
                   >
-                    <RadioGroupItem value={option.value} id={`${question.id}-${option.value}`} className="border-primary-foreground/30 text-accent" />
+                    <RadioGroupItem value={option.value} id={`${question.id}-${option.value}`} className="text-accent" />
                     <span className="text-sm font-medium">{option.label}</span>
                   </label>
                 ))}
@@ -72,8 +72,8 @@ export function WizardStep({ step, formData, updateFormData }: WizardStepProps) 
                       className={cn(
                         "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
                         isChecked
-                          ? "border-accent/50 bg-accent/10 text-primary-foreground"
-                          : "border-primary-foreground/10 hover:border-primary-foreground/20 hover:bg-primary-foreground/5 text-primary-foreground/70"
+                          ? "border-accent/50 bg-accent/5"
+                          : "border-border hover:border-accent/20 hover:bg-muted/50"
                       )}
                     >
                       <Checkbox
@@ -82,7 +82,7 @@ export function WizardStep({ step, formData, updateFormData }: WizardStepProps) 
                           handleCheckboxChange(question.id, option.value, checked as boolean)
                         }
                         id={`${question.id}-${option.value}`}
-                        className="border-primary-foreground/30 data-[state=checked]:bg-accent data-[state=checked]:border-accent"
+                        className="data-[state=checked]:bg-accent data-[state=checked]:border-accent"
                       />
                       <span className="text-sm font-medium">{option.label}</span>
                     </label>

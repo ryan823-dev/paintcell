@@ -12,7 +12,7 @@ export function Section({ children, className, variant = "default", id }: Sectio
   const variants = {
     default: "bg-background",
     muted: "section-gradient",
-    primary: "hero-gradient text-primary-foreground",
+    primary: "bg-muted border-t border-border",
   };
 
   return (

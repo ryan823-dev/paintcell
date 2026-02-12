@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const TOTAL_STEPS = 8; // 6 question steps + summary + contact
+const TOTAL_STEPS = 8;
 
 export function QuoteWizard() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -25,7 +25,6 @@ export function QuoteWizard() {
 
   const validateCurrentStep = (): boolean => {
     if (currentStep >= wizardSteps.length) return true;
-    
     const step = wizardSteps[currentStep];
     return step.questions.every((question) => {
       const value = formData[question.id];
@@ -50,39 +49,25 @@ export function QuoteWizard() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Submit lead via edge function (handles DB insert + email notification)
       const { error } = await supabase.functions.invoke('send-quote-notification', {
-        body: {
-          ...formData,
-          source: 'wizard'
-        }
+        body: { ...formData, source: 'wizard' }
       });
-
       if (error) {
-        // Log error only in development
-        if (import.meta.env.DEV) {
-          console.error("Error sending notification:", error);
-        }
+        if (import.meta.env.DEV) console.error("Error sending notification:", error);
         toast.error("Failed to send quote request. Please try again.");
         return;
       }
-
       toast.success("Quote request submitted successfully!");
       setSubmitted(true);
     } catch (error) {
-      // Log error only in development
-      if (import.meta.env.DEV) {
-        console.error("Error submitting quote:", error);
-      }
+      if (import.meta.env.DEV) console.error("Error submitting quote:", error);
       toast.error("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (submitted) {
-    return <SubmissionSuccess />;
-  }
+  if (submitted) return <SubmissionSuccess />;
 
   const isQuestionStep = currentStep < wizardSteps.length;
   const isSummaryStep = currentStep === wizardSteps.length;
@@ -96,39 +81,22 @@ export function QuoteWizard() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Progress */}
-      <WizardProgress
-        currentStep={currentStep}
-        totalSteps={TOTAL_STEPS}
-        stepTitles={stepTitles}
-      />
+      <WizardProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} stepTitles={stepTitles} />
 
-      {/* Step Content */}
-      <div className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 md:p-8 min-h-[400px]">
+      <div className="rounded-2xl border border-border bg-card p-6 md:p-8 min-h-[400px]">
         {isQuestionStep && (
-          <WizardStep
-            step={wizardSteps[currentStep]}
-            formData={formData}
-            updateFormData={updateFormData}
-          />
+          <WizardStep step={wizardSteps[currentStep]} formData={formData} updateFormData={updateFormData} />
         )}
-
-        {isSummaryStep && (
-          <WizardSummary formData={formData} />
-        )}
-
-        {isContactStep && (
-          <ContactForm formData={formData} updateFormData={updateFormData} />
-        )}
+        {isSummaryStep && <WizardSummary formData={formData} />}
+        {isContactStep && <ContactForm formData={formData} updateFormData={updateFormData} />}
       </div>
 
-      {/* Navigation */}
       <div className="flex justify-between mt-6">
         <Button
           variant="outline"
           onClick={handlePrev}
           disabled={currentStep === 0}
-          className="gap-2 border-primary-foreground/15 text-primary-foreground/60 hover:text-primary-foreground hover:bg-primary-foreground/5"
+          className="gap-2"
         >
           <ChevronLeft className="h-4 w-4" />
           Previous

@@ -10,12 +10,7 @@ const caseStudies = [
     industry: "Automotive",
     challenge: "Manual spray booth struggling with Class A finish requirements and increasing production demands. Reject rate at 8% with significant rework labor.",
     solution: "Deployed fully automatic paint cell with dual robot configuration, electrostatic spray system, and integrated quality inspection.",
-    outcomes: [
-      "Reject rate reduced to 1.2%",
-      "Throughput increased 40%",
-      "Rework labor eliminated",
-      "ROI achieved in 18 months",
-    ],
+    outcomes: ["Reject rate reduced to 1.2%", "Throughput increased 40%", "Rework labor eliminated", "ROI achieved in 18 months"],
   },
   {
     id: 2,
@@ -23,12 +18,7 @@ const caseStudies = [
     challenge: "Large parts requiring thick protective paint. Manual process led to inconsistent film build and paint failures in field.",
     industry: "Industrial",
     solution: "Custom cell design with rail-mounted robot for extended reach. Recipe-based control ensures consistent paint thickness across all part geometries.",
-    outcomes: [
-      "Film build variation reduced 75%",
-      "Field warranty claims down 60%",
-      "Operator safety significantly improved",
-      "Material waste reduced 25%",
-    ],
+    outcomes: ["Film build variation reduced 75%", "Field warranty claims down 60%", "Operator safety significantly improved", "Material waste reduced 25%"],
   },
   {
     id: 3,
@@ -36,12 +26,7 @@ const caseStudies = [
     industry: "Electronics",
     challenge: "High product mix with daily color changes. Previous system required 2-hour changeovers and generated significant purge waste.",
     solution: "Flexible cell with automatic color change system and quick-clean gun technology. Recipe management handles 50+ part numbers.",
-    outcomes: [
-      "Color changeover under 15 minutes",
-      "Purge waste reduced 80%",
-      "Same cell handles all product variants",
-      "Production schedule flexibility improved",
-    ],
+    outcomes: ["Color changeover under 15 minutes", "Purge waste reduced 80%", "Same cell handles all product variants", "Production schedule flexibility improved"],
   },
   {
     id: 4,
@@ -49,27 +34,21 @@ const caseStudies = [
     industry: "Aerospace",
     challenge: "Specialized paints on high-value parts with stringent documentation requirements. Manual process couldn't meet traceability standards.",
     solution: "Semi-automatic cell with comprehensive data logging, barcode tracking, and automatic process verification.",
-    outcomes: [
-      "Full compliance with AS9100 requirements",
-      "Zero documentation non-conformances",
-      "Paint consistency improved significantly",
-      "Audit preparation time reduced 90%",
-    ],
+    outcomes: ["Full compliance with AS9100 requirements", "Zero documentation non-conformances", "Paint consistency improved significantly", "Audit preparation time reduced 90%"],
   },
 ];
 
 export default function CaseStudies() {
   return (
     <>
-      {/* Header */}
-      <section className="hero-gradient relative">
-        <div className="absolute inset-0 industrial-pattern opacity-30" />
-        <div className="container-wide relative py-12 md:py-16">
+      {/* Header — light */}
+      <section className="bg-muted border-b border-border">
+        <div className="container-wide py-12 md:py-16">
           <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
               Case Studies
             </h1>
-            <p className="text-lg text-primary-foreground/80">
+            <p className="text-lg text-muted-foreground">
               Real implementations demonstrating measurable improvements in quality, 
               throughput, and operational efficiency.
             </p>
@@ -81,41 +60,32 @@ export default function CaseStudies() {
       <Section variant="default">
         <div className="space-y-8">
           {caseStudies.map((study) => (
-            <div
-              key={study.id}
-              className="bg-card rounded-xl border border-border overflow-hidden"
-            >
+            <div key={study.id} className="bg-card rounded-xl border border-border overflow-hidden">
               <div className="p-6 md:p-8">
                 <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
+                  <span className="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full">
                     {study.industry}
                   </span>
-                  <h2 className="text-2xl font-bold text-foreground">{study.title}</h2>
+                  <h2 className="text-2xl font-bold">{study.title}</h2>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-destructive" />
                       Challenge
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {study.challenge}
-                    </p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{study.challenge}</p>
                   </div>
-
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-accent" />
                       Solution
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {study.solution}
-                    </p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{study.solution}</p>
                   </div>
-
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-accent" />
                       Outcomes
                     </h3>
