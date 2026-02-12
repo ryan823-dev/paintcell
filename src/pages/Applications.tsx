@@ -5,87 +5,63 @@ import { Section } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { ChevronRight, Car, Cpu, Building2, Plane, Truck, Package } from "lucide-react";
 import heroApplications from "@/assets/hero-applications.jpg";
-
-const applications = [
-  {
-    icon: Car, title: "Automotive Components",
-    description: "High-volume painting of body panels, trim, and structural components with Class A finish requirements.",
-    challenges: ["Complex geometries requiring multi-angle spray", "High cosmetic standards with zero tolerance for defects", "Takt-time constraints in synchronized production"],
-    whyRobotic: "Robotic painting ensures consistent film build and surface finish across thousands of parts while maintaining cycle time targets.",
-  },
-  {
-    icon: Cpu, title: "Electronics & Appliances",
-    description: "Precision painting of housings, enclosures, and consumer product components.",
-    challenges: ["Mixed materials (metal and plastic) on same line", "Frequent color and product changeovers", "Decorative finish and color matching requirements"],
-    whyRobotic: "Flexible robot programming handles part variety while recipe management ensures paint specification compliance.",
-  },
-  {
-    icon: Building2, title: "Industrial Equipment",
-    description: "Protective and decorative painting of machinery, enclosures, and heavy equipment.",
-    challenges: ["Large part dimensions requiring extended reach", "Thick paint builds for corrosion protection", "Batch production with part-to-part variation"],
-    whyRobotic: "6-axis robots with high payload capacity handle large parts with consistent coverage in all orientations.",
-  },
-  {
-    icon: Plane, title: "Aerospace Components",
-    description: "Specialized painting for structural and interior aerospace parts.",
-    challenges: ["Stringent traceability and documentation requirements", "Exotic materials and precise paint specifications", "Low volume with high part value"],
-    whyRobotic: "Process control and data logging ensure full compliance while robotic precision minimizes rework on high-value parts.",
-  },
-  {
-    icon: Truck, title: "Commercial Vehicles",
-    description: "Painting of truck bodies, trailers, and construction equipment components.",
-    challenges: ["Very large part sizes", "Outdoor exposure durability requirements", "Mixed production with custom configurations"],
-    whyRobotic: "Gantry or rail-mounted robots extend reach for oversized parts while maintaining paint quality standards.",
-  },
-  {
-    icon: Package, title: "General Manufacturing",
-    description: "Broad category covering metal fabrication, furniture, and consumer goods.",
-    challenges: ["High product mix with varying batch sizes", "Labor availability and training challenges", "Inconsistent quality from manual processes"],
-    whyRobotic: "Flexible automation handles product variety while providing consistent quality independent of operator skill.",
-  },
-];
+import { useI18n } from "@/i18n";
 
 export default function Applications() {
+  const { t } = useI18n();
+  const a = t.applications || {};
+
+  const applications = [
+    {
+      icon: Car, title: a.automotiveTitle || "Automotive Components", description: a.automotiveDesc || "",
+      challenges: [a.automotiveChallenge1 || "", a.automotiveChallenge2 || "", a.automotiveChallenge3 || ""],
+      whyRobotic: a.automotiveWhy || "",
+    },
+    {
+      icon: Cpu, title: a.electronicsTitle || "Electronics & Appliances", description: a.electronicsDesc || "",
+      challenges: [a.electronicsChallenge1 || "", a.electronicsChallenge2 || "", a.electronicsChallenge3 || ""],
+      whyRobotic: a.electronicsWhy || "",
+    },
+    {
+      icon: Building2, title: a.industrialTitle || "Industrial Equipment", description: a.industrialDesc || "",
+      challenges: [a.industrialChallenge1 || "", a.industrialChallenge2 || "", a.industrialChallenge3 || ""],
+      whyRobotic: a.industrialWhy || "",
+    },
+    {
+      icon: Plane, title: a.aerospaceTitle || "Aerospace Components", description: a.aerospaceDesc || "",
+      challenges: [a.aerospaceChallenge1 || "", a.aerospaceChallenge2 || "", a.aerospaceChallenge3 || ""],
+      whyRobotic: a.aerospaceWhy || "",
+    },
+    {
+      icon: Truck, title: a.commercialTitle || "Commercial Vehicles", description: a.commercialDesc || "",
+      challenges: [a.commercialChallenge1 || "", a.commercialChallenge2 || "", a.commercialChallenge3 || ""],
+      whyRobotic: a.commercialWhy || "",
+    },
+    {
+      icon: Package, title: a.generalTitle || "General Manufacturing", description: a.generalDesc || "",
+      challenges: [a.generalChallenge1 || "", a.generalChallenge2 || "", a.generalChallenge3 || ""],
+      whyRobotic: a.generalWhy || "",
+    },
+  ];
+
   return (
     <>
-      {/* Header with image */}
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
-        <motion.img 
-          src={heroApplications} 
-          alt="Industrial robotic spray painting applications" 
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-        />
+        <motion.img src={heroApplications} alt="Industrial robotic spray painting applications" className="absolute inset-0 w-full h-full object-cover" initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.2, ease: "easeOut" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/50" />
         <div className="container-wide relative h-full flex items-center">
-          <motion.div 
-            className="max-w-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h1 className="text-3xl md:text-4xl font-bold text-inverse mb-4">
-              Applications
-            </h1>
-            <p className="text-lg text-inverse-muted">
-              Robotic spray painting solutions across industries. Each application presents unique 
-              challenges that industrial automation is engineered to solve.
-            </p>
+          <motion.div className="max-w-2xl" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}>
+            <h1 className="text-3xl md:text-4xl font-bold text-inverse mb-4">{a.title || "Applications"}</h1>
+            <p className="text-lg text-inverse-muted">{a.subtitle || ""}</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Applications Grid */}
       <Section variant="default">
         <StaggerContainer className="space-y-8" staggerDelay={0.15}>
-          {applications.map((app, index) => (
+          {applications.map((app) => (
             <StaggerItem key={app.title}>
-              <motion.div
-                className="bg-card rounded-xl border border-border overflow-hidden"
-                whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              >
+              <motion.div className="bg-card rounded-xl border border-border overflow-hidden" whileHover={{ y: -3, transition: { duration: 0.2 } }}>
                 <div className="p-6 md:p-8">
                   <div className="flex items-start gap-4 mb-6">
                     <div className="w-14 h-14 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
@@ -96,10 +72,9 @@ export default function Applications() {
                       <p className="text-muted-foreground">{app.description}</p>
                     </div>
                   </div>
-
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h3 className="font-semibold mb-3">Typical Challenges</h3>
+                      <h3 className="font-semibold mb-3">{a.typicalChallenges || "Typical Challenges"}</h3>
                       <ul className="space-y-2">
                         {app.challenges.map((challenge, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -110,7 +85,7 @@ export default function Applications() {
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-3">Why Robotic Painting</h3>
+                      <h3 className="font-semibold mb-3">{a.whyRoboticPainting || "Why Robotic Painting"}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{app.whyRobotic}</p>
                     </div>
                   </div>
@@ -121,19 +96,13 @@ export default function Applications() {
         </StaggerContainer>
       </Section>
 
-      {/* CTA */}
       <Section variant="muted">
         <FadeIn className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Have a Specific Application in Mind?
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            Our configurator helps you define your requirements regardless of industry. 
-            Start by answering a few questions about your painting needs.
-          </p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">{a.specificApplication || "Have a Specific Application in Mind?"}</h2>
+          <p className="text-muted-foreground mb-6">{a.specificApplicationDesc || ""}</p>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground transition-transform hover:scale-105">
             <Link to="/quote" className="flex items-center gap-2">
-              Configure Paint Cell
+              {t.about?.configurePaintCell || "Configure Paint Cell"}
               <ChevronRight className="h-4 w-4" />
             </Link>
           </Button>
