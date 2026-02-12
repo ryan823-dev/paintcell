@@ -22,7 +22,7 @@ export function ProjectInterfacePanel() {
   return (
     <section className="bg-primary text-primary-foreground h-[calc(100vh-3.5rem)] flex flex-col">
       {/* Main — vertically centered, ~3/4 of viewport */}
-      <div className="flex-[3] flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 py-6 lg:py-10">
+      <div className="flex-[3] flex flex-col items-center justify-start px-6 sm:px-10 lg:px-16 pt-8 lg:pt-14 py-6">
         {/* Status bar */}
         <div className="flex items-center gap-4 mb-8 lg:mb-10 text-xs font-medium tracking-[0.15em] uppercase">
           <span className="flex items-center gap-2 text-accent">
