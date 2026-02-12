@@ -53,9 +53,9 @@ export function WizardProgress({ currentStep, totalSteps, stepTitles }: WizardPr
                     <div
                       className={cn(
                         "relative w-9 h-9 rounded-full flex items-center justify-center text-xs font-mono font-bold transition-all duration-300 border",
-                        isCompleted && "bg-accent/10 border-accent/40 text-accent",
-                        isCurrent && "bg-accent border-accent text-accent-foreground shadow-[0_0_16px_hsl(192_70%_38%/0.3)]",
-                        isPending && "bg-muted border-border text-muted-foreground/40"
+                        isCompleted && "bg-accent/15 border-accent/50 text-accent",
+                        isCurrent && "bg-accent border-accent text-white shadow-[0_0_20px_hsl(192_70%_38%/0.35)]",
+                        isPending && "bg-white border-border text-muted-foreground/50"
                       )}
                     >
                       {isCompleted ? <Check className="h-3.5 w-3.5" /> : <span>{index + 1}</span>}
