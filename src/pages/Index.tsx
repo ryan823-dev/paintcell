@@ -107,6 +107,7 @@ export default function Index() {
     if (id === "ai-consultation") {
       setChatActive(true);
       setChatInitialMessage(null);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setChatActive(false);
     }
