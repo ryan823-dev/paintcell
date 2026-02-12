@@ -22,7 +22,7 @@ export function ProjectInterfacePanel() {
   return (
     <section className="bg-primary text-primary-foreground h-[calc(100vh-3.5rem)] flex flex-col">
       {/* Main — vertically centered, ~3/4 of viewport */}
-      <div className="flex-[3] flex flex-col items-center justify-center container-wide py-6 lg:py-10">
+      <div className="flex-[3] flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 py-6 lg:py-10">
         {/* Status bar — prominent */}
         <div className="flex items-center gap-4 mb-6 text-xs font-medium tracking-[0.15em] uppercase">
           <span className="flex items-center gap-2 text-accent">
@@ -53,7 +53,7 @@ export function ProjectInterfacePanel() {
         </div>
 
         {/* Chat input — glowing card */}
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-5xl">
           <div
             className={cn(
               "rounded-2xl border transition-all duration-300 p-1",
@@ -128,7 +128,7 @@ export function ProjectInterfacePanel() {
 
       {/* Wizard Strip — bottom layer, ~1/4 of viewport */}
       <div className="flex-[1] border-t border-primary-foreground/8 flex items-center">
-        <div className="container-wide w-full py-5">
+        <div className="px-6 sm:px-10 lg:px-16 w-full py-5">
           <HomepageWizardStrip variant="dark" />
         </div>
       </div>
