@@ -23,8 +23,8 @@ export function ProjectInterfacePanel() {
     <section className="bg-primary text-primary-foreground h-[calc(100vh-3.5rem)] flex flex-col">
       {/* Main — vertically centered, ~3/4 of viewport */}
       <div className="flex-[3] flex flex-col items-center justify-center px-6 sm:px-10 lg:px-16 py-6 lg:py-10">
-        {/* Status bar — prominent */}
-        <div className="flex items-center gap-4 mb-6 text-xs font-medium tracking-[0.15em] uppercase">
+        {/* Status bar */}
+        <div className="flex items-center gap-4 mb-8 lg:mb-10 text-xs font-medium tracking-[0.15em] uppercase">
           <span className="flex items-center gap-2 text-accent">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
@@ -39,15 +39,15 @@ export function ProjectInterfacePanel() {
         </div>
 
         {/* Central AI greeting */}
-        <div className="text-center mb-5 max-w-2xl">
-          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
+        <div className="text-center mb-8 lg:mb-10 max-w-3xl">
+          <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
             <Sparkles className="h-3 w-3" />
             AI-Powered Engineering
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-primary-foreground mb-3 leading-tight whitespace-nowrap">
+          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-primary-foreground mb-4 leading-tight whitespace-nowrap">
             Start your robotic painting project
           </h1>
-          <p className="text-primary-foreground/50 text-base md:text-lg">
+          <p className="text-primary-foreground/50 text-base md:text-lg leading-relaxed">
             Describe your application, parts, or production line — our AI agent will guide you through the assessment.
           </p>
         </div>
