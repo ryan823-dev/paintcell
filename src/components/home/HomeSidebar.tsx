@@ -1,20 +1,27 @@
 import { Target, Box, FolderOpen, BookOpen, FileText, MessageSquare } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const sidebarItems = [
-  { icon: Target, label: "Why Robotic Painting", anchor: "#why-robotic-painting" },
-  { icon: Box, label: "Paint Cell Solution", anchor: "#system-overview" },
-  { icon: FolderOpen, label: "Project References", anchor: "#project-references" },
-  { icon: BookOpen, label: "Engineering Library", href: "/resources/engineering-library" },
-  { icon: FileText, label: "Request a Quote", href: "/quote" },
-  { icon: MessageSquare, label: "AI Consultation", action: "open-assistant" },
+  { id: "ai-consultation", icon: MessageSquare, label: "AI Consultation", action: "open-assistant" },
+  { id: "why-robotic-painting", icon: Target, label: "Why Robotic Painting", anchor: "#why-robotic-painting" },
+  { id: "system-overview", icon: Box, label: "Paint Cell Solution", anchor: "#system-overview" },
+  { id: "project-references", icon: FolderOpen, label: "Project References", anchor: "#project-references" },
+  { id: "engineering-library", icon: BookOpen, label: "Engineering Library", href: "/resources/engineering-library" },
+  { id: "request-quote", icon: FileText, label: "Request a Quote", href: "/quote" },
 ];
 
-export function HomeSidebar() {
+interface HomeSidebarProps {
+  activeItem?: string;
+  onItemClick?: (id: string) => void;
+}
+
+export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: HomeSidebarProps) {
   const handleClick = (item: typeof sidebarItems[0]) => {
+    if (onItemClick) {
+      onItemClick(item.id);
+    }
     if (item.action === "open-assistant") {
-      const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
-      if (btn) btn.click();
-      return;
+      return; // handled by parent via onItemClick
     }
     if (item.anchor) {
       const el = document.querySelector(item.anchor);
@@ -40,20 +47,37 @@ export function HomeSidebar() {
         <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-primary-foreground/20 mb-3 px-3">
           Navigation
         </p>
-        {sidebarItems.map((item, index) => (
-          <button
-            key={item.label}
-            onClick={() => handleClick(item)}
-            className="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-primary-foreground/45 hover:text-primary-foreground hover:bg-primary-foreground/8 transition-all duration-200 text-left relative"
-          >
-            {/* Active indicator line */}
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-0 group-hover:h-5 bg-accent rounded-r transition-all duration-200" />
-            <div className="w-7 h-7 rounded-md bg-primary-foreground/5 group-hover:bg-accent/15 flex items-center justify-center transition-colors duration-200">
-              <item.icon className="h-3.5 w-3.5 group-hover:text-accent transition-colors duration-200" />
-            </div>
-            <span className="font-medium">{item.label}</span>
-          </button>
-        ))}
+        {sidebarItems.map((item) => {
+          const isActive = activeItem === item.id;
+          return (
+            <button
+              key={item.label}
+              onClick={() => handleClick(item)}
+              className={cn(
+                "group flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] transition-all duration-200 text-left relative",
+                isActive
+                  ? "text-primary-foreground bg-primary-foreground/10"
+                  : "text-primary-foreground/45 hover:text-primary-foreground hover:bg-primary-foreground/8"
+              )}
+            >
+              {/* Active indicator line */}
+              <span className={cn(
+                "absolute left-0 top-1/2 -translate-y-1/2 w-[2px] bg-accent rounded-r transition-all duration-200",
+                isActive ? "h-5" : "h-0 group-hover:h-5"
+              )} />
+              <div className={cn(
+                "w-7 h-7 rounded-md flex items-center justify-center transition-colors duration-200",
+                isActive ? "bg-accent/20" : "bg-primary-foreground/5 group-hover:bg-accent/15"
+              )}>
+                <item.icon className={cn(
+                  "h-3.5 w-3.5 transition-colors duration-200",
+                  isActive ? "text-accent" : "group-hover:text-accent"
+                )} />
+              </div>
+              <span className="font-medium">{item.label}</span>
+            </button>
+          );
+        })}
       </nav>
 
       {/* Bottom tech decoration */}
