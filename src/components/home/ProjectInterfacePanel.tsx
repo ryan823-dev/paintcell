@@ -44,7 +44,7 @@ export function ProjectInterfacePanel() {
             <Sparkles className="h-3 w-3" />
             AI-Powered Engineering
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-3 leading-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-primary-foreground mb-3 leading-tight whitespace-nowrap">
             Start your robotic painting project
           </h1>
           <p className="text-primary-foreground/50 text-base md:text-lg">
