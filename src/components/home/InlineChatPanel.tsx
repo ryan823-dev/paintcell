@@ -34,7 +34,7 @@ export function InlineChatPanel({ initialMessage, onClose }: InlineChatPanelProp
       </div>
 
       {/* Chat area — fills remaining space */}
-      <div className="flex-1 min-h-0 flex flex-col [&_.flex-1]:flex-1 [&_input]:bg-primary-foreground/5 [&_input]:border-primary-foreground/15 [&_input]:text-primary-foreground [&_input]:placeholder-primary-foreground/25 [&_.border-t]:border-primary-foreground/8 [&_.bg-background]:bg-transparent [&_.bg-muted\\/20]:bg-primary-foreground/5 [&_.text-muted-foreground]:text-primary-foreground/40">
+      <div className="flex-1 min-h-0 flex flex-col [&_.flex-1]:flex-1 [&_input]:bg-primary-foreground/[0.06] [&_input]:border-primary-foreground/30 [&_input]:text-primary-foreground [&_input]:placeholder-primary-foreground/30 [&_input]:h-14 [&_input]:text-base [&_input]:rounded-xl [&_input]:px-5 [&_input:focus]:border-accent/60 [&_input:focus]:shadow-[0_0_15px_-3px_hsl(32_95%_50%/0.3)] [&_.border-t]:border-primary-foreground/8 [&_.bg-background]:bg-transparent [&_.bg-muted\\/20]:bg-primary-foreground/5 [&_.text-muted-foreground]:text-primary-foreground/40 [&_button[size='icon']]:h-14 [&_button[size='icon']]:w-14">
         <AIChatPanel onClose={onClose} initialMessage={initialMessage} />
       </div>
 
