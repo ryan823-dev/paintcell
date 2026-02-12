@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
@@ -90,6 +90,16 @@ export default function Index() {
   const [activeSection, setActiveSection] = useState("ai-consultation");
   const [chatActive, setChatActive] = useState(false);
   const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleReset = () => {
+      setChatActive(false);
+      setChatInitialMessage(null);
+      setActiveSection("ai-consultation");
+    };
+    window.addEventListener("reset-homepage", handleReset);
+    return () => window.removeEventListener("reset-homepage", handleReset);
+  }, []);
 
   const handleCardClick = (benefit: Benefit) => {
     setSelectedBenefit(benefit);
