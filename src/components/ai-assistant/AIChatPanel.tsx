@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, FileText, Settings2, Loader2 } from "lucide-react";
+import { Send, FileText, Settings2, Loader2, GripHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,6 @@ export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
   const [extractedRequirements, setExtractedRequirements] = useState<Partial<QuoteFormData>>({});
   const [showContactForm, setShowContactForm] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -289,23 +288,49 @@ export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
         </div>
       )}
 
+      {/* Draggable resize handle */}
+      {!showSummary && (
+        <div className="relative group cursor-row-resize select-none flex items-center justify-center py-1 border-t border-primary-foreground/15 hover:border-accent/40 transition-colors"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            const startY = e.clientY;
+            const inputEl = (e.currentTarget.nextElementSibling as HTMLElement);
+            const startHeight = inputEl?.offsetHeight || 56;
+
+            const onMouseMove = (ev: MouseEvent) => {
+              const delta = startY - ev.clientY;
+              const newHeight = Math.max(56, Math.min(300, startHeight + delta));
+              if (inputEl) inputEl.style.height = `${newHeight}px`;
+            };
+            const onMouseUp = () => {
+              document.removeEventListener('mousemove', onMouseMove);
+              document.removeEventListener('mouseup', onMouseUp);
+            };
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+          }}
+        >
+          <GripHorizontal className="h-4 w-4 text-primary-foreground/20 group-hover:text-accent/60 transition-colors" />
+        </div>
+      )}
+
       {/* Input Area */}
       {!showSummary && (
-        <div className="p-4 border-t bg-background">
-          <div className="flex gap-2">
-            <Input
-              ref={inputRef}
+        <div className="p-4 bg-background" style={{ height: 80 }}>
+          <div className="flex gap-2 h-full">
+            <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your question..."
               disabled={isLoading}
-              className="flex-1"
+              className="flex-1 resize-none h-full min-h-0"
             />
             <Button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
               size="icon"
+              className="shrink-0 self-end"
             >
               <Send className="h-4 w-4" />
             </Button>
