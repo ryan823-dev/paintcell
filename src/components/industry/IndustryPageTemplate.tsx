@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { IndustryData, deliverySteps } from "@/data/industryData";
+import { useI18n } from "@/i18n";
 
 interface IndustryPageTemplateProps {
   data: IndustryData;
@@ -22,13 +23,13 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
   const [inputValue, setInputValue] = useState(data.examplePrompt);
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [data.slug]);
 
   const handleStartConsultation = () => {
-    // Store AI context for the assistant
     sessionStorage.setItem("project-init-message", inputValue.trim() || data.examplePrompt);
     sessionStorage.setItem("industry-context", JSON.stringify(data.aiContext));
     const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
@@ -80,7 +81,6 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           )}
           <div className="container-wide py-12 md:py-20 relative z-10">
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-              {/* Left: declaration */}
               <div>
                 <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
                   <Sparkles className="h-3 w-3" />
@@ -101,14 +101,13 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                 </Button>
               </div>
 
-              {/* Right: AI input with industry preload */}
               <div>
                 <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground mb-3 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
                   </span>
-                  AI Agent — {data.industryLabel} mode
+                  {t.industry.aiAgent} — {data.industryLabel} {t.industry.mode}
                 </div>
                 <div className={cn(
                   "rounded-2xl border transition-all duration-300 p-1 bg-card",
@@ -140,7 +139,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                       className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-9 px-5 gap-2 rounded-xl"
                     >
                       <Send className="h-3.5 w-3.5" />
-                      Start
+                      {t.industry.start}
                     </Button>
                   </div>
                 </div>
@@ -154,10 +153,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <AlertTriangle className="h-3.5 w-3.5" />
-              Conversion-critical
+              {t.industry.conversionCritical}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Common painting challenges in {data.industryLabel.toLowerCase()}
+              {t.industry.challengesTitle} {data.industryLabel.toLowerCase()}
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {data.painPoints.map((point, i) => (
@@ -184,10 +183,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />
-              System design
+              {t.industry.systemDesign}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Recommended system architecture for {data.industryLabel.toLowerCase()}
+              {t.industry.systemTitle} {data.industryLabel.toLowerCase()}
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {data.systemModules.map((mod, i) => (
@@ -208,27 +207,27 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <BarChart3 className="h-3.5 w-3.5" />
-              SEO + AI core data
+              {t.industry.configLabel}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Typical production configuration
+              {t.industry.configTitle}
             </h2>
             <Card className="border-border bg-card overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border bg-muted/50">
-                      <th className="text-left py-3 px-5 font-semibold text-muted-foreground uppercase text-[11px] tracking-wider">Parameter</th>
-                      <th className="text-left py-3 px-5 font-semibold text-muted-foreground uppercase text-[11px] tracking-wider">Specification</th>
+                      <th className="text-left py-3 px-5 font-semibold text-muted-foreground uppercase text-[11px] tracking-wider">{t.industry.parameterCol}</th>
+                      <th className="text-left py-3 px-5 font-semibold text-muted-foreground uppercase text-[11px] tracking-wider">{t.industry.specCol}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {[
-                      ["Parts/hour", data.productionConfig.partsPerHour],
-                      ["Paint type", data.productionConfig.paintType],
-                      ["Finish requirement", data.productionConfig.finishRequirement],
-                      ["Automation level", data.productionConfig.automationLevel],
-                      ["Line integration", data.productionConfig.lineIntegration],
+                      [t.industry.partsPerHour, data.productionConfig.partsPerHour],
+                      [t.industry.paintType, data.productionConfig.paintType],
+                      [t.industry.finishRequirement, data.productionConfig.finishRequirement],
+                      [t.industry.automationLevel, data.productionConfig.automationLevel],
+                      [t.industry.lineIntegration, data.productionConfig.lineIntegration],
                     ].map(([label, value], i) => (
                       <tr key={i} className="border-b border-border last:border-0">
                         <td className="py-3 px-5 font-medium">{label}</td>
@@ -247,10 +246,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <BarChart3 className="h-3.5 w-3.5" />
-              Investment reference
+              {t.industry.investmentRef}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Investment & ROI reference
+              {t.industry.investmentTitle}
             </h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {data.roiMetrics.map((metric, i) => (
@@ -270,10 +269,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Quote className="h-3.5 w-3.5" />
-              Project track record
+              {t.industry.projectTrack}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Project references in {data.industryLabel.toLowerCase()}
+              {t.industry.projectRefTitle} {data.industryLabel.toLowerCase()}
             </h2>
             <div className="grid md:grid-cols-3 gap-4">
               {data.caseReferences.map((ref, i) => (
@@ -281,9 +280,9 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                   <CardContent className="p-5 space-y-3">
                     <h3 className="font-semibold text-sm">{ref.partType}</h3>
                     <div className="space-y-1.5 text-sm">
-                      <div className="flex justify-between"><span className="text-muted-foreground">System</span><span className="font-medium">{ref.systemConfig}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">Capacity</span><span className="font-medium">{ref.capacity}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">ROI</span><span className="font-medium text-accent">{ref.roi}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">{t.industry.system}</span><span className="font-medium">{ref.systemConfig}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">{t.industry.capacity}</span><span className="font-medium">{ref.capacity}</span></div>
+                      <div className="flex justify-between"><span className="text-muted-foreground">{t.industry.roi}</span><span className="font-medium text-accent">{ref.roi}</span></div>
                     </div>
                   </CardContent>
                 </Card>
@@ -296,10 +295,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
         <section className="border-b border-border">
           <div className="container-wide py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-3">
-              Start feasibility assessment
+              {t.industry.feasibilityTitle}
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl">
-              Choose your preferred way to begin the engineering review process.
+              {t.industry.feasibilitySubtitle}
             </p>
             <div className="flex flex-wrap gap-3">
               <Button
@@ -307,7 +306,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl"
               >
                 <Bot className="h-4 w-4" />
-                Start AI consultation
+                {t.industry.startAI}
               </Button>
               <Button
                 variant="outline"
@@ -318,7 +317,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                 className="h-11 px-6 gap-2 rounded-xl"
               >
                 <MessageSquare className="h-4 w-4" />
-                Talk to engineer
+                {t.industry.talkEngineer}
               </Button>
               <Button
                 variant="outline"
@@ -326,7 +325,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                 className="h-11 px-6 gap-2 rounded-xl"
               >
                 <Upload className="h-4 w-4" />
-                Use project form
+                {t.industry.useForm}
               </Button>
             </div>
           </div>
@@ -337,10 +336,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Truck className="h-3.5 w-3.5" />
-              Trust-building
+              {t.industry.deliveryProcess}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Project delivery process
+              {t.industry.deliveryTitle}
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {deliverySteps.map((step) => (
@@ -368,10 +367,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <HelpCircle className="h-3.5 w-3.5" />
-              AI discovery
+              {t.industry.faqLabel}
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">
-              Frequently asked questions
+              {t.industry.faqTitle}
             </h2>
             <div className="max-w-3xl">
               <Accordion type="single" collapsible className="space-y-2">
@@ -380,7 +379,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                     <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
+                    <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -389,7 +388,6 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
             </div>
           </div>
         </section>
-
       </div>
     </>
   );
