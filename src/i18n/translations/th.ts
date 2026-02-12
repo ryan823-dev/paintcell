@@ -1,6 +1,4 @@
-import type { TranslationKeys } from "./index";
-
-export const th: TranslationKeys = {
+export const th: Record<string, Record<string, string>> = {
   nav: {
     industries: "อุตสาหกรรม",
     products: "ผลิตภัณฑ์",
