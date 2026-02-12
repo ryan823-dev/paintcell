@@ -6,17 +6,26 @@ import { ArrowRight, Send, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HomepageWizardStrip } from "./HomepageWizardStrip";
 
-export function ProjectInterfacePanel() {
+interface ProjectInterfacePanelProps {
+  onStartChat?: (message?: string) => void;
+}
+
+export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProps) {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmitToAssistant = () => {
-    if (inputValue.trim()) {
-      sessionStorage.setItem("project-init-message", inputValue.trim());
+    if (onStartChat) {
+      onStartChat(inputValue.trim() || undefined);
+    } else {
+      // fallback: trigger drawer
+      if (inputValue.trim()) {
+        sessionStorage.setItem("project-init-message", inputValue.trim());
+      }
+      const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
+      if (assistantButton) assistantButton.click();
     }
-    const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
-    if (assistantButton) assistantButton.click();
   };
 
   return (

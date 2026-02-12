@@ -5,6 +5,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { BenefitDetailModal, BenefitModalContent } from "@/components/home/BenefitDetailModal";
 import { ProjectInterfacePanel } from "@/components/home/ProjectInterfacePanel";
 import { HomeSidebar } from "@/components/home/HomeSidebar";
+import { InlineChatPanel } from "@/components/home/InlineChatPanel";
 import { ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge } from "lucide-react";
 
 const benefits = [{
@@ -86,6 +87,9 @@ interface Benefit {
 export default function Index() {
   const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("ai-consultation");
+  const [chatActive, setChatActive] = useState(false);
+  const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
 
   const handleCardClick = (benefit: Benefit) => {
     setSelectedBenefit(benefit);
@@ -94,18 +98,46 @@ export default function Index() {
 
   const handleStartConsultation = () => {
     setIsModalOpen(false);
-    const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
-    if (assistantButton) assistantButton.click();
+    setChatActive(true);
+    setActiveSection("ai-consultation");
+  };
+
+  const handleSidebarClick = (id: string) => {
+    setActiveSection(id);
+    if (id === "ai-consultation") {
+      setChatActive(true);
+      setChatInitialMessage(null);
+    } else {
+      setChatActive(false);
+    }
+  };
+
+  const handleStartChat = (message?: string) => {
+    setChatActive(true);
+    setActiveSection("ai-consultation");
+    if (message) {
+      setChatInitialMessage(message);
+    }
   };
 
   return (
     <div className="bg-primary flex">
       {/* ChatGPT-style left sidebar */}
-      <HomeSidebar />
+      <HomeSidebar activeItem={activeSection} onItemClick={handleSidebarClick} />
 
       <div className="flex-1 min-w-0">
         {/* Control Interface — PRIMARY */}
-        <ProjectInterfacePanel />
+        {chatActive ? (
+          <InlineChatPanel
+            initialMessage={chatInitialMessage}
+            onClose={() => {
+              setChatActive(false);
+              setChatInitialMessage(null);
+            }}
+          />
+        ) : (
+          <ProjectInterfacePanel onStartChat={handleStartChat} />
+        )}
 
         {/* Engineering Benefits */}
         <section id="why-robotic-painting" className="py-16 md:py-20 border-t border-primary-foreground/8">
