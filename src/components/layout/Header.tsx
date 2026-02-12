@@ -23,7 +23,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/8 bg-primary/95 backdrop-blur supports-[backdrop-filter]:bg-primary/85">
       <nav className="flex h-14 items-center">
         {/* Logo — aligned with sidebar width */}
-        <Link to="/" className="flex items-center gap-3 w-[220px] shrink-0 pl-4">
+        <Link to="/" className="flex items-center gap-3 shrink-0 pl-4 pr-6">
           <img 
             src={tdLogo} 
             alt="TDPaintCell Logo" 
