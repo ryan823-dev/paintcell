@@ -19,7 +19,6 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
     if (onStartChat) {
       onStartChat(inputValue.trim() || undefined);
     } else {
-      // fallback: trigger drawer
       if (inputValue.trim()) {
         sessionStorage.setItem("project-init-message", inputValue.trim());
       }
@@ -29,8 +28,8 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
   };
 
   return (
-    <section className="bg-primary text-primary-foreground h-[calc(100vh-3.5rem)] flex flex-col">
-      {/* Main — vertically centered, ~3/4 of viewport */}
+    <section className="bg-background h-[calc(100vh-3.5rem)] flex flex-col">
+      {/* Main — vertically centered */}
       <div className="flex-[3] flex flex-col items-center justify-start px-6 sm:px-10 lg:px-16 pt-8 lg:pt-14 py-6">
         {/* Status bar */}
         <div className="flex items-center gap-4 mb-8 lg:mb-10 text-xs font-medium tracking-[0.15em] uppercase">
@@ -41,10 +40,10 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
             </span>
             System Active
           </span>
-          <span className="text-primary-foreground/20">·</span>
-          <span className="text-primary-foreground/70">AI Online</span>
-          <span className="text-primary-foreground/20">·</span>
-          <span className="text-primary-foreground/70">Project Interface Ready</span>
+          <span className="text-border">·</span>
+          <span className="text-muted-foreground">AI Online</span>
+          <span className="text-border">·</span>
+          <span className="text-muted-foreground">Project Interface Ready</span>
         </div>
 
         {/* Central AI greeting */}
@@ -53,22 +52,22 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
             <Sparkles className="h-3 w-3" />
             AI-Powered Engineering
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold text-primary-foreground mb-4 leading-tight whitespace-nowrap">
+          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold mb-4 leading-tight whitespace-nowrap">
             Start your robotic painting project
           </h1>
-          <p className="text-primary-foreground/50 text-base md:text-lg leading-relaxed">
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
             Describe your application, parts, or production line — our AI agent will guide you through the assessment.
           </p>
         </div>
 
-        {/* Chat input — glowing card */}
+        {/* Chat input */}
         <div className="w-full max-w-5xl">
           <div
             className={cn(
-              "rounded-2xl border transition-all duration-300 p-1",
+              "rounded-2xl border transition-all duration-300 p-1 bg-card",
               isFocused
-                ? "border-primary-foreground/40 shadow-[0_0_30px_-5px_hsl(32_95%_50%/0.25)]"
-                : "border-primary-foreground/25 hover:border-primary-foreground/35"
+                ? "border-accent/40 shadow-[0_0_30px_-5px_hsl(215_90%_52%/0.15)]"
+                : "border-border hover:border-accent/20"
             )}
           >
             <Textarea
@@ -85,21 +84,21 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
               }}
               className={cn(
                 "min-h-[80px] md:min-h-[100px] resize-none border-0 bg-transparent",
-                "text-primary-foreground placeholder:text-primary-foreground/25",
+                "text-foreground placeholder:text-muted-foreground/50",
                 "focus-visible:ring-0 focus-visible:ring-offset-0",
                 "text-[15px] leading-relaxed rounded-xl px-5 py-3"
               )}
             />
-            {/* Action row inside card */}
+            {/* Action row */}
             <div className="flex items-center justify-between px-3 pb-3 pt-1">
-              <p className="text-[11px] text-primary-foreground/25 hidden sm:block">
+              <p className="text-[11px] text-muted-foreground/60 hidden sm:block">
                 No pricing provided · Human engineers confirm scope
               </p>
               <div className="flex items-center gap-2 ml-auto">
                 <Button
                   variant="ghost"
                   onClick={() => navigate("/quote")}
-                  className="h-9 px-4 text-[11px] font-medium text-primary-foreground/35 hover:text-primary-foreground/60 hover:bg-primary-foreground/5 uppercase tracking-wider"
+                  className="h-9 px-4 text-[11px] font-medium text-muted-foreground hover:text-heading uppercase tracking-wider"
                 >
                   Use form instead
                 </Button>
@@ -123,10 +122,8 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
             ].map((text) => (
               <button
                 key={text}
-                onClick={() => {
-                  setInputValue(text);
-                }}
-                className="text-xs px-3.5 py-1.5 rounded-full border border-primary-foreground/12 text-primary-foreground/45 hover:text-primary-foreground/70 hover:border-primary-foreground/25 hover:bg-primary-foreground/5 transition-all"
+                onClick={() => setInputValue(text)}
+                className="text-xs px-3.5 py-1.5 rounded-full border border-border text-muted-foreground hover:text-heading hover:border-accent/30 hover:bg-accent/5 transition-all"
               >
                 {text}
               </button>
@@ -135,10 +132,10 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
         </div>
       </div>
 
-      {/* Wizard Strip — bottom layer, ~1/4 of viewport */}
-      <div className="flex-[1] border-t border-primary-foreground/8 flex items-center">
+      {/* Wizard Strip — bottom */}
+      <div className="flex-[1] border-t border-border flex items-center bg-muted/30">
         <div className="px-6 sm:px-10 lg:px-16 w-full py-5">
-          <HomepageWizardStrip variant="dark" />
+          <HomepageWizardStrip variant="light" />
         </div>
       </div>
     </section>

@@ -9,15 +9,15 @@ interface InlineChatPanelProps {
 
 export function InlineChatPanel({ initialMessage, onClose }: InlineChatPanelProps) {
   return (
-    <section className="bg-primary text-primary-foreground h-[calc(100vh-3.5rem)] flex flex-col">
+    <section className="bg-background h-[calc(100vh-3.5rem)] flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16 pt-6 pb-4 border-b border-primary-foreground/8">
+      <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16 pt-6 pb-4 border-b border-border">
         <div className="flex items-center gap-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
             <Sparkles className="h-3 w-3" />
             AI Consultation
           </div>
-          <span className="flex items-center gap-2 text-xs text-primary-foreground/40">
+          <span className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
@@ -27,21 +27,21 @@ export function InlineChatPanel({ initialMessage, onClose }: InlineChatPanelProp
         </div>
         <button
           onClick={onClose}
-          className="text-xs text-primary-foreground/30 hover:text-primary-foreground/60 transition-colors px-3 py-1.5 rounded-lg hover:bg-primary-foreground/5"
+          className="text-xs text-muted-foreground hover:text-heading transition-colors px-3 py-1.5 rounded-lg hover:bg-muted"
         >
           ← Back to overview
         </button>
       </div>
 
-      {/* Chat area — fills remaining space */}
-      <div className="flex-1 min-h-0 flex flex-col [&_.flex-1]:flex-1 [&_input]:bg-primary-foreground/[0.06] [&_input]:border-primary-foreground/30 [&_input]:text-primary-foreground [&_input]:placeholder-primary-foreground/30 [&_input]:h-14 [&_input]:text-base [&_input]:rounded-xl [&_input]:px-5 [&_input:focus]:border-accent/60 [&_input:focus]:shadow-[0_0_15px_-3px_hsl(32_95%_50%/0.3)] [&_.border-t]:border-primary-foreground/8 [&_.bg-background]:bg-transparent [&_.bg-muted\\/20]:bg-primary-foreground/5 [&_.text-muted-foreground]:text-primary-foreground/40 [&_button[size='icon']]:h-14 [&_button[size='icon']]:w-14">
+      {/* Chat area */}
+      <div className="flex-1 min-h-0 flex flex-col">
         <AIChatPanel onClose={onClose} initialMessage={initialMessage} />
       </div>
 
       {/* Wizard Strip — bottom */}
-      <div className="border-t border-primary-foreground/8 flex items-center">
+      <div className="border-t border-border flex items-center bg-muted/30">
         <div className="px-6 sm:px-10 lg:px-16 w-full py-4">
-          <HomepageWizardStrip variant="dark" />
+          <HomepageWizardStrip variant="light" />
         </div>
       </div>
     </section>

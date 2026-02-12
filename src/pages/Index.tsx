@@ -121,8 +121,8 @@ export default function Index() {
   };
 
   return (
-    <div className="bg-primary flex">
-      {/* ChatGPT-style left sidebar */}
+    <div className="bg-background flex">
+      {/* Left sidebar */}
       <HomeSidebar activeItem={activeSection} onItemClick={handleSidebarClick} />
 
       <div className="flex-1 min-w-0">
@@ -140,12 +140,12 @@ export default function Index() {
         )}
 
         {/* Engineering Benefits */}
-        <section id="why-robotic-painting" className="py-16 md:py-20 border-t border-primary-foreground/8">
+        <section id="why-robotic-painting" className="py-16 md:py-20 border-t border-border">
           <div className="container-wide">
             <FadeIn>
               <div className="mb-10">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-primary-foreground/30 mb-2">Engineering Rationale</p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-primary-foreground mb-2">Why Robotic Painting?</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Engineering Rationale</p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Why Robotic Painting?</h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
@@ -153,7 +153,7 @@ export default function Index() {
               {benefits.map((benefit: Benefit) => (
                 <StaggerItem key={benefit.title}>
                   <div
-                    className="rounded-xl p-5 border border-primary-foreground/10 hover:border-accent/30 transition-all duration-200 h-full flex flex-col cursor-pointer bg-primary-foreground/5 group"
+                    className="rounded-xl p-5 border border-border hover:border-accent/30 transition-all duration-200 h-full flex flex-col cursor-pointer bg-card group"
                     onClick={() => handleCardClick(benefit)}
                     role="button"
                     tabIndex={0}
@@ -167,9 +167,9 @@ export default function Index() {
                     <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center mb-3 group-hover:bg-accent/20 transition-colors">
                       <benefit.icon className="h-4 w-4 text-accent" />
                     </div>
-                    <h3 className="text-sm font-semibold mb-1.5 text-primary-foreground">{benefit.title}</h3>
-                    <p className="text-primary-foreground/45 text-xs leading-relaxed flex-1">{benefit.description}</p>
-                    <p className="text-[11px] text-primary-foreground/25 mt-3 pt-2.5 border-t border-primary-foreground/8 italic">
+                    <h3 className="text-sm font-semibold mb-1.5">{benefit.title}</h3>
+                    <p className="text-muted-foreground text-xs leading-relaxed flex-1">{benefit.description}</p>
+                    <p className="text-[11px] text-muted-foreground/60 mt-3 pt-2.5 border-t border-border italic">
                       {benefit.microLine}
                     </p>
                   </div>
@@ -180,32 +180,32 @@ export default function Index() {
         </section>
 
         {/* System Overview */}
-        <section id="system-overview" className="py-16 md:py-20 border-t border-primary-foreground/8">
+        <section id="system-overview" className="py-16 md:py-20 border-t border-border bg-muted/30">
           <div className="container-wide">
             <FadeIn>
               <div className="mb-10">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-primary-foreground/30 mb-2">System Architecture</p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-primary-foreground mb-2">Complete Paint Cell Solution</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">System Architecture</p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Complete Paint Cell Solution</h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
             <StaggerContainer className="grid md:grid-cols-2 gap-3">
               {systemComponents.map(component => (
                 <StaggerItem key={component.title}>
-                  <div className="rounded-xl p-5 border border-primary-foreground/10 flex gap-4 h-full hover:border-primary-foreground/20 transition-all duration-200 bg-primary-foreground/5">
+                  <div className="rounded-xl p-5 border border-border flex gap-4 h-full hover:border-accent/20 transition-all duration-200 bg-card">
                     <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
                       <component.icon className="h-4 w-4 text-accent" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold mb-1.5 text-primary-foreground">{component.title}</h3>
-                      <p className="text-primary-foreground/45 text-xs leading-relaxed">{component.description}</p>
+                      <h3 className="text-sm font-semibold mb-1.5">{component.title}</h3>
+                      <p className="text-muted-foreground text-xs leading-relaxed">{component.description}</p>
                     </div>
                   </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
             <FadeIn delay={0.4} className="mt-8 text-center">
-              <Button asChild variant="outline" className="bg-transparent border-primary-foreground/15 text-primary-foreground/60 hover:bg-primary-foreground/5 hover:text-primary-foreground">
+              <Button asChild variant="outline">
                 <Link to="/paint-cells">
                   Explore solutions →
                 </Link>
@@ -215,17 +215,17 @@ export default function Index() {
         </section>
 
         {/* Case Studies */}
-        <section id="project-references" className="py-16 md:py-20 border-t border-primary-foreground/8">
+        <section id="project-references" className="py-16 md:py-20 border-t border-border">
           <div className="container-wide">
             <FadeIn>
               <div className="mb-8">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-primary-foreground/30 mb-2">Deployment Reference</p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-primary-foreground mb-2">Project References</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Deployment Reference</p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Project References</h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
             <FadeIn delay={0.2} className="text-center">
-              <Button asChild variant="outline" className="bg-transparent border-primary-foreground/15 text-primary-foreground/60 hover:bg-primary-foreground/5 hover:text-primary-foreground">
+              <Button asChild variant="outline">
                 <Link to="/case-studies" className="flex items-center gap-2">
                   View Case Studies
                   <ChevronRight className="h-4 w-4" />

@@ -22,36 +22,36 @@ const footerLinks = {
 };
 export function Footer() {
   return (
-    <footer className="border-t border-primary-foreground/8 bg-primary text-primary-foreground">
+    <footer className="border-t border-border bg-muted/40">
       <div className="container-wide py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="md:col-span-2 flex flex-col">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
               <img src={tdLogo} alt="TDPaintCell Logo" className="h-8 w-8 rounded-lg object-cover" />
-              <span className="text-lg font-semibold text-primary-foreground">PaintCell</span>
+              <span className="text-lg font-semibold text-heading">PaintCell</span>
             </Link>
-            <p className="text-primary-foreground/50 max-w-md text-sm leading-relaxed mb-5">
+            <p className="text-muted-foreground max-w-md text-sm leading-relaxed mb-5">
               AI-powered robotic spray painting project interface. 
               Engineering assessment, feasibility analysis, and project initialization.
             </p>
             <div className="text-xs leading-relaxed space-y-1 mb-5">
-              <p className="text-primary-foreground/40">Email: engineering@tdpaintcell.com</p>
-              <p className="text-primary-foreground/40">Response: Engineering review within 1–2 business days.</p>
-              <p className="text-primary-foreground/40">Hours: Mon–Fri, GMT+8</p>
+              <p className="text-muted-foreground">Email: engineering@tdpaintcell.com</p>
+              <p className="text-muted-foreground">Response: Engineering review within 1–2 business days.</p>
+              <p className="text-muted-foreground">Hours: Mon–Fri, GMT+8</p>
             </div>
-            <p className="text-primary-foreground/30 text-xs mt-auto">
+            <p className="text-muted-foreground/60 text-xs mt-auto">
               Location: Shanghai, China
             </p>
           </div>
 
           {/* Solutions */}
           <div>
-            <h3 className="font-semibold mb-4 text-primary-foreground/70 text-xs uppercase tracking-wider">Solutions</h3>
+            <h3 className="font-semibold mb-4 text-heading text-xs uppercase tracking-wider">Solutions</h3>
             <ul className="space-y-3">
               {footerLinks.solutions.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="text-sm text-primary-foreground/50 hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -61,11 +61,11 @@ export function Footer() {
 
           {/* Resources */}
           <div>
-            <h3 className="font-semibold mb-4 text-primary-foreground/70 text-xs uppercase tracking-wider">Resources</h3>
+            <h3 className="font-semibold mb-4 text-heading text-xs uppercase tracking-wider">Resources</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="text-sm text-primary-foreground/50 hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -75,11 +75,11 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold mb-4 text-primary-foreground/70 text-xs uppercase tracking-wider">Company</h3>
+            <h3 className="font-semibold mb-4 text-heading text-xs uppercase tracking-wider">Company</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="text-sm text-primary-foreground/50 hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -88,8 +88,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-primary-foreground/8">
-          <p className="text-xs text-primary-foreground/30 text-center">
+        <div className="mt-12 pt-8 border-t border-border">
+          <p className="text-xs text-muted-foreground/60 text-center">
             © 2026 TDPaintCell. All rights reserved.
           </p>
         </div>
