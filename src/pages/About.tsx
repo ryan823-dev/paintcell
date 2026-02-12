@@ -36,15 +36,14 @@ const values = [
 export default function About() {
   return (
     <>
-      {/* Header */}
-      <section className="hero-gradient relative">
-        <div className="absolute inset-0 industrial-pattern opacity-30" />
-        <div className="container-wide relative py-12 md:py-16">
+      {/* Header — light */}
+      <section className="bg-muted border-b border-border">
+        <div className="container-wide py-12 md:py-16">
           <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
               About PaintCell
             </h1>
-            <p className="text-lg text-primary-foreground/80">
+            <p className="text-lg text-muted-foreground">
               Specialists in robotic spray painting automation with decades of experience 
               solving complex painting challenges.
             </p>
@@ -57,7 +56,7 @@ export default function About() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-accent mb-2">
                 {stat.value}
               </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -69,7 +68,7 @@ export default function About() {
       {/* Story */}
       <Section variant="muted">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
             Our Story
           </h2>
           <div className="prose prose-lg text-muted-foreground space-y-4">
@@ -102,11 +101,11 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-6">
           {values.map((value) => (
             <div key={value.title} className="flex gap-4">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <value.icon className="h-6 w-6 text-primary" />
+              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                <value.icon className="h-6 w-6 text-accent" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-1">{value.title}</h3>
+                <h3 className="font-semibold mb-1">{value.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{value.description}</p>
               </div>
             </div>
@@ -114,28 +113,30 @@ export default function About() {
         </div>
       </Section>
 
-      {/* CTA */}
-      <Section variant="primary">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Let's Discuss Your Project
-          </h2>
-          <p className="text-primary-foreground/80 mb-6">
-            Start with our configurator to tell us about your painting requirements. 
-            Our engineering team will review and follow up to explore solutions.
-          </p>
-          <Button 
-            asChild 
-            size="lg" 
-            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-          >
-            <Link to="/quote" className="flex items-center gap-2">
-              Configure Paint Cell
-              <ChevronRight className="h-5 w-5" />
-            </Link>
-          </Button>
+      {/* CTA — light */}
+      <section className="bg-muted border-t border-border">
+        <div className="container-wide py-16 md:py-24">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Let's Discuss Your Project
+            </h2>
+            <p className="text-muted-foreground mb-6">
+              Start with our configurator to tell us about your painting requirements. 
+              Our engineering team will review and follow up to explore solutions.
+            </p>
+            <Button 
+              asChild 
+              size="lg" 
+              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+            >
+              <Link to="/quote" className="flex items-center gap-2">
+                Configure Paint Cell
+                <ChevronRight className="h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 }

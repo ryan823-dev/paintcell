@@ -1,76 +1,46 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Section, SectionHeader } from "@/components/ui/section";
+import { Section } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { ChevronRight, Car, Cpu, Building2, Plane, Truck, Package } from "lucide-react";
 import heroApplications from "@/assets/hero-applications.jpg";
 
 const applications = [
   {
-    icon: Car,
-    title: "Automotive Components",
+    icon: Car, title: "Automotive Components",
     description: "High-volume painting of body panels, trim, and structural components with Class A finish requirements.",
-    challenges: [
-      "Complex geometries requiring multi-angle spray",
-      "High cosmetic standards with zero tolerance for defects",
-      "Takt-time constraints in synchronized production",
-    ],
+    challenges: ["Complex geometries requiring multi-angle spray", "High cosmetic standards with zero tolerance for defects", "Takt-time constraints in synchronized production"],
     whyRobotic: "Robotic painting ensures consistent film build and surface finish across thousands of parts while maintaining cycle time targets.",
   },
   {
-    icon: Cpu,
-    title: "Electronics & Appliances",
+    icon: Cpu, title: "Electronics & Appliances",
     description: "Precision painting of housings, enclosures, and consumer product components.",
-    challenges: [
-      "Mixed materials (metal and plastic) on same line",
-      "Frequent color and product changeovers",
-      "Decorative finish and color matching requirements",
-    ],
+    challenges: ["Mixed materials (metal and plastic) on same line", "Frequent color and product changeovers", "Decorative finish and color matching requirements"],
     whyRobotic: "Flexible robot programming handles part variety while recipe management ensures paint specification compliance.",
   },
   {
-    icon: Building2,
-    title: "Industrial Equipment",
+    icon: Building2, title: "Industrial Equipment",
     description: "Protective and decorative painting of machinery, enclosures, and heavy equipment.",
-    challenges: [
-      "Large part dimensions requiring extended reach",
-      "Thick paint builds for corrosion protection",
-      "Batch production with part-to-part variation",
-    ],
+    challenges: ["Large part dimensions requiring extended reach", "Thick paint builds for corrosion protection", "Batch production with part-to-part variation"],
     whyRobotic: "6-axis robots with high payload capacity handle large parts with consistent coverage in all orientations.",
   },
   {
-    icon: Plane,
-    title: "Aerospace Components",
+    icon: Plane, title: "Aerospace Components",
     description: "Specialized painting for structural and interior aerospace parts.",
-    challenges: [
-      "Stringent traceability and documentation requirements",
-      "Exotic materials and precise paint specifications",
-      "Low volume with high part value",
-    ],
+    challenges: ["Stringent traceability and documentation requirements", "Exotic materials and precise paint specifications", "Low volume with high part value"],
     whyRobotic: "Process control and data logging ensure full compliance while robotic precision minimizes rework on high-value parts.",
   },
   {
-    icon: Truck,
-    title: "Commercial Vehicles",
+    icon: Truck, title: "Commercial Vehicles",
     description: "Painting of truck bodies, trailers, and construction equipment components.",
-    challenges: [
-      "Very large part sizes",
-      "Outdoor exposure durability requirements",
-      "Mixed production with custom configurations",
-    ],
+    challenges: ["Very large part sizes", "Outdoor exposure durability requirements", "Mixed production with custom configurations"],
     whyRobotic: "Gantry or rail-mounted robots extend reach for oversized parts while maintaining paint quality standards.",
   },
   {
-    icon: Package,
-    title: "General Manufacturing",
+    icon: Package, title: "General Manufacturing",
     description: "Broad category covering metal fabrication, furniture, and consumer goods.",
-    challenges: [
-      "High product mix with varying batch sizes",
-      "Labor availability and training challenges",
-      "Inconsistent quality from manual processes",
-    ],
+    challenges: ["High product mix with varying batch sizes", "Labor availability and training challenges", "Inconsistent quality from manual processes"],
     whyRobotic: "Flexible automation handles product variety while providing consistent quality independent of operator skill.",
   },
 ];
@@ -78,7 +48,7 @@ const applications = [
 export default function Applications() {
   return (
     <>
-      {/* Header */}
+      {/* Header with image */}
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <motion.img 
           src={heroApplications} 
@@ -88,7 +58,7 @@ export default function Applications() {
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/50" />
         <div className="container-wide relative h-full flex items-center">
           <motion.div 
             className="max-w-2xl"
@@ -96,10 +66,10 @@ export default function Applications() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-inverse mb-4">
               Applications
             </h1>
-            <p className="text-lg text-primary-foreground/80">
+            <p className="text-lg text-inverse-muted">
               Robotic spray painting solutions across industries. Each application presents unique 
               challenges that industrial automation is engineered to solve.
             </p>
@@ -113,25 +83,23 @@ export default function Applications() {
           {applications.map((app, index) => (
             <StaggerItem key={app.title}>
               <motion.div
-                className={`bg-card rounded-xl border border-border overflow-hidden ${
-                  index % 2 === 0 ? "" : "md:flex-row-reverse"
-                }`}
+                className="bg-card rounded-xl border border-border overflow-hidden"
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
               >
                 <div className="p-6 md:p-8">
                   <div className="flex items-start gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <app.icon className="h-7 w-7 text-primary" />
+                    <div className="w-14 h-14 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                      <app.icon className="h-7 w-7 text-accent" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground mb-2">{app.title}</h2>
+                      <h2 className="text-2xl font-bold mb-2">{app.title}</h2>
                       <p className="text-muted-foreground">{app.description}</p>
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Typical Challenges</h3>
+                      <h3 className="font-semibold mb-3">Typical Challenges</h3>
                       <ul className="space-y-2">
                         {app.challenges.map((challenge, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -142,7 +110,7 @@ export default function Applications() {
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Why Robotic Painting</h3>
+                      <h3 className="font-semibold mb-3">Why Robotic Painting</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{app.whyRobotic}</p>
                     </div>
                   </div>

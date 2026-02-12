@@ -66,7 +66,7 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
             className={cn(
               "rounded-2xl border transition-all duration-300 p-1 bg-card",
               isFocused
-                ? "border-accent/40 shadow-[0_0_30px_-5px_hsl(215_90%_52%/0.15)]"
+                ? "border-accent/40 shadow-[0_0_24px_-5px_hsl(192_70%_38%/0.2)]"
                 : "border-border hover:border-accent/20"
             )}
           >
