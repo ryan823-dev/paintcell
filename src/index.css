@@ -115,11 +115,17 @@
     @apply border-border;
   }
 
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply bg-background font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
     color: hsl(var(--text-body));
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
   }
 
   /* Unified heading hierarchy */
