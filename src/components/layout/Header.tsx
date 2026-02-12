@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Sparkles } from "lucide-react";
 import tdLogo from "@/assets/td-logo.png";
 
@@ -13,17 +13,26 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";
     return location.pathname.startsWith(href);
   };
 
+  const handleLogoClick = useCallback((e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.dispatchEvent(new CustomEvent("reset-homepage"));
+    }
+  }, [location.pathname]);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
       <nav className="flex h-14 items-center">
         {/* Logo — aligned with sidebar width */}
-        <Link to="/" className="flex items-center gap-3 shrink-0 pl-4 pr-6">
+        <Link to="/" className="flex items-center gap-3 shrink-0 pl-4 pr-6" onClick={handleLogoClick}>
           <img 
             src={tdLogo} 
             alt="TDPaintCell Logo" 
