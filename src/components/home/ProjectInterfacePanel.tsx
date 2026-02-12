@@ -55,7 +55,7 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
           <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold mb-4 leading-tight whitespace-nowrap">
             Start your robotic painting project
           </h1>
-          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed whitespace-nowrap">
             Describe your application, parts, or production line — our AI agent will guide you through the assessment.
           </p>
         </div>
