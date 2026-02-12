@@ -4,7 +4,7 @@ import { Menu, X, Sparkles } from "lucide-react";
 import tdLogo from "@/assets/td-logo.png";
 
 const navigation = [
-  { name: "Industries", href: "/industries/automotive-painting" },
+  { name: "Industries", href: "/industries" },
   { name: "Products", href: "/paint-cells" },
   { name: "Applications", href: "/applications" },
   { name: "Knowledge", href: "/resources/engineering-library" },

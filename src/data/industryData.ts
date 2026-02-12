@@ -47,6 +47,7 @@ export interface IndustryData {
   metaDescription: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroImage?: string;
   ctaText: string;
   examplePrompt: string;
   aiContext: {
@@ -60,6 +61,7 @@ export interface IndustryData {
   roiMetrics: ROIMetric[];
   caseReferences: CaseReference[];
   faqs: FAQItem[];
+  comingSoon?: boolean;
 }
 
 const deliverySteps: DeliveryStep[] = [
@@ -83,6 +85,7 @@ export const industries: Record<string, IndustryData> = {
     metaDescription: "Engineered robotic spray painting systems for automotive parts. Class A finish, high throughput, and full process control for brackets, housings, and trim components.",
     heroTitle: "Robotic painting automation for automotive",
     heroSubtitle: "Engineered systems for consistent finish, throughput, and process control.",
+    heroImage: "/industry-heroes/automotive.jpg",
     ctaText: "Start your automotive project",
     examplePrompt: "We need automated painting for automotive brackets, ~300 parts/hour, Class A finish required.",
     aiContext: {
@@ -139,6 +142,7 @@ export const industries: Record<string, IndustryData> = {
     metaDescription: "Automated spray painting systems for metal components. Consistent coating quality, corrosion protection, and high-volume finishing for fabricated metal parts.",
     heroTitle: "Robotic painting automation for metal parts",
     heroSubtitle: "Engineered systems for consistent finish, throughput, and process control.",
+    heroImage: "/industry-heroes/metal.jpg",
     ctaText: "Start your metal finishing project",
     examplePrompt: "We fabricate steel enclosures and need consistent powder-free liquid coating, ~150 parts/shift.",
     aiContext: {
@@ -195,6 +199,7 @@ export const industries: Record<string, IndustryData> = {
     metaDescription: "Automated spray painting systems for home and commercial appliances. High-volume, consistent finish quality with color flexibility for appliance manufacturing.",
     heroTitle: "Robotic painting automation for appliances",
     heroSubtitle: "Engineered systems for consistent finish, throughput, and process control.",
+    heroImage: "/industry-heroes/appliance.jpg",
     ctaText: "Start your appliance project",
     examplePrompt: "We manufacture washing machine panels and need automated painting with fast color changeover, ~500 parts/shift.",
     aiContext: {
@@ -241,5 +246,105 @@ export const industries: Record<string, IndustryData> = {
       { question: "Can robots handle both flat panels and curved appliance surfaces?", answer: "Yes. Offline programming and adaptive spray patterns allow robots to maintain consistent film build across varying surface geometries." },
       { question: "What finish quality can robotic systems achieve for consumer appliances?", answer: "Robotic systems consistently achieve consumer-grade finish with uniform gloss, texture, and color match that exceeds manual painting quality." },
     ],
+  },
+
+  "construction-machinery": {
+    slug: "construction-machinery",
+    industry: "construction",
+    industryLabel: "Construction Machinery",
+    metaTitle: "Robotic Painting Automation for Construction Machinery | TD",
+    metaDescription: "Automated spray painting systems for construction and heavy machinery components.",
+    heroTitle: "Robotic painting automation for construction machinery",
+    heroSubtitle: "Engineered systems for heavy-duty protective finishes and high-volume production.",
+    ctaText: "Start your construction machinery project",
+    examplePrompt: "",
+    aiContext: { industry: "construction-machinery", finish: "heavy-duty protective", throughput: "medium" },
+    painPoints: [],
+    systemModules: [],
+    productionConfig: { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
+    roiMetrics: [],
+    caseReferences: [],
+    faqs: [],
+    comingSoon: true,
+  },
+
+  "hardware-sanitary": {
+    slug: "hardware-sanitary",
+    industry: "hardware",
+    industryLabel: "Hardware & Sanitary",
+    metaTitle: "Robotic Painting Automation for Hardware & Sanitary Products | TD",
+    metaDescription: "Automated spray painting systems for hardware fittings and sanitary ware.",
+    heroTitle: "Robotic painting automation for hardware & sanitary",
+    heroSubtitle: "Engineered systems for decorative finishes on fittings, fixtures, and sanitary products.",
+    ctaText: "Start your hardware project",
+    examplePrompt: "",
+    aiContext: { industry: "hardware-sanitary", finish: "decorative / chrome-alternative", throughput: "medium-high" },
+    painPoints: [],
+    systemModules: [],
+    productionConfig: { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
+    roiMetrics: [],
+    caseReferences: [],
+    faqs: [],
+    comingSoon: true,
+  },
+
+  "furniture-woodwork": {
+    slug: "furniture-woodwork",
+    industry: "furniture",
+    industryLabel: "Furniture & Woodwork",
+    metaTitle: "Robotic Painting Automation for Furniture & Woodwork | TD",
+    metaDescription: "Automated spray painting and lacquering systems for furniture and wood products.",
+    heroTitle: "Robotic painting automation for furniture & woodwork",
+    heroSubtitle: "Engineered systems for precision lacquering and staining on wood surfaces.",
+    ctaText: "Start your furniture project",
+    examplePrompt: "",
+    aiContext: { industry: "furniture", finish: "lacquer / stain / UV", throughput: "medium" },
+    painPoints: [],
+    systemModules: [],
+    productionConfig: { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
+    roiMetrics: [],
+    caseReferences: [],
+    faqs: [],
+    comingSoon: true,
+  },
+
+  "aerospace-defense": {
+    slug: "aerospace-defense",
+    industry: "aerospace",
+    industryLabel: "Aerospace & Defense",
+    metaTitle: "Robotic Painting Automation for Aerospace & Defense | TD",
+    metaDescription: "Automated spray painting systems for aerospace and defense components with strict specification compliance.",
+    heroTitle: "Robotic painting automation for aerospace & defense",
+    heroSubtitle: "Engineered systems for mil-spec and aerospace-grade finishing requirements.",
+    ctaText: "Start your aerospace project",
+    examplePrompt: "",
+    aiContext: { industry: "aerospace", finish: "mil-spec / aerospace-grade", throughput: "low-medium" },
+    painPoints: [],
+    systemModules: [],
+    productionConfig: { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
+    roiMetrics: [],
+    caseReferences: [],
+    faqs: [],
+    comingSoon: true,
+  },
+
+  "plastics-composites": {
+    slug: "plastics-composites",
+    industry: "plastics",
+    industryLabel: "Plastics & Composites",
+    metaTitle: "Robotic Painting Automation for Plastics & Composites | TD",
+    metaDescription: "Automated spray painting systems for plastic and composite parts requiring specialized adhesion and finish quality.",
+    heroTitle: "Robotic painting automation for plastics & composites",
+    heroSubtitle: "Engineered systems for adhesion-critical coatings on plastic and composite substrates.",
+    ctaText: "Start your plastics project",
+    examplePrompt: "",
+    aiContext: { industry: "plastics", finish: "decorative / functional", throughput: "medium-high" },
+    painPoints: [],
+    systemModules: [],
+    productionConfig: { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
+    roiMetrics: [],
+    caseReferences: [],
+    faqs: [],
+    comingSoon: true,
   },
 };
