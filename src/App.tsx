@@ -46,6 +46,9 @@ import PaintCellRFQTemplate from "./pages/resources/tools/PaintCellRFQTemplate";
 import SiteReadinessChecklist from "./pages/resources/tools/SiteReadinessChecklist";
 import FeasibilityChecklist from "./pages/resources/tools/FeasibilityChecklist";
 
+// Industry pages
+import IndustryPage from "./pages/IndustryPage";
+
 // Console pages
 import ConsoleLogin from "./pages/console/ConsoleLogin";
 import ConsoleLayout from "./pages/console/ConsoleLayout";
@@ -131,6 +134,9 @@ const App = () => (
               <Route path="/resources/tools-templates/paint-cell-rfq-template" element={<PaintCellRFQTemplate />} />
               <Route path="/resources/tools-templates/site-readiness-checklist" element={<SiteReadinessChecklist />} />
               <Route path="/resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
+              
+              {/* Industry pages */}
+              <Route path="/industries/:slug" element={<IndustryPage />} />
               
               <Route path="*" element={<NotFound />} />
             </Route>
