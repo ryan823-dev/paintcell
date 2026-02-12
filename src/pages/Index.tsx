@@ -7,74 +7,7 @@ import { ProjectInterfacePanel } from "@/components/home/ProjectInterfacePanel";
 import { HomeSidebar } from "@/components/home/HomeSidebar";
 import { InlineChatPanel } from "@/components/home/InlineChatPanel";
 import { ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge } from "lucide-react";
-
-const benefits = [{
-  icon: Target,
-  title: "Quality Consistency",
-  description: "Achieve repeatable, high-quality paint finishes with robotic precision that eliminates human variability.",
-  microLine: "Driven by part presentation and path repeatability.",
-  modalContent: {
-    title: "Quality Consistency",
-    engineeringAnchor: "Repeatability depends on fixturing, path control, and paint stability.",
-    typicalUseCase: "Tight appearance requirements, reduced rework, stable finish across shifts.",
-    keyConstraints: "Part presentation/fixturing, spray distance & angle, edge coverage, paint viscosity/atomization, booth airflow & temperature.",
-    whatWeNeedToAssess: "Part CAD or photos, finish spec (visual vs functional), target film build range, acceptable touch-up level, current defect/rework drivers."
-  }
-}, {
-  icon: Zap,
-  title: "Increased Throughput",
-  description: "Maximize production capacity with faster cycle times and continuous operation capabilities.",
-  microLine: "Takt time and changeover define real capacity.",
-  modalContent: {
-    title: "Increased Throughput",
-    engineeringAnchor: "True capacity is limited by takt, changeovers, and handling time.",
-    typicalUseCase: "Increase line output, stabilize cycle time, enable longer unattended operation.",
-    keyConstraints: "Robot path length vs takt time, loading/unloading method, curing/dry time, color change & cleaning time, buffer/conveyor logic.",
-    whatWeNeedToAssess: "Required parts/hour (or takt), shift pattern, batch size & changeover frequency, current bottleneck step, handling/conveyor constraints."
-  }
-}, {
-  icon: Users,
-  title: "Labor Reduction",
-  description: "Reduce dependency on skilled manual painters and reallocate workforce to higher-value tasks.",
-  microLine: "Automation boundary determines operator workload.",
-  modalContent: {
-    title: "Labor Reduction",
-    engineeringAnchor: "Labor savings come from a clear automation boundary.",
-    typicalUseCase: "Reduce dependency on skilled painters, shift labor to prep/QA, improve staffing stability.",
-    keyConstraints: "Masking/prep workload, manual touch-up expectations, paint mixing/refill routine, maintenance & daily checks, inspection and rework loop.",
-    whatWeNeedToAssess: "Which tasks must remain manual, acceptable manual touch-up %, paint supply method, operator skill availability, current staffing pain points."
-  }
-}, {
-  icon: Shield,
-  title: "Safety & Compliance",
-  description: "Protect workers from hazardous paint fumes and overspray while meeting stringent regulatory requirements.",
-  microLine: "Ventilation and site constraints set the baseline.",
-  modalContent: {
-    title: "Safety & Compliance",
-    engineeringAnchor: "Compliance is defined by ventilation, fire risk, and site conditions.",
-    typicalUseCase: "Reduce exposure to fumes/overspray, standardize safety controls, meet plant and local compliance requirements.",
-    keyConstraints: "Booth ventilation & airflow, VOC/solvent handling, grounding & static control, fire suppression, hazardous area classification (if applicable).",
-    whatWeNeedToAssess: "Paint type (liquid), booth/room dimensions, ventilation/exhaust capacity, plant safety standards required (e.g., NFPA/ATEX where relevant), waste handling constraints."
-  }
-}];
-
-const systemComponents = [{
-  icon: Cog,
-  title: "Industrial Robot",
-  description: "6-axis articulated robot optimized for spray painting applications with extended reach and payload."
-}, {
-  icon: Box,
-  title: "Spray Equipment",
-  description: "Integrated spray guns, pumps, and fluid handling systems for precise paint delivery."
-}, {
-  icon: Settings,
-  title: "Paint Booth & Ventilation",
-  description: "Purpose-built spray booth with exhaust systems meeting safety and environmental standards."
-}, {
-  icon: Gauge,
-  title: "Process Controls",
-  description: "Advanced HMI and recipe management for consistent paint parameters and traceability."
-}];
+import { useI18n } from "@/i18n";
 
 interface Benefit {
   icon: typeof Target;
@@ -90,6 +23,75 @@ export default function Index() {
   const [activeSection, setActiveSection] = useState("ai-consultation");
   const [chatActive, setChatActive] = useState(false);
   const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
+  const { t } = useI18n();
+
+  const benefits: Benefit[] = [{
+    icon: Target,
+    title: t.home.qualityConsistency,
+    description: t.home.qualityDesc,
+    microLine: t.home.qualityMicro,
+    modalContent: {
+      title: t.home.qualityConsistency,
+      engineeringAnchor: "Repeatability depends on fixturing, path control, and paint stability.",
+      typicalUseCase: "Tight appearance requirements, reduced rework, stable finish across shifts.",
+      keyConstraints: "Part presentation/fixturing, spray distance & angle, edge coverage, paint viscosity/atomization, booth airflow & temperature.",
+      whatWeNeedToAssess: "Part CAD or photos, finish spec (visual vs functional), target film build range, acceptable touch-up level, current defect/rework drivers."
+    }
+  }, {
+    icon: Zap,
+    title: t.home.throughput,
+    description: t.home.throughputDesc,
+    microLine: t.home.throughputMicro,
+    modalContent: {
+      title: t.home.throughput,
+      engineeringAnchor: "True capacity is limited by takt, changeovers, and handling time.",
+      typicalUseCase: "Increase line output, stabilize cycle time, enable longer unattended operation.",
+      keyConstraints: "Robot path length vs takt time, loading/unloading method, curing/dry time, color change & cleaning time, buffer/conveyor logic.",
+      whatWeNeedToAssess: "Required parts/hour (or takt), shift pattern, batch size & changeover frequency, current bottleneck step, handling/conveyor constraints."
+    }
+  }, {
+    icon: Users,
+    title: t.home.laborReduction,
+    description: t.home.laborDesc,
+    microLine: t.home.laborMicro,
+    modalContent: {
+      title: t.home.laborReduction,
+      engineeringAnchor: "Labor savings come from a clear automation boundary.",
+      typicalUseCase: "Reduce dependency on skilled painters, shift labor to prep/QA, improve staffing stability.",
+      keyConstraints: "Masking/prep workload, manual touch-up expectations, paint mixing/refill routine, maintenance & daily checks, inspection and rework loop.",
+      whatWeNeedToAssess: "Which tasks must remain manual, acceptable manual touch-up %, paint supply method, operator skill availability, current staffing pain points."
+    }
+  }, {
+    icon: Shield,
+    title: t.home.safetyCompliance,
+    description: t.home.safetyDesc,
+    microLine: t.home.safetyMicro,
+    modalContent: {
+      title: t.home.safetyCompliance,
+      engineeringAnchor: "Compliance is defined by ventilation, fire risk, and site conditions.",
+      typicalUseCase: "Reduce exposure to fumes/overspray, standardize safety controls, meet plant and local compliance requirements.",
+      keyConstraints: "Booth ventilation & airflow, VOC/solvent handling, grounding & static control, fire suppression, hazardous area classification (if applicable).",
+      whatWeNeedToAssess: "Paint type (liquid), booth/room dimensions, ventilation/exhaust capacity, plant safety standards required (e.g., NFPA/ATEX where relevant), waste handling constraints."
+    }
+  }];
+
+  const systemComponents = [{
+    icon: Cog,
+    title: t.home.industrialRobot,
+    description: t.home.robotDesc,
+  }, {
+    icon: Box,
+    title: t.home.sprayEquipment,
+    description: t.home.sprayDesc,
+  }, {
+    icon: Settings,
+    title: t.home.boothVentilation,
+    description: t.home.boothDesc,
+  }, {
+    icon: Gauge,
+    title: t.home.processControls,
+    description: t.home.controlsDesc,
+  }];
 
   useEffect(() => {
     const handleReset = () => {
@@ -133,11 +135,9 @@ export default function Index() {
 
   return (
     <div className="bg-background flex">
-      {/* Left sidebar */}
       <HomeSidebar activeItem={activeSection} onItemClick={handleSidebarClick} />
 
       <div className="flex-1 min-w-0">
-        {/* Control Interface — PRIMARY */}
         {chatActive ? (
           <InlineChatPanel
             initialMessage={chatInitialMessage}
@@ -155,8 +155,8 @@ export default function Index() {
           <div className="container-wide">
             <FadeIn>
               <div className="mb-10">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Engineering Rationale</p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Why Robotic Painting?</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">{t.home.sectionRationale}</p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">{t.home.whyRoboticPainting}</h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
@@ -195,8 +195,8 @@ export default function Index() {
           <div className="container-wide">
             <FadeIn>
               <div className="mb-10">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">System Architecture</p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Complete Paint Cell Solution</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">{t.home.sectionArchitecture}</p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">{t.home.completeSolution}</h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
@@ -218,7 +218,7 @@ export default function Index() {
             <FadeIn delay={0.4} className="mt-8 text-center">
               <Button asChild variant="outline">
                 <Link to="/paint-cells">
-                  Explore solutions →
+                  {t.home.exploreSolutions}
                 </Link>
               </Button>
             </FadeIn>
@@ -230,15 +230,15 @@ export default function Index() {
           <div className="container-wide">
             <FadeIn>
               <div className="mb-8">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Deployment Reference</p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Project References</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">{t.home.sectionReference}</p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">{t.home.projectReferences}</h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
             <FadeIn delay={0.2} className="text-center">
               <Button asChild variant="outline">
                 <Link to="/case-studies" className="flex items-center gap-2">
-                  View Case Studies
+                  {t.home.viewCaseStudies}
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -246,7 +246,6 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Benefit Detail Modal */}
         <BenefitDetailModal open={isModalOpen} onOpenChange={setIsModalOpen} content={selectedBenefit?.modalContent || null} onStartConsultation={handleStartConsultation} />
       </div>
     </div>
