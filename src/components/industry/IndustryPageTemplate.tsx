@@ -72,8 +72,13 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
       <div className="min-h-screen bg-background">
 
         {/* ─── 1. HERO ─── */}
-        <section className="border-b border-border">
-          <div className="container-wide py-12 md:py-20">
+        <section className="border-b border-border relative overflow-hidden">
+          {data.heroImage && (
+            <div className="absolute inset-0">
+              <img src={data.heroImage} alt="" className="w-full h-full object-cover opacity-[0.07]" />
+            </div>
+          )}
+          <div className="container-wide py-12 md:py-20 relative z-10">
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
               {/* Left: declaration */}
               <div>

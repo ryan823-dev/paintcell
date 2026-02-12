@@ -48,6 +48,7 @@ import FeasibilityChecklist from "./pages/resources/tools/FeasibilityChecklist";
 
 // Industry pages
 import IndustryPage from "./pages/IndustryPage";
+import Industries from "./pages/Industries";
 
 // Console pages
 import ConsoleLogin from "./pages/console/ConsoleLogin";
@@ -136,6 +137,7 @@ const App = () => (
               <Route path="/resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
               
               {/* Industry pages */}
+              <Route path="/industries" element={<Industries />} />
               <Route path="/industries/:slug" element={<IndustryPage />} />
               
               <Route path="*" element={<NotFound />} />
