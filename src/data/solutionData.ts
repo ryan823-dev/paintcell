@@ -22,12 +22,26 @@ export interface SolutionData {
   heroTitle: string;
   heroSubtitle: string;
   definition: string;
+  /** Optional second paragraph for definition block */
+  definitionSecondary?: string;
+  /** "What TD Delivers" scope section */
+  scopeIntro?: string;
+  scopeItems?: string[];
   processSteps: ProcessStep[];
   applicationScope: string[];
+  applicationScopeIntro?: string;
   configOptions: ConfigOption[];
+  /** Key Technical Parameters */
+  technicalParameters?: string[];
+  technicalParametersIntro?: string;
   constraints: string[];
+  /** ATEX / Explosion-Proof section */
+  atexIntro?: string;
+  atexItems?: string[];
   roiMethodology: string;
   roiMetrics: { label: string; value: string }[];
+  /** Deployment timeline note */
+  deploymentNote?: string;
   timeline: { phase: string; duration: string; description: string }[];
   faqs: SolutionFAQ[];
   relatedIndustries: { label: string; href: string }[];
@@ -37,67 +51,99 @@ export interface SolutionData {
 export const solutions: Record<string, SolutionData> = {
   "robotic-painting-system": {
     slug: "robotic-painting-system",
-    metaTitle: "Robotic Painting System | Robotic Painting System Integrator | TD",
-    metaDescription: "Robotic painting system implementation guide. Process flow, ROI analysis, and configuration options. Engineering-focused approach for industrial applications.",
-    heroTitle: "Robotic Painting System",
-    heroSubtitle: "End-to-end automated spray painting solution — from feasibility to production deployment.",
-    definition: "A robotic painting system is a fully integrated automation cell that replaces manual spray painting with programmable robot-controlled application. The system encompasses industrial robots, spray equipment, paint supply infrastructure, environmental controls (booth, ventilation), and process management software. TD designs, engineers, and deploys these systems as turnkey solutions tailored to specific production requirements.",
-    processSteps: [
-      { title: "Surface Preparation", description: "Parts are cleaned, masked, and fixtured for consistent presentation to the robot.", parameters: "Cleanliness standard, masking complexity, fixture design" },
-      { title: "Paint Preparation", description: "Coating material is mixed, filtered, and conditioned to specification (viscosity, temperature, catalyst ratio).", parameters: "Viscosity range, pot life, mixing ratio, filtration grade" },
-      { title: "Robotic Application", description: "6-axis robot executes pre-programmed spray paths with controlled parameters: fan width, atomization pressure, flow rate, and gun distance.", parameters: "Spray speed, overlap %, gun distance, bell/cup RPM" },
-      { title: "Flash & Cure", description: "Coated parts undergo flash-off and curing per paint specification — ambient, forced air, IR, or oven.", parameters: "Flash time, cure temperature, dwell time" },
-      { title: "Quality Inspection", description: "Film build, appearance, and adhesion are verified against acceptance criteria.", parameters: "DFT range, gloss target, cross-cut adhesion grade" },
+    metaTitle: "Robotic Painting System Integration | Paint Booth Automation & ATEX Options | TD",
+    metaDescription: "Engineering and integration of robotic painting systems, spray painting cells, and paint booth automation. ABB-led integrations with electrostatic, HVLP, and air spray options. ATEX-ready configurations and fast deployment timelines for automotive and industrial finishing.",
+    heroTitle: "Robotic Painting System Integration",
+    heroSubtitle: "We provide system-level integration rather than standalone equipment. Our solutions combine robot selection, spray process configuration, booth design, control integration, and commissioning support. Applications primarily serve automotive component production and industrial finishing environments targeting global markets including Europe and North America.",
+    definition: "A robotic painting system is an automated coating solution integrating industrial robots, spray technologies, paint supply systems, paint booth airflow/ventilation, and process control to deliver repeatable finish quality and stable production throughput.",
+    definitionSecondary: "TD Robotic Painting Systems engineers and integrates robotic painting cells and automated spray painting workstations for automotive component manufacturing and industrial finishing worldwide.",
+    scopeIntro: "TD provides end-to-end system integration, including:",
+    scopeItems: [
+      "Robotic painting cell design and commissioning",
+      "Paint booth automation (new booth build or integration with existing booths)",
+      "Paint supply and fluid control integration",
+      "Controls integration (PLC + robot controller + HMI)",
+      "Process tuning for repeatability and throughput",
     ],
+    processSteps: [
+      { title: "Part Positioning", description: "Fixture, handling, and optional conveyor interface for consistent part presentation to the robot." },
+      { title: "Spray Execution", description: "Electrostatic, HVLP, or air spray application with programmable robot-controlled parameters." },
+      { title: "Paint Supply & Fluid Control", description: "Pump or pressure tank delivery with viscosity, temperature, and flow regulation." },
+      { title: "Paint Booth Airflow & Overspray Management", description: "New booth construction or existing booth integration with ventilation and filtration." },
+      { title: "Controls & Safety", description: "PLC, robot controller, HMI coordination with interlocks, monitoring, and safety systems." },
+      { title: "Process Verification", description: "Production startup support, process validation, and quality verification." },
+    ],
+    applicationScopeIntro: "Robotic painting systems are commonly applied in:",
     applicationScope: [
-      "Automotive components — brackets, housings, trim panels, under-body parts",
-      "Metal fabrication — enclosures, frames, structural steel, heat sinks",
-      "Appliance manufacturing — panels, doors, housings, internal components",
-      "General industrial — valves, fittings, machinery covers, equipment parts",
+      "Automotive component painting — brackets, structural parts, metal assemblies, sub-components",
+      "Industrial parts finishing and equipment coating",
+      "Metal parts finishing lines requiring stable quality and controlled overspray management",
     ],
     configOptions: [
-      { scenario: "Low volume, high mix", recommendation: "Single robot cell with offline programming and quick-change fixturing", suitableFor: "Job shops, prototype runs, contract coaters" },
-      { scenario: "Medium volume, moderate mix", recommendation: "Dual robot cell with automated part handling and recipe management", suitableFor: "OEM Tier 1-2 suppliers, batch production" },
-      { scenario: "High volume, low mix", recommendation: "Multi-robot inline system with conveyor integration and auto color change", suitableFor: "Mass production, appliance lines, automotive assembly" },
+      { scenario: "Robot brand preference", recommendation: "ABB / FANUC / KUKA / others. ABB integrations are common in our projects, while we can support customer-specified brands.", suitableFor: "All applications" },
+      { scenario: "Spray technology selection", recommendation: "Electrostatic, HVLP, or air spray — selected based on part geometry, finish requirement, and transfer efficiency targets.", suitableFor: "Application-dependent" },
+      { scenario: "Part dimensions & geometry", recommendation: "System layout and robot reach configured based on part size constraints and fixture design.", suitableFor: "All part types" },
+      { scenario: "Throughput targets", recommendation: "Cell capacity and cycle time engineered to meet parts/hour requirements.", suitableFor: "Production volume planning" },
+      { scenario: "Color change requirements", recommendation: "Single color or multi-color changeover with automated flush and valve systems.", suitableFor: "Multi-product lines" },
+      { scenario: "Line integration mode", recommendation: "Integration with existing production lines or standalone cell deployment.", suitableFor: "Greenfield or retrofit" },
+      { scenario: "ATEX / explosion-proof requirements", recommendation: "ATEX-ready configurations depending on site classification and paint type.", suitableFor: "Solvent-based applications" },
+    ],
+    technicalParametersIntro: "Typical system considerations include:",
+    technicalParameters: [
+      "Robot reach, payload, and repeatability requirement",
+      "Spray speed and coating thickness control targets",
+      "Booth dimensions, airflow design, and ventilation constraints",
+      "Paint supply method (pump / pressure tank) and fluid stability",
+      "Control architecture (PLC + robot controller coordination)",
+      "Safety classification and ATEX readiness when required",
     ],
     constraints: [
-      "Part geometry must allow robot reach and spray angle coverage",
-      "Production environment must support ATEX/NFPA requirements for spray painting",
-      "Minimum production volume should justify automation investment (typically >50 parts/day)",
-      "Paint chemistry must be compatible with robotic application equipment",
-      "Facility must have adequate power, compressed air, and ventilation infrastructure",
+      "Configuration is finalized during engineering assessment",
+      "Parameters vary by application and site constraints",
+      "This is system integration, not standalone equipment supply",
+      "Primary focus: automotive component manufacturing",
     ],
-    roiMethodology: "ROI is calculated by comparing total cost of ownership (TCO) between manual and automated painting. Key variables include labor rates, paint consumption (transfer efficiency delta), reject/rework rates, throughput improvement, and maintenance costs. Payback is typically measured from system commissioning to breakeven.",
+    atexIntro: "ATEX-ready configurations can be supported based on customer site classification and paint process requirements. ATEX scope is defined during assessment, including:",
+    atexItems: [
+      "Ventilation and airflow requirements",
+      "Electrical and control cabinet considerations",
+      "Safety interlocks and monitoring",
+      "Process constraints based on paint type and environment",
+    ],
+    roiMethodology: "ROI depends on production volume, labor structure, and coating requirements. Robotic painting system integration enables measurable operational improvements:",
     roiMetrics: [
-      { label: "Labor cost reduction", value: "40–70%" },
-      { label: "Paint material savings", value: "15–35%" },
-      { label: "Throughput improvement", value: "25–60%" },
-      { label: "Rework reduction", value: "50–80%" },
-      { label: "Typical payback", value: "12–24 months" },
+      { label: "Coating consistency improvement", value: "Repeatable" },
+      { label: "Manual spraying dependency", value: "Reduced" },
+      { label: "Production throughput", value: "Stabilized" },
+      { label: "Overspray & material waste", value: "Reduced" },
+      { label: "Automation scalability", value: "Enabled" },
     ],
+    deploymentNote: "Typical lead time: 8–12 weeks after design approval. Extended for complex line integration, multi-color changeover, or specialized ATEX scopes.",
     timeline: [
-      { phase: "Feasibility & Concept", duration: "2–3 weeks", description: "Technical assessment, layout concept, budget estimate" },
-      { phase: "Detail Engineering", duration: "4–6 weeks", description: "3D design, electrical schematics, process simulation" },
-      { phase: "Manufacturing", duration: "6–10 weeks", description: "Booth fabrication, system assembly, component procurement" },
-      { phase: "Factory Acceptance", duration: "1–2 weeks", description: "Full system testing, customer witness, adjustments" },
-      { phase: "Installation", duration: "2–4 weeks", description: "On-site setup, integration, commissioning" },
-      { phase: "Training & Handover", duration: "1–2 weeks", description: "Operator training, documentation, support transition" },
+      { phase: "Requirement Assessment", duration: "Week 1–2", description: "Parts, coating spec, throughput, site constraints" },
+      { phase: "System Configuration Planning", duration: "Week 2–3", description: "Robot + spray + booth + controls selection" },
+      { phase: "Layout & Integration Design", duration: "Week 3–5", description: "3D layout, electrical schematics, process design" },
+      { phase: "Manufacturing & Assembly", duration: "Week 5–10", description: "System build, component procurement, assembly" },
+      { phase: "Process Testing & Verification", duration: "Week 10–11", description: "Factory acceptance testing and validation" },
+      { phase: "Installation & Commissioning", duration: "Week 11–13", description: "On-site setup, integration, commissioning" },
+      { phase: "Production Startup", duration: "Week 13–14", description: "Training, optimization, and production handover" },
     ],
     faqs: [
-      { question: "What is a robotic painting system?", answer: "A robotic painting system is an automated manufacturing cell where industrial robots perform spray painting operations. It includes the robot, spray equipment, paint delivery system, spray booth with ventilation, and process control software — all integrated into a turnkey production solution." },
-      { question: "How much does a robotic painting system cost?", answer: "System costs vary significantly based on throughput requirements, number of robots, paint technology, and integration complexity. A single-cell system starts at a different baseline than a multi-robot production line. Contact us for a preliminary budget assessment based on your specific requirements." },
-      { question: "How long does it take to deploy a robotic painting system?", answer: "Typical project timelines range from 16–26 weeks from concept approval to production handover, depending on system complexity, custom engineering requirements, and integration scope." },
-      { question: "Can a robotic system handle multiple paint types and colors?", answer: "Yes. Modern systems support automatic color change with changeover times under 60 seconds. They handle solvent-based, water-based, 2K, and specialty coatings with appropriate equipment selection." },
-      { question: "What maintenance does a robotic painting system require?", answer: "Routine maintenance includes robot calibration checks, spray equipment cleaning/replacement (nozzles, filters), paint supply system maintenance, and booth filter management. Most systems require 30–60 minutes of daily maintenance and periodic scheduled service intervals." },
+      { question: "What is robotic painting system integration?", answer: "Turnkey integration of industrial robots, spray process, paint supply, booth/airflow, controls, and commissioning to achieve repeatable coating quality." },
+      { question: "Can you build a new paint booth or integrate with an existing booth?", answer: "Both. We can deliver new booth automation or integrate the robotic system into an existing booth environment." },
+      { question: "Do you support ABB, FANUC, and KUKA?", answer: "Yes. ABB is common in our projects, and we can also integrate other customer-specified robot brands." },
+      { question: "Do you support ATEX / explosion-proof requirements?", answer: "Yes. ATEX readiness is configured based on site classification and process requirements." },
+      { question: "How long does deployment typically take?", answer: "Often 8–12 weeks after design approval, depending on complexity and site constraints." },
     ],
     relatedIndustries: [
       { label: "Automotive Painting", href: "/industries/automotive-painting" },
+      { label: "Appliance Coating Automation", href: "/industries/appliance-coating" },
       { label: "Metal Parts Finishing", href: "/industries/metal-parts-finishing" },
-      { label: "Appliance Coating", href: "/industries/appliance-coating" },
     ],
     relatedKnowledge: [
       { label: "How to Choose a Paint Robot", href: "/resources/knowledge/how-to-choose-paint-robot" },
       { label: "Robotic Painting Cost Guide", href: "/resources/knowledge/robotic-painting-cost-guide" },
+      { label: "Paint Booth Automation", href: "/solutions/paint-booth-automation" },
     ],
   },
 

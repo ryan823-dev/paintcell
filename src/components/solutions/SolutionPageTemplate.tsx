@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Sparkles, Layers, Settings2, BarChart3,
-  AlertTriangle, Clock, HelpCircle, ArrowRight, BookOpen
+  AlertTriangle, Clock, HelpCircle, ArrowRight, BookOpen,
+  Shield, Wrench, Target
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -98,21 +99,53 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
             </p>
             <div className="flex flex-wrap gap-3">
               <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl">
-                Get Free Assessment
+                Start Project Assessment
                 <ChevronRight className="h-4 w-4" />
               </Button>
               <Button asChild variant="outline" className="h-11 px-6 rounded-xl">
-                <Link to="/quote">Configure Your System</Link>
+                <Link to="/quote">Talk to an Engineer</Link>
               </Button>
             </div>
           </div>
         </section>
 
-        {/* Definition */}
+        {/* Definition Block */}
         <section className="border-b border-border section-gradient">
           <div className="container-narrow py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Process Overview</h2>
-            <p className="text-muted-foreground leading-relaxed mb-10">{data.definition}</p>
+            <p className="text-muted-foreground leading-relaxed mb-4">{data.definition}</p>
+            {data.definitionSecondary && (
+              <p className="text-muted-foreground leading-relaxed mb-10">{data.definitionSecondary}</p>
+            )}
+
+            {/* What TD Delivers (Scope) */}
+            {data.scopeItems && data.scopeItems.length > 0 && (
+              <div className="mt-8">
+                <div className="flex items-center gap-2 mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  <Wrench className="h-3.5 w-3.5" />
+                  What TD delivers
+                </div>
+                {data.scopeIntro && (
+                  <p className="text-muted-foreground text-sm mb-4">{data.scopeIntro}</p>
+                )}
+                <ul className="space-y-2">
+                  {data.scopeItems.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-accent mt-1 shrink-0">•</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* System Architecture */}
+        <section className="border-b border-border">
+          <div className="container-narrow py-12 md:py-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">System Architecture</h2>
+            <p className="text-muted-foreground text-sm leading-relaxed mb-8">Architecture is configured based on part geometry, finish requirement, and production throughput.</p>
             <div className="space-y-4">
               {data.processSteps.map((step, i) => (
                 <div key={i} className="flex gap-4 items-start">
@@ -131,9 +164,12 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         </section>
 
         {/* Application Scope */}
-        <section className="border-b border-border">
+        <section className="border-b border-border section-gradient">
           <div className="container-narrow py-12 md:py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Application Scope</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Typical Applications</h2>
+            {data.applicationScopeIntro && (
+              <p className="text-muted-foreground text-sm mb-6">{data.applicationScopeIntro}</p>
+            )}
             <div className="grid md:grid-cols-2 gap-3">
               {data.applicationScope.map((scope, i) => (
                 <Card key={i} className="border-border bg-card">
@@ -148,13 +184,13 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         </section>
 
         {/* Technical Configuration */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-narrow py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Settings2 className="h-3.5 w-3.5" />
               Configuration logic
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-8">Technical Configuration</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Configuration Options</h2>
             <div className="space-y-4">
               {data.configOptions.map((opt, i) => (
                 <Card key={i} className="border-border bg-card">
@@ -167,11 +203,32 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               ))}
             </div>
 
+            {/* Key Technical Parameters */}
+            {data.technicalParameters && data.technicalParameters.length > 0 && (
+              <div className="mt-10">
+                <div className="flex items-center gap-2 mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  <Target className="h-3.5 w-3.5" />
+                  Key technical parameters
+                </div>
+                {data.technicalParametersIntro && (
+                  <p className="text-muted-foreground text-sm mb-4">{data.technicalParametersIntro}</p>
+                )}
+                <ul className="space-y-2">
+                  {data.technicalParameters.map((p, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-accent mt-1 shrink-0">•</span>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Constraints */}
             <div className="mt-10">
               <div className="flex items-center gap-2 mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 <AlertTriangle className="h-3.5 w-3.5" />
-                Constraints & prerequisites
+                Constraints & notes
               </div>
               <ul className="space-y-2">
                 {data.constraints.map((c, i) => (
@@ -185,14 +242,38 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
           </div>
         </section>
 
+        {/* ATEX / Explosion-Proof */}
+        {data.atexItems && data.atexItems.length > 0 && (
+          <section className="border-b border-border section-gradient">
+            <div className="container-narrow py-12 md:py-16">
+              <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <Shield className="h-3.5 w-3.5" />
+                Safety classification
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">ATEX / Explosion-Proof Readiness</h2>
+              {data.atexIntro && (
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">{data.atexIntro}</p>
+              )}
+              <ul className="space-y-2">
+                {data.atexItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className="text-accent mt-1 shrink-0">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         {/* ROI */}
         <section className="border-b border-border">
           <div className="container-narrow py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <BarChart3 className="h-3.5 w-3.5" />
-              Investment analysis
+              Production benefits
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">ROI Analysis</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">ROI & Production Benefits</h2>
             <p className="text-muted-foreground text-sm leading-relaxed mb-8">{data.roiMethodology}</p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {data.roiMetrics.map((m, i) => (
@@ -214,7 +295,10 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               <Clock className="h-3.5 w-3.5" />
               Project timeline
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-8">Implementation Workflow</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Implementation Workflow</h2>
+            {data.deploymentNote && (
+              <p className="text-muted-foreground text-sm leading-relaxed mb-8">{data.deploymentNote}</p>
+            )}
             <div className="space-y-4">
               {data.timeline.map((phase, i) => (
                 <div key={i} className="flex gap-4 items-start">
@@ -254,7 +338,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
           </div>
         </section>
 
-        {/* Related Links + CTA */}
+        {/* Related Links + Project Initiation CTA */}
         <section>
           <div className="container-narrow py-12 md:py-16">
             <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -294,17 +378,18 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               )}
             </div>
 
+            {/* Project Initiation */}
             <div className="pt-8 border-t border-border">
-              <h2 className="text-xl font-bold mb-3">Get a Free Project Assessment</h2>
+              <h2 className="text-xl font-bold mb-3">Start Your Robotic Painting Project</h2>
               <p className="text-muted-foreground text-sm mb-6 max-w-xl">
-                Our AI agent can evaluate your project requirements and provide a preliminary feasibility assessment in minutes.
+                Tell us about your parts, coating requirements, booth situation (new or existing), ATEX needs, and throughput targets.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl">
-                  Start AI Consultation <ChevronRight className="h-4 w-4" />
+                  Start Project Assessment <ChevronRight className="h-4 w-4" />
                 </Button>
                 <Button asChild variant="outline" className="h-11 px-6 rounded-xl">
-                  <Link to="/quote">Use Project Form</Link>
+                  <Link to="/quote">Talk to an Engineer</Link>
                 </Button>
               </div>
             </div>
