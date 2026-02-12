@@ -1,11 +1,15 @@
-import { Target, Box, FolderOpen, BookOpen, FileText, MessageSquare } from "lucide-react";
+import { Target, Box, FolderOpen, BookOpen, FileText, MessageSquare, Factory, Layers, CheckCircle2, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const sidebarItems = [
   { id: "ai-consultation", icon: MessageSquare, label: "AI Consultation", action: "open-assistant" },
-  { id: "why-robotic-painting", icon: Target, label: "Why Robotic Painting", anchor: "#why-robotic-painting" },
-  { id: "system-overview", icon: Box, label: "Paint Cell Solution", anchor: "#system-overview" },
-  { id: "project-references", icon: FolderOpen, label: "Project References", anchor: "#project-references" },
+  { id: "industry-entry", icon: Factory, label: "Applications", anchor: "#industry-entry" },
+  { id: "core-capabilities", icon: CheckCircle2, label: "Capabilities", anchor: "#core-capabilities" },
+  { id: "system-overview", icon: Box, label: "System Architecture", anchor: "#system-overview" },
+  { id: "deployment-process", icon: Layers, label: "Deployment", anchor: "#deployment-process" },
+  { id: "why-robotic-painting", icon: Target, label: "Why Automation", anchor: "#why-robotic-painting" },
+  { id: "project-references", icon: FolderOpen, label: "References", anchor: "#project-references" },
+  { id: "faq", icon: HelpCircle, label: "FAQ", anchor: "#faq" },
   { id: "engineering-library", icon: BookOpen, label: "Engineering Library", href: "/resources/engineering-library" },
   { id: "request-quote", icon: FileText, label: "Request a Quote", href: "/quote" },
 ];
@@ -35,7 +39,7 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
 
   return (
     <aside className="hidden lg:flex flex-col w-[220px] shrink-0 sticky top-[3.5rem] h-[calc(100vh-3.5rem)] border-r border-border bg-muted/50 z-20">
-      <nav className="relative flex flex-col gap-1 p-4 pt-8">
+      <nav className="relative flex flex-col gap-0.5 p-4 pt-8 overflow-y-auto flex-1">
         <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-3 px-3">
           Navigation
         </p>
@@ -43,26 +47,25 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
           const isActive = activeItem === item.id;
           return (
             <button
-              key={item.label}
+              key={item.id}
               onClick={() => handleClick(item)}
               className={cn(
-                "group flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] transition-all duration-200 text-left relative",
+                "group flex items-center gap-3 px-3 py-2 rounded-lg text-[12px] transition-all duration-200 text-left relative",
                 isActive
                   ? "text-heading bg-background shadow-sm"
                   : "text-muted-foreground hover:text-heading hover:bg-background/60"
               )}
             >
-              {/* Active indicator line */}
               <span className={cn(
                 "absolute left-0 top-1/2 -translate-y-1/2 w-[2px] bg-accent rounded-r transition-all duration-200",
-                isActive ? "h-5" : "h-0 group-hover:h-5"
+                isActive ? "h-4" : "h-0 group-hover:h-4"
               )} />
               <div className={cn(
-                "w-7 h-7 rounded-md flex items-center justify-center transition-colors duration-200",
+                "w-6 h-6 rounded-md flex items-center justify-center transition-colors duration-200",
                 isActive ? "bg-accent/15" : "bg-muted group-hover:bg-accent/10"
               )}>
                 <item.icon className={cn(
-                  "h-3.5 w-3.5 transition-colors duration-200",
+                  "h-3 w-3 transition-colors duration-200",
                   isActive ? "text-accent" : "text-muted-foreground group-hover:text-accent"
                 )} />
               </div>
@@ -73,7 +76,7 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
       </nav>
 
       {/* Bottom tech decoration */}
-      <div className="mt-auto p-4">
+      <div className="p-4">
         <div className="border border-border rounded-lg p-3 bg-background">
           <div className="flex items-center gap-2 mb-2">
             <span className="relative flex h-1.5 w-1.5">

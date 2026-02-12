@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Send, Sparkles } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HomepageWizardStrip } from "./HomepageWizardStrip";
 
@@ -46,16 +46,16 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
           <span className="text-muted-foreground">Project Interface Ready</span>
         </div>
 
-        {/* Central AI greeting */}
+        {/* H1 — SEO primary heading */}
         <div className="text-center mb-8 lg:mb-10 w-full max-w-5xl">
           <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
             <Sparkles className="h-3 w-3" />
             AI-Powered Engineering
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl font-bold mb-4 leading-tight whitespace-nowrap">
-            Start your robotic painting project
+          <h1 className="text-2xl md:text-3xl lg:text-[2.5rem] xl:text-[2.75rem] font-bold mb-4 leading-tight">
+            Robotic Painting Systems &amp; Paint Booth Automation Integrator
           </h1>
-          <p className="text-muted-foreground text-base md:text-lg leading-relaxed whitespace-nowrap">
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-3xl mx-auto">
             Describe your application, parts, or production line — our AI agent will guide you through the assessment.
           </p>
         </div>
