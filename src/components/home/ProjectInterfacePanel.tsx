@@ -47,7 +47,7 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
         </div>
 
         {/* Central AI greeting */}
-        <div className="text-center mb-8 lg:mb-10 max-w-3xl">
+        <div className="text-center mb-8 lg:mb-10 w-full max-w-5xl">
           <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
             <Sparkles className="h-3 w-3" />
             AI-Powered Engineering
