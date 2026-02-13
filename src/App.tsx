@@ -55,6 +55,7 @@ import PaintBoothDesignBasics from "./pages/resources/knowledge/PaintBoothDesign
 // Industry pages
 import IndustryPage from "./pages/IndustryPage";
 import Industries from "./pages/Industries";
+import AutomotivePainting from "./pages/industries/AutomotivePainting";
 
 // Solution pages
 import Solutions from "./pages/Solutions";
@@ -158,6 +159,7 @@ const App = () => (
               
               {/* Industry pages */}
               <Route path="/industries" element={<Industries />} />
+              <Route path="/industries/automotive-painting" element={<AutomotivePainting />} />
               <Route path="/industries/:slug" element={<IndustryPage />} />
               
               <Route path="*" element={<NotFound />} />
