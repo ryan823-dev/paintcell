@@ -7,6 +7,7 @@ import { BenefitDetailModal, BenefitModalContent } from "@/components/home/Benef
 import { ProjectInterfacePanel } from "@/components/home/ProjectInterfacePanel";
 import { HomeSidebar } from "@/components/home/HomeSidebar";
 import { InlineChatPanel } from "@/components/home/InlineChatPanel";
+import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import {
   ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge,
   Car, Refrigerator, Wrench, Factory, ArrowRight, CheckCircle2,
@@ -552,6 +553,9 @@ export default function Index() {
               </FadeIn>
             </div>
           </section>
+
+          {/* Explore Links */}
+          <ExploreLinks currentPath="/" />
 
           {/* E-E-A-T Block */}
           <section className="border-t border-border">

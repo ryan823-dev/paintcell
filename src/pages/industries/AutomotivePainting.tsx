@@ -18,6 +18,7 @@ import {
   BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
+import { ExploreLinks } from "@/components/seo/ExploreLinks";
 
 const DOMAIN = "https://tdpaintcell.com";
 
@@ -492,6 +493,9 @@ export default function AutomotivePainting() {
             </div>
           </div>
         </section>
+
+        {/* Explore Links */}
+        <ExploreLinks currentPath="/industries/automotive-painting" />
       </div>
     </>
   );

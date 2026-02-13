@@ -15,6 +15,7 @@ import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SolutionData } from "@/data/solutionData";
+import { ExploreLinks } from "@/components/seo/ExploreLinks";
 
 interface SolutionPageTemplateProps {
   data: SolutionData;
@@ -520,6 +521,9 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
             </div>
           </div>
         </section>
+
+        {/* Explore Links */}
+        <ExploreLinks currentPath={`/solutions/${data.slug}`} />
       </div>
     </>
   );
