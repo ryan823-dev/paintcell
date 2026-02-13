@@ -59,17 +59,49 @@
       </div>
     </section>
     <!-- Static internal links for crawlability (kept in DOM permanently) -->
-    <section id="static-internal-links" aria-hidden="true" style="position:absolute !important;width:1px !important;height:1px !important;overflow:hidden !important;clip:rect(0,0,0,0) !important;clip-path:inset(50%) !important;white-space:nowrap !important;border:0 !important;padding:0 !important;margin:-1px !important">
-      <h2>Explore PaintCell</h2>
-      <nav>
-        <a href="/solutions/paint-booth-automation">Paint Booth Automation</a>
-        <a href="/industries/automotive-painting">Automotive Painting</a>
-        <a href="/industries/appliance-coating">Appliance Coating</a>
-        <a href="/industries/metal-parts-finishing">Metal Parts Finishing</a>
-        <a href="/knowledge/how-to-choose-paint-robot">How to Choose a Paint Robot</a>
-        <a href="/knowledge/robotic-painting-cost-guide">Robotic Painting Cost Guide</a>
-        <a href="/knowledge/paint-booth-design-basics">Paint Booth Design Basics</a>
-      </nav>
+    <section id="static-internal-links" style="max-width:900px;margin:0 auto;padding:32px 16px 16px;font-family:system-ui,sans-serif;font-size:13px;color:#555;line-height:1.6">
+      <h2 style="font-size:15px;margin:0 0 12px 0">Explore</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:24px">
+        <div>
+          <h3 style="font-size:14px;margin:0 0 8px 0;opacity:0.9">Solutions</h3>
+          <ul style="margin:0;padding-left:18px;line-height:1.7">
+            <li><a href="/solutions/robotic-painting-system">Robotic Painting System Integration</a></li>
+            <li><a href="/solutions/paint-booth-automation">Paint Booth Automation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-size:14px;margin:0 0 8px 0;opacity:0.9">Industries</h3>
+          <ul style="margin:0;padding-left:18px;line-height:1.7">
+            <li><a href="/industries/automotive-painting">Automotive Painting</a></li>
+            <li><a href="/industries/appliance-coating">Appliance Coating</a></li>
+            <li><a href="/industries/metal-parts-finishing">Metal Parts Finishing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-size:14px;margin:0 0 8px 0;opacity:0.9">Knowledge</h3>
+          <ul style="margin:0;padding-left:18px;line-height:1.7">
+            <li><a href="/knowledge/how-to-choose-paint-robot">How to Choose a Paint Robot</a></li>
+            <li><a href="/knowledge/robotic-painting-cost-guide">Robotic Painting Cost Guide</a></li>
+            <li><a href="/knowledge/paint-booth-design-basics">Paint Booth Design Basics</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Static P0 content snapshot for crawlability (kept in DOM permanently) -->
+    <section id="static-p0-snapshot" style="max-width:900px;margin:0 auto;padding:16px 16px 32px;font-family:system-ui,sans-serif;font-size:13px;color:#555;line-height:1.6">
+      <h2 style="font-size:15px;margin:0 0 12px 0">About Our Solutions</h2>
+      <div style="margin-bottom:10px">
+        <strong><a href="/solutions/robotic-painting-system">Robotic Painting System Integration</a></strong> — System-level engineering covering robot selection (ABB/FANUC/KUKA), spray technology (electrostatic/HVLP/air spray), paint supply coordination, controls integration (PLC + robot controller), commissioning, and production startup support. Scope is configured by part geometry, throughput targets, booth conditions, and site classification (including ATEX where required).
+      </div>
+      <div style="margin-bottom:10px">
+        <strong><a href="/solutions/paint-booth-automation">Paint Booth Automation</a></strong> — Engineering and integration of paint booth airflow/ventilation, overspray management, safety interlocks, and controls to create a stable finishing environment for robotic spray painting. Supports new booth build or retrofit integration into existing booths with ATEX-ready configurations where applicable.
+      </div>
+      <div style="margin-bottom:10px">
+        <strong><a href="/industries/automotive-painting">Automotive Painting</a></strong> — Robotic painting integration for automotive components to achieve repeatable finish quality and stable throughput. Typical scope includes booth integration, robot and process configuration, controls and safety logic, and commissioning aligned to takt time and quality requirements.
+      </div>
+      <div>
+        <strong><a href="/industries/appliance-coating">Appliance Coating</a></strong> — Robotic coating automation for appliance housings and panels, configured by paint type, appearance requirements, throughput targets, and booth conditions. Integration includes spray process selection, booth automation boundaries, controls integration, and production startup support.
+      </div>
     </section>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
