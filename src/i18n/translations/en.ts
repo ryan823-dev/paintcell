@@ -331,6 +331,22 @@ export const en: Record<string, Record<string, string>> = {
     termsOfUse: "Terms of Use",
     cookiePolicy: "Cookie Policy",
   },
+  // Sidebar
+  sidebar: {
+    navigation: "Navigation",
+    aiConsultation: "AI Consultation",
+    applications: "Applications",
+    capabilities: "Capabilities",
+    systemArchitecture: "System Architecture",
+    deployment: "Deployment",
+    whyAutomation: "Why Automation",
+    references: "References",
+    faq: "FAQ",
+    engineeringLibrary: "Engineering Library",
+    requestQuote: "Request a Quote",
+    online: "Online",
+    aiReady: "AI agent ready for project consultation",
+  },
   // Common
   common: {
     language: "Language",
