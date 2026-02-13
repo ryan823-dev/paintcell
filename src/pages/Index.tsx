@@ -10,7 +10,7 @@ import { InlineChatPanel } from "@/components/home/InlineChatPanel";
 import {
   ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge,
   Car, Refrigerator, Wrench, Factory, ArrowRight, CheckCircle2,
-  MessageSquare, FileText, Upload
+  MessageSquare, FileText, Upload, User, CalendarDays, HelpCircle
 } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { deliverySteps } from "@/data/industryData";
@@ -23,22 +23,24 @@ interface Benefit {
   modalContent: BenefitModalContent;
 }
 
+const DOMAIN = "https://tdpaintcell.com";
+
 const homepageFAQs = [
   {
     question: "What is a robotic painting system integrator?",
-    answer: "A robotic painting system integrator designs, engineers, and delivers complete automated spray painting solutions — combining industrial robots, spray technologies, paint supply systems, booth design, and process controls into a production-ready workstation. Unlike standalone equipment suppliers, an integrator ensures all subsystems work together for consistent finish quality and stable throughput."
+    answer: "A robotic painting system integrator designs and integrates robots, spray technologies, paint supply systems, controls, and commissioning workflows into a complete finishing solution that delivers repeatable quality and stable throughput."
   },
   {
     question: "How does paint booth automation improve production?",
-    answer: "Paint booth automation replaces manual spraying with robot-controlled spray processes inside an engineered booth environment. This delivers repeatable film build, consistent finish quality, reduced overspray waste, faster cycle times, and stable production output independent of operator skill variation."
+    answer: "Paint booth automation stabilizes airflow/ventilation and safety controls, reduces process variability, and supports repeatable finishing outcomes with reduced rework and more consistent production conditions."
   },
   {
     question: "What industries use robotic spray painting?",
-    answer: "Robotic spray painting is deployed across automotive component manufacturing, appliance production, metal parts finishing, industrial equipment coating, commercial vehicle painting, and general manufacturing. Any operation requiring consistent finish quality at production volumes benefits from automation."
+    answer: "Robotic spray painting is commonly used for automotive components and other industrial finishing applications where repeatable coating quality, controlled process stability, and scalable throughput are required."
   },
   {
     question: "What is required to start a robotic painting project?",
-    answer: "To begin a project assessment, you need: part geometry information (drawings, CAD, or photos), target production volume (parts per hour or shift), paint type and finish specification, available floor space, and any existing line integration requirements. Our AI agent can guide you through this initial requirement gathering."
+    answer: "To start a project assessment, provide part drawings or dimensions, coating requirements, throughput targets, booth situation (new or existing), and site classification needs such as ATEX where applicable."
   },
 ];
 
@@ -51,52 +53,56 @@ const industryEntries = [
 
 const coreCapabilities = [
   "Robotic painting system integration for automotive production",
-  "Automated spray painting workstations",
-  "Paint booth automation and process engineering",
+  "Automated spray painting workstations and robotic painting cells",
+  "Paint booth automation and process engineering (new booth or retrofit)",
   "Industrial robot configuration (ABB / FANUC / KUKA)",
   "Spray technology options: electrostatic, HVLP, air spray",
   "Control integration with PLC and robot controllers",
   "Commissioning, deployment, and production startup support",
 ];
 
-const homepageStructuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "name": "TD Robotic Painting Systems",
-      "alternateName": "TDPaintCell",
-      "url": "https://paintcell.lovable.app",
-      "description": "Engineering and integration of robotic painting cells and automated spray painting workstations for automotive manufacturers and industrial suppliers worldwide.",
-      "areaServed": ["Worldwide", "Europe", "North America", "Asia"],
-      "knowsAbout": [
-        "Robotic painting systems",
-        "Paint booth automation",
-        "Spray painting workstations",
-        "Industrial robot integration"
-      ]
-    },
-    {
-      "@type": "WebPage",
-      "name": "Robotic Painting Systems & Paint Booth Automation Integrator",
-      "description": "TD Robotic Painting Systems provides engineering and integration of robotic painting cells and automated spray painting workstations for automotive manufacturers and industrial suppliers worldwide.",
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paintcell.lovable.app" }
-        ]
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": homepageFAQs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
-      }))
-    }
-  ]
-};
+const jsonLdSchemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${DOMAIN}/#organization`,
+    "name": "TD Robotic Painting Systems",
+    "url": DOMAIN,
+    "logo": `${DOMAIN}/images/td-logo.png`,
+    "description": "System-level engineering and integration of robotic painting systems and paint booth automation.",
+    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${DOMAIN}/#website`,
+    "name": "TD Robotic Painting Systems",
+    "url": `${DOMAIN}/`,
+    "publisher": { "@id": `${DOMAIN}/#organization` },
+    "inLanguage": "en",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${DOMAIN}/#webpage`,
+    "name": "TD Robotic Painting Systems | Robotic Painting System Integrator for Automotive Components",
+    "url": `${DOMAIN}/`,
+    "isPartOf": { "@id": `${DOMAIN}/#website` },
+    "about": { "@id": `${DOMAIN}/#organization` },
+    "inLanguage": "en",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${DOMAIN}/#faq`,
+    "mainEntity": [
+      { "@type": "Question", "name": "What is a robotic painting system integrator?", "acceptedAnswer": { "@type": "Answer", "text": "A robotic painting system integrator designs and integrates robots, spray technologies, paint supply systems, controls, and commissioning workflows into a complete finishing solution that delivers repeatable quality and stable throughput." } },
+      { "@type": "Question", "name": "How does paint booth automation improve production?", "acceptedAnswer": { "@type": "Answer", "text": "Paint booth automation stabilizes airflow/ventilation and safety controls, reduces process variability, and supports repeatable finishing outcomes with reduced rework and more consistent production conditions." } },
+      { "@type": "Question", "name": "What industries use robotic spray painting?", "acceptedAnswer": { "@type": "Answer", "text": "Robotic spray painting is commonly used for automotive components and other industrial finishing applications where repeatable coating quality, controlled process stability, and scalable throughput are required." } },
+      { "@type": "Question", "name": "What is required to start a robotic painting project?", "acceptedAnswer": { "@type": "Answer", "text": "To start a project assessment, provide part drawings or dimensions, coating requirements, throughput targets, booth situation (new or existing), and site classification needs such as ATEX where applicable." } },
+    ],
+  },
+];
 
 export default function Index() {
   const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
@@ -214,15 +220,15 @@ export default function Index() {
     }
   };
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
     <>
       <Helmet>
-        <title>Robotic Painting Systems & Paint Booth Automation Integrator | TD</title>
-        <meta name="description" content="TD Robotic Painting Systems provides engineering and integration of robotic painting cells and automated spray painting workstations for automotive manufacturers and industrial suppliers worldwide." />
-        <link rel="canonical" href="https://paintcell.lovable.app" />
-        <script type="application/ld+json">{JSON.stringify(homepageStructuredData)}</script>
+        <title>TD Robotic Painting Systems | Robotic Painting System Integrator for Automotive Components</title>
+        <meta name="description" content="System-level integration of robotic spray painting cells and paint booth automation for automotive components and industrial finishing. Start your robotic painting project: talk to an engineer, upload drawings, or begin an AI project assessment." />
+        <link rel="canonical" href={`${DOMAIN}/`} />
+        {jsonLdSchemas.map((schema, i) => (
+          <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
+        ))}
       </Helmet>
 
       <div className="bg-background flex">
@@ -242,23 +248,26 @@ export default function Index() {
             <ProjectInterfacePanel onStartChat={handleStartChat} />
           )}
 
-          {/* Definition Block */}
+          {/* H1 + Definition Block */}
           <section id="definition" className="py-12 md:py-16 border-t border-border bg-muted/30">
             <div className="container-wide">
               <FadeIn>
                 <div className="max-w-4xl">
+                  <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                    Robotic Painting System Integrator for Automotive Components
+                  </h1>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
-                    A <strong className="text-foreground">robotic painting system</strong> is an automated coating solution combining industrial robots, spray technologies, paint supply systems, and process control to deliver consistent finish quality and stable production throughput.
+                    A <strong className="text-foreground">robotic painting system</strong> is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, and process control to deliver consistent finish quality and stable production throughput.
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
-                    TD Robotic Painting Systems provides engineering and integration of robotic painting cells and automated spray painting workstations for automotive manufacturers and industrial suppliers worldwide.
+                    TD Robotic Painting Systems specializes in engineering and integrating robotic painting cells and automated painting workstations for automotive component manufacturing and industrial finishing.
                   </p>
                   <div className="border-l-2 border-accent/40 pl-4">
                     <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                      We provide system-level integration rather than standalone equipment. Our solutions combine robot selection, spray process configuration, booth design, control integration, and commissioning support.
+                      We provide system-level integration rather than standalone equipment. Our solutions combine robot selection, spray process configuration, booth integration, control integration, and commissioning support.
                     </p>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Applications primarily serve automotive component production and industrial finishing environments targeting global markets including Europe and North America.
+                      Applications primarily serve automotive component production, with deployment supporting manufacturers targeting global markets, including Europe and North America.
                     </p>
                   </div>
                 </div>
@@ -298,13 +307,13 @@ export default function Index() {
             </div>
           </section>
 
-          {/* Core Capabilities */}
+          {/* Core Capabilities — with internal links */}
           <section id="core-capabilities" className="py-14 md:py-18 border-t border-border bg-muted/30">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Engineering scope</p>
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Core capabilities</h2>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">What We Deliver</h2>
                   <div className="h-px w-12 bg-accent/50" />
                 </div>
               </FadeIn>
@@ -319,9 +328,22 @@ export default function Index() {
                 ))}
               </div>
               <FadeIn delay={0.4}>
-                <p className="text-sm text-muted-foreground mt-6 pt-4 border-t border-border max-w-4xl">
-                  Systems deployed for automotive component manufacturers and industrial finishing operations.
-                </p>
+                <div className="mt-6 pt-4 border-t border-border max-w-4xl space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    For system-level integration details, see{" "}
+                    <Link to="/solutions/robotic-painting-system" className="text-accent hover:text-accent/80 underline">Robotic Painting System</Link>.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    For booth-specific scope, see{" "}
+                    <Link to="/solutions/paint-booth-automation" className="text-accent hover:text-accent/80 underline">Paint Booth Automation</Link>.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Planning robot selection? See{" "}
+                    <Link to="/resources/knowledge/how-to-choose-paint-robot" className="text-accent hover:text-accent/80 underline">How to Choose a Paint Robot</Link>
+                    {" "}and{" "}
+                    <Link to="/resources/knowledge/robotic-painting-cost-guide" className="text-accent hover:text-accent/80 underline">Robotic Painting Cost Guide</Link>.
+                  </p>
+                </div>
               </FadeIn>
             </div>
           </section>
@@ -413,6 +435,22 @@ export default function Index() {
                   <div className="h-px w-12 bg-accent/50" />
                 </div>
               </FadeIn>
+              <div className="max-w-3xl space-y-2 mb-8">
+                {[
+                  "Improve coating consistency and finish repeatability",
+                  "Reduce manual spraying dependency",
+                  "Stabilize production throughput",
+                  "Enable scalable automation",
+                  "Support industrial coating quality standards",
+                ].map((item, i) => (
+                  <FadeIn key={i} delay={i * 0.05}>
+                    <div className="flex items-start gap-3 py-1">
+                      <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" />
+                      <p className="text-sm text-muted-foreground">{item}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
               <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
                 {benefits.map((benefit: Benefit) => (
                   <StaggerItem key={benefit.title}>
@@ -502,12 +540,35 @@ export default function Index() {
             </div>
           </section>
 
-          {/* FAQ */}
+          {/* E-E-A-T Block */}
+          <section className="border-t border-border">
+            <div className="container-wide py-8 md:py-10">
+              <div className="flex flex-wrap gap-6 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5">
+                  <User className="h-3.5 w-3.5" />
+                  Author: TD Engineering Team
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarDays className="h-3.5 w-3.5" />
+                  Last updated: 2026-02-12
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <FileText className="h-3.5 w-3.5" />
+                  Scope: Robotic painting system integration and paint booth automation for automotive components and industrial finishing. Specifications depend on application and site classification (including ATEX where required).
+                </span>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ — all expanded by default */}
           <section id="faq" className="py-14 md:py-18 border-t border-border bg-muted/30">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-10">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Common questions</p>
+                  <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                    <HelpCircle className="h-3.5 w-3.5" />
+                    FAQ
+                  </div>
                   <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Frequently asked questions</h2>
                   <div className="h-px w-12 bg-accent/50" />
                 </div>
@@ -516,18 +577,10 @@ export default function Index() {
                 {homepageFAQs.map((faq, i) => (
                   <FadeIn key={i} delay={i * 0.08}>
                     <div className="border border-border rounded-xl bg-card overflow-hidden">
-                      <button
-                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                        className="w-full flex items-center justify-between p-4 text-left"
-                      >
-                        <h3 className="text-sm font-semibold pr-4">{faq.question}</h3>
-                        <ChevronRight className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${openFaq === i ? 'rotate-90' : ''}`} />
-                      </button>
-                      {openFaq === i && (
-                        <div className="px-4 pb-4">
-                          <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
-                        </div>
-                      )}
+                      <div className="p-4">
+                        <h3 className="text-sm font-semibold mb-2">{faq.question}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                      </div>
                     </div>
                   </FadeIn>
                 ))}
