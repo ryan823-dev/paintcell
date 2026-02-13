@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Sparkles, Layers, Settings2, BarChart3,
   AlertTriangle, Clock, HelpCircle, ArrowRight, BookOpen,
-  Shield, Wrench, Target
+  Shield, Wrench, Target, CheckCircle2, User, CalendarDays, FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,33 +25,60 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
     window.scrollTo(0, 0);
   }, [data.slug]);
 
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": data.heroTitle,
-    "description": data.metaDescription,
-    "brand": { "@type": "Brand", "name": "TD" },
-  };
+  const domain = data.canonicalDomain || "https://paintcell.lovable.app";
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": data.faqs.map(f => ({
-      "@type": "Question",
-      "name": f.question,
-      "acceptedAnswer": { "@type": "Answer", "text": f.answer },
-    })),
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paintcell.lovable.app" },
-      { "@type": "ListItem", "position": 2, "name": "Solutions", "item": "https://paintcell.lovable.app/solutions" },
-      { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": `https://paintcell.lovable.app/solutions/${data.slug}` },
-    ],
-  };
+  // Build JSON-LD schemas
+  const schemas: Record<string, unknown>[] = data.customSchemas
+    ? [
+        ...data.customSchemas,
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": `${domain}/solutions/${data.slug}#faq`,
+          "mainEntity": data.faqs.map(f => ({
+            "@type": "Question",
+            "name": f.question,
+            "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+          })),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "@id": `${domain}/solutions/${data.slug}#breadcrumb`,
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${domain}/` },
+            { "@type": "ListItem", "position": 2, "name": "Solutions", "item": `${domain}/solutions/` },
+            { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": `${domain}/solutions/${data.slug}` },
+          ],
+        },
+      ]
+    : [
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": data.heroTitle,
+          "description": data.metaDescription,
+          "brand": { "@type": "Brand", "name": "TD" },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": data.faqs.map(f => ({
+            "@type": "Question",
+            "name": f.question,
+            "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+          })),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": domain },
+            { "@type": "ListItem", "position": 2, "name": "Solutions", "item": `${domain}/solutions` },
+            { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": `${domain}/solutions/${data.slug}` },
+          ],
+        },
+      ];
 
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", `I'm interested in ${data.heroTitle}. Can you help assess feasibility for my project?`);
@@ -64,10 +91,10 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
       <Helmet>
         <title>{data.metaTitle}</title>
         <meta name="description" content={data.metaDescription} />
-        <link rel="canonical" href={`https://paintcell.lovable.app/solutions/${data.slug}`} />
-        <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <link rel="canonical" href={`${domain}/solutions/${data.slug}`} />
+        {schemas.map((schema, i) => (
+          <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
+        ))}
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -141,32 +168,106 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
           </div>
         </section>
 
-        {/* System Architecture */}
-        <section className="border-b border-border">
-          <div className="container-narrow py-12 md:py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">System Architecture</h2>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-8">Architecture is configured based on part geometry, finish requirement, and production throughput.</p>
-            <div className="space-y-4">
-              {data.processSteps.map((step, i) => (
-                <div key={i} className="flex gap-4 items-start">
-                  <span className="flex items-center justify-center h-8 w-8 rounded-full bg-accent text-accent-foreground text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
-                  <div>
-                    <h3 className="font-semibold text-sm mb-1">{step.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
-                    {step.parameters && (
-                      <p className="text-xs text-muted-foreground/60 mt-1 italic">Key parameters: {step.parameters}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
+        {/* Why Section */}
+        {data.whyTitle && data.whyItems && data.whyItems.length > 0 && (
+          <section className="border-b border-border">
+            <div className="container-narrow py-12 md:py-16">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">{data.whyTitle}</h2>
+              {data.whyIntro && (
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">{data.whyIntro}</p>
+              )}
+              <ul className="space-y-2">
+                {data.whyItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
+        {/* Scope Sub-Sections */}
+        {data.scopeSubSections && data.scopeSubSections.length > 0 && (
+          <section className="border-b border-border section-gradient">
+            <div className="container-narrow py-12 md:py-16">
+              <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <Wrench className="h-3.5 w-3.5" />
+                Scope of delivery
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8">Scope of Delivery</h2>
+              {data.scopeIntro && (
+                <p className="text-muted-foreground text-sm mb-8">{data.scopeIntro}</p>
+              )}
+              <div className="space-y-8">
+                {data.scopeSubSections.map((sub, i) => (
+                  <div key={i}>
+                    <h3 className="font-semibold text-base mb-3">{sub.title}</h3>
+                    <ul className="space-y-2">
+                      {sub.items.map((item, j) => (
+                        <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="text-accent mt-1 shrink-0">•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Typical Components */}
+        {data.componentItems && data.componentItems.length > 0 && (
+          <section className="border-b border-border">
+            <div className="container-narrow py-12 md:py-16">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Typical Paint Booth Automation Components</h2>
+              {data.componentsIntro && (
+                <p className="text-muted-foreground text-sm mb-6">{data.componentsIntro}</p>
+              )}
+              <ul className="space-y-2">
+                {data.componentItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className="text-accent mt-1 shrink-0">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-muted-foreground/60 mt-4 italic">Final configuration depends on paint type, throughput, and site constraints.</p>
+            </div>
+          </section>
+        )}
+
+        {/* System Architecture (only if no scopeSubSections — avoid duplication) */}
+        {!data.scopeSubSections && (
+          <section className="border-b border-border">
+            <div className="container-narrow py-12 md:py-16">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">System Architecture</h2>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-8">Architecture is configured based on part geometry, finish requirement, and production throughput.</p>
+              <div className="space-y-4">
+                {data.processSteps.map((step, i) => (
+                  <div key={i} className="flex gap-4 items-start">
+                    <span className="flex items-center justify-center h-8 w-8 rounded-full bg-accent text-accent-foreground text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
+                    <div>
+                      <h3 className="font-semibold text-sm mb-1">{step.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+                      {step.parameters && (
+                        <p className="text-xs text-muted-foreground/60 mt-1 italic">Key parameters: {step.parameters}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Application Scope */}
         <section className="border-b border-border section-gradient">
           <div className="container-narrow py-12 md:py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Typical Applications</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Common Use Cases</h2>
             {data.applicationScopeIntro && (
               <p className="text-muted-foreground text-sm mb-6">{data.applicationScopeIntro}</p>
             )}
@@ -190,7 +291,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               <Settings2 className="h-3.5 w-3.5" />
               Configuration logic
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-8">Configuration Options</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">Integration Options</h2>
             <div className="space-y-4">
               {data.configOptions.map((opt, i) => (
                 <Card key={i} className="border-border bg-card">
@@ -225,20 +326,22 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
             )}
 
             {/* Constraints */}
-            <div className="mt-10">
-              <div className="flex items-center gap-2 mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                <AlertTriangle className="h-3.5 w-3.5" />
-                Constraints & notes
+            {data.constraints.length > 0 && (
+              <div className="mt-10">
+                <div className="flex items-center gap-2 mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  <AlertTriangle className="h-3.5 w-3.5" />
+                  Constraints & notes
+                </div>
+                <ul className="space-y-2">
+                  {data.constraints.map((c, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-destructive mt-1 shrink-0">•</span>
+                      {c}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-2">
-                {data.constraints.map((c, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="text-destructive mt-1 shrink-0">•</span>
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            )}
           </div>
         </section>
 
@@ -273,7 +376,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               <BarChart3 className="h-3.5 w-3.5" />
               Production benefits
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">ROI & Production Benefits</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Benefits and ROI</h2>
             <p className="text-muted-foreground text-sm leading-relaxed mb-8">{data.roiMethodology}</p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {data.roiMetrics.map((m, i) => (
@@ -319,6 +422,28 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
           </div>
         </section>
 
+        {/* E-E-A-T Block */}
+        {data.eeat && (
+          <section className="border-b border-border">
+            <div className="container-narrow py-8 md:py-10">
+              <div className="flex flex-wrap gap-6 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5">
+                  <User className="h-3.5 w-3.5" />
+                  Author: {data.eeat.author}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarDays className="h-3.5 w-3.5" />
+                  Last updated: {data.eeat.lastUpdated}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <FileText className="h-3.5 w-3.5" />
+                  Scope: {data.eeat.scope}
+                </span>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* FAQ */}
         <section className="border-b border-border">
           <div className="container-narrow py-12 md:py-16">
@@ -327,7 +452,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               FAQ
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-8">Frequently Asked Questions</h2>
-            <Accordion type="single" collapsible className="space-y-2">
+            <Accordion type="multiple" defaultValue={data.faqs.map((_, i) => `faq-${i}`)} className="space-y-2">
               {data.faqs.map((faq, i) => (
                 <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-5 bg-card">
                   <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">{faq.question}</AccordionTrigger>
@@ -380,9 +505,9 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
 
             {/* Project Initiation */}
             <div className="pt-8 border-t border-border">
-              <h2 className="text-xl font-bold mb-3">Start Your Robotic Painting Project</h2>
+              <h2 className="text-xl font-bold mb-3">Start Your Paint Booth Automation Assessment</h2>
               <p className="text-muted-foreground text-sm mb-6 max-w-xl">
-                Tell us about your parts, coating requirements, booth situation (new or existing), ATEX needs, and throughput targets.
+                Tell us whether you need a new booth or integration into an existing booth, your parts/coating requirements, throughput targets, and ATEX classification (if applicable).
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl">

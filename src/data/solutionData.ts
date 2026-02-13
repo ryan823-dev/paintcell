@@ -15,6 +15,17 @@ export interface ConfigOption {
   suitableFor: string;
 }
 
+export interface ScopeSubSection {
+  title: string;
+  items: string[];
+}
+
+export interface EEATBlock {
+  author: string;
+  lastUpdated: string;
+  scope: string;
+}
+
 export interface SolutionData {
   slug: string;
   metaTitle: string;
@@ -24,9 +35,18 @@ export interface SolutionData {
   definition: string;
   /** Optional second paragraph for definition block */
   definitionSecondary?: string;
+  /** "Why" section */
+  whyTitle?: string;
+  whyIntro?: string;
+  whyItems?: string[];
   /** "What TD Delivers" scope section */
   scopeIntro?: string;
   scopeItems?: string[];
+  /** Scope sub-sections (e.g. New Booth / Retrofit) */
+  scopeSubSections?: ScopeSubSection[];
+  /** Typical components list */
+  componentsIntro?: string;
+  componentItems?: string[];
   processSteps: ProcessStep[];
   applicationScope: string[];
   applicationScopeIntro?: string;
@@ -46,6 +66,12 @@ export interface SolutionData {
   faqs: SolutionFAQ[];
   relatedIndustries: { label: string; href: string }[];
   relatedKnowledge: { label: string; href: string }[];
+  /** E-E-A-T block */
+  eeat?: EEATBlock;
+  /** Custom JSON-LD schemas (override default Product schema) */
+  customSchemas?: Record<string, unknown>[];
+  /** Domain for canonical/schema URLs */
+  canonicalDomain?: string;
 }
 
 export const solutions: Record<string, SolutionData> = {
@@ -149,65 +175,180 @@ export const solutions: Record<string, SolutionData> = {
 
   "paint-booth-automation": {
     slug: "paint-booth-automation",
-    metaTitle: "Paint Booth Automation | Robotic Painting System Integrator | TD",
-    metaDescription: "Paint booth automation implementation guide. Process flow, ROI analysis, and configuration options. Engineering-focused approach for industrial painting environments.",
-    heroTitle: "Paint Booth Automation",
-    heroSubtitle: "Engineered spray booth systems with integrated robotics, ventilation, and environmental controls.",
-    definition: "Paint booth automation transforms a passive spray enclosure into an active, controlled production system. TD integrates robotic application, automated part handling, intelligent ventilation control, and real-time process monitoring into a unified booth architecture. The result is a production-ready environment that meets safety, quality, and throughput requirements simultaneously.",
+    canonicalDomain: "https://tdpaintcell.com",
+    metaTitle: "Paint Booth Automation | Robotic Paint Booth Integration & ATEX Options | TD",
+    metaDescription: "Engineering and integration of paint booth automation for robotic spray painting. New booth build or retrofit into existing booths, airflow/ventilation design support, controls integration, and ATEX-ready configurations for automotive and industrial finishing.",
+    heroTitle: "Paint Booth Automation for Robotic Spray Painting",
+    heroSubtitle: "Engineering and integration of paint booth automation for robotic spray painting. New booth build or retrofit into existing booths, airflow/ventilation design support, controls integration, and ATEX-ready configurations for automotive and industrial finishing.",
+    definition: "Paint booth automation is the engineering and integration of spray booth airflow/ventilation, overspray management, safety interlocks, paint process controls, and robotic spray execution into a stable, repeatable finishing environment.",
+    definitionSecondary: "TD Robotic Painting Systems provides paint booth automation for new booth builds and retrofit integration into existing paint booths, supporting automotive component painting and industrial finishing applications worldwide.",
+
+    whyTitle: "Why Paint Booth Automation Matters",
+    whyIntro: "A robotic painting system is only as stable as the booth environment. Paint booth automation helps ensure:",
+    whyItems: [
+      "Controlled airflow and overspray capture",
+      "Stable coating quality and repeatability",
+      "Safer operations and consistent process conditions",
+      "Integration readiness for industrial robots and paint supply systems",
+    ],
+
+    scopeIntro: "TD provides paint booth automation across two primary delivery modes:",
+    scopeSubSections: [
+      {
+        title: "1) New Paint Booth Automation",
+        items: [
+          "Integration-ready booth layout planning",
+          "Airflow and ventilation requirements aligned with spray process",
+          "Safety interlocks, monitoring, and control integration",
+          "Readiness for robotic spray painting cell installation and commissioning",
+        ],
+      },
+      {
+        title: "2) Retrofit / Integration into Existing Paint Booths",
+        items: [
+          "Integrate robotic spray execution into current booth environments",
+          "Validate airflow, ventilation, and integration constraints",
+          "Update controls and safety logic as required",
+          "Designed to reduce retrofit disruption while maintaining production requirements",
+        ],
+      },
+    ],
+
+    componentsIntro: "A robotic paint booth automation project typically involves:",
+    componentItems: [
+      "Airflow and ventilation control considerations",
+      "Overspray management and filtration interface planning",
+      "Spray zone safety design and interlocks",
+      "Controls integration (PLC + robot controller + HMI)",
+      "Paint supply system coordination (pump / pressure tank)",
+      "Operational monitoring and alarm logic",
+    ],
+
     processSteps: [
-      { title: "Booth Design & Sizing", description: "Booth dimensions, airflow type (downdraft/crossdraft), and filtration are engineered based on part size, paint type, and throughput.", parameters: "Booth dimensions, air velocity, filter stages, exhaust CFM" },
-      { title: "Ventilation Engineering", description: "Supply and exhaust air systems are designed to maintain proper airflow, temperature, and humidity for coating quality and safety.", parameters: "Air changes/hour, temperature range, humidity control, filter efficiency" },
-      { title: "Robot Integration", description: "Robots are positioned within the booth envelope with optimized reach coverage and safe maintenance access.", parameters: "Robot reach envelope, mounting position, safety zones" },
-      { title: "Environmental Controls", description: "PLC-controlled systems manage booth pressure, temperature, lighting, and fire suppression automatically.", parameters: "Pressure differential, temp tolerance, lux level, suppression type" },
-      { title: "Compliance Verification", description: "Completed system is tested against applicable safety and environmental standards.", parameters: "NFPA 33, local fire codes, VOC emission limits" },
+      { title: "Airflow & Ventilation", description: "Control considerations for stable spray environment and overspray capture." },
+      { title: "Safety Design", description: "Spray zone safety interlocks and monitoring systems." },
+      { title: "Controls Integration", description: "PLC + robot controller + HMI coordination." },
+      { title: "Paint Supply Coordination", description: "Pump / pressure tank system coordination." },
+      { title: "Monitoring & Alarms", description: "Operational monitoring and alarm logic." },
     ],
+
+    applicationScopeIntro: "Paint booth automation is commonly required for:",
     applicationScope: [
-      "New booth construction — purpose-built for robotic painting operations",
-      "Existing booth retrofit — adding automation to manual spray booths",
-      "Multi-booth production lines — sequential prime/base/clear coat application",
-      "Specialty environments — cleanroom-grade, high-temperature, or hazardous area booths",
+      "Automotive component painting requiring stable finish consistency",
+      "High-throughput operations seeking reduced rework and downtime",
+      "Retrofit projects upgrading manual spraying environments",
+      "Multi-part production needing repeatable process control",
     ],
+
     configOptions: [
-      { scenario: "Small parts, batch production", recommendation: "Compact enclosed booth with single robot and dry filter exhaust", suitableFor: "Job shops, small component painting" },
-      { scenario: "Medium parts, continuous flow", recommendation: "Drive-through booth with dual robots and water wash exhaust", suitableFor: "Automotive suppliers, metal fabrication" },
-      { scenario: "Large parts or assemblies", recommendation: "Open-face or tunnel booth with extended robot reach and multi-zone ventilation", suitableFor: "Heavy machinery, large panel painting" },
+      { scenario: "Booth type", recommendation: "New booth build vs existing booth integration", suitableFor: "All applications" },
+      { scenario: "Spray technology", recommendation: "Electrostatic / HVLP / air spray — selected based on application requirements", suitableFor: "Application-dependent" },
+      { scenario: "Part size & geometry", recommendation: "Configuration based on part dimensions and geometry constraints", suitableFor: "All part types" },
+      { scenario: "Throughput targets", recommendation: "Parts/hour capacity planning", suitableFor: "Production volume planning" },
+      { scenario: "Color change requirements", recommendation: "Color changeover complexity and automation", suitableFor: "Multi-product lines" },
+      { scenario: "Robot brand preference", recommendation: "ABB / FANUC / KUKA / others", suitableFor: "All applications" },
+      { scenario: "ATEX requirements", recommendation: "ATEX-ready configurations where applicable", suitableFor: "Solvent-based applications" },
     ],
+
     constraints: [
-      "Facility ceiling height must accommodate booth structure plus HVAC ducting",
-      "Adequate makeup air supply required for booth exhaust volume",
-      "Floor loading capacity must support booth structure and equipment weight",
-      "Local fire code compliance may require specific suppression systems",
-      "Noise levels from ventilation must comply with workplace regulations",
+      "Final configuration depends on paint type, throughput, and site constraints",
+      "Configuration is finalized during engineering assessment",
     ],
-    roiMethodology: "Booth automation ROI combines direct savings (labor, material, energy) with indirect benefits (quality improvement, reduced rework, compliance risk mitigation). Energy cost reduction from intelligent ventilation control alone can account for 15–25% of annual operating savings.",
+
+    atexIntro: "ATEX-ready configurations can be supported based on site classification and paint process requirements. ATEX scope is defined during assessment, including:",
+    atexItems: [
+      "Ventilation and airflow requirements",
+      "Electrical and control cabinet considerations",
+      "Safety interlocks and monitoring",
+      "Operational constraints based on paint type and environment",
+    ],
+
+    roiMethodology: "ROI depends on throughput, defect rate reduction, and process stability improvements. Paint booth automation can enable:",
     roiMetrics: [
-      { label: "Energy savings", value: "15–30%" },
-      { label: "Filter consumption reduction", value: "20–40%" },
-      { label: "Overspray capture rate", value: ">95%" },
-      { label: "Defect reduction", value: "40–70%" },
-      { label: "Typical payback", value: "18–30 months" },
+      { label: "Coating quality stability", value: "Improved" },
+      { label: "Production continuity", value: "Stabilized" },
+      { label: "Rework from unstable environment", value: "Reduced" },
+      { label: "Operations safety", value: "Improved" },
+      { label: "Scalable automation readiness", value: "Enabled" },
     ],
+
+    deploymentNote: "Typical lead time: 8–12 weeks after design approval. Extended for complex retrofits, multi-zone booths, multi-color changeover, or specialized ATEX scopes.",
     timeline: [
-      { phase: "Site Survey & Concept", duration: "1–2 weeks", description: "Facility assessment, layout options, preliminary design" },
-      { phase: "Detail Engineering", duration: "3–5 weeks", description: "Structural design, HVAC engineering, electrical layout" },
-      { phase: "Fabrication", duration: "6–12 weeks", description: "Booth panel manufacture, ductwork, system assembly" },
-      { phase: "Installation", duration: "3–6 weeks", description: "On-site construction, equipment mounting, utilities connection" },
-      { phase: "Commissioning", duration: "1–2 weeks", description: "Airflow balancing, safety testing, production trials" },
-      { phase: "Handover", duration: "1 week", description: "Documentation, training, warranty activation" },
+      { phase: "Assessment", duration: "Week 1–2", description: "New booth vs existing booth, site constraints, ATEX needs" },
+      { phase: "Scope Definition", duration: "Week 2–3", description: "Airflow, controls, safety, integration boundaries" },
+      { phase: "Layout & Integration Design", duration: "Week 3–5", description: "Layout planning and integration design" },
+      { phase: "Manufacturing / Modification", duration: "Week 5–10", description: "Manufacturing or modification planning" },
+      { phase: "Testing & Verification", duration: "Week 10–11", description: "System testing and verification" },
+      { phase: "Installation & Commissioning", duration: "Week 11–13", description: "On-site installation and commissioning" },
+      { phase: "Production Startup", duration: "Week 13–14", description: "Production startup and optimization" },
     ],
+
     faqs: [
-      { question: "What is paint booth automation?", answer: "Paint booth automation is the integration of robotic spray painting, automated part handling, and intelligent environmental controls into a spray booth. It transforms a passive enclosure into an active, production-ready system that manages coating application, ventilation, and safety automatically." },
-      { question: "Can an existing spray booth be automated?", answer: "In many cases, yes. Retrofit feasibility depends on booth dimensions (robot reach envelope), structural integrity (robot mounting), ventilation capacity, and electrical infrastructure. A site survey determines what modifications are required." },
-      { question: "What ventilation requirements does an automated booth need?", answer: "Automated booths typically require 60–100 FPM (feet per minute) air velocity across the spray zone, with proper makeup air heating/cooling and multi-stage filtration. Exact requirements depend on paint type, booth size, and local regulations." },
-      { question: "How does booth automation improve paint quality?", answer: "Controlled airflow eliminates contaminants, consistent temperature and humidity stabilize paint behavior, and robotic application ensures repeatable film build and coverage. These factors combined reduce defects by 40–70% compared to manual booths." },
+      { question: "What is paint booth automation?", answer: "Paint booth automation is the engineering and integration of spray booth airflow/ventilation, overspray management, safety interlocks, paint process controls, and robotic spray execution into a stable, repeatable finishing environment." },
+      { question: "Can you build a new booth or integrate into an existing booth?", answer: "Both. TD provides new paint booth automation and retrofit integration into existing paint booths, designed to reduce retrofit disruption while maintaining production requirements." },
+      { question: "Do you support ATEX / explosion-proof requirements?", answer: "Yes. ATEX-ready configurations are supported based on site classification and paint process requirements." },
+      { question: "How does booth automation affect coating quality?", answer: "A stable booth environment reduces process variability and supports repeatable finish outcomes with reduced rework." },
+      { question: "How long does deployment typically take?", answer: "Typically 8–12 weeks after design approval, depending on booth condition and project complexity." },
     ],
+
     relatedIndustries: [
       { label: "Automotive Painting", href: "/industries/automotive-painting" },
-      { label: "Appliance Coating", href: "/industries/appliance-coating" },
+      { label: "Appliance Coating Automation", href: "/industries/appliance-coating" },
+      { label: "Metal Parts Finishing", href: "/industries/metal-parts-finishing" },
     ],
     relatedKnowledge: [
+      { label: "Robotic Painting System Integration", href: "/solutions/robotic-painting-system" },
       { label: "Paint Booth Design Basics", href: "/resources/knowledge/paint-booth-design-basics" },
-      { label: "Ventilation & Airflow", href: "/resources/standards-compliance/ventilation-airflow" },
+      { label: "Robotic Painting Cost Guide", href: "/resources/knowledge/robotic-painting-cost-guide" },
+    ],
+
+    eeat: {
+      author: "TD Engineering Team",
+      lastUpdated: "2026-02-12",
+      scope: "Robotic painting systems, paint booth automation, and ATEX-ready integration (where required). Specifications and timelines depend on application and site classification.",
+    },
+
+    customSchemas: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://tdpaintcell.com/#organization",
+        "name": "TD Robotic Painting Systems",
+        "url": "https://tdpaintcell.com",
+        "logo": "https://tdpaintcell.com/images/td-logo.png",
+        "description": "Engineering and integration of robotic painting systems and paint booth automation.",
+        "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://tdpaintcell.com/#website",
+        "name": "TD Robotic Painting Systems",
+        "url": "https://tdpaintcell.com/",
+        "publisher": { "@id": "https://tdpaintcell.com/#organization" },
+        "inLanguage": "en",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": "https://tdpaintcell.com/solutions/paint-booth-automation#service",
+        "name": "Paint Booth Automation",
+        "description": "Engineering and integration of paint booth automation for robotic spray painting. New booth build, retrofit, airflow design, and ATEX-ready configurations.",
+        "provider": { "@id": "https://tdpaintcell.com/#organization" },
+        "serviceType": "Industrial Automation",
+        "areaServed": "Worldwide",
+        "audience": { "@type": "Audience", "audienceType": "Manufacturers" },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://tdpaintcell.com/solutions/paint-booth-automation#webpage",
+        "name": "Paint Booth Automation | Robotic Paint Booth Integration & ATEX Options | TD",
+        "url": "https://tdpaintcell.com/solutions/paint-booth-automation",
+        "isPartOf": { "@id": "https://tdpaintcell.com/#website" },
+        "about": { "@id": "https://tdpaintcell.com/solutions/paint-booth-automation#service" },
+        "inLanguage": "en",
+      },
     ],
   },
 
