@@ -1,17 +1,27 @@
 import { Target, Box, FolderOpen, BookOpen, FileText, MessageSquare, Factory, Layers, CheckCircle2, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n";
 
-const sidebarItems = [
-  { id: "ai-consultation", icon: MessageSquare, label: "AI Consultation", action: "open-assistant" },
-  { id: "industry-entry", icon: Factory, label: "Applications", anchor: "#industry-entry" },
-  { id: "core-capabilities", icon: CheckCircle2, label: "Capabilities", anchor: "#core-capabilities" },
-  { id: "system-overview", icon: Box, label: "System Architecture", anchor: "#system-overview" },
-  { id: "deployment-process", icon: Layers, label: "Deployment", anchor: "#deployment-process" },
-  { id: "why-robotic-painting", icon: Target, label: "Why Automation", anchor: "#why-robotic-painting" },
-  { id: "project-references", icon: FolderOpen, label: "References", anchor: "#project-references" },
-  { id: "faq", icon: HelpCircle, label: "FAQ", anchor: "#faq" },
-  { id: "engineering-library", icon: BookOpen, label: "Engineering Library", href: "/resources/engineering-library" },
-  { id: "request-quote", icon: FileText, label: "Request a Quote", href: "/quote" },
+interface SidebarItem {
+  id: string;
+  icon: typeof MessageSquare;
+  labelKey: string;
+  action?: string;
+  anchor?: string;
+  href?: string;
+}
+
+const sidebarItems: SidebarItem[] = [
+  { id: "ai-consultation", icon: MessageSquare, labelKey: "aiConsultation", action: "open-assistant" },
+  { id: "industry-entry", icon: Factory, labelKey: "applications", anchor: "#industry-entry" },
+  { id: "core-capabilities", icon: CheckCircle2, labelKey: "capabilities", anchor: "#core-capabilities" },
+  { id: "system-overview", icon: Box, labelKey: "systemArchitecture", anchor: "#system-overview" },
+  { id: "deployment-process", icon: Layers, labelKey: "deployment", anchor: "#deployment-process" },
+  { id: "why-robotic-painting", icon: Target, labelKey: "whyAutomation", anchor: "#why-robotic-painting" },
+  { id: "project-references", icon: FolderOpen, labelKey: "references", anchor: "#project-references" },
+  { id: "faq", icon: HelpCircle, labelKey: "faq", anchor: "#faq" },
+  { id: "engineering-library", icon: BookOpen, labelKey: "engineeringLibrary", href: "/resources/engineering-library" },
+  { id: "request-quote", icon: FileText, labelKey: "requestQuote", href: "/quote" },
 ];
 
 interface HomeSidebarProps {
@@ -20,7 +30,9 @@ interface HomeSidebarProps {
 }
 
 export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: HomeSidebarProps) {
-  const handleClick = (item: typeof sidebarItems[0]) => {
+  const { t } = useI18n();
+
+  const handleClick = (item: SidebarItem) => {
     if (onItemClick) {
       onItemClick(item.id);
     }
@@ -41,7 +53,7 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
     <aside className="hidden lg:flex flex-col w-[220px] shrink-0 sticky top-[3.5rem] h-[calc(100vh-3.5rem)] border-r border-border bg-muted/50 z-20">
       <nav className="relative flex flex-col gap-0.5 p-4 pt-8 overflow-y-auto flex-1">
         <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-3 px-3">
-          Navigation
+          {t.sidebar.navigation}
         </p>
         {sidebarItems.map((item) => {
           const isActive = activeItem === item.id;
@@ -69,7 +81,7 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
                   isActive ? "text-accent" : "text-muted-foreground group-hover:text-accent"
                 )} />
               </div>
-              <span className="font-medium">{item.label}</span>
+              <span className="font-medium">{t.sidebar[item.labelKey]}</span>
             </button>
           );
         })}
@@ -83,10 +95,10 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent" />
             </span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-accent">Online</span>
+            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-accent">{t.sidebar.online}</span>
           </div>
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            AI agent ready for project consultation
+            {t.sidebar.aiReady}
           </p>
         </div>
       </div>
