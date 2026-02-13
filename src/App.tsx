@@ -61,6 +61,7 @@ import ApplianceCoating from "./pages/industries/ApplianceCoating";
 // Solution pages
 import Solutions from "./pages/Solutions";
 import SolutionPage from "./pages/SolutionPage";
+import RoboticPaintingSystem from "./pages/solutions/RoboticPaintingSystem";
 
 // Console pages
 import ConsoleLogin from "./pages/console/ConsoleLogin";
@@ -156,6 +157,7 @@ const App = () => (
               
               {/* Solution pages */}
               <Route path="/solutions" element={<Solutions />} />
+              <Route path="/solutions/robotic-painting-system" element={<RoboticPaintingSystem />} />
               <Route path="/solutions/:slug" element={<SolutionPage />} />
               
               {/* Industry pages */}
