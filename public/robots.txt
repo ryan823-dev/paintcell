@@ -1,19 +1,26 @@
-User-agent: Googlebot
+User-agent: *
 Allow: /
-Disallow: /console
+
+# Allow major AI / search crawlers explicitly (SPA sites benefit from clarity)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
 
 User-agent: Bingbot
 Allow: /
-Disallow: /console
 
-User-agent: Twitterbot
+User-agent: Applebot
 Allow: /
-Disallow: /console
 
-User-agent: facebookexternalhit
+User-agent: Bytespider
 Allow: /
-Disallow: /console
 
-User-agent: *
+User-agent: CCBot
 Allow: /
-Disallow: /console
+
+Sitemap: https://tdpaintcell.com/sitemap.xml
