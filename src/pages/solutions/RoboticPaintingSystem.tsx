@@ -15,6 +15,7 @@ import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { AIChatDrawer } from "@/components/ai-assistant/AIChatDrawer";
+import { ExploreLinks } from "@/components/seo/ExploreLinks";
 
 const DOMAIN = "https://tdpaintcell.com";
 
@@ -419,36 +420,8 @@ export default function RoboticPaintingSystem() {
           </div>
         </section>
 
-        {/* Related Links */}
-        <section>
-          <div className="container-narrow py-12 md:py-16">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-accent" />
-                  Related Industries
-                </h3>
-                <ul className="space-y-2">
-                  <li><Link to="/industries/automotive-painting" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">Automotive Painting <ArrowRight className="h-3 w-3" /></Link></li>
-                  <li><Link to="/industries/appliance-coating" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">Appliance Coating <ArrowRight className="h-3 w-3" /></Link></li>
-                  <li><Link to="/industries/metal-parts-finishing" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">Metal Parts Finishing <ArrowRight className="h-3 w-3" /></Link></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-accent" />
-                  Related Knowledge
-                </h3>
-                <ul className="space-y-2">
-                  <li><Link to="/solutions/paint-booth-automation" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">Paint Booth Automation <ArrowRight className="h-3 w-3" /></Link></li>
-                  <li><Link to="/resources/knowledge/how-to-choose-paint-robot" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">How to Choose a Paint Robot <ArrowRight className="h-3 w-3" /></Link></li>
-                  <li><Link to="/resources/knowledge/robotic-painting-cost-guide" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">Robotic Painting Cost Guide <ArrowRight className="h-3 w-3" /></Link></li>
-                  <li><Link to="/resources/knowledge/paint-booth-design-basics" className="text-sm text-accent hover:text-accent/80 inline-flex items-center gap-1">Paint Booth Design Basics <ArrowRight className="h-3 w-3" /></Link></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Explore Links */}
+        <ExploreLinks currentPath="/solutions/robotic-painting-system" />
       </div>
 
       <AIChatDrawer open={drawerOpen} onOpenChange={setDrawerOpen} initialProjectMessage={drawerMessage} />
