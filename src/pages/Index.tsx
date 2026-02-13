@@ -181,6 +181,19 @@ export default function Index() {
   }];
 
   useEffect(() => {
+    // Hide static FAQ visually (keep in DOM for crawlers) once React renders its own FAQ
+    const staticFaq = document.getElementById("static-faq");
+    if (staticFaq) {
+      staticFaq.style.position = "absolute";
+      staticFaq.style.width = "1px";
+      staticFaq.style.height = "1px";
+      staticFaq.style.overflow = "hidden";
+      staticFaq.style.clip = "rect(0,0,0,0)";
+      staticFaq.style.whiteSpace = "nowrap";
+    }
+  }, []);
+
+  useEffect(() => {
     const handleReset = () => {
       setChatActive(false);
       setChatInitialMessage(null);
