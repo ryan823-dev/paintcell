@@ -308,48 +308,8 @@ export const solutions: Record<string, SolutionData> = {
       scope: "Robotic painting systems, paint booth automation, and ATEX-ready integration (where required). Specifications and timelines depend on application and site classification.",
     },
 
-    customSchemas: [
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "@id": "https://tdpaintcell.com/#organization",
-        "name": "TD Robotic Painting Systems",
-        "url": "https://tdpaintcell.com",
-        "logo": "https://tdpaintcell.com/images/td-logo.png",
-        "description": "Engineering and integration of robotic painting systems and paint booth automation.",
-        "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "@id": "https://tdpaintcell.com/#website",
-        "name": "TD Robotic Painting Systems",
-        "url": "https://tdpaintcell.com/",
-        "publisher": { "@id": "https://tdpaintcell.com/#organization" },
-        "inLanguage": "en",
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "@id": "https://tdpaintcell.com/solutions/paint-booth-automation#service",
-        "name": "Paint Booth Automation",
-        "description": "Engineering and integration of paint booth automation for robotic spray painting. New booth build, retrofit, airflow design, and ATEX-ready configurations.",
-        "provider": { "@id": "https://tdpaintcell.com/#organization" },
-        "serviceType": "Industrial Automation",
-        "areaServed": "Worldwide",
-        "audience": { "@type": "Audience", "audienceType": "Manufacturers" },
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "@id": "https://tdpaintcell.com/solutions/paint-booth-automation#webpage",
-        "name": "Paint Booth Automation | Robotic Paint Booth Integration & ATEX Options | TD",
-        "url": "https://tdpaintcell.com/solutions/paint-booth-automation",
-        "isPartOf": { "@id": "https://tdpaintcell.com/#website" },
-        "about": { "@id": "https://tdpaintcell.com/solutions/paint-booth-automation#service" },
-        "inLanguage": "en",
-      },
-    ],
+    // customSchemas removed — standard schemas (Organization, WebSite, Service, FAQ, Breadcrumb, WebPage)
+    // are now generated automatically by SolutionPageTemplate with proper @id linking
   },
 
   "spray-robot-integration": {
