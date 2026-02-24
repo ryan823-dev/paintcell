@@ -77,6 +77,9 @@ import ResourceEditor from "./pages/console/ResourceEditor";
 import CaseStudiesList from "./pages/console/CaseStudiesList";
 import CaseStudyEditor from "./pages/console/CaseStudyEditor";
 import LegalPages from "./pages/console/LegalPages";
+import Dashboard from "./pages/console/Dashboard";
+import LeadsManagement from "./pages/console/LeadsManagement";
+import MediaLibrary from "./pages/console/MediaLibrary";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +95,9 @@ const App = () => (
             {/* Console routes (no public layout) */}
             <Route path="/console" element={<ConsoleLogin />} />
             <Route element={<ConsoleLayout />}>
+              <Route path="/console/dashboard" element={<Dashboard />} />
+              <Route path="/console/leads" element={<LeadsManagement />} />
+              <Route path="/console/media" element={<MediaLibrary />} />
               <Route path="/console/home" element={<HomeContent />} />
               <Route path="/console/about" element={<AboutContent />} />
               <Route path="/console/paint-cells" element={<PaintCellsContent />} />

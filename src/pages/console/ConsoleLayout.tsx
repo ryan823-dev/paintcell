@@ -16,12 +16,22 @@ import {
   Droplets,
   Factory,
   MessageSquareQuote,
-  Settings
+  Settings,
+  LayoutDashboard,
+  Users,
+  ImageIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Navigation organized by section
 const navSections = [
+  {
+    title: "概览 / Overview",
+    items: [
+      { href: "/console/dashboard", label: "仪表盘 / Dashboard", icon: LayoutDashboard },
+      { href: "/console/leads", label: "询盘管理 / Leads", icon: Users },
+    ],
+  },
   {
     title: "页面内容 / Page Content",
     items: [
@@ -37,6 +47,7 @@ const navSections = [
     items: [
       { href: "/console/case-studies", label: "案例研究 / Case Studies", icon: FileText },
       { href: "/console/resources", label: "资源库 / Resources", icon: BookOpen },
+      { href: "/console/media", label: "媒体库 / Media", icon: ImageIcon },
     ],
   },
   {
