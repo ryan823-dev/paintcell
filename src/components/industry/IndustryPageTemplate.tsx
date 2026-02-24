@@ -36,16 +36,33 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
     if (assistantButton) assistantButton.click();
   };
 
+  const domain = "https://tdpaintcell.com";
+  const pageUrl = `${domain}/industries/${data.slug}`;
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${domain}/#organization`,
+    "name": "TD Robotic Painting Systems",
+    "url": domain,
+  };
+
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${domain}/#website`,
+    "name": "TD Robotic Painting Systems",
+    "url": domain,
+    "publisher": { "@id": `${domain}/#organization` },
+  };
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${pageUrl}#service`,
     "name": data.heroTitle,
     "description": data.metaDescription,
-    "provider": {
-      "@type": "Organization",
-      "name": "TD Painting System",
-      "url": "https://paintcell.lovable.app"
-    },
+    "provider": { "@id": `${domain}/#organization` },
     "serviceType": "Robotic Spray Painting Automation",
     "areaServed": "Worldwide",
   };
@@ -53,6 +70,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": `${pageUrl}#faq`,
     "mainEntity": data.faqs.map(f => ({
       "@type": "Question",
       "name": f.question,
@@ -60,14 +78,41 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
     }))
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": `${domain}/` },
+      { "@type": "ListItem", "position": 2, "name": "Industries", "item": `${domain}/industries` },
+      { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": pageUrl },
+    ],
+  };
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    "url": pageUrl,
+    "name": data.metaTitle,
+    "description": data.metaDescription,
+    "isPartOf": { "@id": `${domain}/#website` },
+    "about": { "@id": `${pageUrl}#service` },
+    "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+  };
+
   return (
     <>
       <Helmet>
         <title>{data.metaTitle}</title>
         <meta name="description" content={data.metaDescription} />
-        <link rel="canonical" href={`https://paintcell.lovable.app/industries/${data.slug}`} />
+        <link rel="canonical" href={pageUrl} />
+        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(webSiteSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -373,7 +418,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
               {t.industry.faqTitle}
             </h2>
             <div className="max-w-3xl">
-              <Accordion type="single" collapsible className="space-y-2">
+              <Accordion type="multiple" defaultValue={data.faqs.map((_, i) => `faq-${i}`)} className="space-y-2">
                 {data.faqs.map((faq, i) => (
                   <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-5 bg-card">
                     <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">

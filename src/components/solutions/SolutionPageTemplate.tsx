@@ -26,60 +26,70 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
     window.scrollTo(0, 0);
   }, [data.slug]);
 
-  const domain = data.canonicalDomain || "https://paintcell.lovable.app";
+  const domain = data.canonicalDomain || "https://tdpaintcell.com";
+  const pageUrl = `${domain}/solutions/${data.slug}`;
 
-  // Build JSON-LD schemas
-  const schemas: Record<string, unknown>[] = data.customSchemas
-    ? [
-        ...data.customSchemas,
-        {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "@id": `${domain}/solutions/${data.slug}#faq`,
-          "mainEntity": data.faqs.map(f => ({
-            "@type": "Question",
-            "name": f.question,
-            "acceptedAnswer": { "@type": "Answer", "text": f.answer },
-          })),
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "@id": `${domain}/solutions/${data.slug}#breadcrumb`,
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${domain}/` },
-            { "@type": "ListItem", "position": 2, "name": "Solutions", "item": `${domain}/solutions/` },
-            { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": `${domain}/solutions/${data.slug}` },
-          ],
-        },
-      ]
-    : [
-        {
-          "@context": "https://schema.org",
-          "@type": "Product",
-          "name": data.heroTitle,
-          "description": data.metaDescription,
-          "brand": { "@type": "Brand", "name": "TD" },
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": data.faqs.map(f => ({
-            "@type": "Question",
-            "name": f.question,
-            "acceptedAnswer": { "@type": "Answer", "text": f.answer },
-          })),
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": domain },
-            { "@type": "ListItem", "position": 2, "name": "Solutions", "item": `${domain}/solutions` },
-            { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": `${domain}/solutions/${data.slug}` },
-          ],
-        },
-      ];
+  // Build standardized JSON-LD schemas with @id linking
+  const schemas: Record<string, unknown>[] = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${domain}/#organization`,
+      "name": "TD Robotic Painting Systems",
+      "url": domain,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${domain}/#website`,
+      "name": "TD Robotic Painting Systems",
+      "url": domain,
+      "publisher": { "@id": `${domain}/#organization` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${pageUrl}#service`,
+      "name": data.heroTitle,
+      "description": data.metaDescription,
+      "provider": { "@id": `${domain}/#organization` },
+      "serviceType": "Robotic Spray Painting Automation",
+      "areaServed": "Worldwide",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      "mainEntity": data.faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${domain}/` },
+        { "@type": "ListItem", "position": 2, "name": "Solutions", "item": `${domain}/solutions` },
+        { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": pageUrl },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      "url": pageUrl,
+      "name": data.metaTitle,
+      "description": data.metaDescription,
+      "isPartOf": { "@id": `${domain}/#website` },
+      "about": { "@id": `${pageUrl}#service` },
+      "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+    },
+    // Include any custom schemas if provided (e.g. additional Product schemas)
+    ...(data.customSchemas || []),
+  ];
 
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", `I'm interested in ${data.heroTitle}. Can you help assess feasibility for my project?`);
@@ -92,7 +102,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
       <Helmet>
         <title>{data.metaTitle}</title>
         <meta name="description" content={data.metaDescription} />
-        <link rel="canonical" href={`${domain}/solutions/${data.slug}`} />
+        <link rel="canonical" href={pageUrl} />
         {schemas.map((schema, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
         ))}
