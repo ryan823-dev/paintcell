@@ -30,7 +30,7 @@ export default function ConsoleLogin() {
           .rpc("is_admin_or_editor", { _user_id: session.user.id });
         
         if (isAdminOrEditor) {
-          navigate("/console/home");
+          navigate("/console/dashboard");
         }
       }
       setChecking(false);
@@ -44,7 +44,7 @@ export default function ConsoleLogin() {
           .rpc("is_admin_or_editor", { _user_id: session.user.id });
         
         if (isAdminOrEditor) {
-          navigate("/console/home");
+          navigate("/console/dashboard");
         } else {
           toast({
             title: "Access Denied",
