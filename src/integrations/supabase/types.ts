@@ -505,6 +505,117 @@ export type Database = {
         }
         Relationships: []
       }
+      industry_pages: {
+        Row: {
+          ai_context: Json | null
+          case_references: Json | null
+          case_references_zh: Json | null
+          coming_soon: boolean
+          created_at: string
+          cta_text: string | null
+          cta_text_zh: string | null
+          example_prompt: string | null
+          faqs: Json | null
+          faqs_zh: Json | null
+          hero_image: string | null
+          hero_subtitle: string | null
+          hero_subtitle_zh: string | null
+          hero_title: string | null
+          hero_title_zh: string | null
+          id: string
+          industry_label: string
+          industry_label_zh: string | null
+          meta_description: string | null
+          meta_description_zh: string | null
+          meta_title: string | null
+          meta_title_zh: string | null
+          pain_points: Json | null
+          pain_points_zh: Json | null
+          production_config: Json | null
+          production_config_zh: Json | null
+          roi_metrics: Json | null
+          roi_metrics_zh: Json | null
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
+          system_modules: Json | null
+          system_modules_zh: Json | null
+          updated_at: string
+        }
+        Insert: {
+          ai_context?: Json | null
+          case_references?: Json | null
+          case_references_zh?: Json | null
+          coming_soon?: boolean
+          created_at?: string
+          cta_text?: string | null
+          cta_text_zh?: string | null
+          example_prompt?: string | null
+          faqs?: Json | null
+          faqs_zh?: Json | null
+          hero_image?: string | null
+          hero_subtitle?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          industry_label: string
+          industry_label_zh?: string | null
+          meta_description?: string | null
+          meta_description_zh?: string | null
+          meta_title?: string | null
+          meta_title_zh?: string | null
+          pain_points?: Json | null
+          pain_points_zh?: Json | null
+          production_config?: Json | null
+          production_config_zh?: Json | null
+          roi_metrics?: Json | null
+          roi_metrics_zh?: Json | null
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          system_modules?: Json | null
+          system_modules_zh?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          ai_context?: Json | null
+          case_references?: Json | null
+          case_references_zh?: Json | null
+          coming_soon?: boolean
+          created_at?: string
+          cta_text?: string | null
+          cta_text_zh?: string | null
+          example_prompt?: string | null
+          faqs?: Json | null
+          faqs_zh?: Json | null
+          hero_image?: string | null
+          hero_subtitle?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          industry_label?: string
+          industry_label_zh?: string | null
+          meta_description?: string | null
+          meta_description_zh?: string | null
+          meta_title?: string | null
+          meta_title_zh?: string | null
+          pain_points?: Json | null
+          pain_points_zh?: Json | null
+          production_config?: Json | null
+          production_config_zh?: Json | null
+          roi_metrics?: Json | null
+          roi_metrics_zh?: Json | null
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          system_modules?: Json | null
+          system_modules_zh?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           company: string | null
@@ -903,6 +1014,171 @@ export type Database = {
           linkedin_url?: string | null
           updated_at?: string
           wechat_id?: string | null
+        }
+        Relationships: []
+      }
+      solution_pages: {
+        Row: {
+          application_scope: Json | null
+          application_scope_intro: string | null
+          atex_intro: string | null
+          atex_items: Json | null
+          component_items: Json | null
+          components_intro: string | null
+          config_options: Json | null
+          constraints: Json | null
+          created_at: string
+          definition: string | null
+          definition_secondary: string | null
+          definition_secondary_zh: string | null
+          definition_zh: string | null
+          deployment_note: string | null
+          deployment_note_zh: string | null
+          eeat: Json | null
+          faqs: Json | null
+          faqs_zh: Json | null
+          hero_subtitle: string | null
+          hero_subtitle_zh: string | null
+          hero_title: string | null
+          hero_title_zh: string | null
+          id: string
+          meta_description: string | null
+          meta_description_zh: string | null
+          meta_title: string | null
+          meta_title_zh: string | null
+          process_steps: Json | null
+          process_steps_zh: Json | null
+          related_industries: Json | null
+          related_knowledge: Json | null
+          roi_methodology: string | null
+          roi_methodology_zh: string | null
+          roi_metrics: Json | null
+          scope_intro: string | null
+          scope_intro_zh: string | null
+          scope_items: Json | null
+          scope_items_zh: Json | null
+          scope_sub_sections: Json | null
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["content_status"]
+          technical_parameters: Json | null
+          technical_parameters_intro: string | null
+          timeline: Json | null
+          updated_at: string
+          why_intro: string | null
+          why_intro_zh: string | null
+          why_items: Json | null
+          why_items_zh: Json | null
+          why_title: string | null
+          why_title_zh: string | null
+        }
+        Insert: {
+          application_scope?: Json | null
+          application_scope_intro?: string | null
+          atex_intro?: string | null
+          atex_items?: Json | null
+          component_items?: Json | null
+          components_intro?: string | null
+          config_options?: Json | null
+          constraints?: Json | null
+          created_at?: string
+          definition?: string | null
+          definition_secondary?: string | null
+          definition_secondary_zh?: string | null
+          definition_zh?: string | null
+          deployment_note?: string | null
+          deployment_note_zh?: string | null
+          eeat?: Json | null
+          faqs?: Json | null
+          faqs_zh?: Json | null
+          hero_subtitle?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_description_zh?: string | null
+          meta_title?: string | null
+          meta_title_zh?: string | null
+          process_steps?: Json | null
+          process_steps_zh?: Json | null
+          related_industries?: Json | null
+          related_knowledge?: Json | null
+          roi_methodology?: string | null
+          roi_methodology_zh?: string | null
+          roi_metrics?: Json | null
+          scope_intro?: string | null
+          scope_intro_zh?: string | null
+          scope_items?: Json | null
+          scope_items_zh?: Json | null
+          scope_sub_sections?: Json | null
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          technical_parameters?: Json | null
+          technical_parameters_intro?: string | null
+          timeline?: Json | null
+          updated_at?: string
+          why_intro?: string | null
+          why_intro_zh?: string | null
+          why_items?: Json | null
+          why_items_zh?: Json | null
+          why_title?: string | null
+          why_title_zh?: string | null
+        }
+        Update: {
+          application_scope?: Json | null
+          application_scope_intro?: string | null
+          atex_intro?: string | null
+          atex_items?: Json | null
+          component_items?: Json | null
+          components_intro?: string | null
+          config_options?: Json | null
+          constraints?: Json | null
+          created_at?: string
+          definition?: string | null
+          definition_secondary?: string | null
+          definition_secondary_zh?: string | null
+          definition_zh?: string | null
+          deployment_note?: string | null
+          deployment_note_zh?: string | null
+          eeat?: Json | null
+          faqs?: Json | null
+          faqs_zh?: Json | null
+          hero_subtitle?: string | null
+          hero_subtitle_zh?: string | null
+          hero_title?: string | null
+          hero_title_zh?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_description_zh?: string | null
+          meta_title?: string | null
+          meta_title_zh?: string | null
+          process_steps?: Json | null
+          process_steps_zh?: Json | null
+          related_industries?: Json | null
+          related_knowledge?: Json | null
+          roi_methodology?: string | null
+          roi_methodology_zh?: string | null
+          roi_metrics?: Json | null
+          scope_intro?: string | null
+          scope_intro_zh?: string | null
+          scope_items?: Json | null
+          scope_items_zh?: Json | null
+          scope_sub_sections?: Json | null
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["content_status"]
+          technical_parameters?: Json | null
+          technical_parameters_intro?: string | null
+          timeline?: Json | null
+          updated_at?: string
+          why_intro?: string | null
+          why_intro_zh?: string | null
+          why_items?: Json | null
+          why_items_zh?: Json | null
+          why_title?: string | null
+          why_title_zh?: string | null
         }
         Relationships: []
       }

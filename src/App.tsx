@@ -80,6 +80,11 @@ import LegalPages from "./pages/console/LegalPages";
 import Dashboard from "./pages/console/Dashboard";
 import LeadsManagement from "./pages/console/LeadsManagement";
 import MediaLibrary from "./pages/console/MediaLibrary";
+import UserManagement from "./pages/console/UserManagement";
+import IndustryPagesList from "./pages/console/IndustryPagesList";
+import IndustryPageEditor from "./pages/console/IndustryPageEditor";
+import SolutionPagesList from "./pages/console/SolutionPagesList";
+import SolutionPageEditor from "./pages/console/SolutionPageEditor";
 
 const queryClient = new QueryClient();
 
@@ -108,6 +113,11 @@ const App = () => (
               <Route path="/console/resources/:id" element={<ResourceEditor />} />
               <Route path="/console/case-studies" element={<CaseStudiesList />} />
               <Route path="/console/case-studies/:id" element={<CaseStudyEditor />} />
+              <Route path="/console/industry-pages" element={<IndustryPagesList />} />
+              <Route path="/console/industry-pages/:id" element={<IndustryPageEditor />} />
+              <Route path="/console/solution-pages" element={<SolutionPagesList />} />
+              <Route path="/console/solution-pages/:id" element={<SolutionPageEditor />} />
+              <Route path="/console/users" element={<UserManagement />} />
               <Route path="/console/policies" element={<LegalPages />} />
             </Route>
 

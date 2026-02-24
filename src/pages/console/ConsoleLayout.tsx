@@ -19,7 +19,10 @@ import {
   Settings,
   LayoutDashboard,
   Users,
-  ImageIcon
+  ImageIcon,
+  Globe,
+  Wrench,
+  ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +50,8 @@ const navSections = [
     items: [
       { href: "/console/case-studies", label: "案例研究 / Case Studies", icon: FileText },
       { href: "/console/resources", label: "资源库 / Resources", icon: BookOpen },
+      { href: "/console/industry-pages", label: "行业页面 / Industries", icon: Globe },
+      { href: "/console/solution-pages", label: "方案页面 / Solutions", icon: Wrench },
       { href: "/console/media", label: "媒体库 / Media", icon: ImageIcon },
     ],
   },
@@ -54,6 +59,7 @@ const navSections = [
     title: "系统设置 / System",
     items: [
       { href: "/console/settings", label: "全站设置 / Site Settings", icon: Settings },
+      { href: "/console/users", label: "用户管理 / Users", icon: ShieldCheck },
       { href: "/console/policies", label: "法律条款 / Legal Pages", icon: Scale },
     ],
   },
