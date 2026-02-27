@@ -39,7 +39,7 @@ export default function HowToChoosePaintRobot() {
       <Helmet>
         <title>How to Choose a Paint Robot | Technical Insights | TD</title>
         <meta name="description" content="Expert guide on selecting industrial painting robots. Covers robot types, key specifications, selection criteria, and common mistakes. Downloadable checklist included." />
-        <link rel="canonical" href="https://paintcell.lovable.app/resources/knowledge/how-to-choose-paint-robot" />
+        <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/how-to-choose-paint-robot" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       </Helmet>
 

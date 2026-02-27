@@ -39,7 +39,7 @@ export default function PaintBoothDesignBasics() {
       <Helmet>
         <title>Paint Booth Design Basics | Technical Insights | TD</title>
         <meta name="description" content="Expert guide on paint booth design for robotic spray painting. Covers airflow types, sizing methodology, ventilation requirements, and common design mistakes." />
-        <link rel="canonical" href="https://paintcell.lovable.app/resources/knowledge/paint-booth-design-basics" />
+        <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/paint-booth-design-basics" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       </Helmet>
 

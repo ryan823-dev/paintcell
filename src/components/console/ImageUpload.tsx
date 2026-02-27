@@ -67,11 +67,12 @@ export function ImageUpload({ value, onChange, label, hint, className }: ImageUp
         title: "上传成功 / Upload successful",
         description: "图片已上传 / Image uploaded",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Upload error:", error);
+      const message = error instanceof Error ? error.message : "请重试 / Please try again";
       toast({
         title: "上传失败 / Upload failed",
-        description: error.message || "请重试 / Please try again",
+        description: message,
         variant: "destructive",
       });
     } finally {

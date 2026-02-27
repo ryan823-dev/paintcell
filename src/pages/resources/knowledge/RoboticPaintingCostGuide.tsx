@@ -39,7 +39,7 @@ export default function RoboticPaintingCostGuide() {
       <Helmet>
         <title>Robotic Painting Cost Guide | Technical Insights | TD</title>
         <meta name="description" content="Expert guide on robotic painting system costs. Covers capital investment breakdown, operating costs, ROI calculation methodology, and cost optimization strategies." />
-        <link rel="canonical" href="https://paintcell.lovable.app/resources/knowledge/robotic-painting-cost-guide" />
+        <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/robotic-painting-cost-guide" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       </Helmet>
 

@@ -75,7 +75,7 @@ export default function SolutionPageEditor() {
 
     const newForm: Record<string, string> = {};
     for (const key of Object.keys(form)) {
-      const val = (data as any)[key];
+      const val = (data as Record<string, unknown>)[key];
       if (jsonFields.includes(key) || jsonFieldsZh.includes(key)) {
         newForm[key] = JSON.stringify(val || (key === "eeat" ? {} : []), null, 2);
       } else {
@@ -94,7 +94,7 @@ export default function SolutionPageEditor() {
 
     setSaving(true);
     try {
-      const payload: Record<string, any> = { updated_at: new Date().toISOString() };
+      const payload: Record<string, unknown> = { updated_at: new Date().toISOString() };
       for (const key of Object.keys(form)) {
         if (jsonFields.includes(key) || jsonFieldsZh.includes(key)) {
           payload[key] = JSON.parse(form[key]);
@@ -104,17 +104,18 @@ export default function SolutionPageEditor() {
       }
 
       if (isNew) {
-        const { error } = await supabase.from("solution_pages").insert(payload as any);
+        const { error } = await supabase.from("solution_pages").insert(payload);
         if (error) throw error;
         toast({ title: "已创建 / Created" });
         navigate("/console/solution-pages");
       } else {
-        const { error } = await supabase.from("solution_pages").update(payload as any).eq("id", id!);
+        const { error } = await supabase.from("solution_pages").update(payload).eq("id", id!);
         if (error) throw error;
         toast({ title: "已保存 / Saved" });
       }
-    } catch (err: any) {
-      toast({ title: "保存失败 / Failed", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast({ title: "保存失败 / Failed", description: message, variant: "destructive" });
     } finally {
       setSaving(false);
     }

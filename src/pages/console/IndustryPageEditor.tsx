@@ -153,8 +153,9 @@ export default function IndustryPageEditor() {
         if (error) throw error;
         toast({ title: "已保存 / Saved" });
       }
-    } catch (err: any) {
-      toast({ title: "保存失败 / Failed", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      toast({ title: "保存失败 / Failed", description: message, variant: "destructive" });
     } finally {
       setSaving(false);
     }
@@ -171,7 +172,7 @@ export default function IndustryPageEditor() {
     }
   };
 
-  const update = (key: string, value: any) => setForm(prev => ({ ...prev, [key]: value }));
+  const update = (key: string, value: string | boolean) => setForm(prev => ({ ...prev, [key]: value }));
 
   if (loading) {
     return (

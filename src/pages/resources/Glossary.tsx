@@ -19,13 +19,25 @@ const structuredData = {
 };
 
 const glossaryTerms = [
-  { term: "Takt Time", slug: "takt-time" },
-  { term: "Overspray", slug: "overspray" },
-  { term: "Transfer Efficiency", slug: "transfer-efficiency" },
-  { term: "Film Build", slug: "film-build" },
-  { term: "Color Changeover", slug: "color-changeover" },
+  { term: "ATEX Certification", slug: "atex-certification" },
   { term: "Atomization", slug: "atomization" },
   { term: "Booth Airflow", slug: "booth-airflow" },
+  { term: "Color Changeover", slug: "color-changeover" },
+  { term: "Cure Time", slug: "cure-time" },
+  { term: "Dry Film Thickness (DFT)", slug: "dry-film-thickness" },
+  { term: "Electrostatic Spraying", slug: "electrostatic-spraying" },
+  { term: "Film Build", slug: "film-build" },
+  { term: "Flash-off Time", slug: "flash-off-time" },
+  { term: "Gun Distance", slug: "gun-distance" },
+  { term: "Hollow Wrist Robot", slug: "hollow-wrist" },
+  { term: "HVLP (High Volume Low Pressure)", slug: "hvlp" },
+  { term: "Orange Peel", slug: "orange-peel" },
+  { term: "Overspray", slug: "overspray" },
+  { term: "Paint Recipe", slug: "paint-recipe" },
+  { term: "Spray Pattern", slug: "spray-pattern" },
+  { term: "Takt Time", slug: "takt-time" },
+  { term: "Teach Pendant", slug: "teach-pendant" },
+  { term: "Transfer Efficiency", slug: "transfer-efficiency" },
   { term: "2K Paint", slug: "2k-paint" },
 ];
 

@@ -237,7 +237,7 @@ export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
     <div className="flex-1 flex flex-col min-h-0">
       {/* Chat Messages */}
       <ScrollArea 
-        ref={scrollRef as any}
+        ref={scrollRef}
         className="flex-1 px-4 py-4"
       >
         <div className="space-y-4">

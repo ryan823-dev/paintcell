@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Main Pages -->
   <url>
     <loc>https://tdpaintcell.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/quote</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/applications</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/paint-cells</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/case-studies</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Solutions -->
+  <url>
+    <loc>https://tdpaintcell.com/solutions</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <url>
@@ -13,8 +51,9 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Industries -->
   <url>
-    <loc>https://tdpaintcell.com/solutions/paint-booth-automation</loc>
+    <loc>https://tdpaintcell.com/industries</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -29,6 +68,108 @@
     <loc>https://tdpaintcell.com/industries/appliance-coating</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Resources - Engineering Library -->
+  <url>
+    <loc>https://tdpaintcell.com/resources/engineering-library</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/engineering-library/guides-checklists</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/engineering-library/insights</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/engineering-library/faqs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Resources - Standards & Compliance -->
+  <url>
+    <loc>https://tdpaintcell.com/resources/standards-compliance</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/standards-compliance/ventilation-airflow</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/standards-compliance/voc-solvent-handling</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/standards-compliance/grounding-static-control</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Resources - Glossary -->
+  <url>
+    <loc>https://tdpaintcell.com/resources/glossary</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Resources - Tools & Templates -->
+  <url>
+    <loc>https://tdpaintcell.com/resources/tools-templates</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Knowledge Articles -->
+  <url>
+    <loc>https://tdpaintcell.com/resources/knowledge/how-to-choose-paint-robot</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/knowledge/robotic-painting-cost-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/knowledge/paint-booth-design-basics</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Legal -->
+  <url>
+    <loc>https://tdpaintcell.com/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/cookies</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>

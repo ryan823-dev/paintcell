@@ -2,26 +2,27 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { industries, IndustryData } from "@/data/industryData";
 
-function mapDbToIndustryData(row: any): IndustryData {
+function mapDbToIndustryData(row: Record<string, unknown>): IndustryData {
+  const aiContext = row.ai_context as Record<string, string> | null;
   return {
-    slug: row.slug,
-    industry: row.ai_context?.industry || row.slug,
-    industryLabel: row.industry_label,
-    metaTitle: row.meta_title || "",
-    metaDescription: row.meta_description || "",
-    heroTitle: row.hero_title || "",
-    heroSubtitle: row.hero_subtitle || "",
-    heroImage: row.hero_image || undefined,
-    ctaText: row.cta_text || "",
-    examplePrompt: row.example_prompt || "",
-    aiContext: row.ai_context || { industry: "", finish: "", throughput: "" },
+    slug: row.slug as string,
+    industry: aiContext?.industry || (row.slug as string),
+    industryLabel: row.industry_label as string,
+    metaTitle: (row.meta_title as string) || "",
+    metaDescription: (row.meta_description as string) || "",
+    heroTitle: (row.hero_title as string) || "",
+    heroSubtitle: (row.hero_subtitle as string) || "",
+    heroImage: (row.hero_image as string) || undefined,
+    ctaText: (row.cta_text as string) || "",
+    examplePrompt: (row.example_prompt as string) || "",
+    aiContext: aiContext || { industry: "", finish: "", throughput: "" },
     painPoints: Array.isArray(row.pain_points) ? row.pain_points : [],
     systemModules: Array.isArray(row.system_modules) ? row.system_modules : [],
-    productionConfig: row.production_config || { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
+    productionConfig: (row.production_config as IndustryData["productionConfig"]) || { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
     roiMetrics: Array.isArray(row.roi_metrics) ? row.roi_metrics : [],
     caseReferences: Array.isArray(row.case_references) ? row.case_references : [],
     faqs: Array.isArray(row.faqs) ? row.faqs : [],
-    comingSoon: row.coming_soon || false,
+    comingSoon: (row.coming_soon as boolean) || false,
   };
 }
 
