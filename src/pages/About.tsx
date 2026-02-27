@@ -1,8 +1,65 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, Award, Users, Globe, Wrench } from "lucide-react";
 import { useI18n } from "@/i18n";
+
+const DOMAIN = "https://tdpaintcell.com";
+
+const schemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${DOMAIN}/#organization`,
+    name: "TD Robotic Painting Systems",
+    alternateName: "PaintCell",
+    url: DOMAIN,
+    logo: `${DOMAIN}/favicon.png`,
+    description: "Engineering and integration of robotic painting systems and paint booth automation for automotive, industrial, appliance, and aerospace manufacturing.",
+    foundingDate: "2000",
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      minValue: 50,
+      maxValue: 200,
+    },
+    areaServed: "Worldwide",
+    knowsAbout: [
+      "Robotic spray painting",
+      "Paint booth automation",
+      "Industrial coating systems",
+      "Electrostatic painting",
+      "HVLP spray technology",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: "info@tdpaintcell.com",
+      availableLanguage: ["English", "Chinese", "Japanese"],
+    },
+    sameAs: [],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${DOMAIN}/about#webpage`,
+    name: "About TD Robotic Painting Systems",
+    description: "Learn about TD's 25+ years of experience engineering robotic painting systems. 500+ systems deployed across 30+ countries with 98% customer satisfaction.",
+    url: `${DOMAIN}/about`,
+    isPartOf: { "@id": `${DOMAIN}/#website` },
+    about: { "@id": `${DOMAIN}/#organization` },
+    mainEntity: { "@id": `${DOMAIN}/#organization` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${DOMAIN}/about#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+      { "@type": "ListItem", position: 2, name: "About", item: `${DOMAIN}/about` },
+    ],
+  },
+];
 
 export default function About() {
   const { t } = useI18n();
@@ -23,6 +80,15 @@ export default function About() {
 
   return (
     <>
+      <Helmet>
+        <title>About TD Robotic Painting Systems — 25+ Years of Automation Excellence</title>
+        <meta name="description" content="TD Robotic Painting Systems: 25+ years engineering robotic spray painting and paint booth automation. 500+ systems deployed across 30+ countries with 98% customer satisfaction." />
+        <link rel="canonical" href={`${DOMAIN}/about`} />
+        {schemas.map((s, i) => (
+          <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+        ))}
+      </Helmet>
+
       <section className="bg-muted border-b border-border">
         <div className="container-wide py-12 md:py-16">
           <div className="max-w-2xl">

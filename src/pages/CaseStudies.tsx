@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, ArrowRight } from "lucide-react";
 import { useI18n } from "@/i18n";
+
+const DOMAIN = "https://tdpaintcell.com";
 
 export default function CaseStudies() {
   const { t } = useI18n();
@@ -31,8 +34,53 @@ export default function CaseStudies() {
     },
   ];
 
+  const schemas = [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${DOMAIN}/case-studies#webpage`,
+      name: "Robotic Painting Automation Case Studies",
+      description: "Real implementations demonstrating measurable improvements in quality, throughput, and operational efficiency across automotive, industrial, electronics, and aerospace industries.",
+      url: `${DOMAIN}/case-studies`,
+      isPartOf: { "@id": `${DOMAIN}/#website` },
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: caseStudies.map((study, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Article",
+            headline: study.title,
+            description: study.challenge,
+            articleSection: study.industry,
+            author: { "@id": `${DOMAIN}/#organization` },
+            publisher: { "@id": `${DOMAIN}/#organization` },
+          },
+        })),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${DOMAIN}/case-studies#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+        { "@type": "ListItem", position: 2, name: "Case Studies", item: `${DOMAIN}/case-studies` },
+      ],
+    },
+  ];
+
   return (
     <>
+      <Helmet>
+        <title>Case Studies — Robotic Painting Automation Success Stories | TD</title>
+        <meta name="description" content="Explore real-world robotic painting automation implementations. Case studies from automotive, industrial, electronics, and aerospace industries showing measurable improvements in quality, throughput, and ROI." />
+        <link rel="canonical" href={`${DOMAIN}/case-studies`} />
+        {schemas.map((s, i) => (
+          <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+        ))}
+      </Helmet>
+
       <section className="bg-muted border-b border-border">
         <div className="container-wide py-12 md:py-16">
           <div className="max-w-2xl">
