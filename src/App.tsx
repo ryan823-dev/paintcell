@@ -80,6 +80,8 @@ const Industries = lazy(() => import("./pages/Industries"));
 const AutomotivePainting = lazy(() => import("./pages/industries/AutomotivePainting"));
 const ApplianceCoating = lazy(() => import("./pages/industries/ApplianceCoating"));
 const MetalPartsFinishing = lazy(() => import("./pages/industries/MetalPartsFinishing"));
+const FurnitureWoodwork = lazy(() => import("./pages/industries/FurnitureWoodwork"));
+const PlasticsComposites = lazy(() => import("./pages/industries/PlasticsComposites"));
 
 // Lazy load Solution pages
 const Solutions = lazy(() => import("./pages/Solutions"));
@@ -226,6 +228,8 @@ const App = () => (
                 <Route path="/industries/automotive-painting" element={<AutomotivePainting />} />
                 <Route path="/industries/appliance-coating" element={<ApplianceCoating />} />
                 <Route path="/industries/metal-parts-finishing" element={<MetalPartsFinishing />} />
+                <Route path="/industries/furniture-woodwork" element={<FurnitureWoodwork />} />
+                <Route path="/industries/plastics-composites" element={<PlasticsComposites />} />
                 <Route path="/industries/:slug" element={<IndustryPage />} />
                 
                 <Route path="*" element={<NotFound />} />

@@ -76,6 +76,18 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://tdpaintcell.com/industries/furniture-woodwork</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/industries/plastics-composites</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Resources - Engineering Library -->
   <url>
     <loc>https://tdpaintcell.com/resources/engineering-library</loc>
