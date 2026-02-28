@@ -5,7 +5,6 @@ export const en: Record<string, Record<string, string>> = {
     products: "Products",
     applications: "Applications",
     knowledge: "Knowledge",
-    console: "Console",
   },
   // Footer
   footer: {

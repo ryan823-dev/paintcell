@@ -4,7 +4,6 @@ export const ru: Record<string, Record<string, string>> = {
     products: "Продукция",
     applications: "Применение",
     knowledge: "База знаний",
-    console: "Консоль",
   },
   footer: {
     solutions: "Решения",

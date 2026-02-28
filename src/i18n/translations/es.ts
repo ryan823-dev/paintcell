@@ -4,7 +4,6 @@ export const es: Record<string, Record<string, string>> = {
     products: "Productos",
     applications: "Aplicaciones",
     knowledge: "Conocimiento",
-    console: "Consola",
   },
   footer: {
     solutions: "Soluciones",

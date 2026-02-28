@@ -4,7 +4,6 @@ export const th: Record<string, Record<string, string>> = {
     products: "ผลิตภัณฑ์",
     applications: "การใช้งาน",
     knowledge: "ความรู้",
-    console: "คอนโซล",
   },
   footer: {
     solutions: "โซลูชัน",

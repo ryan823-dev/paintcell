@@ -4,7 +4,6 @@ export const ja: Record<string, Record<string, string>> = {
     products: "製品",
     applications: "用途",
     knowledge: "技術情報",
-    console: "コンソール",
   },
   footer: {
     solutions: "ソリューション",
