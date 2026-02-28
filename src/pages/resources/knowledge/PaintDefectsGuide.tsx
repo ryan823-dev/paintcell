@@ -213,7 +213,7 @@ export default function PaintDefectsGuide() {
         </section>
 
         {/* Defect Categories */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-2xl font-bold mb-6">Defect Categories Overview</h2>
             <div className="grid md:grid-cols-3 gap-4 mb-8">
@@ -307,7 +307,7 @@ export default function PaintDefectsGuide() {
         </section>
 
         {/* Environmental Factors */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-2xl font-bold mb-6">Environmental Factors in Defect Prevention</h2>
             <p className="text-muted-foreground mb-6 max-w-3xl">
@@ -411,7 +411,7 @@ export default function PaintDefectsGuide() {
         </section>
 
         {/* E-E-A-T Block */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-10">
             <Card className="border-border bg-card">
               <CardContent className="p-6 flex flex-col sm:flex-row gap-6 text-sm">
@@ -465,7 +465,7 @@ export default function PaintDefectsGuide() {
         </section>
 
         {/* Related Content */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-xl font-bold mb-6">Related Resources</h2>
             <div className="grid md:grid-cols-3 gap-4">

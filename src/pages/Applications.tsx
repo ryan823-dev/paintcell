@@ -138,10 +138,11 @@ export default function Applications() {
         </Accordion>
       </Section>
 
-      <Section variant="muted">
-        <FadeIn className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">{a.specificApplication || "Have a Specific Application in Mind?"}</h2>
-          <p className="text-muted-foreground mb-6">{a.specificApplicationDesc || ""}</p>
+      <section className="section-dark border-t border-white/10">
+        <div className="container-wide py-16 md:py-24">
+          <FadeIn className="text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{a.specificApplication || "Have a Specific Application in Mind?"}</h2>
+            <p className="text-white/60 mb-6">{a.specificApplicationDesc || ""}</p>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground transition-transform hover:scale-105">
             <Link to="/quote" className="flex items-center gap-2">
               {t.about?.configurePaintCell || "Configure Paint Cell"}
@@ -149,7 +150,8 @@ export default function Applications() {
             </Link>
           </Button>
         </FadeIn>
-      </Section>
+        </div>
+      </section>
     </>
   );
 }

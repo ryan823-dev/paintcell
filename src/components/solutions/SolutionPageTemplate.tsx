@@ -123,16 +123,16 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         </div>
 
         {/* Hero */}
-        <section className="border-b border-border">
+        <section className="border-b border-white/10 hero-gradient">
           <div className="container-wide py-12 md:py-20">
-            <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/40 bg-accent/20 text-accent text-[11px] font-semibold tracking-wider uppercase">
               <Sparkles className="h-3 w-3" />
               Solution
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight max-w-3xl">
+            <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight max-w-3xl text-white">
               {data.heroTitle}
             </h1>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl mb-8">
+            <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl mb-8">
               {data.heroSubtitle}
             </p>
             <div className="flex flex-wrap gap-3">
@@ -140,7 +140,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
                 Start Project Assessment
                 <ChevronRight className="h-4 w-4" />
               </Button>
-              <Button asChild variant="outline" className="h-11 px-6 rounded-xl">
+              <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-white/30 text-white hover:bg-white/10">
                 <Link to="/quote">Talk to an Engineer</Link>
               </Button>
             </div>
@@ -148,7 +148,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         </section>
 
         {/* Definition Block */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-narrow py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Process Overview</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">{data.definition}</p>
@@ -201,7 +201,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
 
         {/* Scope Sub-Sections */}
         {data.scopeSubSections && data.scopeSubSections.length > 0 && (
-          <section className="border-b border-border section-gradient">
+          <section className="border-b border-border">
             <div className="container-narrow py-12 md:py-16">
               <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 <Wrench className="h-3.5 w-3.5" />
@@ -276,7 +276,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         )}
 
         {/* Application Scope */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-narrow py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Common Use Cases</h2>
             {data.applicationScopeIntro && (
@@ -358,7 +358,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
 
         {/* ATEX / Explosion-Proof */}
         {data.atexItems && data.atexItems.length > 0 && (
-          <section className="border-b border-border section-gradient">
+          <section className="border-b border-border">
             <div className="container-narrow py-12 md:py-16">
               <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 <Shield className="h-3.5 w-3.5" />
@@ -403,7 +403,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         </section>
 
         {/* Implementation Timeline */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-narrow py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Clock className="h-3.5 w-3.5" />
@@ -475,12 +475,12 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
         </section>
 
         {/* Related Links + Project Initiation CTA */}
-        <section>
+        <section className="section-dark">
           <div className="container-narrow py-12 md:py-16">
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               {data.relatedIndustries.length > 0 && (
                 <div>
-                  <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
+                  <h3 className="font-semibold text-sm mb-4 flex items-center gap-2 text-white">
                     <Layers className="h-4 w-4 text-accent" />
                     Related Industries
                   </h3>
@@ -497,7 +497,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               )}
               {data.relatedKnowledge.length > 0 && (
                 <div>
-                  <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
+                  <h3 className="font-semibold text-sm mb-4 flex items-center gap-2 text-white">
                     <BookOpen className="h-4 w-4 text-accent" />
                     Related Knowledge
                   </h3>
@@ -515,16 +515,16 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
             </div>
 
             {/* Project Initiation */}
-            <div className="pt-8 border-t border-border">
-              <h2 className="text-xl font-bold mb-3">Start Your Paint Booth Automation Assessment</h2>
-              <p className="text-muted-foreground text-sm mb-6 max-w-xl">
+            <div className="pt-8 border-t border-white/10">
+              <h2 className="text-xl font-bold mb-3 text-white">Start Your Paint Booth Automation Assessment</h2>
+              <p className="text-white/60 text-sm mb-6 max-w-xl">
                 Tell us whether you need a new booth or integration into an existing booth, your parts/coating requirements, throughput targets, and ATEX classification (if applicable).
               </p>
               <div className="flex flex-wrap gap-3">
                 <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl">
                   Start Project Assessment <ChevronRight className="h-4 w-4" />
                 </Button>
-                <Button asChild variant="outline" className="h-11 px-6 rounded-xl">
+                <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-white/30 text-white hover:bg-white/10">
                   <Link to="/quote">Talk to an Engineer</Link>
                 </Button>
               </div>

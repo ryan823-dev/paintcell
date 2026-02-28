@@ -91,7 +91,7 @@ export default function AerospaceDefense() {
           </div>
         </section>
 
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><Target className="h-3.5 w-3.5" />Application Scope</div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Typical Aerospace & Defense Components</h2>
@@ -119,7 +119,7 @@ export default function AerospaceDefense() {
           </div>
         </section>
 
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><Layers className="h-3.5 w-3.5" />Specification Compliance</div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Coating Systems & Specifications</h2>
@@ -163,7 +163,7 @@ export default function AerospaceDefense() {
           </div>
         </section>
 
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><Clock className="h-3.5 w-3.5" />Lead Time</div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Deployment Timeline</h2>
@@ -188,7 +188,7 @@ export default function AerospaceDefense() {
           </div>
         </section>
 
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><BarChart3 className="h-3.5 w-3.5" />Benefits</div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Why Robotic Coating for Aerospace</h2>
@@ -215,7 +215,7 @@ export default function AerospaceDefense() {
           </div>
         </section>
 
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-10 md:py-12">
             <Card className="border-border bg-card"><CardContent className="p-6 flex flex-col sm:flex-row gap-6 text-sm">
               <div className="flex items-start gap-3"><User className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" /><div><div className="font-semibold text-foreground">Author</div><div className="text-muted-foreground">TD Engineering Team</div></div></div>

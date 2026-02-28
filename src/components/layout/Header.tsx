@@ -36,7 +36,7 @@ export function Header() {
         <Link to="/" className="flex items-center gap-3 shrink-0 pl-4 pr-6" onClick={handleLogoClick}>
           <img src={tdLogo} alt="TDPaintCell Logo" className="h-9 w-9 rounded-lg object-cover" />
           <span className="text-2xl md:text-3xl font-bold tracking-tight text-heading leading-none">
-            Painting System
+            Painting Systems
           </span>
           <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-medium text-accent/80 bg-accent/10 border border-accent/20 rounded-full px-2 py-0.5">
             <Sparkles className="h-2.5 w-2.5" />

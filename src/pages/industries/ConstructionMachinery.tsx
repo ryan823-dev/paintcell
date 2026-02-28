@@ -88,7 +88,7 @@ export default function ConstructionMachinery() {
           </div>
         </div></section>
 
-        <section className="border-b border-border section-gradient"><div className="container-wide py-12 md:py-16">
+        <section className="border-b border-border "><div className="container-wide py-12 md:py-16">
           <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><Target className="h-3.5 w-3.5" />Application Scope</div>
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Typical Components</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -110,7 +110,7 @@ export default function ConstructionMachinery() {
           </ul>
         </div></section>
 
-        <section className="border-b border-border section-gradient"><div className="container-wide py-12 md:py-16">
+        <section className="border-b border-border "><div className="container-wide py-12 md:py-16">
           <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><Layers className="h-3.5 w-3.5" />Engineering Logic</div>
           <h2 className="text-2xl md:text-3xl font-bold mb-6">System Approach for Large Parts</h2>
           <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside max-w-2xl">
@@ -138,7 +138,7 @@ export default function ConstructionMachinery() {
           <p className="text-muted-foreground text-sm mt-4">Related: <Link to="/industries/metal-parts-finishing" className="text-accent underline underline-offset-2 hover:text-accent/80">Metal Parts Finishing</Link> · <Link to="/industries/automotive-painting" className="text-accent underline underline-offset-2 hover:text-accent/80">Automotive Painting</Link></p>
         </div></section>
 
-        <section className="border-b border-border section-gradient"><div className="container-wide py-12 md:py-16">
+        <section className="border-b border-border "><div className="container-wide py-12 md:py-16">
           <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><Clock className="h-3.5 w-3.5" />Lead Time</div>
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Deployment Timeline</h2>
           <p className="font-semibold text-foreground text-lg">10-16 weeks after design approval</p>
@@ -158,7 +158,7 @@ export default function ConstructionMachinery() {
           </div>
         </div></section>
 
-        <section className="border-b border-border section-gradient"><div className="container-wide py-12 md:py-16">
+        <section className="border-b border-border "><div className="container-wide py-12 md:py-16">
           <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground"><BarChart3 className="h-3.5 w-3.5" />Benefits</div>
           <h2 className="text-2xl md:text-3xl font-bold mb-6">Why Robotic Coating for Heavy Equipment</h2>
           <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside max-w-2xl">
@@ -179,7 +179,7 @@ export default function ConstructionMachinery() {
           </div>
         </div></section>
 
-        <section className="border-b border-border section-gradient"><div className="container-wide py-10 md:py-12">
+        <section className="border-b border-border "><div className="container-wide py-10 md:py-12">
           <Card className="border-border bg-card"><CardContent className="p-6 flex flex-col sm:flex-row gap-6 text-sm">
             <div className="flex items-start gap-3"><User className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" /><div><div className="font-semibold">Author</div><div className="text-muted-foreground">TD Engineering Team</div></div></div>
             <div className="flex items-start gap-3"><CalendarDays className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" /><div><div className="font-semibold">Last updated</div><div className="text-muted-foreground">2026-02-27</div></div></div>

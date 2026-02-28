@@ -222,7 +222,7 @@ export default function FurnitureWoodwork() {
         </section>
 
         {/* 2. TYPICAL PRODUCTS */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Target className="h-3.5 w-3.5" />
@@ -273,7 +273,7 @@ export default function FurnitureWoodwork() {
         </section>
 
         {/* 4. COATING TECHNOLOGIES */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />
@@ -334,7 +334,7 @@ export default function FurnitureWoodwork() {
         </section>
 
         {/* 6. WHAT TD DELIVERS */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Wrench className="h-3.5 w-3.5" />
@@ -379,7 +379,7 @@ export default function FurnitureWoodwork() {
         </section>
 
         {/* 8. PROJECT INITIATION */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-3">
               Start your furniture finishing automation assessment
@@ -486,7 +486,7 @@ export default function FurnitureWoodwork() {
         </section>
 
         {/* 10. IMPLEMENTATION WORKFLOW */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Settings2 className="h-3.5 w-3.5" />

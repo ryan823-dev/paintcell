@@ -136,11 +136,11 @@ export default function PaintCells() {
         </Accordion>
       </Section>
 
-      <section className="bg-muted border-t border-border">
+      <section className="section-dark border-t border-white/10">
         <div className="container-wide py-16 md:py-24">
           <FadeIn className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">{p.readyConfigure || "Ready to Configure Your Solution?"}</h2>
-            <p className="text-muted-foreground mb-6">{p.readyConfigureDesc || ""}</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{p.readyConfigure || "Ready to Configure Your Solution?"}</h2>
+            <p className="text-white/60 mb-6">{p.readyConfigureDesc || ""}</p>
             <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-transform hover:scale-105">
               <Link to="/quote" className="flex items-center gap-2">
                 {p.startAssessment || "Start Assessment"}

@@ -191,7 +191,7 @@ export default function AutomotivePainting() {
         </section>
 
         {/* ─── 2. TYPICAL AUTOMOTIVE PARTS ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Target className="h-3.5 w-3.5" />
@@ -232,7 +232,7 @@ export default function AutomotivePainting() {
         </section>
 
         {/* ─── 4. RECOMMENDED SYSTEM APPROACH ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />
@@ -286,7 +286,7 @@ export default function AutomotivePainting() {
         </section>
 
         {/* ─── 6. DEPLOYMENT TIMELINE ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Clock className="h-3.5 w-3.5" />
@@ -380,7 +380,7 @@ export default function AutomotivePainting() {
         </section>
 
         {/* ─── 8. WHY ROBOTIC PAINTING ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <BarChart3 className="h-3.5 w-3.5" />
@@ -437,7 +437,7 @@ export default function AutomotivePainting() {
         </section>
 
         {/* ─── 10. E-E-A-T BLOCK ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-10 md:py-12">
             <Card className="border-border bg-card">
               <CardContent className="p-6 flex flex-col sm:flex-row gap-6 text-sm">

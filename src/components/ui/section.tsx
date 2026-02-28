@@ -11,7 +11,7 @@ interface SectionProps {
 export function Section({ children, className, variant = "default", id }: SectionProps) {
   const variants = {
     default: "bg-background",
-    muted: "section-gradient",
+    muted: "bg-background",
     primary: "bg-muted border-t border-border",
   };
 

@@ -31,9 +31,9 @@ export function ExploreLinks({ currentPath }: ExploreLinksProps) {
   const knowledge = filterOut(exploreLinks.knowledge);
 
   return (
-    <section className="border-t border-border bg-muted/30">
+    <section className="border-t border-white/10 section-dark">
       <div className="container-wide py-12 md:py-16">
-        <h2 className="text-lg font-semibold mb-6">Explore</h2>
+        <h2 className="text-lg font-semibold mb-6 text-white">Explore</h2>
         <div className="grid sm:grid-cols-3 gap-8">
           {solutions.length > 0 && (
             <div>

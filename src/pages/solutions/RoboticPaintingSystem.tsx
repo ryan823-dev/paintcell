@@ -146,7 +146,7 @@ export default function RoboticPaintingSystem() {
         </section>
 
         {/* Definition Block */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-narrow py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Definition</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -189,7 +189,7 @@ export default function RoboticPaintingSystem() {
         </section>
 
         {/* Typical Applications */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-narrow py-12 md:py-16">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Typical Applications</h2>
             <p className="text-muted-foreground text-sm mb-6">Robotic painting systems are commonly deployed for:</p>
@@ -242,7 +242,7 @@ export default function RoboticPaintingSystem() {
         </section>
 
         {/* Paint Booth Automation */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-narrow py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Layers className="h-3.5 w-3.5" />
@@ -291,7 +291,7 @@ export default function RoboticPaintingSystem() {
         </section>
 
         {/* Benefits and ROI */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-narrow py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <BarChart3 className="h-3.5 w-3.5" />
@@ -354,7 +354,7 @@ export default function RoboticPaintingSystem() {
         </section>
 
         {/* Project Initiation */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-narrow py-12 md:py-16">
             <h2 className="text-xl font-bold mb-3">Start Your Robotic Painting System Assessment</h2>
             <p className="text-muted-foreground text-sm mb-6 max-w-xl">

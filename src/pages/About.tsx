@@ -89,11 +89,11 @@ export default function About() {
         ))}
       </Helmet>
 
-      <section className="bg-muted border-b border-border">
+      <section className="section-dark border-b border-white/10">
         <div className="container-wide py-12 md:py-16">
           <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{t.about?.title || "About PaintCell"}</h1>
-            <p className="text-lg text-muted-foreground">{t.about?.subtitle || ""}</p>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{t.about?.title || "About PaintCell"}</h1>
+            <p className="text-lg text-white/70">{t.about?.subtitle || ""}</p>
           </div>
         </div>
       </section>
@@ -137,11 +137,11 @@ export default function About() {
         </div>
       </Section>
 
-      <section className="bg-muted border-t border-border">
+      <section className="section-dark border-t border-white/10">
         <div className="container-wide py-16 md:py-24">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">{t.about?.discussProject || "Let's Discuss Your Project"}</h2>
-            <p className="text-muted-foreground mb-6">{t.about?.discussProjectDesc || ""}</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{t.about?.discussProject || "Let's Discuss Your Project"}</h2>
+            <p className="text-white/60 mb-6">{t.about?.discussProjectDesc || ""}</p>
             <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
               <Link to="/quote" className="flex items-center gap-2">
                 {t.about?.configurePaintCell || "Configure Paint Cell"}

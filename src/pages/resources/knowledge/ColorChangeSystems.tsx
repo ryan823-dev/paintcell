@@ -222,7 +222,7 @@ export default function ColorChangeSystems() {
         </section>
 
         {/* System Types Comparison */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-2xl font-bold mb-6">Color Change System Types</h2>
             <div className="overflow-x-auto mb-8">
@@ -295,7 +295,7 @@ export default function ColorChangeSystems() {
         </section>
 
         {/* Automatic Color Changer Deep Dive */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-2xl font-bold mb-6">Automatic Color Changers: How They Work</h2>
             <div className="prose prose-sm max-w-3xl text-muted-foreground space-y-4 mb-8">
@@ -409,7 +409,7 @@ export default function ColorChangeSystems() {
         </section>
 
         {/* Selection Guide */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-2xl font-bold mb-6">System Selection Guide</h2>
             <div className="overflow-x-auto">
@@ -482,7 +482,7 @@ export default function ColorChangeSystems() {
         </section>
 
         {/* FAQ */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border ">
           <div className="container-wide py-12">
             <h2 className="text-2xl font-bold mb-8">Frequently Asked Questions</h2>
             <div className="max-w-3xl">

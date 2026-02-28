@@ -28,16 +28,16 @@ export default function Industries() {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        <section className="border-b border-border">
+        <section className="hero-gradient border-b border-white/10">
           <div className="container-wide py-12 md:py-20">
-            <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-[11px] font-semibold tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/40 bg-accent/20 text-accent text-[11px] font-semibold tracking-wider uppercase">
               <Sparkles className="h-3 w-3" />
               {t.industries.badge}
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight text-white">
               {t.industries.title}
             </h1>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl">
+            <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl">
               {t.industries.subtitle}
             </p>
           </div>

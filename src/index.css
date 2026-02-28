@@ -207,6 +207,12 @@
   .section-dark h4 {
     color: hsl(var(--section-dark-fg));
   }
+  .section-dark a:not([class*="text-"]):not([class*="Button"]):not([class*="btn"]) {
+    color: hsl(var(--section-dark-fg));
+  }
+  .section-dark a:not([class*="text-"]):not([class*="Button"]):not([class*="btn"]):hover {
+    color: hsl(var(--accent));
+  }
 
   .card-elevated {
     box-shadow: var(--card-shadow);

@@ -81,11 +81,11 @@ export default function CaseStudies() {
         ))}
       </Helmet>
 
-      <section className="bg-muted border-b border-border">
+      <section className="section-dark border-b border-white/10">
         <div className="container-wide py-12 md:py-16">
           <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{cs.title || "Case Studies"}</h1>
-            <p className="text-lg text-muted-foreground">{cs.subtitle || ""}</p>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{cs.title || "Case Studies"}</h1>
+            <p className="text-lg text-white/70">{cs.subtitle || ""}</p>
           </div>
         </div>
       </section>
@@ -135,10 +135,11 @@ export default function CaseStudies() {
         </div>
       </Section>
 
-      <Section variant="muted">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">{cs.ctaTitle || "See How Automation Applies to Your Operation"}</h2>
-          <p className="text-muted-foreground mb-6">{cs.ctaDesc || ""}</p>
+      <section className="section-dark border-t border-white/10">
+        <div className="container-wide py-16 md:py-24">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{cs.ctaTitle || "See How Automation Applies to Your Operation"}</h2>
+            <p className="text-white/60 mb-6">{cs.ctaDesc || ""}</p>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link to="/quote" className="flex items-center gap-2">
               {t.about?.configurePaintCell || "Configure Paint Cell"}
@@ -146,7 +147,8 @@ export default function CaseStudies() {
             </Link>
           </Button>
         </div>
-      </Section>
+        </div>
+      </section>
     </>
   );
 }

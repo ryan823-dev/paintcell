@@ -194,7 +194,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
         </section>
 
         {/* ─── 2. PAIN POINTS ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <AlertTriangle className="h-3.5 w-3.5" />
@@ -248,7 +248,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
         </section>
 
         {/* ─── 4. PRODUCTION CONFIG ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <BarChart3 className="h-3.5 w-3.5" />
@@ -310,7 +310,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
         </section>
 
         {/* ─── 6. CASE REFERENCES ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Quote className="h-3.5 w-3.5" />
@@ -337,12 +337,12 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
         </section>
 
         {/* ─── 7. SECOND CTA ─── */}
-        <section className="border-b border-border">
+        <section className="border-b border-white/10 section-dark">
           <div className="container-wide py-12 md:py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
               {t.industry.feasibilityTitle}
             </h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl">
+            <p className="text-white/60 mb-8 max-w-2xl">
               {t.industry.feasibilitySubtitle}
             </p>
             <div className="flex flex-wrap gap-3">
@@ -359,7 +359,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                   const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
                   if (assistantButton) assistantButton.click();
                 }}
-                className="h-11 px-6 gap-2 rounded-xl"
+                className="h-11 px-6 gap-2 rounded-xl border-white/30 text-white hover:bg-white/10"
               >
                 <MessageSquare className="h-4 w-4" />
                 {t.industry.talkEngineer}
@@ -367,7 +367,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
               <Button
                 variant="outline"
                 onClick={() => navigate("/quote")}
-                className="h-11 px-6 gap-2 rounded-xl"
+                className="h-11 px-6 gap-2 rounded-xl border-white/30 text-white hover:bg-white/10"
               >
                 <Upload className="h-4 w-4" />
                 {t.industry.useForm}
@@ -377,7 +377,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
         </section>
 
         {/* ─── 8. DELIVERY PROCESS ─── */}
-        <section className="border-b border-border section-gradient">
+        <section className="border-b border-border">
           <div className="container-wide py-12 md:py-16">
             <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               <Truck className="h-3.5 w-3.5" />

@@ -27,13 +27,13 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-border bg-muted/40">
+    <footer className="border-t border-border section-dark">
       <div className="container-wide py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div className="md:col-span-2 flex flex-col">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
               <img src={tdLogo} alt="TDPaintCell Logo" className="h-8 w-8 rounded-lg object-cover" />
-              <span className="text-lg font-semibold text-heading">PaintCell</span>
+              <span className="text-lg font-semibold text-white">Painting Systems</span>
             </Link>
             <p className="text-muted-foreground max-w-md text-sm leading-relaxed mb-5">
               {t.footer.tagline}
@@ -43,13 +43,13 @@ export function Footer() {
               <p className="text-muted-foreground">{t.footer.response}</p>
               <p className="text-muted-foreground">{t.footer.hours}</p>
             </div>
-            <p className="text-muted-foreground/60 text-xs mt-auto">
+            <p className="text-white/30 text-xs mt-auto">
               {t.footer.location}
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-heading text-xs uppercase tracking-wider">{t.footer.solutions}</h3>
+            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{t.footer.solutions}</h3>
             <ul className="space-y-3">
               {footerLinks.solutions.map((link) => (
                 <li key={link.href}>
@@ -62,7 +62,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-heading text-xs uppercase tracking-wider">{t.footer.resources}</h3>
+            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{t.footer.resources}</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
@@ -75,7 +75,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-heading text-xs uppercase tracking-wider">{t.footer.company}</h3>
+            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{t.footer.company}</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -89,7 +89,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">
-          <p className="text-xs text-muted-foreground/60 text-center">
+          <p className="text-xs text-white/30 text-center">
             {t.footer.copyright}
           </p>
         </div>

@@ -265,7 +265,7 @@ export default function Index() {
           )}
 
           {/* H1 + Definition Block */}
-          <section id="definition" className="py-12 md:py-16 border-t border-border section-gradient">
+          <section id="definition" className="py-12 md:py-16 border-t border-border">
             <div className="container-wide">
               <FadeIn>
                 <div className="max-w-4xl">
@@ -308,7 +308,7 @@ export default function Index() {
           </section>
 
           {/* Industry Entry */}
-          <section id="industry-entry" className="py-14 md:py-18 border-t border-border section-gradient">
+          <section id="industry-entry" className="py-14 md:py-18 border-t border-border">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -342,7 +342,7 @@ export default function Index() {
           </section>
 
           {/* Core Capabilities — with internal links */}
-          <section id="core-capabilities" className="py-14 md:py-18 border-t border-border section-gradient">
+          <section id="core-capabilities" className="py-14 md:py-18 border-t border-border">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -418,7 +418,7 @@ export default function Index() {
           </section>
 
           {/* Deployment Process */}
-          <section id="deployment-process" className="py-14 md:py-18 border-t border-border section-gradient">
+          <section id="deployment-process" className="py-14 md:py-18 border-t border-border">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-10">
@@ -561,7 +561,7 @@ export default function Index() {
           </section>
 
           {/* Project References */}
-          <section id="project-references" className="py-14 md:py-18 border-t border-border section-gradient">
+          <section id="project-references" className="py-14 md:py-18 border-t border-border">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -636,7 +636,7 @@ export default function Index() {
           </section>
 
           {/* FAQ — all expanded by default */}
-          <section id="faq" className="py-14 md:py-18 border-t border-border section-gradient">
+          <section id="faq" className="py-14 md:py-18 border-t border-border">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-10">
