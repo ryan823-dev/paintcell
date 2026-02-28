@@ -15,7 +15,6 @@ export function Header() {
     { name: t.nav.products, href: "/paint-cells" },
     { name: t.nav.applications, href: "/applications" },
     { name: t.nav.knowledge, href: "/resources/engineering-library" },
-    { name: t.nav.console, href: "/console" },
   ];
 
   const isActive = (href: string) => {
