@@ -71,7 +71,7 @@ const jsonLdSchemas = [
     "@id": `${DOMAIN}/#organization`,
     "name": "TD Robotic Painting Systems",
     "url": DOMAIN,
-    "logo": `${DOMAIN}/images/td-logo.png`,
+    "logo": `${DOMAIN}/images/og-social-share.png`,
     "description": "System-level engineering and integration of robotic painting systems and paint booth automation.",
     "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
   },
@@ -276,7 +276,7 @@ export default function Index() {
                     A <strong className="text-foreground">robotic painting system</strong> is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, and process control to deliver consistent finish quality and stable production throughput.
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
-                    TD Robotic Painting Systems specializes in engineering and integrating robotic painting cells and automated painting workstations for automotive component manufacturing and industrial finishing.
+                    TD Robotic Painting Systems specializes in engineering and integrating robotic painting cells and automated painting workstations for automotive component manufacturing and industrial finishing. With 500+ systems deployed across 30+ countries, our solutions typically reduce paint waste by 20–40% and achieve first-pass yield rates above 95%.
                   </p>
                   <div className="border-l-2 border-accent/40 pl-4">
                     <p className="text-sm text-muted-foreground leading-relaxed mb-2">
@@ -471,11 +471,11 @@ export default function Index() {
               </FadeIn>
               <div className="max-w-3xl space-y-2 mb-8">
                 {[
-                  "Improve coating consistency and finish repeatability",
-                  "Reduce manual spraying dependency",
-                  "Stabilize production throughput",
-                  "Enable scalable automation",
-                  "Support industrial coating quality standards",
+                  "Improve coating consistency — achieve first-pass yield rates above 95%",
+                  "Reduce paint waste by 20–40% through optimized transfer efficiency",
+                  "Stabilize production throughput with repeatable cycle times",
+                  "Lower labor costs — typical ROI payback within 18–36 months",
+                  "Meet VOC emission and safety compliance with enclosed robotic cells",
                 ].map((item, i) => (
                   <FadeIn key={i} delay={i * 0.05}>
                     <div className="flex items-start gap-3 py-1">

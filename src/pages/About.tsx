@@ -15,7 +15,7 @@ const schemas = [
     name: "TD Robotic Painting Systems",
     alternateName: "PaintCell",
     url: DOMAIN,
-    logo: `${DOMAIN}/favicon.png`,
+    logo: `${DOMAIN}/images/og-social-share.png`,
     description: "Engineering and integration of robotic painting systems and paint booth automation for automotive, industrial, appliance, and aerospace manufacturing.",
     foundingDate: "2000",
     numberOfEmployees: {
