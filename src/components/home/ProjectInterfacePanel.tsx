@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Sparkles } from "lucide-react";
+import { Send, Sparkles, Bot, FileText, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HomepageWizardStrip } from "./HomepageWizardStrip";
 
@@ -28,9 +28,27 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
   };
 
   return (
-    <section className="bg-background h-[calc(100vh-3.5rem)] flex flex-col">
+    <section className="relative bg-background min-h-[calc(100vh-3.5rem)] flex flex-col overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(hsl(var(--accent)) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--accent)) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+          }}
+        />
+        {/* Radial glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-accent/[0.03] blur-[100px]" />
+        {/* Corner accents */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/[0.02] rounded-full blur-[80px] translate-x-1/2 -translate-y-1/2" />
+      </div>
+
       {/* Main — vertically centered */}
-      <div className="flex-[3] flex flex-col items-center justify-start px-6 sm:px-10 lg:px-16 pt-8 lg:pt-14 py-6">
+      <div className="relative flex-[3] flex flex-col items-center justify-start px-6 sm:px-10 lg:px-16 pt-8 lg:pt-14 py-6">
         {/* Status bar */}
         <div className="flex items-center gap-4 mb-8 lg:mb-10 text-xs font-medium tracking-[0.15em] uppercase">
           <span className="flex items-center gap-2 text-accent">
@@ -66,7 +84,7 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
             className={cn(
               "rounded-2xl border transition-all duration-300 p-1 bg-card",
               isFocused
-                ? "border-accent/40 shadow-[0_0_24px_-5px_hsl(192_70%_38%/0.2)]"
+                ? "border-accent/40 shadow-[0_0_30px_-5px_hsl(192_70%_38%/0.25)]"
                 : "border-border hover:border-accent/20"
             )}
           >
@@ -113,18 +131,19 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
             </div>
           </div>
 
-          {/* Quick starters */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+          {/* Quick starters - enhanced with icons */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
             {[
-              "Automate manual spraying",
-              "Improve finish consistency",
-              "Feasibility check for my parts",
-            ].map((text) => (
+              { text: "Automate manual spraying", icon: Bot },
+              { text: "Improve finish consistency", icon: Sparkles },
+              { text: "Feasibility check for my parts", icon: FileText },
+            ].map(({ text, icon: Icon }) => (
               <button
                 key={text}
                 onClick={() => setInputValue(text)}
-                className="text-xs px-3.5 py-1.5 rounded-full border border-border text-muted-foreground hover:text-heading hover:border-accent/30 hover:bg-accent/5 transition-all"
+                className="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:border-accent/30 hover:bg-accent/5 transition-all duration-200"
               >
+                <Icon className="h-3 w-3" />
                 {text}
               </button>
             ))}
@@ -133,7 +152,7 @@ export function ProjectInterfacePanel({ onStartChat }: ProjectInterfacePanelProp
       </div>
 
       {/* Wizard Strip — bottom */}
-      <div className="flex-[1] border-t border-border flex items-center bg-muted/30">
+      <div className="relative flex-[1] border-t border-border flex items-center bg-muted/30">
         <div className="px-6 sm:px-10 lg:px-16 w-full py-5">
           <HomepageWizardStrip variant="light" />
         </div>

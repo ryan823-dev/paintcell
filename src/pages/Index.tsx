@@ -7,6 +7,8 @@ import { BenefitDetailModal, BenefitModalContent } from "@/components/home/Benef
 import { ProjectInterfacePanel } from "@/components/home/ProjectInterfacePanel";
 import { HomeSidebar } from "@/components/home/HomeSidebar";
 import { InlineChatPanel } from "@/components/home/InlineChatPanel";
+import { TrustStats } from "@/components/home/TrustStats";
+import { TrustLogos } from "@/components/home/TrustLogos";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import {
   ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge,
@@ -289,8 +291,24 @@ export default function Index() {
             </div>
           </section>
 
+          {/* Trust Stats — Animated Numbers */}
+          <section id="trust-stats" className="py-14 md:py-18 border-t border-border">
+            <div className="container-wide">
+              <FadeIn>
+                <div className="mb-10 text-center">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Track record</p>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Proven at Scale</h2>
+                  <div className="h-px w-12 bg-accent/50 mx-auto" />
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.2}>
+                <TrustStats />
+              </FadeIn>
+            </div>
+          </section>
+
           {/* Industry Entry */}
-          <section id="industry-entry" className="py-14 md:py-18 border-t border-border">
+          <section id="industry-entry" className="py-14 md:py-18 border-t border-border bg-muted/30">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -304,13 +322,15 @@ export default function Index() {
                   <StaggerItem key={entry.title}>
                     <Link
                       to={entry.href}
-                      className="group block rounded-xl p-5 border border-border hover:border-accent/30 transition-all duration-200 h-full bg-card"
+                      className="group relative block rounded-xl p-5 border border-border hover:border-accent/40 transition-all duration-300 h-full bg-card overflow-hidden hover:shadow-[0_4px_20px_-4px_hsl(192_70%_38%/0.12)]"
                     >
+                      {/* Hover accent indicator */}
+                      <div className="absolute top-0 left-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                       <div className="flex items-start justify-between mb-3">
-                        <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
                           <entry.icon className="h-5 w-5 text-accent" />
                         </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-accent transition-colors" />
+                        <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-300" />
                       </div>
                       <h3 className="text-sm font-semibold mb-1">{entry.title}</h3>
                       <p className="text-xs text-muted-foreground leading-relaxed">{entry.description}</p>
@@ -495,9 +515,13 @@ export default function Index() {
             </div>
           </section>
 
-          {/* Project Initiation */}
-          <section id="project-initiation" className="py-14 md:py-18 border-t border-border bg-muted/30">
-            <div className="container-wide">
+          {/* Project Initiation — Enhanced CTA */}
+          <section id="project-initiation" className="py-14 md:py-18 border-t border-border relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] via-accent/[0.06] to-accent/[0.03]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-accent/[0.04] blur-[80px]" />
+            </div>
+            <div className="container-wide relative">
               <FadeIn>
                 <div className="max-w-3xl mx-auto text-center">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Get started</p>
@@ -505,15 +529,15 @@ export default function Index() {
                   <p className="text-sm text-muted-foreground mb-8">
                     Tell us about your parts, coating requirements, and production needs.
                   </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
                     <Button
                       onClick={() => handleStartChat()}
-                      className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2"
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2 h-12 px-8 text-sm rounded-xl shadow-[0_4px_14px_-2px_hsl(192_70%_38%/0.35)] hover:shadow-[0_6px_20px_-2px_hsl(192_70%_38%/0.45)] transition-all duration-300"
                     >
                       <MessageSquare className="h-4 w-4" />
                       Start project assessment
                     </Button>
-                    <Button asChild variant="outline" className="gap-2">
+                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl">
                       <Link to="/quote">
                         <FileText className="h-4 w-4" />
                         Talk to an engineer
@@ -521,20 +545,23 @@ export default function Index() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="gap-2"
+                      className="gap-2 h-12 px-8 text-sm rounded-xl"
                       onClick={() => handleStartChat("I'd like to share part drawings for a robotic painting feasibility assessment.")}
                     >
                       <Upload className="h-4 w-4" />
                       Upload part drawings
                     </Button>
                   </div>
+                  <p className="text-xs text-muted-foreground/60">
+                    Free initial assessment · No commitment · Response within 24 hours
+                  </p>
                 </div>
               </FadeIn>
             </div>
           </section>
 
           {/* Project References */}
-          <section id="project-references" className="py-14 md:py-18 border-t border-border">
+          <section id="project-references" className="py-14 md:py-18 border-t border-border bg-muted/30">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -543,13 +570,44 @@ export default function Index() {
                   <div className="h-px w-12 bg-accent/50" />
                 </div>
               </FadeIn>
+              <FadeIn delay={0.1}>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+                  {[
+                    { industry: "Automotive", metric: "Reject rate 8.2% → 1.2%", detail: "Dual robot electrostatic cell" },
+                    { industry: "Heavy Equipment", metric: "Warranty claims ↓65%", detail: "7th-axis rail system, HVLP" },
+                    { industry: "Electronics", metric: "Color change 2hr → 12min", detail: "16-color automatic manifold" },
+                    { industry: "Aerospace", metric: "Zero non-conformances", detail: "Full AS9100D compliance" },
+                  ].map((ref, i) => (
+                    <Link
+                      key={i}
+                      to="/case-studies"
+                      className="group rounded-xl p-5 border border-border bg-card hover:border-accent/30 hover:shadow-[0_4px_20px_-4px_hsl(192_70%_38%/0.12)] transition-all duration-300"
+                    >
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-accent mb-2 block">
+                        {ref.industry}
+                      </span>
+                      <p className="text-sm font-semibold text-foreground mb-1">{ref.metric}</p>
+                      <p className="text-xs text-muted-foreground">{ref.detail}</p>
+                    </Link>
+                  ))}
+                </div>
+              </FadeIn>
               <FadeIn delay={0.2} className="text-center">
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" className="rounded-xl">
                   <Link to="/case-studies" className="flex items-center gap-2">
                     {t.home.viewCaseStudies}
                     <ChevronRight className="h-4 w-4" />
                   </Link>
                 </Button>
+              </FadeIn>
+            </div>
+          </section>
+
+          {/* Technology Partners & Trust */}
+          <section id="trust-logos" className="py-14 md:py-18 border-t border-border">
+            <div className="container-wide">
+              <FadeIn>
+                <TrustLogos />
               </FadeIn>
             </div>
           </section>
