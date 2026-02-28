@@ -265,7 +265,7 @@ export default function Index() {
           )}
 
           {/* H1 + Definition Block */}
-          <section id="definition" className="py-12 md:py-16 border-t border-border bg-muted/30">
+          <section id="definition" className="py-12 md:py-16 border-t border-border section-gradient">
             <div className="container-wide">
               <FadeIn>
                 <div className="max-w-4xl">
@@ -308,7 +308,7 @@ export default function Index() {
           </section>
 
           {/* Industry Entry */}
-          <section id="industry-entry" className="py-14 md:py-18 border-t border-border bg-muted/30">
+          <section id="industry-entry" className="py-14 md:py-18 border-t border-border section-gradient">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -322,7 +322,7 @@ export default function Index() {
                   <StaggerItem key={entry.title}>
                     <Link
                       to={entry.href}
-                      className="group relative block rounded-xl p-5 border border-border hover:border-accent/40 transition-all duration-300 h-full bg-card overflow-hidden hover:shadow-[0_4px_20px_-4px_hsl(192_70%_38%/0.12)]"
+                      className="group relative block rounded-xl p-5 border border-border hover:border-accent/40 transition-all duration-300 h-full bg-card overflow-hidden card-elevated"
                     >
                       {/* Hover accent indicator */}
                       <div className="absolute top-0 left-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
@@ -342,7 +342,7 @@ export default function Index() {
           </section>
 
           {/* Core Capabilities — with internal links */}
-          <section id="core-capabilities" className="py-14 md:py-18 border-t border-border bg-muted/30">
+          <section id="core-capabilities" className="py-14 md:py-18 border-t border-border section-gradient">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -418,7 +418,7 @@ export default function Index() {
           </section>
 
           {/* Deployment Process */}
-          <section id="deployment-process" className="py-14 md:py-18 border-t border-border bg-muted/30">
+          <section id="deployment-process" className="py-14 md:py-18 border-t border-border section-gradient">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-10">
@@ -515,29 +515,29 @@ export default function Index() {
             </div>
           </section>
 
-          {/* Project Initiation — Enhanced CTA */}
-          <section id="project-initiation" className="py-14 md:py-18 border-t border-border relative overflow-hidden">
+          {/* Project Initiation — Dark CTA Section */}
+          <section id="project-initiation" className="py-14 md:py-18 border-t border-border section-dark relative overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] via-accent/[0.06] to-accent/[0.03]" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-accent/[0.04] blur-[80px]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-accent/[0.08] blur-[100px]" />
+              <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent/[0.05] blur-[80px] translate-x-1/4 translate-y-1/4" />
             </div>
             <div className="container-wide relative">
               <FadeIn>
                 <div className="max-w-3xl mx-auto text-center">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">Get started</p>
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">Start your robotic painting project</h2>
-                  <p className="text-sm text-muted-foreground mb-8">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent mb-2">Get started</p>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3 text-white">Start your robotic painting project</h2>
+                  <p className="text-sm text-white/60 mb-8">
                     Tell us about your parts, coating requirements, and production needs.
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
                     <Button
                       onClick={() => handleStartChat()}
-                      className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2 h-12 px-8 text-sm rounded-xl shadow-[0_4px_14px_-2px_hsl(192_70%_38%/0.35)] hover:shadow-[0_6px_20px_-2px_hsl(192_70%_38%/0.45)] transition-all duration-300"
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2 h-12 px-8 text-sm rounded-xl shadow-[0_4px_20px_-2px_hsl(192_70%_36%/0.5)] hover:shadow-[0_6px_28px_-2px_hsl(192_70%_36%/0.6)] transition-all duration-300"
                     >
                       <MessageSquare className="h-4 w-4" />
                       Start project assessment
                     </Button>
-                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl">
+                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white">
                       <Link to="/quote">
                         <FileText className="h-4 w-4" />
                         Talk to an engineer
@@ -545,14 +545,14 @@ export default function Index() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="gap-2 h-12 px-8 text-sm rounded-xl"
+                      className="gap-2 h-12 px-8 text-sm rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white"
                       onClick={() => handleStartChat("I'd like to share part drawings for a robotic painting feasibility assessment.")}
                     >
                       <Upload className="h-4 w-4" />
                       Upload part drawings
                     </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground/60">
+                  <p className="text-xs text-white/40">
                     Free initial assessment · No commitment · Response within 24 hours
                   </p>
                 </div>
@@ -561,7 +561,7 @@ export default function Index() {
           </section>
 
           {/* Project References */}
-          <section id="project-references" className="py-14 md:py-18 border-t border-border bg-muted/30">
+          <section id="project-references" className="py-14 md:py-18 border-t border-border section-gradient">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-8">
@@ -581,7 +581,7 @@ export default function Index() {
                     <Link
                       key={i}
                       to="/case-studies"
-                      className="group rounded-xl p-5 border border-border bg-card hover:border-accent/30 hover:shadow-[0_4px_20px_-4px_hsl(192_70%_38%/0.12)] transition-all duration-300"
+                      className="group rounded-xl p-5 border border-border bg-card card-elevated hover:border-accent/30 transition-all duration-300"
                     >
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-accent mb-2 block">
                         {ref.industry}
@@ -636,7 +636,7 @@ export default function Index() {
           </section>
 
           {/* FAQ — all expanded by default */}
-          <section id="faq" className="py-14 md:py-18 border-t border-border bg-muted/30">
+          <section id="faq" className="py-14 md:py-18 border-t border-border section-gradient">
             <div className="container-wide">
               <FadeIn>
                 <div className="mb-10">
