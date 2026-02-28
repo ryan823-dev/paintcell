@@ -4,36 +4,37 @@
   <!-- Main Pages -->
   <url>
     <loc>https://tdpaintcell.com/</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/quote</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/applications</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/paint-cells</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/case-studies</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/about</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -41,12 +42,25 @@
   <!-- Solutions -->
   <url>
     <loc>https://tdpaintcell.com/solutions</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/solutions/robotic-painting-system</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tdpaintcell.com/solutions/paint-booth-automation</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tdpaintcell.com/solutions/spray-robot-integration</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -54,54 +68,55 @@
   <!-- Industries -->
   <url>
     <loc>https://tdpaintcell.com/industries</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/automotive-painting</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/appliance-coating</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/metal-parts-finishing</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/furniture-woodwork</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/plastics-composites</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/aerospace-defense</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/construction-machinery</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/industries/hardware-sanitary</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -109,24 +124,25 @@
   <!-- Resources - Engineering Library -->
   <url>
     <loc>https://tdpaintcell.com/resources/engineering-library</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/engineering-library/guides-checklists</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/engineering-library/insights</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/engineering-library/faqs</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -134,24 +150,25 @@
   <!-- Resources - Standards & Compliance -->
   <url>
     <loc>https://tdpaintcell.com/resources/standards-compliance</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/standards-compliance/ventilation-airflow</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/standards-compliance/voc-solvent-handling</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/standards-compliance/grounding-static-control</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -159,127 +176,127 @@
   <!-- Resources - Glossary -->
   <url>
     <loc>https://tdpaintcell.com/resources/glossary</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Glossary Terms -->
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/takt-time</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/overspray</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/transfer-efficiency</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/film-build</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/color-changeover</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/atomization</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/booth-airflow</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/2k-paint</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/electrostatic-spraying</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/hvlp</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/flash-off-time</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/orange-peel</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/dry-film-thickness</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/atex-certification</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/paint-recipe</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/spray-pattern</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/teach-pendant</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/gun-distance</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/cure-time</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/glossary/hollow-wrist</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -287,82 +304,83 @@
   <!-- Resources - Tools & Templates -->
   <url>
     <loc>https://tdpaintcell.com/resources/tools-templates</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdpaintcell.com/resources/tools-templates/paint-cell-rfq-template</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tdpaintcell.com/resources/tools-templates/site-readiness-checklist</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tdpaintcell.com/resources/tools-templates/feasibility-checklist</loc>
+    <lastmod>2026-02-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- Knowledge Articles -->
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/how-to-choose-paint-robot</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/robotic-painting-cost-guide</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/paint-booth-design-basics</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/spray-technology-guide</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/robot-path-optimization</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/paint-defects-guide</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/resources/knowledge/color-change-systems</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Tools & Templates -->
-  <url>
-    <loc>https://tdpaintcell.com/resources/tools-templates/paint-cell-rfq-template</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://tdpaintcell.com/resources/tools-templates/site-readiness-checklist</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://tdpaintcell.com/resources/tools-templates/feasibility-checklist</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Guides -->
+  <!-- Guides & Insights -->
   <url>
     <loc>https://tdpaintcell.com/resources/guides/paint-cell-feasibility-checks</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Insights -->
   <url>
     <loc>https://tdpaintcell.com/resources/insights/automation-boundary-spray-painting</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -370,18 +388,19 @@
   <!-- Legal -->
   <url>
     <loc>https://tdpaintcell.com/privacy</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/terms</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
   <url>
     <loc>https://tdpaintcell.com/cookies</loc>
+    <lastmod>2026-02-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
