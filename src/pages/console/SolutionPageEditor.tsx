@@ -79,7 +79,7 @@ export default function SolutionPageEditor() {
       if (jsonFields.includes(key) || jsonFieldsZh.includes(key)) {
         newForm[key] = JSON.stringify(val || (key === "eeat" ? {} : []), null, 2);
       } else {
-        newForm[key] = val || "";
+        newForm[key] = (val as string) || "";
       }
     }
     setForm(newForm);
@@ -104,7 +104,7 @@ export default function SolutionPageEditor() {
       }
 
       if (isNew) {
-        const { error } = await supabase.from("solution_pages").insert(payload);
+        const { error } = await supabase.from("solution_pages").insert(payload as any);
         if (error) throw error;
         toast({ title: "已创建 / Created" });
         navigate("/console/solution-pages");
