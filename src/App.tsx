@@ -84,6 +84,9 @@ const ApplianceCoating = lazy(() => import("./pages/industries/ApplianceCoating"
 const MetalPartsFinishing = lazy(() => import("./pages/industries/MetalPartsFinishing"));
 const FurnitureWoodwork = lazy(() => import("./pages/industries/FurnitureWoodwork"));
 const PlasticsComposites = lazy(() => import("./pages/industries/PlasticsComposites"));
+const AerospaceDefense = lazy(() => import("./pages/industries/AerospaceDefense"));
+const ConstructionMachinery = lazy(() => import("./pages/industries/ConstructionMachinery"));
+const HardwareSanitary = lazy(() => import("./pages/industries/HardwareSanitary"));
 
 // Lazy load Solution pages
 const Solutions = lazy(() => import("./pages/Solutions"));
@@ -234,6 +237,9 @@ const App = () => (
                 <Route path="/industries/metal-parts-finishing" element={<MetalPartsFinishing />} />
                 <Route path="/industries/furniture-woodwork" element={<FurnitureWoodwork />} />
                 <Route path="/industries/plastics-composites" element={<PlasticsComposites />} />
+                <Route path="/industries/aerospace-defense" element={<AerospaceDefense />} />
+                <Route path="/industries/construction-machinery" element={<ConstructionMachinery />} />
+                <Route path="/industries/hardware-sanitary" element={<HardwareSanitary />} />
                 <Route path="/industries/:slug" element={<IndustryPage />} />
                 
                 <Route path="*" element={<NotFound />} />

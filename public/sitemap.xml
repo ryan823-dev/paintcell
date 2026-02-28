@@ -88,6 +88,24 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://tdpaintcell.com/industries/aerospace-defense</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/industries/construction-machinery</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/industries/hardware-sanitary</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Resources - Engineering Library -->
   <url>
     <loc>https://tdpaintcell.com/resources/engineering-library</loc>
