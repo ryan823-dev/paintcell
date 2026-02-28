@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -18,23 +19,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  { question: "What coating types are used for construction machinery?", answer: "High-build epoxy primers, polyurethane topcoats, 2K systems, and heavy-duty protective coatings designed for UV resistance, corrosion protection, and mechanical durability in harsh outdoor environments." },
-  { question: "Can robots handle large construction equipment parts?", answer: "Yes. Rail-mounted robots with 7th-axis linear tracks extend reach to 8-12 meters for large boom arms, frames, and structural components. Multiple robots can work simultaneously on very large assemblies." },
-  { question: "How do you handle thick film builds?", answer: "Multi-pass application with controlled flash-off between coats. Automated DFT monitoring ensures target film build (often 100-200+ microns) is achieved without runs or sags." },
-  { question: "What about mixed-model production?", answer: "Recipe-based programming with part identification (barcode, RFID, or vision) enables automatic spray parameter adjustment for different component types on the same line." },
-  { question: "How does robotic painting improve corrosion protection?", answer: "Consistent film thickness on all surfaces, including hard-to-reach areas, ensures uniform corrosion protection. Robots maintain proper gun distance and angle even on complex geometries." },
-  { question: "How long does deployment typically take?", answer: "Typically 10-16 weeks after design approval, depending on part size, number of robots, and booth/conveyor requirements." },
-];
-
-const schemas = [
-  { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/construction-machinery#service`, name: "Construction Machinery Coating Automation", description: "Robotic spray painting systems for construction and heavy equipment components. Heavy-duty protective finishes, large-part handling, and high-throughput production for excavators, loaders, and industrial machinery.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Painting System Integration", areaServed: "Worldwide" },
-  { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/construction-machinery#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
-  { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/construction-machinery#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Construction Machinery", item: `${DOMAIN}/industries/construction-machinery` }] },
-];
 
 const partCategories = [
   { category: "Excavator Components", examples: "Boom arms, buckets, cab frames, counterweights, track frames" },
@@ -55,10 +42,83 @@ const workflowSteps = [
 ];
 
 export default function ConstructionMachinery() {
+  const { t } = useI18n();
   const [inputValue, setInputValue] = useState("We manufacture excavator boom arms and need consistent protective coating for outdoor durability.");
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.construction.q1, answer: t.industryFaqs.construction.a1 },
+    { question: t.industryFaqs.construction.q2, answer: t.industryFaqs.construction.a2 },
+    { question: t.industryFaqs.construction.q3, answer: t.industryFaqs.construction.a3 },
+    { question: t.industryFaqs.construction.q4, answer: t.industryFaqs.construction.a4 },
+    { question: t.industryFaqs.construction.q5, answer: t.industryFaqs.construction.a5 },
+    { question: t.industryFaqs.construction.q6, answer: t.industryFaqs.construction.a6 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${DOMAIN}/#organization`,
+      name: "TD Robotic Painting Systems",
+      url: DOMAIN,
+      logo: `${DOMAIN}/images/td-logo.png`,
+      description: "Engineering and integration of robotic painting systems and paint booth automation.",
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${DOMAIN}/#website`,
+      name: "TD Robotic Painting Systems",
+      url: `${DOMAIN}/`,
+      publisher: { "@id": `${DOMAIN}/#organization` },
+      inLanguage: "en",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${DOMAIN}/industries/construction-machinery#service`,
+      name: "Construction Machinery Coating Automation",
+      description: "Robotic painting systems for construction and heavy equipment with protective coatings.",
+      provider: { "@id": `${DOMAIN}/#organization` },
+      serviceType: "Robotic Coating System Integration",
+      areaServed: "Worldwide",
+      mainEntityOfPage: { "@id": `${DOMAIN}/industries/construction-machinery#webpage` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/industries/construction-machinery#faq`,
+      mainEntity: faqs.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${DOMAIN}/industries/construction-machinery#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+        { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
+        { "@type": "ListItem", position: 3, name: "Construction Machinery", item: `${DOMAIN}/industries/construction-machinery` },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${DOMAIN}/industries/construction-machinery#webpage`,
+      name: "Construction Machinery Coating Automation",
+      url: `${DOMAIN}/industries/construction-machinery`,
+      isPartOf: { "@id": `${DOMAIN}/#website` },
+      mainEntity: { "@id": `${DOMAIN}/industries/construction-machinery#service` },
+      inLanguage: "en",
+    },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, User, CalendarDays, FileText, Clock,
@@ -17,6 +17,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
 } from "@/components/ui/table";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
 
@@ -59,7 +60,7 @@ const systemTypes = [
   },
 ];
 
-const faqs = [
+const faqs_static = [
   {
     question: "What is color changeover time?",
     answer: "Color changeover time is the total duration from completing the last part in one color to producing the first acceptable part in the next color. This includes purging, cleaning, priming with new color, and any quality verification steps.",
@@ -82,7 +83,7 @@ const faqs = [
   },
 ];
 
-const schemas = [
+const schemas_static = [
   {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -101,7 +102,7 @@ const schemas = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": `${DOMAIN}/resources/knowledge/color-change-systems#faq`,
-    mainEntity: faqs.map(f => ({
+    mainEntity: faqs_static.map(f => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: { "@type": "Answer", text: f.answer },
@@ -121,6 +122,30 @@ const schemas = [
 ];
 
 export default function ColorChangeSystems() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { question: t.knowledgeFaqs.colorChange.q1, answer: t.knowledgeFaqs.colorChange.a1 },
+    { question: t.knowledgeFaqs.colorChange.q2, answer: t.knowledgeFaqs.colorChange.a2 },
+    { question: t.knowledgeFaqs.colorChange.q3, answer: t.knowledgeFaqs.colorChange.a3 },
+    { question: t.knowledgeFaqs.colorChange.q4, answer: t.knowledgeFaqs.colorChange.a4 },
+    { question: t.knowledgeFaqs.colorChange.q5, answer: t.knowledgeFaqs.colorChange.a5 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    ...schemas_static.filter(s => s["@type"] !== "FAQPage"),
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/resources/knowledge/color-change-systems#faq`,
+      mainEntity: faqs.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+  ], [faqs]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

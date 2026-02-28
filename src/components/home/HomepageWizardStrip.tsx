@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { wizardSteps } from "@/data/wizardSteps";
 import { cn } from "@/lib/utils";
 

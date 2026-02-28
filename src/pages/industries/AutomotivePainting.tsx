@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -19,95 +20,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  {
-    question: "What is automotive component painting automation?",
-    answer: "Automotive component painting automation is the engineering and integration of robotic spray painting systems, paint booth airflow/ventilation, paint supply control, and process coordination to deliver repeatable finish quality and stable production throughput for automotive parts.",
-  },
-  {
-    question: "Can you integrate into an existing paint booth?",
-    answer: "Yes. TD supports new paint booth builds and retrofit integration into existing paint booths, depending on site constraints and production requirements.",
-  },
-  {
-    question: "Do you support ATEX / explosion-proof requirements?",
-    answer: "Yes. ATEX-ready configurations are supported based on site classification and paint process requirements.",
-  },
-  {
-    question: "What spray technologies are commonly used for automotive parts?",
-    answer: "Common options include electrostatic spraying, HVLP, and air spray, selected based on coating requirements and production constraints.",
-  },
-  {
-    question: "How long does deployment typically take?",
-    answer: "Typically 8–12 weeks after design approval, depending on project complexity and site conditions.",
-  },
-];
-
-const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${DOMAIN}/#organization`,
-    name: "TD Robotic Painting Systems",
-    url: DOMAIN,
-    logo: `${DOMAIN}/images/td-logo.png`,
-    description: "Engineering and integration of robotic painting systems and paint booth automation.",
-    contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${DOMAIN}/#website`,
-    name: "TD Robotic Painting Systems",
-    url: `${DOMAIN}/`,
-    publisher: { "@id": `${DOMAIN}/#organization` },
-    inLanguage: "en",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${DOMAIN}/industries/automotive-painting#service`,
-    name: "Automotive Component Painting Automation",
-    description: "Engineering and integration of robotic painting systems and paint booth automation for automotive components, including electrostatic, HVLP, and air spray options with ATEX-ready configurations where required.",
-    provider: { "@id": `${DOMAIN}/#organization` },
-    serviceType: "Robotic Painting System Integration",
-    areaServed: "Worldwide",
-    audience: { "@type": "Audience", audienceType: "Automotive component manufacturers" },
-    mainEntityOfPage: { "@id": `${DOMAIN}/industries/automotive-painting#webpage` },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${DOMAIN}/industries/automotive-painting#faq`,
-    mainEntity: faqs.map(f => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${DOMAIN}/industries/automotive-painting#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-      { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
-      { "@type": "ListItem", position: 3, name: "Automotive Painting", item: `${DOMAIN}/industries/automotive-painting` },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${DOMAIN}/industries/automotive-painting#webpage`,
-    name: "Automotive Component Painting Automation",
-    url: `${DOMAIN}/industries/automotive-painting`,
-    isPartOf: { "@id": `${DOMAIN}/#website` },
-    mainEntity: { "@id": `${DOMAIN}/industries/automotive-painting#service` },
-    inLanguage: "en",
-  },
-];
 
 const workflowSteps = [
   { title: "Assessment", desc: "New booth vs existing booth, site constraints, ATEX needs" },
@@ -125,10 +40,73 @@ export default function AutomotivePainting() {
   );
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Dynamic FAQs from translations
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.automotive.q1, answer: t.industryFaqs.automotive.a1 },
+    { question: t.industryFaqs.automotive.q2, answer: t.industryFaqs.automotive.a2 },
+    { question: t.industryFaqs.automotive.q3, answer: t.industryFaqs.automotive.a3 },
+    { question: t.industryFaqs.automotive.q4, answer: t.industryFaqs.automotive.a4 },
+    { question: t.industryFaqs.automotive.q5, answer: t.industryFaqs.automotive.a5 },
+  ], [t]);
+
+  // Dynamic schemas
+  const schemas = useMemo(() => [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${DOMAIN}/#organization`,
+      name: "TD Robotic Painting Systems",
+      url: DOMAIN,
+      logo: `${DOMAIN}/images/td-logo.png`,
+      description: "Engineering and integration of robotic painting systems and paint booth automation.",
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${DOMAIN}/#website`,
+      name: "TD Robotic Painting Systems",
+      url: `${DOMAIN}/`,
+      publisher: { "@id": `${DOMAIN}/#organization` },
+      inLanguage: "en",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${DOMAIN}/industries/automotive-painting#service`,
+      name: "Automotive Component Painting Automation",
+      description: "Engineering and integration of robotic painting systems and paint booth automation for automotive components.",
+      provider: { "@id": `${DOMAIN}/#organization` },
+      serviceType: "Robotic Painting System Integration",
+      areaServed: "Worldwide",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/industries/automotive-painting#faq`,
+      mainEntity: faqs.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${DOMAIN}/industries/automotive-painting#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+        { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
+        { "@type": "ListItem", position: 3, name: "Automotive Painting", item: `${DOMAIN}/industries/automotive-painting` },
+      ],
+    },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

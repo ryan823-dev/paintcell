@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -19,99 +20,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  {
-    question: "What is plastics coating automation?",
-    answer: "Plastics coating automation is the engineering and integration of robotic spray systems, controlled booths, and specialized coating processes to deliver consistent, adhesion-critical finishes on plastic and composite substrates with repeatable quality.",
-  },
-  {
-    question: "Why is painting plastics different from metal?",
-    answer: "Plastics present unique challenges including surface energy/adhesion issues, static buildup, heat sensitivity, and outgassing. Proper surface preparation (flame treatment, plasma, primers) and spray parameters are critical for coating adhesion and durability.",
-  },
-  {
-    question: "What surface preparation is needed for plastics?",
-    answer: "Depending on substrate, preparation may include cleaning/degreasing, flame treatment, plasma treatment, adhesion promoters, or conductive primers. The appropriate method is determined during the feasibility assessment.",
-  },
-  {
-    question: "Can robots handle complex plastic part geometries?",
-    answer: "Yes. 6-axis robots with offline programming can access complex curves, undercuts, and interior surfaces common in plastic parts. Vision systems can compensate for part-to-part variation from molding processes.",
-  },
-  {
-    question: "What about electrostatic spraying on non-conductive plastics?",
-    answer: "Non-conductive plastics can be electrostatically sprayed using conductive primers or specialized techniques. This improves transfer efficiency and wraparound coverage on complex shapes.",
-  },
-  {
-    question: "How long does deployment typically take?",
-    answer: "Typically 10-14 weeks after design approval, depending on surface preparation requirements, coating complexity, and integration scope.",
-  },
-];
-
-const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${DOMAIN}/#organization`,
-    name: "TD Robotic Painting Systems",
-    url: DOMAIN,
-    logo: `${DOMAIN}/images/td-logo.png`,
-    description: "Engineering and integration of robotic painting systems and paint booth automation.",
-    contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${DOMAIN}/#website`,
-    name: "TD Robotic Painting Systems",
-    url: `${DOMAIN}/`,
-    publisher: { "@id": `${DOMAIN}/#organization` },
-    inLanguage: "en",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${DOMAIN}/industries/plastics-composites#service`,
-    name: "Plastics & Composites Coating Automation",
-    description: "Engineering and integration of robotic spray coating systems for plastic and composite parts. Specialized surface preparation, adhesion-optimized processes, and consistent finish quality for automotive, consumer, and industrial plastic components.",
-    provider: { "@id": `${DOMAIN}/#organization` },
-    serviceType: "Robotic Coating System Integration",
-    areaServed: "Worldwide",
-    audience: { "@type": "Audience", audienceType: "Plastic part manufacturers, automotive suppliers, consumer products companies" },
-    mainEntityOfPage: { "@id": `${DOMAIN}/industries/plastics-composites#webpage` },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${DOMAIN}/industries/plastics-composites#faq`,
-    mainEntity: faqs.map(f => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${DOMAIN}/industries/plastics-composites#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-      { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
-      { "@type": "ListItem", position: 3, name: "Plastics & Composites", item: `${DOMAIN}/industries/plastics-composites` },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${DOMAIN}/industries/plastics-composites#webpage`,
-    name: "Plastics & Composites Coating Automation",
-    url: `${DOMAIN}/industries/plastics-composites`,
-    isPartOf: { "@id": `${DOMAIN}/#website` },
-    mainEntity: { "@id": `${DOMAIN}/industries/plastics-composites#service` },
-    inLanguage: "en",
-  },
-];
 
 const workflowSteps = [
   { title: "Assessment", desc: "Substrate analysis, adhesion testing, surface prep evaluation" },
@@ -151,6 +62,7 @@ const productCategories = [
 ];
 
 export default function PlasticsComposites() {
+  const { t } = useI18n();
   const [inputValue, setInputValue] = useState(
     "We manufacture automotive bumpers and need consistent basecoat/clearcoat finish with proper adhesion."
   );
@@ -160,6 +72,78 @@ export default function PlasticsComposites() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.plastics.q1, answer: t.industryFaqs.plastics.a1 },
+    { question: t.industryFaqs.plastics.q2, answer: t.industryFaqs.plastics.a2 },
+    { question: t.industryFaqs.plastics.q3, answer: t.industryFaqs.plastics.a3 },
+    { question: t.industryFaqs.plastics.q4, answer: t.industryFaqs.plastics.a4 },
+    { question: t.industryFaqs.plastics.q5, answer: t.industryFaqs.plastics.a5 },
+    { question: t.industryFaqs.plastics.q6, answer: t.industryFaqs.plastics.a6 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${DOMAIN}/#organization`,
+      name: "TD Robotic Painting Systems",
+      url: DOMAIN,
+      logo: `${DOMAIN}/images/td-logo.png`,
+      description: "Engineering and integration of robotic painting systems and paint booth automation.",
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${DOMAIN}/#website`,
+      name: "TD Robotic Painting Systems",
+      url: `${DOMAIN}/`,
+      publisher: { "@id": `${DOMAIN}/#organization` },
+      inLanguage: "en",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${DOMAIN}/industries/plastics-composites#service`,
+      name: "Plastics & Composites Coating Automation",
+      description: "Engineering and integration of robotic spray coating systems for plastic and composite parts.",
+      provider: { "@id": `${DOMAIN}/#organization` },
+      serviceType: "Robotic Coating System Integration",
+      areaServed: "Worldwide",
+      mainEntityOfPage: { "@id": `${DOMAIN}/industries/plastics-composites#webpage` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/industries/plastics-composites#faq`,
+      mainEntity: faqs.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${DOMAIN}/industries/plastics-composites#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+        { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
+        { "@type": "ListItem", position: 3, name: "Plastics & Composites", item: `${DOMAIN}/industries/plastics-composites` },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${DOMAIN}/industries/plastics-composites#webpage`,
+      name: "Plastics & Composites Coating Automation",
+      url: `${DOMAIN}/industries/plastics-composites`,
+      isPartOf: { "@id": `${DOMAIN}/#website` },
+      mainEntity: { "@id": `${DOMAIN}/industries/plastics-composites#service` },
+      inLanguage: "en",
+    },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from "react";
-import { Locale, defaultLocale } from "./types";
+import { Locale, defaultLocale, isValidLocale } from "./types";
 import { getTranslation, TranslationKeys } from "./translations";
 
 interface I18nContextValue {
@@ -10,11 +10,28 @@ interface I18nContextValue {
 
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
+/**
+ * Detect initial locale from URL path, then localStorage, then browser language.
+ * URL is the primary source of truth for SEO.
+ */
+function detectInitialLocale(): Locale {
+  // 1. URL path: /:lang/...
+  const pathSegment = window.location.pathname.split("/")[1];
+  if (isValidLocale(pathSegment)) return pathSegment;
+
+  // 2. localStorage (returning visitor preference)
+  const saved = localStorage.getItem("locale");
+  if (saved && isValidLocale(saved)) return saved;
+
+  // 3. Browser language
+  const browserLang = navigator.language.split("-")[0];
+  if (isValidLocale(browserLang)) return browserLang;
+
+  return defaultLocale;
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    const saved = localStorage.getItem("locale") as Locale;
-    return saved && ["en", "ja", "th", "ru", "es"].includes(saved) ? saved : defaultLocale;
-  });
+  const [locale, setLocaleState] = useState<Locale>(detectInitialLocale);
 
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);

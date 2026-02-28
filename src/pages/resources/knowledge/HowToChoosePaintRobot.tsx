@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger
 } from "@/components/ui/accordion";
+import { useMemo } from "react";
+import { useI18n } from "@/i18n";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -20,14 +22,16 @@ const articleSchema = {
   "publisher": { "@type": "Organization", "name": "TD Painting System" },
 };
 
-const faqs = [
-  { q: "What is the most important factor when choosing a painting robot?", a: "Application requirements — specifically part geometry, production volume, and paint type — should drive robot selection, not brand preference. The robot must have adequate reach, explosion-proof certification, and hollow-wrist design for painting applications." },
-  { q: "How much does a painting robot cost?", a: "Painting robot prices vary significantly based on reach, payload, and features. The robot itself is typically 20–35% of total system cost. A complete single-cell system including booth, spray equipment, and controls represents the full investment." },
-  { q: "Can general-purpose robots be used for spray painting?", a: "No. Spray painting requires ATEX/IECEx certified robots with explosion-proof construction, hollow wrist for paint line routing, and painting-specific software. Using general robots in painting environments creates safety hazards and poor coating results." },
-  { q: "How long does it take to program a painting robot?", a: "Initial programming for a new part typically takes 2–8 hours depending on geometry complexity. Offline programming from CAD data can reduce teach time by 50–70%. Once programmed, recipe recall is instant." },
-];
-
 export default function HowToChoosePaintRobot() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { q: t.knowledgeFaqs.choosePaintRobot.q1, a: t.knowledgeFaqs.choosePaintRobot.a1 },
+    { q: t.knowledgeFaqs.choosePaintRobot.q2, a: t.knowledgeFaqs.choosePaintRobot.a2 },
+    { q: t.knowledgeFaqs.choosePaintRobot.q3, a: t.knowledgeFaqs.choosePaintRobot.a3 },
+    { q: t.knowledgeFaqs.choosePaintRobot.q4, a: t.knowledgeFaqs.choosePaintRobot.a4 },
+  ], [t]);
+
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", "I need help selecting the right paint robot for my application.");
     const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;

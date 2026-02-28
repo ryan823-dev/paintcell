@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
 import { ArrowRight, FileText, ClipboardCheck, CheckSquare } from "lucide-react";

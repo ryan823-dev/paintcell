@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {

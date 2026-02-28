@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, FileText, Settings2, Loader2, GripHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { ChatMessage, ChatMessageType } from "./ChatMessage";
 import { RequirementSummary } from "./RequirementSummary";
 import { ContactFormModal } from "./ContactFormModal";

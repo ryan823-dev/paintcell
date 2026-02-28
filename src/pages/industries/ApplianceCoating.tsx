@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -19,95 +20,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  {
-    question: "What is appliance coating automation?",
-    answer: "Appliance coating automation is the engineering and integration of robotic spray painting systems, paint booth airflow/ventilation, paint supply control, and process coordination to deliver repeatable finish quality and stable production throughput for appliance parts and housings.",
-  },
-  {
-    question: "Can you integrate into an existing paint booth?",
-    answer: "Yes. TD supports new paint booth builds and retrofit integration into existing paint booths, depending on site constraints and production requirements.",
-  },
-  {
-    question: "Do you support ATEX / explosion-proof requirements?",
-    answer: "Yes. ATEX-ready configurations are supported based on site classification and paint process requirements.",
-  },
-  {
-    question: "What spray technologies are commonly used for appliance parts?",
-    answer: "Common options include electrostatic spraying, HVLP, and air spray, selected based on coating requirements and production constraints.",
-  },
-  {
-    question: "How long does deployment typically take?",
-    answer: "Typically 8–12 weeks after design approval, depending on project complexity and site conditions.",
-  },
-];
-
-const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${DOMAIN}/#organization`,
-    name: "TD Robotic Painting Systems",
-    url: DOMAIN,
-    logo: `${DOMAIN}/images/td-logo.png`,
-    description: "Engineering and integration of robotic painting systems and paint booth automation.",
-    contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${DOMAIN}/#website`,
-    name: "TD Robotic Painting Systems",
-    url: `${DOMAIN}/`,
-    publisher: { "@id": `${DOMAIN}/#organization` },
-    inLanguage: "en",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${DOMAIN}/industries/appliance-coating#service`,
-    name: "Appliance Coating Automation",
-    description: "Engineering and integration of robotic painting systems and paint booth automation for appliance parts and housings, including electrostatic, HVLP, and air spray options with ATEX-ready configurations where required.",
-    provider: { "@id": `${DOMAIN}/#organization` },
-    serviceType: "Robotic Painting System Integration",
-    areaServed: "Worldwide",
-    audience: { "@type": "Audience", audienceType: "Appliance manufacturers" },
-    mainEntityOfPage: { "@id": `${DOMAIN}/industries/appliance-coating#webpage` },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${DOMAIN}/industries/appliance-coating#faq`,
-    mainEntity: faqs.map(f => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${DOMAIN}/industries/appliance-coating#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-      { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
-      { "@type": "ListItem", position: 3, name: "Appliance Coating", item: `${DOMAIN}/industries/appliance-coating` },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${DOMAIN}/industries/appliance-coating#webpage`,
-    name: "Appliance Coating Automation",
-    url: `${DOMAIN}/industries/appliance-coating`,
-    isPartOf: { "@id": `${DOMAIN}/#website` },
-    mainEntity: { "@id": `${DOMAIN}/industries/appliance-coating#service` },
-    inLanguage: "en",
-  },
-];
 
 const workflowSteps = [
   { title: "Assessment", desc: "Parts, coating spec, booth situation, ATEX needs" },
@@ -125,10 +40,25 @@ export default function ApplianceCoating() {
   );
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.appliance.q1, answer: t.industryFaqs.appliance.a1 },
+    { question: t.industryFaqs.appliance.q2, answer: t.industryFaqs.appliance.a2 },
+    { question: t.industryFaqs.appliance.q3, answer: t.industryFaqs.appliance.a3 },
+    { question: t.industryFaqs.appliance.q4, answer: t.industryFaqs.appliance.a4 },
+    { question: t.industryFaqs.appliance.q5, answer: t.industryFaqs.appliance.a5 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/appliance-coating#service`, name: "Appliance Coating Automation", description: "Robotic painting systems for appliance parts and housings.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Painting System Integration", areaServed: "Worldwide" },
+    { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/appliance-coating#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/appliance-coating#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Appliance Coating", item: `${DOMAIN}/industries/appliance-coating` }] },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

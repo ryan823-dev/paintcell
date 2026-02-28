@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -18,23 +19,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  { question: "What finishes can replace chrome plating on hardware?", answer: "PVD (Physical Vapor Deposition) look-alike coatings, chrome-effect lacquers, and metallic basecoat/clearcoat systems provide chrome-like appearance without hexavalent chromium. These alternatives meet RoHS and REACH requirements while maintaining decorative appeal." },
-  { question: "Can robotic systems handle small, complex-shaped hardware parts?", answer: "Yes. Fixtures with multiple part holders allow batch processing of small items. 6-axis robots with precision spray guns maintain consistent coverage on complex geometries including handles, knobs, hinges, and fittings." },
-  { question: "How do you ensure consistent color on decorative hardware?", answer: "Closed-loop spray parameter control, climate-controlled booths, and automated paint supply systems maintain consistent color, gloss, and metallic effect across production batches. Statistical process control monitors key parameters." },
-  { question: "What about coating bathroom fixtures and sanitary ware?", answer: "Sanitary ware requires moisture-resistant, chemical-resistant coatings. Robotic systems apply epoxy primers and polyurethane or acrylic topcoats uniformly on complex basin, toilet, and bathtub geometries." },
-  { question: "How do you handle high-mix production with many SKUs?", answer: "Recipe-based programming with barcode or RFID part identification enables automatic parameter switching. Fixture systems accommodate multiple part types with minimal changeover time." },
-  { question: "How long does deployment typically take?", answer: "Typically 8-14 weeks after design approval, depending on fixture complexity, color count, and surface preparation requirements." },
-];
-
-const schemas = [
-  { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/hardware-sanitary#service`, name: "Hardware & Sanitary Coating Automation", description: "Robotic spray coating systems for hardware fittings, bathroom fixtures, and sanitary ware. Decorative and protective finishes including chrome alternatives, metallic effects, and chemical-resistant coatings.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Coating System Integration", areaServed: "Worldwide" },
-  { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/hardware-sanitary#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
-  { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/hardware-sanitary#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Hardware & Sanitary", item: `${DOMAIN}/industries/hardware-sanitary` }] },
-];
 
 const workflowSteps = [
   { title: "Part & finish analysis", desc: "Substrate materials, geometry, target finish (metallic, matte, gloss, chrome-effect)" },
@@ -58,7 +45,23 @@ export default function HardwareSanitary() {
   const [inputValue, setInputValue] = useState("We manufacture bathroom faucets and door handles, need consistent metallic finish replacing chrome plating.");
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.hardware.q1, answer: t.industryFaqs.hardware.a1 },
+    { question: t.industryFaqs.hardware.q2, answer: t.industryFaqs.hardware.a2 },
+    { question: t.industryFaqs.hardware.q3, answer: t.industryFaqs.hardware.a3 },
+    { question: t.industryFaqs.hardware.q4, answer: t.industryFaqs.hardware.a4 },
+    { question: t.industryFaqs.hardware.q5, answer: t.industryFaqs.hardware.a5 },
+    { question: t.industryFaqs.hardware.q6, answer: t.industryFaqs.hardware.a6 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/hardware-sanitary#service`, name: "Hardware & Sanitary Coating Automation", description: "Robotic spray coating systems for hardware fittings, bathroom fixtures, and sanitary ware.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Coating System Integration", areaServed: "Worldwide" },
+    { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/hardware-sanitary#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/hardware-sanitary#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Hardware & Sanitary", item: `${DOMAIN}/industries/hardware-sanitary` }] },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

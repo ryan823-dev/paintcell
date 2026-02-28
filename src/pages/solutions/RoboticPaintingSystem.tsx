@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Sparkles, Layers, Settings2, BarChart3,
@@ -16,10 +16,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { AIChatDrawer } from "@/components/ai-assistant/AIChatDrawer";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
 
-const jsonLdSchemas = [
+const jsonLdSchemas_static = [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -53,19 +54,6 @@ const jsonLdSchemas = [
   },
   {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${DOMAIN}/solutions/robotic-painting-system#faq`,
-    "mainEntity": [
-      { "@type": "Question", "name": "What is a robotic painting system?", "acceptedAnswer": { "@type": "Answer", "text": "A robotic painting system is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, paint booth environment control, and process coordination to deliver repeatable finish quality and stable production throughput." } },
-      { "@type": "Question", "name": "Are you a system integrator or an equipment supplier?", "acceptedAnswer": { "@type": "Answer", "text": "TD provides system-level integration rather than standalone equipment supply, including robot/process/booth/controls integration and commissioning support." } },
-      { "@type": "Question", "name": "Can you build a new booth or integrate into an existing paint booth?", "acceptedAnswer": { "@type": "Answer", "text": "Both. TD supports new paint booth automation and retrofit integration into existing paint booths, depending on site constraints and production requirements." } },
-      { "@type": "Question", "name": "Which robot brands and spray technologies do you support?", "acceptedAnswer": { "@type": "Answer", "text": "Typical robot brands include ABB, FANUC, KUKA, and others. Spray options commonly include electrostatic, HVLP, and air spray, selected based on coating requirements and production constraints." } },
-      { "@type": "Question", "name": "Do you support ATEX / explosion-proof requirements?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. ATEX-ready configurations are supported based on site classification and paint process requirements." } },
-      { "@type": "Question", "name": "How long does deployment typically take?", "acceptedAnswer": { "@type": "Answer", "text": "Typically 8–12 weeks after design approval, depending on project complexity and site conditions." } },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "@id": `${DOMAIN}/solutions/robotic-painting-system#breadcrumb`,
     "itemListElement": [
@@ -86,18 +74,33 @@ const jsonLdSchemas = [
   },
 ];
 
-const faqs = [
-  { q: "What is a robotic painting system?", a: "A robotic painting system is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, paint booth environment control, and process coordination to deliver repeatable finish quality and stable production throughput." },
-  { q: "Are you a system integrator or an equipment supplier?", a: "TD provides system-level integration rather than standalone equipment supply, including robot/process/booth/controls integration and commissioning support." },
-  { q: "Can you build a new booth or integrate into an existing paint booth?", a: "Both. TD supports new paint booth automation and retrofit integration into existing paint booths, depending on site constraints and production requirements." },
-  { q: "Which robot brands and spray technologies do you support?", a: "Typical robot brands include ABB, FANUC, KUKA, and others. Spray options commonly include electrostatic, HVLP, and air spray, selected based on coating requirements and production constraints." },
-  { q: "Do you support ATEX / explosion-proof requirements?", a: "Yes. ATEX-ready configurations are supported based on site classification and paint process requirements." },
-  { q: "How long does deployment typically take?", a: "Typically 8–12 weeks after design approval, depending on project complexity and site conditions." },
-];
-
 export default function RoboticPaintingSystem() {
+  const { t } = useI18n();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerMessage, setDrawerMessage] = useState<string | null>(null);
+
+  const faqs = useMemo(() => [
+    { q: t.solutionFaqs.roboticPaintingSystem.q1, a: t.solutionFaqs.roboticPaintingSystem.a1 },
+    { q: t.solutionFaqs.roboticPaintingSystem.q2, a: t.solutionFaqs.roboticPaintingSystem.a2 },
+    { q: t.solutionFaqs.roboticPaintingSystem.q3, a: t.solutionFaqs.roboticPaintingSystem.a3 },
+    { q: t.solutionFaqs.roboticPaintingSystem.q4, a: t.solutionFaqs.roboticPaintingSystem.a4 },
+    { q: t.solutionFaqs.roboticPaintingSystem.q5, a: t.solutionFaqs.roboticPaintingSystem.a5 },
+    { q: t.solutionFaqs.roboticPaintingSystem.q6, a: t.solutionFaqs.roboticPaintingSystem.a6 },
+  ], [t]);
+
+  const jsonLdSchemas = useMemo(() => [
+    ...jsonLdSchemas_static,
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/solutions/robotic-painting-system#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a },
+      })),
+    },
+  ], [faqs]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 

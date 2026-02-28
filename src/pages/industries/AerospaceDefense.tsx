@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -18,23 +19,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  { question: "What specifications govern aerospace coatings?", answer: "Aerospace coatings are governed by OEM specifications (Boeing BMS, Airbus AIMS), military specifications (MIL-PRF-85285, MIL-PRF-23377), and industry standards (AMS, SAE). Each coating application requires documented compliance with specific specification callouts." },
-  { question: "Why is traceability so important in aerospace painting?", answer: "AS9100D and NADCAP require full traceability of coating processes. Every part must have documented records of paint batch, application parameters, environmental conditions, and operator/system identification for the full service life of the aircraft." },
-  { question: "Can robotic systems handle low-volume aerospace production?", answer: "Yes. Semi-automatic cells with offline programming are designed for high-mix, low-volume production typical in aerospace. Recipe management allows quick changeover between different part types and coating specifications." },
-  { question: "What about masking and multi-color schemes?", answer: "Aerospace parts often require complex masking for livery, markings, and functional zones. Systems can integrate automated masking, multi-pass color application, and vision-based verification." },
-  { question: "How do you handle hazardous coatings like chromate primers?", answer: "Robotic application of hazardous coatings (chromate primers, cadmium-based paints) reduces operator exposure. Enclosed cells with proper ventilation, filtration, and waste handling ensure regulatory compliance." },
-  { question: "How long does deployment typically take?", answer: "Typically 14-20 weeks after design approval due to specification validation, documentation requirements, and qualification testing. First article inspection (FAI) is part of the commissioning process." },
-];
-
-const schemas = [
-  { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/aerospace-defense#service`, name: "Aerospace & Defense Coating Automation", description: "Robotic spray coating systems for aerospace and defense components. Mil-spec and aerospace-grade finishing with full traceability, AS9100D compliance, and NADCAP-ready process control.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Coating System Integration", areaServed: "Worldwide" },
-  { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/aerospace-defense#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
-  { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/aerospace-defense#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Aerospace & Defense", item: `${DOMAIN}/industries/aerospace-defense` }] },
-];
 
 const workflowSteps = [
   { title: "Specification review", desc: "OEM specs, mil-specs, material callouts, traceability requirements" },
@@ -56,10 +43,83 @@ const partCategories = [
 ];
 
 export default function AerospaceDefense() {
+  const { t } = useI18n();
   const [inputValue, setInputValue] = useState("We need automated primer and topcoat application for flight control surfaces, MIL-PRF-85285 compliant.");
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.aerospace.q1, answer: t.industryFaqs.aerospace.a1 },
+    { question: t.industryFaqs.aerospace.q2, answer: t.industryFaqs.aerospace.a2 },
+    { question: t.industryFaqs.aerospace.q3, answer: t.industryFaqs.aerospace.a3 },
+    { question: t.industryFaqs.aerospace.q4, answer: t.industryFaqs.aerospace.a4 },
+    { question: t.industryFaqs.aerospace.q5, answer: t.industryFaqs.aerospace.a5 },
+    { question: t.industryFaqs.aerospace.q6, answer: t.industryFaqs.aerospace.a6 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${DOMAIN}/#organization`,
+      name: "TD Robotic Painting Systems",
+      url: DOMAIN,
+      logo: `${DOMAIN}/images/td-logo.png`,
+      description: "Engineering and integration of robotic painting systems and paint booth automation.",
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${DOMAIN}/#website`,
+      name: "TD Robotic Painting Systems",
+      url: `${DOMAIN}/`,
+      publisher: { "@id": `${DOMAIN}/#organization` },
+      inLanguage: "en",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": `${DOMAIN}/industries/aerospace-defense#service`,
+      name: "Aerospace & Defense Coating Automation",
+      description: "Robotic spray coating systems for aerospace and defense components with mil-spec compliance.",
+      provider: { "@id": `${DOMAIN}/#organization` },
+      serviceType: "Robotic Coating System Integration",
+      areaServed: "Worldwide",
+      mainEntityOfPage: { "@id": `${DOMAIN}/industries/aerospace-defense#webpage` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/industries/aerospace-defense#faq`,
+      mainEntity: faqs.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${DOMAIN}/industries/aerospace-defense#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
+        { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
+        { "@type": "ListItem", position: 3, name: "Aerospace & Defense", item: `${DOMAIN}/industries/aerospace-defense` },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${DOMAIN}/industries/aerospace-defense#webpage`,
+      name: "Aerospace & Defense Coating Automation",
+      url: `${DOMAIN}/industries/aerospace-defense`,
+      isPartOf: { "@id": `${DOMAIN}/#website` },
+      mainEntity: { "@id": `${DOMAIN}/industries/aerospace-defense#service` },
+      inLanguage: "en",
+    },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { I18nProvider } from "@/i18n";
 import { Layout } from "@/components/layout/Layout";
+import { LocaleLayout, RootRedirect } from "@/i18n/LocaleLayout";
+import { Hreflang } from "@/components/seo/Hreflang";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -125,6 +127,99 @@ const PageLoader = () => (
   </div>
 );
 
+/**
+ * All public page routes rendered inside the locale-prefixed Layout.
+ * Paths are relative to the parent `/:lang` route.
+ */
+function PublicRoutes() {
+  return (
+    <Route element={<Layout />}>
+      <Route index element={<Index />} />
+      <Route path="quote" element={<Quote />} />
+      <Route path="applications" element={<Applications />} />
+      <Route path="paint-cells" element={<PaintCells />} />
+      <Route path="case-studies" element={<CaseStudies />} />
+      <Route path="about" element={<About />} />
+
+      {/* Legal pages */}
+      <Route path="privacy" element={<Privacy />} />
+      <Route path="terms" element={<Terms />} />
+      <Route path="cookies" element={<Cookies />} />
+
+      {/* Engineering Library routes */}
+      <Route path="resources/engineering-library" element={<EngineeringLibrary />} />
+      <Route path="resources/engineering-library/guides-checklists" element={<GuidesChecklists />} />
+      <Route path="resources/engineering-library/insights" element={<Insights />} />
+      <Route path="resources/engineering-library/faqs" element={<FAQs />} />
+      <Route path="resources/guides/paint-cell-feasibility-checks" element={<PaintCellFeasibilityChecks />} />
+      <Route path="resources/insights/automation-boundary-spray-painting" element={<AutomationBoundary />} />
+
+      {/* Standards & Compliance routes */}
+      <Route path="resources/standards-compliance" element={<StandardsCompliance />} />
+      <Route path="resources/standards-compliance/ventilation-airflow" element={<VentilationAirflow />} />
+      <Route path="resources/standards-compliance/voc-solvent-handling" element={<VOCSolventHandling />} />
+      <Route path="resources/standards-compliance/grounding-static-control" element={<GroundingStaticControl />} />
+
+      {/* Glossary routes */}
+      <Route path="resources/glossary" element={<Glossary />} />
+      <Route path="resources/glossary/takt-time" element={<TaktTime />} />
+      <Route path="resources/glossary/overspray" element={<Overspray />} />
+      <Route path="resources/glossary/transfer-efficiency" element={<TransferEfficiency />} />
+      <Route path="resources/glossary/film-build" element={<FilmBuild />} />
+      <Route path="resources/glossary/color-changeover" element={<ColorChangeover />} />
+      <Route path="resources/glossary/atomization" element={<Atomization />} />
+      <Route path="resources/glossary/booth-airflow" element={<BoothAirflow />} />
+      <Route path="resources/glossary/2k-paint" element={<TwoKPaint />} />
+      <Route path="resources/glossary/electrostatic-spraying" element={<ElectrostaticSpraying />} />
+      <Route path="resources/glossary/hvlp" element={<HVLP />} />
+      <Route path="resources/glossary/flash-off-time" element={<FlashOffTime />} />
+      <Route path="resources/glossary/orange-peel" element={<OrangePeel />} />
+      <Route path="resources/glossary/dry-film-thickness" element={<DryFilmThickness />} />
+      <Route path="resources/glossary/atex-certification" element={<ATEXCertification />} />
+      <Route path="resources/glossary/paint-recipe" element={<PaintRecipe />} />
+      <Route path="resources/glossary/spray-pattern" element={<SprayPattern />} />
+      <Route path="resources/glossary/teach-pendant" element={<TeachPendant />} />
+      <Route path="resources/glossary/gun-distance" element={<GunDistance />} />
+      <Route path="resources/glossary/cure-time" element={<CureTime />} />
+      <Route path="resources/glossary/hollow-wrist" element={<HollowWrist />} />
+
+      {/* Tools & Templates routes */}
+      <Route path="resources/tools-templates" element={<ToolsTemplates />} />
+      <Route path="resources/tools-templates/paint-cell-rfq-template" element={<PaintCellRFQTemplate />} />
+      <Route path="resources/tools-templates/site-readiness-checklist" element={<SiteReadinessChecklist />} />
+      <Route path="resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
+
+      {/* Knowledge articles */}
+      <Route path="resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
+      <Route path="resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
+      <Route path="resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
+      <Route path="resources/knowledge/spray-technology-guide" element={<SprayTechnologyGuide />} />
+      <Route path="resources/knowledge/robot-path-optimization" element={<RobotPathOptimization />} />
+      <Route path="resources/knowledge/paint-defects-guide" element={<PaintDefectsGuide />} />
+      <Route path="resources/knowledge/color-change-systems" element={<ColorChangeSystems />} />
+
+      {/* Solution pages */}
+      <Route path="solutions" element={<Solutions />} />
+      <Route path="solutions/robotic-painting-system" element={<RoboticPaintingSystem />} />
+      <Route path="solutions/:slug" element={<SolutionPage />} />
+
+      {/* Industry pages */}
+      <Route path="industries" element={<Industries />} />
+      <Route path="industries/automotive-painting" element={<AutomotivePainting />} />
+      <Route path="industries/appliance-coating" element={<ApplianceCoating />} />
+      <Route path="industries/metal-parts-finishing" element={<MetalPartsFinishing />} />
+      <Route path="industries/furniture-woodwork" element={<FurnitureWoodwork />} />
+      <Route path="industries/plastics-composites" element={<PlasticsComposites />} />
+      <Route path="industries/aerospace-defense" element={<AerospaceDefense />} />
+      <Route path="industries/construction-machinery" element={<ConstructionMachinery />} />
+      <Route path="industries/hardware-sanitary" element={<HardwareSanitary />} />
+      <Route path="industries/:slug" element={<IndustryPage />} />
+
+      <Route path="*" element={<NotFound />} />
+    </Route>
+  );
+}
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -135,7 +230,7 @@ const App = () => (
         <BrowserRouter>
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              {/* Console routes (no public layout) */}
+              {/* Console routes (no locale prefix, no public layout) */}
               <Route path="/console" element={<ConsoleLogin />} />
               <Route element={<ConsoleLayout />}>
                 <Route path="/console/dashboard" element={<Dashboard />} />
@@ -159,90 +254,12 @@ const App = () => (
                 <Route path="/console/policies" element={<LegalPages />} />
               </Route>
 
-              {/* Public routes */}
-              <Route element={<Layout />}>
-                <Route index element={<Index />} />
-                <Route path="/quote" element={<Quote />} />
-                <Route path="/applications" element={<Applications />} />
-                <Route path="/paint-cells" element={<PaintCells />} />
-                <Route path="/case-studies" element={<CaseStudies />} />
-                <Route path="/about" element={<About />} />
-                
-                {/* Legal pages */}
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/cookies" element={<Cookies />} />
-                
-                {/* Engineering Library routes */}
-                <Route path="/resources/engineering-library" element={<EngineeringLibrary />} />
-                <Route path="/resources/engineering-library/guides-checklists" element={<GuidesChecklists />} />
-                <Route path="/resources/engineering-library/insights" element={<Insights />} />
-                <Route path="/resources/engineering-library/faqs" element={<FAQs />} />
-                <Route path="/resources/guides/paint-cell-feasibility-checks" element={<PaintCellFeasibilityChecks />} />
-                <Route path="/resources/insights/automation-boundary-spray-painting" element={<AutomationBoundary />} />
-                
-                {/* Standards & Compliance routes */}
-                <Route path="/resources/standards-compliance" element={<StandardsCompliance />} />
-                <Route path="/resources/standards-compliance/ventilation-airflow" element={<VentilationAirflow />} />
-                <Route path="/resources/standards-compliance/voc-solvent-handling" element={<VOCSolventHandling />} />
-                <Route path="/resources/standards-compliance/grounding-static-control" element={<GroundingStaticControl />} />
-                
-                {/* Glossary routes */}
-                <Route path="/resources/glossary" element={<Glossary />} />
-                <Route path="/resources/glossary/takt-time" element={<TaktTime />} />
-                <Route path="/resources/glossary/overspray" element={<Overspray />} />
-                <Route path="/resources/glossary/transfer-efficiency" element={<TransferEfficiency />} />
-                <Route path="/resources/glossary/film-build" element={<FilmBuild />} />
-                <Route path="/resources/glossary/color-changeover" element={<ColorChangeover />} />
-                <Route path="/resources/glossary/atomization" element={<Atomization />} />
-                <Route path="/resources/glossary/booth-airflow" element={<BoothAirflow />} />
-                <Route path="/resources/glossary/2k-paint" element={<TwoKPaint />} />
-                <Route path="/resources/glossary/electrostatic-spraying" element={<ElectrostaticSpraying />} />
-                <Route path="/resources/glossary/hvlp" element={<HVLP />} />
-                <Route path="/resources/glossary/flash-off-time" element={<FlashOffTime />} />
-                <Route path="/resources/glossary/orange-peel" element={<OrangePeel />} />
-                <Route path="/resources/glossary/dry-film-thickness" element={<DryFilmThickness />} />
-                <Route path="/resources/glossary/atex-certification" element={<ATEXCertification />} />
-                <Route path="/resources/glossary/paint-recipe" element={<PaintRecipe />} />
-                <Route path="/resources/glossary/spray-pattern" element={<SprayPattern />} />
-                <Route path="/resources/glossary/teach-pendant" element={<TeachPendant />} />
-                <Route path="/resources/glossary/gun-distance" element={<GunDistance />} />
-                <Route path="/resources/glossary/cure-time" element={<CureTime />} />
-                <Route path="/resources/glossary/hollow-wrist" element={<HollowWrist />} />
-                
-                {/* Tools & Templates routes */}
-                <Route path="/resources/tools-templates" element={<ToolsTemplates />} />
-                <Route path="/resources/tools-templates/paint-cell-rfq-template" element={<PaintCellRFQTemplate />} />
-                <Route path="/resources/tools-templates/site-readiness-checklist" element={<SiteReadinessChecklist />} />
-                <Route path="/resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
-                
-                {/* Knowledge articles */}
-                <Route path="/resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
-                <Route path="/resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
-                <Route path="/resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
-                <Route path="/resources/knowledge/spray-technology-guide" element={<SprayTechnologyGuide />} />
-                <Route path="/resources/knowledge/robot-path-optimization" element={<RobotPathOptimization />} />
-                <Route path="/resources/knowledge/paint-defects-guide" element={<PaintDefectsGuide />} />
-                <Route path="/resources/knowledge/color-change-systems" element={<ColorChangeSystems />} />
-                
-                {/* Solution pages */}
-                <Route path="/solutions" element={<Solutions />} />
-                <Route path="/solutions/robotic-painting-system" element={<RoboticPaintingSystem />} />
-                <Route path="/solutions/:slug" element={<SolutionPage />} />
-                
-                {/* Industry pages */}
-                <Route path="/industries" element={<Industries />} />
-                <Route path="/industries/automotive-painting" element={<AutomotivePainting />} />
-                <Route path="/industries/appliance-coating" element={<ApplianceCoating />} />
-                <Route path="/industries/metal-parts-finishing" element={<MetalPartsFinishing />} />
-                <Route path="/industries/furniture-woodwork" element={<FurnitureWoodwork />} />
-                <Route path="/industries/plastics-composites" element={<PlasticsComposites />} />
-                <Route path="/industries/aerospace-defense" element={<AerospaceDefense />} />
-                <Route path="/industries/construction-machinery" element={<ConstructionMachinery />} />
-                <Route path="/industries/hardware-sanitary" element={<HardwareSanitary />} />
-                <Route path="/industries/:slug" element={<IndustryPage />} />
-                
-                <Route path="*" element={<NotFound />} />
+              {/* Root "/" → redirect to /:locale based on user preference */}
+              <Route path="/" element={<RootRedirect />} />
+
+              {/* All public routes under /:lang prefix for SEO */}
+              <Route path="/:lang" element={<><Hreflang /><LocaleLayout /></>}>
+                {PublicRoutes()}
               </Route>
             </Routes>
           </Suspense>

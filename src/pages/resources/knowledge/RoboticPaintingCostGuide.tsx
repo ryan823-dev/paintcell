@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger
 } from "@/components/ui/accordion";
+import { useMemo } from "react";
+import { useI18n } from "@/i18n";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -20,14 +22,16 @@ const articleSchema = {
   "publisher": { "@type": "Organization", "name": "TD Painting System" },
 };
 
-const faqs = [
-  { q: "How much does a robotic painting system cost?", a: "Total system costs vary by complexity. A single-robot cell ranges differently from a multi-robot production line. Key cost drivers include robot count, spray technology, booth size, and integration scope. Contact us for a budget estimate based on your specific requirements." },
-  { q: "What is the typical ROI payback period?", a: "Most robotic painting systems achieve ROI payback in 12–24 months. This depends on current labor costs, paint savings from improved transfer efficiency, throughput gains, and rework reduction. Higher labor cost regions see faster payback." },
-  { q: "What are the ongoing operating costs?", a: "Annual operating costs typically include paint materials (largest component), robot maintenance, booth filter replacement, energy, and periodic spare parts. Automated systems generally reduce total operating cost by 25–45% compared to manual painting." },
-  { q: "Is financing available for robotic painting systems?", a: "Many equipment financing and leasing options are available through third-party providers. TD can provide documentation and project specifications required for financing applications." },
-];
-
 export default function RoboticPaintingCostGuide() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { q: t.knowledgeFaqs.costGuide.q1, a: t.knowledgeFaqs.costGuide.a1 },
+    { q: t.knowledgeFaqs.costGuide.q2, a: t.knowledgeFaqs.costGuide.a2 },
+    { q: t.knowledgeFaqs.costGuide.q3, a: t.knowledgeFaqs.costGuide.a3 },
+    { q: t.knowledgeFaqs.costGuide.q4, a: t.knowledgeFaqs.costGuide.a4 },
+  ], [t]);
+
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", "I need a preliminary budget estimate for a robotic painting system.");
     const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;

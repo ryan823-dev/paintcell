@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -19,99 +20,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  {
-    question: "What is metal parts finishing automation?",
-    answer: "Metal parts finishing automation is the engineering and integration of robotic spray painting systems, paint booth airflow/ventilation, paint supply control, and process coordination to deliver repeatable finish quality and stable production throughput for general industrial metal components and fabrications.",
-  },
-  {
-    question: "What types of metal parts are suitable for robotic painting?",
-    answer: "Most fabricated metal parts are suitable, including steel furniture, enclosures, machine housings, agricultural equipment, construction components, and general fabrications. Final feasibility depends on part size, geometry, surface preparation, and production volume.",
-  },
-  {
-    question: "Can you handle mixed part types on the same line?",
-    answer: "Yes. Systems can be configured for mixed-model production with programmable paint recipes and flexible fixturing. The specific approach depends on part variation, throughput requirements, and color change frequency.",
-  },
-  {
-    question: "Do you support powder coating as well as liquid paint?",
-    answer: "TD specializes in liquid paint systems (including electrostatic, HVLP, and conventional spray). Powder coating integration can be discussed based on specific project requirements.",
-  },
-  {
-    question: "What surface preparation is required before painting?",
-    answer: "Typical preparation includes cleaning, degreasing, and potentially phosphating or sandblasting depending on substrate and coating requirements. Surface prep requirements are evaluated during project assessment.",
-  },
-  {
-    question: "How long does deployment typically take?",
-    answer: "Typically 8-14 weeks after design approval, depending on project complexity, booth configuration, and site conditions. Larger or more complex systems may require extended timelines.",
-  },
-];
-
-const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${DOMAIN}/#organization`,
-    name: "TD Robotic Painting Systems",
-    url: DOMAIN,
-    logo: `${DOMAIN}/images/td-logo.png`,
-    description: "Engineering and integration of robotic painting systems and paint booth automation.",
-    contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${DOMAIN}/#website`,
-    name: "TD Robotic Painting Systems",
-    url: `${DOMAIN}/`,
-    publisher: { "@id": `${DOMAIN}/#organization` },
-    inLanguage: "en",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${DOMAIN}/industries/metal-parts-finishing#service`,
-    name: "Metal Parts Finishing Automation",
-    description: "Engineering and integration of robotic painting systems and paint booth automation for general industrial metal parts and fabrications, including steel furniture, enclosures, machine components, agricultural equipment, and construction parts. Supports electrostatic, HVLP, and conventional spray technologies.",
-    provider: { "@id": `${DOMAIN}/#organization` },
-    serviceType: "Robotic Painting System Integration",
-    areaServed: "Worldwide",
-    audience: { "@type": "Audience", audienceType: "Metal fabricators, contract coaters, and industrial manufacturers" },
-    mainEntityOfPage: { "@id": `${DOMAIN}/industries/metal-parts-finishing#webpage` },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${DOMAIN}/industries/metal-parts-finishing#faq`,
-    mainEntity: faqs.map(f => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${DOMAIN}/industries/metal-parts-finishing#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-      { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
-      { "@type": "ListItem", position: 3, name: "Metal Parts Finishing", item: `${DOMAIN}/industries/metal-parts-finishing` },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${DOMAIN}/industries/metal-parts-finishing#webpage`,
-    name: "Metal Parts Finishing Automation",
-    url: `${DOMAIN}/industries/metal-parts-finishing`,
-    isPartOf: { "@id": `${DOMAIN}/#website` },
-    mainEntity: { "@id": `${DOMAIN}/industries/metal-parts-finishing#service` },
-    inLanguage: "en",
-  },
-];
 
 const workflowSteps = [
   { title: "Assessment", desc: "Part types, coating spec, volume, booth situation, site classification" },
@@ -156,10 +67,26 @@ export default function MetalPartsFinishing() {
   );
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.metal.q1, answer: t.industryFaqs.metal.a1 },
+    { question: t.industryFaqs.metal.q2, answer: t.industryFaqs.metal.a2 },
+    { question: t.industryFaqs.metal.q3, answer: t.industryFaqs.metal.a3 },
+    { question: t.industryFaqs.metal.q4, answer: t.industryFaqs.metal.a4 },
+    { question: t.industryFaqs.metal.q5, answer: t.industryFaqs.metal.a5 },
+    { question: t.industryFaqs.metal.q6, answer: t.industryFaqs.metal.a6 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/metal-parts-finishing#service`, name: "Metal Parts Finishing Automation", description: "Robotic painting systems for industrial metal parts and fabrications.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Painting System Integration", areaServed: "Worldwide" },
+    { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/metal-parts-finishing#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/metal-parts-finishing#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Metal Parts Finishing", item: `${DOMAIN}/industries/metal-parts-finishing` }] },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

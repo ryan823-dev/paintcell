@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import tdLogo from "@/assets/td-logo.png";
 import { useI18n } from "@/i18n";
 

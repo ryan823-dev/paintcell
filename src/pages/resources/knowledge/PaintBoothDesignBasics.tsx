@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger
 } from "@/components/ui/accordion";
+import { useMemo } from "react";
+import { useI18n } from "@/i18n";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -20,14 +22,16 @@ const articleSchema = {
   "publisher": { "@type": "Organization", "name": "TD Painting System" },
 };
 
-const faqs = [
-  { q: "What are the key design parameters for a painting booth?", a: "Critical parameters include booth dimensions (part clearance + robot envelope), airflow type (downdraft vs crossdraft), air velocity (60–100 FPM), filtration efficiency, temperature/humidity control, and lighting levels (>800 lux for quality inspection)." },
-  { q: "What is the difference between downdraft and crossdraft booths?", a: "Downdraft booths pull air from ceiling to floor, providing the cleanest spray environment and best finish quality. Crossdraft booths move air horizontally, are simpler to install, but may cause more contamination on large parts. Downdraft is preferred for automotive and decorative finishes." },
-  { q: "How is booth size determined?", a: "Booth size is determined by: largest part dimensions + robot working envelope + safety clearances + operator access. Add 600mm minimum clearance on each side of the part for spray coverage, and 1200mm for maintenance access to robots." },
-  { q: "What ventilation capacity does a robotic painting booth need?", a: "Air volume depends on booth cross-section area and required velocity (typically 0.3–0.5 m/s). For a 4m × 3m booth, this means approximately 12,000–20,000 m³/h. Include makeup air heating/cooling to maintain ±2°C temperature stability." },
-];
-
 export default function PaintBoothDesignBasics() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { q: t.knowledgeFaqs.boothDesign.q1, a: t.knowledgeFaqs.boothDesign.a1 },
+    { q: t.knowledgeFaqs.boothDesign.q2, a: t.knowledgeFaqs.boothDesign.a2 },
+    { q: t.knowledgeFaqs.boothDesign.q3, a: t.knowledgeFaqs.boothDesign.a3 },
+    { q: t.knowledgeFaqs.boothDesign.q4, a: t.knowledgeFaqs.boothDesign.a4 },
+  ], [t]);
+
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", "I need guidance on paint booth design for my robotic painting project.");
     const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;

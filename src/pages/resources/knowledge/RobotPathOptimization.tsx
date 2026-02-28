@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger
 } from "@/components/ui/accordion";
+import { useMemo } from "react";
+import { useI18n } from "@/i18n";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -20,14 +22,16 @@ const articleSchema = {
   "publisher": { "@type": "Organization", "name": "TD Painting System" },
 };
 
-const faqs = [
-  { q: "How long does it take to program a painting robot?", a: "Initial programming for a new part typically takes 4-16 hours depending on geometry complexity. Simple flat panels may take 2-4 hours, while complex automotive parts with multiple surfaces can require 12-16 hours. Offline programming from CAD can reduce on-robot time by 50-70%." },
-  { q: "What is the optimal overlap percentage for spray passes?", a: "Standard overlap is 50% (each pass covers half the previous pass width). For heavier builds or thicker coatings, 66% overlap may be used. The key is consistency—varying overlap causes visible banding and film build inconsistency." },
-  { q: "How do I maintain consistent gun distance on curved surfaces?", a: "Use the robot's tool center point (TCP) orientation control to keep the gun perpendicular to the surface. Modern robots support surface-following features that automatically adjust orientation. For complex geometry, teach additional waypoints in high-curvature areas." },
-  { q: "Should I use teach pendant or offline programming?", a: "Use both. Offline programming creates the initial path structure efficiently from CAD data. Then refine on the actual part using the teach pendant, adjusting for real-world fit-up variations, spray behavior, and edge coverage. This hybrid approach balances speed and quality." },
-];
-
 export default function RobotPathOptimization() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { q: t.knowledgeFaqs.pathOptimization.q1, a: t.knowledgeFaqs.pathOptimization.a1 },
+    { q: t.knowledgeFaqs.pathOptimization.q2, a: t.knowledgeFaqs.pathOptimization.a2 },
+    { q: t.knowledgeFaqs.pathOptimization.q3, a: t.knowledgeFaqs.pathOptimization.a3 },
+    { q: t.knowledgeFaqs.pathOptimization.q4, a: t.knowledgeFaqs.pathOptimization.a4 },
+  ], [t]);
+
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", "I need help optimizing robot spray paths for my painting application.");
     const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;

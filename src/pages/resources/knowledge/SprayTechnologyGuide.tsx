@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger
 } from "@/components/ui/accordion";
+import { useMemo } from "react";
+import { useI18n } from "@/i18n";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -20,14 +22,16 @@ const articleSchema = {
   "publisher": { "@type": "Organization", "name": "TD Painting System" },
 };
 
-const faqs = [
-  { q: "What is the best spray technology for automotive parts?", a: "Electrostatic spraying is typically preferred for automotive components due to its high transfer efficiency (65-85%) and excellent wrap-around coverage. This reduces paint consumption and provides consistent film build on complex geometries like bumpers and body panels." },
-  { q: "Can I use HVLP for waterborne paints?", a: "Yes, HVLP works well with waterborne paints. The lower atomization pressure reduces bounce-back and overspray. However, ensure your HVLP equipment is rated for waterborne materials, as some older guns may have compatibility issues with water-based chemistries." },
-  { q: "When should I choose conventional air spray?", a: "Conventional air spray remains suitable for applications requiring maximum atomization fineness, such as high-gloss automotive refinish or aerospace coatings. It's also simpler and lower cost for small-batch or prototyping operations where transfer efficiency is less critical." },
-  { q: "What transfer efficiency should I expect from each technology?", a: "Typical ranges: Conventional air spray 25-40%, HVLP 65-75%, Electrostatic HVLP 75-85%, Electrostatic rotary bell 85-95%. Actual results depend on part geometry, operator skill (for manual), and process optimization." },
-];
-
 export default function SprayTechnologyGuide() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { q: t.knowledgeFaqs.sprayTechnology.q1, a: t.knowledgeFaqs.sprayTechnology.a1 },
+    { q: t.knowledgeFaqs.sprayTechnology.q2, a: t.knowledgeFaqs.sprayTechnology.a2 },
+    { q: t.knowledgeFaqs.sprayTechnology.q3, a: t.knowledgeFaqs.sprayTechnology.a3 },
+    { q: t.knowledgeFaqs.sprayTechnology.q4, a: t.knowledgeFaqs.sprayTechnology.a4 },
+  ], [t]);
+
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", "I need help selecting the right spray technology for my application.");
     const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
@@ -19,99 +20,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
-
-const faqs = [
-  {
-    question: "What is furniture finishing automation?",
-    answer: "Furniture finishing automation is the engineering and integration of robotic spray systems, booth airflow control, and paint/lacquer supply systems to deliver consistent, high-quality finishes on wood and wood-composite furniture components with repeatable quality and stable production throughput.",
-  },
-  {
-    question: "What types of coatings can robotic systems apply to furniture?",
-    answer: "Robotic systems can apply stains, sealers, lacquers (nitrocellulose, acrylic, polyurethane), UV-curable coatings, water-based finishes, and pigmented paints. The spray technology and process parameters are optimized for each coating type.",
-  },
-  {
-    question: "Can robots handle the variety of furniture shapes and sizes?",
-    answer: "Yes. 6-axis robots with offline programming can adapt to various furniture geometries including flat panels, curved surfaces, turned legs, and complex assemblies. Recipe management enables quick changeover between different product types.",
-  },
-  {
-    question: "How does robotic finishing improve quality over hand spraying?",
-    answer: "Robotic systems deliver consistent film thickness, uniform coverage, and repeatable spray patterns regardless of operator skill or fatigue. This reduces defects like runs, sags, orange peel, and uneven stain penetration that are common with manual application.",
-  },
-  {
-    question: "What about dust and contamination control?",
-    answer: "Furniture finishing cells include controlled-environment booths with filtered air supply, proper airflow velocity, and dust extraction. Temperature and humidity control can be added for sensitive finishes.",
-  },
-  {
-    question: "How long does deployment typically take?",
-    answer: "Typically 10-16 weeks after design approval, depending on system complexity, booth requirements, and coating types. UV curing integration or complex conveyor systems may extend timelines.",
-  },
-];
-
-const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${DOMAIN}/#organization`,
-    name: "TD Robotic Painting Systems",
-    url: DOMAIN,
-    logo: `${DOMAIN}/images/td-logo.png`,
-    description: "Engineering and integration of robotic painting systems and paint booth automation.",
-    contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${DOMAIN}/#website`,
-    name: "TD Robotic Painting Systems",
-    url: `${DOMAIN}/`,
-    publisher: { "@id": `${DOMAIN}/#organization` },
-    inLanguage: "en",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${DOMAIN}/industries/furniture-woodwork#service`,
-    name: "Furniture & Woodwork Finishing Automation",
-    description: "Engineering and integration of robotic spray finishing systems for furniture and wood products. Supports stains, lacquers, UV coatings, and water-based finishes with consistent quality and high throughput.",
-    provider: { "@id": `${DOMAIN}/#organization` },
-    serviceType: "Robotic Finishing System Integration",
-    areaServed: "Worldwide",
-    audience: { "@type": "Audience", audienceType: "Furniture manufacturers, cabinet makers, and wood product producers" },
-    mainEntityOfPage: { "@id": `${DOMAIN}/industries/furniture-woodwork#webpage` },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${DOMAIN}/industries/furniture-woodwork#faq`,
-    mainEntity: faqs.map(f => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${DOMAIN}/industries/furniture-woodwork#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-      { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
-      { "@type": "ListItem", position: 3, name: "Furniture & Woodwork", item: `${DOMAIN}/industries/furniture-woodwork` },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${DOMAIN}/industries/furniture-woodwork#webpage`,
-    name: "Furniture & Woodwork Finishing Automation",
-    url: `${DOMAIN}/industries/furniture-woodwork`,
-    isPartOf: { "@id": `${DOMAIN}/#website` },
-    mainEntity: { "@id": `${DOMAIN}/industries/furniture-woodwork#service` },
-    inLanguage: "en",
-  },
-];
 
 const workflowSteps = [
   { title: "Assessment", desc: "Product types, finish requirements, volume, current process evaluation" },
@@ -156,10 +67,26 @@ export default function FurnitureWoodwork() {
   );
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const faqs = useMemo(() => [
+    { question: t.industryFaqs.furniture.q1, answer: t.industryFaqs.furniture.a1 },
+    { question: t.industryFaqs.furniture.q2, answer: t.industryFaqs.furniture.a2 },
+    { question: t.industryFaqs.furniture.q3, answer: t.industryFaqs.furniture.a3 },
+    { question: t.industryFaqs.furniture.q4, answer: t.industryFaqs.furniture.a4 },
+    { question: t.industryFaqs.furniture.q5, answer: t.industryFaqs.furniture.a5 },
+    { question: t.industryFaqs.furniture.q6, answer: t.industryFaqs.furniture.a6 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    { "@context": "https://schema.org", "@type": "Service", "@id": `${DOMAIN}/industries/furniture-woodwork#service`, name: "Furniture & Woodwork Finishing Automation", description: "Robotic spray finishing systems for furniture and wood products.", provider: { "@id": `${DOMAIN}/#organization` }, serviceType: "Robotic Finishing System Integration", areaServed: "Worldwide" },
+    { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${DOMAIN}/industries/furniture-woodwork#faq`, mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) },
+    { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${DOMAIN}/industries/furniture-woodwork#breadcrumb`, itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` }, { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` }, { "@type": "ListItem", position: 3, name: "Furniture & Woodwork", item: `${DOMAIN}/industries/furniture-woodwork` }] },
+  ], [faqs]);
 
   const handleStartConsultation = () => {
     sessionStorage.setItem("project-init-message", inputValue.trim());

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, User, CalendarDays, FileText, Clock,
@@ -17,6 +17,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow
 } from "@/components/ui/table";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
 
@@ -79,7 +80,7 @@ const defects = [
   },
 ];
 
-const faqs = [
+const faqs_static = [
   {
     question: "What causes most paint defects in robotic painting?",
     answer: "Most defects in robotic painting stem from process parameter issues (gun distance, speed, atomization pressure) or environmental factors (temperature, humidity, contamination). Unlike manual painting, robotic systems eliminate operator variability but require proper initial setup and ongoing monitoring.",
@@ -102,7 +103,7 @@ const faqs = [
   },
 ];
 
-const schemas = [
+const schemas_static = [
   {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -121,7 +122,7 @@ const schemas = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": `${DOMAIN}/resources/knowledge/paint-defects-guide#faq`,
-    mainEntity: faqs.map(f => ({
+    mainEntity: faqs_static.map(f => ({
       "@type": "Question",
       name: f.question,
       acceptedAnswer: { "@type": "Answer", text: f.answer },
@@ -141,6 +142,30 @@ const schemas = [
 ];
 
 export default function PaintDefectsGuide() {
+  const { t } = useI18n();
+  
+  const faqs = useMemo(() => [
+    { question: t.knowledgeFaqs.paintDefects.q1, answer: t.knowledgeFaqs.paintDefects.a1 },
+    { question: t.knowledgeFaqs.paintDefects.q2, answer: t.knowledgeFaqs.paintDefects.a2 },
+    { question: t.knowledgeFaqs.paintDefects.q3, answer: t.knowledgeFaqs.paintDefects.a3 },
+    { question: t.knowledgeFaqs.paintDefects.q4, answer: t.knowledgeFaqs.paintDefects.a4 },
+    { question: t.knowledgeFaqs.paintDefects.q5, answer: t.knowledgeFaqs.paintDefects.a5 },
+  ], [t]);
+
+  const schemas = useMemo(() => [
+    ...schemas_static.filter(s => s["@type"] !== "FAQPage"),
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${DOMAIN}/resources/knowledge/paint-defects-guide#faq`,
+      mainEntity: faqs.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+  ], [faqs]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
