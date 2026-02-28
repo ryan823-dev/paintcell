@@ -41,6 +41,7 @@ export default function RoboticPaintingCostGuide() {
         <meta name="description" content="Expert guide on robotic painting system costs. Covers capital investment breakdown, operating costs, ROI calculation methodology, and cost optimization strategies." />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/robotic-painting-cost-guide" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

@@ -1,5 +1,9 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
+import { Helmet } from "react-helmet-async";
+import {
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger
+} from "@/components/ui/accordion";
 import {
   Table,
   TableBody,
@@ -8,6 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+const groundFaqs = [
+  { q: "Why is grounding critical in spray painting operations?", a: "Solvent-based paints create flammable vapor atmospheres. Static discharge can ignite these vapors, causing fires or explosions. Proper grounding ensures all conductive elements (robot, fixtures, booth, operator) are at the same electrical potential, preventing spark-generating discharge." },
+  { q: "What grounding resistance is acceptable for paint booths?", a: "Ground resistance should be less than 1 megohm (< 1 MΩ) for personnel and equipment bonding, and less than 25 ohms for facility earth ground connections. These values should be verified with a megohmmeter during commissioning and periodically thereafter." },
+  { q: "How does electrostatic spraying relate to grounding?", a: "Electrostatic spray guns charge paint particles to 60-100 kV. The grounded workpiece attracts charged particles, improving transfer efficiency. Without proper grounding of the part and fixtures, wrap-around effect is lost and charge buildup creates safety hazards." },
+  { q: "How often should grounding connections be inspected?", a: "Visual inspection of ground connections should be performed daily before operation. Resistance testing should be done weekly or per shift in high-volume operations. Full system verification with documented results should occur quarterly and after any maintenance." },
+];
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -103,6 +114,20 @@ export default function GroundingStaticControl() {
             </TableBody>
           </Table>
         </div>
+      </ContentSection>
+
+      <ContentSection title="Frequently Asked Questions">
+        <Helmet>
+          <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: groundFaqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
+        </Helmet>
+        <Accordion type="multiple" defaultValue={groundFaqs.map((_, i) => `faq-${i}`)} className="space-y-2">
+          {groundFaqs.map((faq, i) => (
+            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-5 bg-card">
+              <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">{faq.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </ContentSection>
     </ResourcePageLayout>
   );

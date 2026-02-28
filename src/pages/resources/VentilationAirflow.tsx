@@ -1,5 +1,9 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
+import { Helmet } from "react-helmet-async";
+import {
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger
+} from "@/components/ui/accordion";
 import {
   Table,
   TableBody,
@@ -8,6 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+const ventFaqs = [
+  { q: "What airflow velocity is recommended for paint spray booths?", a: "Downdraft booths typically require 0.3-0.5 m/s (60-100 fpm) average face velocity. Crossdraft booths need 0.5-0.75 m/s. The exact requirement depends on paint type, solvent load, and local regulations (NFPA 33, OSHA 1910.94)." },
+  { q: "How does booth airflow affect paint finish quality?", a: "Insufficient airflow allows overspray to settle on wet surfaces causing contamination. Excessive airflow can cause dry spray and poor film formation. Balanced, laminar airflow removes overspray without disturbing the spray pattern." },
+  { q: "What is makeup air and why is it important?", a: "Makeup air replaces exhausted booth air to maintain stable pressure and airflow. Without properly conditioned makeup air, booth pressure becomes unstable, causing inconsistent finishes and potential safety issues from uncontrolled air ingress." },
+  { q: "How often should booth filters be changed?", a: "Floor filters typically need replacement every 200-500 operating hours depending on paint volume. Exhaust filters should be monitored with differential pressure gauges and changed when pressure drop exceeds manufacturer specifications." },
+];
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -108,6 +119,20 @@ export default function VentilationAirflow() {
             </TableBody>
           </Table>
         </div>
+      </ContentSection>
+
+      <ContentSection title="Frequently Asked Questions">
+        <Helmet>
+          <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: ventFaqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
+        </Helmet>
+        <Accordion type="multiple" defaultValue={ventFaqs.map((_, i) => `faq-${i}`)} className="space-y-2">
+          {ventFaqs.map((faq, i) => (
+            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-5 bg-card">
+              <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">{faq.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </ContentSection>
     </ResourcePageLayout>
   );

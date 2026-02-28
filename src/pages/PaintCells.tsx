@@ -1,11 +1,26 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ChevronRight, Cog, Layers, Wind, Gauge, Shield, Zap, RefreshCw, Settings } from "lucide-react";
 import heroPaintCells from "@/assets/hero-paint-cells.jpg";
 import { useI18n } from "@/i18n";
+
+const cellFaqs = [
+  { q: "What is a robotic paint cell and how does it differ from a paint booth?", a: "A robotic paint cell is a fully integrated workstation that combines an industrial robot, spray equipment, ventilation, and process controls in a single engineered package. Unlike a standalone paint booth that only provides an enclosed spray environment, a paint cell delivers a complete turnkey automation solution ready for production." },
+  { q: "What automation level is right for my production volume?", a: "Semi-automatic cells suit low-to-medium volumes where operators load parts manually and the robot handles spraying. Fully automatic cells are ideal for high-volume, continuous production with conveyor integration and automatic part handling. Phased automation lets you start semi-automatic and upgrade incrementally as demand grows." },
+  { q: "How long does it take to install and commission a paint cell?", a: "Typical installation takes 4–8 weeks depending on cell complexity, site preparation, and integration requirements. This includes mechanical setup, robot programming, spray parameter tuning, safety validation, and operator training. Modular pre-engineered cells can reduce this timeline significantly." },
+  { q: "What maintenance does a robotic paint cell require?", a: "Routine maintenance includes daily tip cleaning, weekly filter inspections, monthly robot calibration checks, and quarterly full-system audits. Paint supply lines, pumps, and regulators need periodic service. Most facilities schedule a comprehensive preventive maintenance session every 6–12 months to maintain peak performance." },
+];
+
 
 export default function PaintCells() {
   const { t } = useI18n();
@@ -92,6 +107,33 @@ export default function PaintCells() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+      </Section>
+
+      <Section variant="default">
+        <FadeIn>
+          <SectionHeader title="Frequently Asked Questions" description="Common questions about robotic paint cell solutions and configurations." />
+        </FadeIn>
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: cellFaqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            })}
+          </script>
+        </Helmet>
+        <Accordion type="multiple" defaultValue={cellFaqs.map((_, i) => `faq-${i}`)} className="space-y-2 max-w-3xl mx-auto">
+          {cellFaqs.map((faq, i) => (
+            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-4">
+              <AccordionTrigger className="text-left font-medium">{faq.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </Section>
 
       <section className="bg-muted border-t border-border">

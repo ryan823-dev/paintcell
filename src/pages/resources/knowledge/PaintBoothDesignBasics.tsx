@@ -41,6 +41,7 @@ export default function PaintBoothDesignBasics() {
         <meta name="description" content="Expert guide on paint booth design for robotic spray painting. Covers airflow types, sizing methodology, ventilation requirements, and common design mistakes." />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/paint-booth-design-basics" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

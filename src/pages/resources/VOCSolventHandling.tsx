@@ -1,5 +1,9 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
+import { Helmet } from "react-helmet-async";
+import {
+  Accordion, AccordionContent, AccordionItem, AccordionTrigger
+} from "@/components/ui/accordion";
 import {
   Table,
   TableBody,
@@ -8,6 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+const vocFaqs = [
+  { q: "What are VOCs in the context of spray painting?", a: "Volatile Organic Compounds (VOCs) are carbon-based chemicals that evaporate during paint application and curing. In spray painting, they originate from solvents in liquid coatings. VOC emissions are regulated under EPA, EU IED, and local air quality regulations." },
+  { q: "How do you reduce VOC emissions in a paint cell?", a: "Key methods include switching to high-solids or waterborne coatings, improving transfer efficiency with electrostatic or HVLP spray, using enclosed booths with abatement systems (RTO, carbon adsorption), and optimizing solvent flush volumes during color changes." },
+  { q: "What solvent storage requirements apply to paint operations?", a: "Solvents must be stored in approved flammable liquid cabinets or dedicated rooms meeting NFPA 30 requirements. Quantities in the spray area should be limited to one shift's supply. Secondary containment, grounding, and bonding are required for all containers." },
+  { q: "What PPE is required for solvent handling in paint operations?", a: "Minimum PPE includes chemical-resistant gloves, safety glasses or goggles, and appropriate respiratory protection. In enclosed mixing rooms, supplied-air respirators may be required. Robotic automation significantly reduces operator solvent exposure." },
+];
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -103,6 +114,20 @@ export default function VOCSolventHandling() {
             </TableBody>
           </Table>
         </div>
+      </ContentSection>
+
+      <ContentSection title="Frequently Asked Questions">
+        <Helmet>
+          <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: vocFaqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
+        </Helmet>
+        <Accordion type="multiple" defaultValue={vocFaqs.map((_, i) => `faq-${i}`)} className="space-y-2">
+          {vocFaqs.map((faq, i) => (
+            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-5 bg-card">
+              <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">{faq.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </ContentSection>
     </ResourcePageLayout>
   );

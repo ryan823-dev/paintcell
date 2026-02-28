@@ -1,11 +1,26 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Section } from "@/components/ui/section";
+import { Section, SectionHeader } from "@/components/ui/section";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ChevronRight, Car, Cpu, Building2, Plane, Truck, Package } from "lucide-react";
 import heroApplications from "@/assets/hero-applications.jpg";
 import { useI18n } from "@/i18n";
+
+const appFaqs = [
+  { q: "What types of products can robotic painting systems handle?", a: "Robotic painting systems are versatile and can coat automotive components, electronics housings, aerospace parts, commercial vehicles, industrial equipment, and general manufactured goods. Multi-axis robots adjust spray patterns for complex geometries, curved surfaces, and varying part sizes." },
+  { q: "How does robotic spray painting improve quality over manual methods?", a: "Robots deliver consistent film thickness, uniform coverage, and repeatable spray paths every cycle. This eliminates human variability, reduces defects such as runs, sags, and orange peel, and typically achieves first-pass yield rates above 95%." },
+  { q: "Can one robotic paint cell handle multiple product types?", a: "Yes. Modern paint cells support quick-change fixtures, programmable spray recipes, and automatic color-change systems, allowing a single cell to process different part families with minimal changeover time—often under 5 minutes." },
+  { q: "What ROI can manufacturers expect from robotic painting?", a: "Most installations achieve full payback within 18–36 months through reduced paint waste (transfer efficiency gains of 20–40%), lower rework rates, decreased labor costs, and higher throughput. Energy savings from optimized booth airflow add further long-term value." },
+];
+
 
 export default function Applications() {
   const { t } = useI18n();
@@ -94,6 +109,33 @@ export default function Applications() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+      </Section>
+
+      <Section variant="default">
+        <FadeIn>
+          <SectionHeader title="Frequently Asked Questions" description="Common questions about robotic painting applications across industries." />
+        </FadeIn>
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: appFaqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            })}
+          </script>
+        </Helmet>
+        <Accordion type="multiple" defaultValue={appFaqs.map((_, i) => `faq-${i}`)} className="space-y-2 max-w-3xl mx-auto">
+          {appFaqs.map((faq, i) => (
+            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-4">
+              <AccordionTrigger className="text-left font-medium">{faq.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </Section>
 
       <Section variant="muted">
