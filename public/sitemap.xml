@@ -304,6 +304,18 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://tdpaintcell.com/resources/knowledge/paint-defects-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tdpaintcell.com/resources/knowledge/color-change-systems</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Tools & Templates -->
   <url>
     <loc>https://tdpaintcell.com/resources/tools-templates/paint-cell-rfq-template</loc>

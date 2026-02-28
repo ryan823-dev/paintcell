@@ -73,6 +73,8 @@ const RoboticPaintingCostGuide = lazy(() => import("./pages/resources/knowledge/
 const PaintBoothDesignBasics = lazy(() => import("./pages/resources/knowledge/PaintBoothDesignBasics"));
 const SprayTechnologyGuide = lazy(() => import("./pages/resources/knowledge/SprayTechnologyGuide"));
 const RobotPathOptimization = lazy(() => import("./pages/resources/knowledge/RobotPathOptimization"));
+const PaintDefectsGuide = lazy(() => import("./pages/resources/knowledge/PaintDefectsGuide"));
+const ColorChangeSystems = lazy(() => import("./pages/resources/knowledge/ColorChangeSystems"));
 
 // Lazy load Industry pages
 const IndustryPage = lazy(() => import("./pages/IndustryPage"));
@@ -217,6 +219,8 @@ const App = () => (
                 <Route path="/resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
                 <Route path="/resources/knowledge/spray-technology-guide" element={<SprayTechnologyGuide />} />
                 <Route path="/resources/knowledge/robot-path-optimization" element={<RobotPathOptimization />} />
+                <Route path="/resources/knowledge/paint-defects-guide" element={<PaintDefectsGuide />} />
+                <Route path="/resources/knowledge/color-change-systems" element={<ColorChangeSystems />} />
                 
                 {/* Solution pages */}
                 <Route path="/solutions" element={<Solutions />} />
