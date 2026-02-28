@@ -537,7 +537,7 @@ export default function Index() {
                       <MessageSquare className="h-4 w-4" />
                       Start project assessment
                     </Button>
-                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white">
+                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
                       <Link to="/quote">
                         <FileText className="h-4 w-4" />
                         Talk to an engineer
@@ -545,7 +545,7 @@ export default function Index() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="gap-2 h-12 px-8 text-sm rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white"
+                      className="gap-2 h-12 px-8 text-sm rounded-xl border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
                       onClick={() => handleStartChat("I'd like to share part drawings for a robotic painting feasibility assessment.")}
                     >
                       <Upload className="h-4 w-4" />
