@@ -15,7 +15,7 @@ function mapDbToIndustryData(row: Record<string, unknown>): IndustryData {
     heroImage: (row.hero_image as string) || undefined,
     ctaText: (row.cta_text as string) || "",
     examplePrompt: (row.example_prompt as string) || "",
-    aiContext: aiContext || { industry: "", finish: "", throughput: "" },
+    aiContext: { industry: aiContext?.industry || "", finish: aiContext?.finish || "", throughput: aiContext?.throughput || "" },
     painPoints: Array.isArray(row.pain_points) ? row.pain_points : [],
     systemModules: Array.isArray(row.system_modules) ? row.system_modules : [],
     productionConfig: (row.production_config as IndustryData["productionConfig"]) || { partsPerHour: "—", paintType: "—", finishRequirement: "—", automationLevel: "—", lineIntegration: "—" },
