@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Lock } from "lucide-react";
 
@@ -92,14 +91,12 @@ export default function ConsoleLogin() {
     setLoading(true);
     
     try {
-      const { error, redirected } = await lovable.auth.signInWithOAuth(provider, {
-        redirect_uri: window.location.origin,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: window.location.origin,
+        },
       });
-
-      if (redirected) {
-        // Page is redirecting to OAuth provider
-        return;
-      }
 
       if (error) {
         toast({
