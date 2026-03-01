@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+
+# Vercel temp files
+.vercel-tmp/
+
+# Supabase temp files
+supabase/.temp/
