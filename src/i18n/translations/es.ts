@@ -1,4 +1,4 @@
-export const es: Record<string, Record<string, string>> = {
+export const es: Record<string, Record<string, any>> = {
   nav: {
     industries: "Industrias",
     products: "Productos",

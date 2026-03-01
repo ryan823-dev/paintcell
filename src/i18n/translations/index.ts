@@ -9,7 +9,7 @@ import { vi } from "./vi";
 import { tr } from "./tr";
 import { id } from "./id";
 
-export type TranslationKeys = Record<string, Record<string, string>>;
+export type TranslationKeys = Record<string, Record<string, any>>;
 
 const translations: Record<Locale, TranslationKeys> = { en, ja, th, ru, es, pt, vi, tr, id };
 
