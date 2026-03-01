@@ -908,6 +908,7 @@ export type Database = {
           body_zh: string | null
           category: Database["public"]["Enums"]["resource_category"] | null
           created_at: string
+          featured_image_url: string | null
           id: string
           last_ai_generation_at: string | null
           meta_description: string | null
@@ -922,6 +923,7 @@ export type Database = {
           title: string
           title_zh: string | null
           updated_at: string
+          vertax_asset_id: string | null
         }
         Insert: {
           answer_box?: string | null
@@ -930,6 +932,7 @@ export type Database = {
           body_zh?: string | null
           category?: Database["public"]["Enums"]["resource_category"] | null
           created_at?: string
+          featured_image_url?: string | null
           id?: string
           last_ai_generation_at?: string | null
           meta_description?: string | null
@@ -944,6 +947,7 @@ export type Database = {
           title: string
           title_zh?: string | null
           updated_at?: string
+          vertax_asset_id?: string | null
         }
         Update: {
           answer_box?: string | null
@@ -952,6 +956,7 @@ export type Database = {
           body_zh?: string | null
           category?: Database["public"]["Enums"]["resource_category"] | null
           created_at?: string
+          featured_image_url?: string | null
           id?: string
           last_ai_generation_at?: string | null
           meta_description?: string | null
@@ -966,6 +971,7 @@ export type Database = {
           title?: string
           title_zh?: string | null
           updated_at?: string
+          vertax_asset_id?: string | null
         }
         Relationships: []
       }
