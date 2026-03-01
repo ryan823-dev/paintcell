@@ -19,7 +19,10 @@ export function Footer() {
     ],
     company: [
       { name: t.footer.about, href: "/about" },
-      { name: t.footer.contact, href: "/quote" },
+      { name: t.footer.industries, href: "/industries" },
+      { name: t.footer.solutionsPage, href: "/solutions" },
+    ],
+    legal: [
       { name: t.footer.privacyPolicy, href: "/privacy" },
       { name: t.footer.termsOfUse, href: "/terms" },
       { name: t.footer.cookiePolicy, href: "/cookies" },
@@ -88,10 +91,20 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border">
-          <p className="text-xs text-white/30 text-center">
+        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/30">
             {t.footer.copyright}
           </p>
+          <div className="flex items-center gap-4">
+            {footerLinks.legal.map((link, i) => (
+              <span key={link.href} className="flex items-center gap-4">
+                <Link to={link.href} className="text-xs text-white/30 hover:text-white/60 transition-colors">
+                  {link.name}
+                </Link>
+                {i < footerLinks.legal.length - 1 && <span className="text-white/15">·</span>}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
