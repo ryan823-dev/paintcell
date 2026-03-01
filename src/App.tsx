@@ -94,6 +94,16 @@ const HardwareSanitary = lazy(() => import("./pages/industries/HardwareSanitary"
 const Solutions = lazy(() => import("./pages/Solutions"));
 const SolutionPage = lazy(() => import("./pages/SolutionPage"));
 const RoboticPaintingSystem = lazy(() => import("./pages/solutions/RoboticPaintingSystem"));
+const TurnkeyPaintingShop = lazy(() => import("./pages/solutions/TurnkeyPaintingShop"));
+const PaintSupplySystems = lazy(() => import("./pages/solutions/PaintSupplySystems"));
+
+// Lazy load Products pages
+const ProductsIndex = lazy(() => import("./pages/products/ProductsIndex"));
+const ProductCategory = lazy(() => import("./pages/products/ProductCategory"));
+
+// Lazy load Services pages
+const ServicesIndex = lazy(() => import("./pages/services/ServicesIndex"));
+const ServiceDetail = lazy(() => import("./pages/services/ServiceDetail"));
 
 // Lazy load Console pages (admin only)
 const ConsoleLogin = lazy(() => import("./pages/console/ConsoleLogin"));
@@ -201,7 +211,17 @@ function PublicRoutes() {
       {/* Solution pages */}
       <Route path="solutions" element={<Solutions />} />
       <Route path="solutions/robotic-painting-system" element={<RoboticPaintingSystem />} />
+      <Route path="solutions/turnkey-painting-shop" element={<TurnkeyPaintingShop />} />
+      <Route path="solutions/paint-supply-systems" element={<PaintSupplySystems />} />
       <Route path="solutions/:slug" element={<SolutionPage />} />
+
+      {/* Products pages */}
+      <Route path="products" element={<ProductsIndex />} />
+      <Route path="products/:category" element={<ProductCategory />} />
+
+      {/* Services pages */}
+      <Route path="services" element={<ServicesIndex />} />
+      <Route path="services/:slug" element={<ServiceDetail />} />
 
       {/* Industry pages */}
       <Route path="industries" element={<Industries />} />

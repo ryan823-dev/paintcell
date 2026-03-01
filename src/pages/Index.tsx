@@ -9,6 +9,7 @@ import { HomeSidebar } from "@/components/home/HomeSidebar";
 import { InlineChatPanel } from "@/components/home/InlineChatPanel";
 import { TrustStats } from "@/components/home/TrustStats";
 import { TrustLogos } from "@/components/home/TrustLogos";
+import { BusinessPyramid } from "@/components/home/BusinessPyramid";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import {
   ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge,
@@ -69,17 +70,17 @@ const jsonLdSchemas = [
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${DOMAIN}/#organization`,
-    "name": "TD Robotic Painting Systems",
+    "name": "TD Painting Systems",
     "url": DOMAIN,
     "logo": `${DOMAIN}/images/og-social-share.png`,
-    "description": "System-level engineering and integration of robotic painting systems and paint booth automation.",
+    "description": "International industrial coating system expert providing turnkey painting shops, robotic workstations, paint supply systems, and technical services.",
     "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
   },
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${DOMAIN}/#website`,
-    "name": "TD Robotic Painting Systems",
+    "name": "TD Painting Systems - Industrial Coating System Expert",
     "url": `${DOMAIN}/`,
     "publisher": { "@id": `${DOMAIN}/#organization` },
     "inLanguage": "en",
@@ -88,7 +89,7 @@ const jsonLdSchemas = [
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `${DOMAIN}/#webpage`,
-    "name": "TD Robotic Painting Systems | Robotic Painting System Integrator for Automotive Components",
+    "name": "TD Painting Systems | International Industrial Coating System Expert",
     "url": `${DOMAIN}/`,
     "isPartOf": { "@id": `${DOMAIN}/#website` },
     "about": { "@id": `${DOMAIN}/#organization` },
@@ -239,8 +240,8 @@ export default function Index() {
   return (
     <>
       <Helmet>
-        <title>TD Robotic Painting Systems | Robotic Painting System Integrator for Automotive Components</title>
-        <meta name="description" content="System-level integration of robotic spray painting cells and paint booth automation for automotive components and industrial finishing. Start your robotic painting project: talk to an engineer, upload drawings, or begin an AI project assessment." />
+        <title>TD Painting Systems | International Industrial Coating System Expert</title>
+        <meta name="description" content="International industrial coating system expert providing turnkey painting shops, robotic workstations, paint supply systems, spare parts, and comprehensive technical services for automotive and industrial manufacturing." />
         <link rel="canonical" href={`${DOMAIN}/`} />
         {jsonLdSchemas.map((schema, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -269,24 +270,47 @@ export default function Index() {
             <div className="container-wide">
               <FadeIn>
                 <div className="max-w-4xl">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent mb-3">
+                    International Industrial Coating System Expert
+                  </p>
                   <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-                    Robotic Painting System Integrator for Automotive Components
+                    Complete Industrial Coating Solutions
                   </h1>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
-                    A <strong className="text-foreground">robotic painting system</strong> is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, and process control to deliver consistent finish quality and stable production throughput.
+                    <strong className="text-foreground">TD Painting Systems</strong> delivers comprehensive industrial coating solutions spanning the full value chain: from complete <strong className="text-foreground">turnkey painting shops</strong> and <strong className="text-foreground">robotic workstations</strong> to <strong className="text-foreground">paint supply systems</strong>, <strong className="text-foreground">spare parts</strong>, and expert <strong className="text-foreground">technical services</strong>.
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
-                    TD Robotic Painting Systems specializes in engineering and integrating robotic painting cells and automated painting workstations for automotive component manufacturing and industrial finishing. With 500+ systems deployed across 30+ countries, our solutions typically reduce paint waste by 20–40% and achieve first-pass yield rates above 95%.
+                    With 500+ systems deployed across 30+ countries, we serve automotive body shops, parts coating lines, and industrial manufacturing facilities. Our integrated approach delivers consistent quality, optimized throughput, and reduced total cost of ownership.
                   </p>
                   <div className="border-l-2 border-accent/40 pl-4">
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                      We provide system-level integration rather than standalone equipment. Our solutions combine robot selection, spray process configuration, booth integration, control integration, and commissioning support.
-                    </p>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Applications primarily serve automotive component production, with deployment supporting manufacturers targeting global markets, including Europe and North America.
+                      Whether you need a complete painting shop design, a single robotic cell, paint supply equipment, or ongoing maintenance support — we provide the expertise and equipment to meet your industrial coating requirements.
                     </p>
                   </div>
                 </div>
+              </FadeIn>
+            </div>
+          </section>
+
+          {/* Business Pyramid - Our Complete Offering */}
+          <section id="business-pyramid" className="py-14 md:py-18 border-t border-border bg-muted/30">
+            <div className="container-wide">
+              <FadeIn>
+                <div className="mb-10 text-center">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                    Our Complete Offering
+                  </p>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+                    Full-Spectrum Coating Solutions
+                  </h2>
+                  <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+                    From turnkey painting shops to spare parts and services — explore our integrated business model
+                  </p>
+                  <div className="h-px w-12 bg-accent/50 mx-auto mt-4" />
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.2}>
+                <BusinessPyramid />
               </FadeIn>
             </div>
           </section>
