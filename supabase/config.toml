@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.ai-generate-draft]
 verify_jwt = true
+
+[functions.receive-content-push]
+verify_jwt = false
