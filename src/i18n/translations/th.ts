@@ -1,4 +1,4 @@
-export const th: Record<string, Record<string, string>> = {
+export const th: Record<string, Record<string, any>> = {
   nav: {
     industries: "อุตสาหกรรม",
     products: "ผลิตภัณฑ์",

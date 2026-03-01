@@ -1,4 +1,4 @@
-export const vi: Record<string, Record<string, string>> = {
+export const vi: Record<string, Record<string, any>> = {
   // Header
   nav: {
     industries: "Ngành Công Nghiệp",
