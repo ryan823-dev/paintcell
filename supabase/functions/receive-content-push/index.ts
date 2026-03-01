@@ -100,7 +100,7 @@ const handler = async (req: Request): Promise<Response> => {
       meta_description_zh: payload.meta_description_zh || null,
       category: payload.category || "learning-center",
       featured_image_url: payload.featured_image_url || null,
-      status: "review" as const,
+      status: (payload as any).status || "published",
       last_ai_generation_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
