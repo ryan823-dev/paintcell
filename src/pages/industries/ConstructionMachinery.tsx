@@ -256,6 +256,38 @@ export default function ConstructionMachinery() {
             </Accordion>
           </div>
         </div></section>
+        {/* PROJECT REFERENCES — CONSTRUCTION */}
+        <section className="border-b border-border bg-muted/30">
+          <div className="container-wide py-12 md:py-16">
+            <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Project Track Record
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Construction Equipment Painting References</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl">
+              TD has delivered robotic painting systems for heavy equipment and construction machinery manufacturers, utilizing 7-axis rail-mounted robots for extended reach on large structural components.
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                { client: "Major Excavator OEM (Zhuhai)", config: "4 Kawasaki robots on 7th-axis tracks", highlight: "Boom arms, frames — 12min cycle" },
+                { client: "Weichai / Lovol Heavy Equipment", config: "Multi-robot protective coating line", highlight: "High-build 2K corrosion protection" },
+                { client: "Baosteel Wheel (Chongqing)", config: "Robotic wheel painting system", highlight: "Aluminum wheel finishing line" },
+              ].map((project, idx) => (
+                <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">
+                  <CardContent className="p-5">
+                    <h3 className="font-semibold text-sm mb-2">{project.client}</h3>
+                    <p className="text-sm text-muted-foreground mb-2">{project.config}</p>
+                    <div className="text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
+                      {project.highlight}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <ExploreLinks currentPath="/industries/construction-machinery" />
       </div>
     </>

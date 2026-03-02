@@ -1,6 +1,6 @@
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
-import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car, Wrench } from "lucide-react";
+import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car, Wrench, Eye, AlertTriangle, Droplets, Monitor, Radio, Layers } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { solutions } from "@/data/solutionData";
 import { useI18n } from "@/i18n";
@@ -19,34 +19,58 @@ const techFeatures = [
     advantage: "Break vendor lock-in, flexible equipment selection"
   },
   {
+    icon: AlertTriangle,
+    title: "Robot Collision Detection",
+    description: "Proprietary torque-sensor-based collision detection compares real-time position data against taught paths. Automatic alarm and emergency stop upon deviation, protecting both robots and workpieces.",
+    advantage: "Patent-pending safety technology, zero collision damage"
+  },
+  {
+    icon: Eye,
+    title: "Vision-Based Part Recognition",
+    description: "Multi-point visual inspection system identifies product model, position, and orientation before spraying. Automatic fixture alignment detection prevents mispositioned parts from entering the spray zone.",
+    advantage: "Eliminate missprays, support mixed-model production"
+  },
+  {
     icon: Shield,
-    title: "Intelligent Quality Control",
-    description: "Vision-based part recognition, skip-station interlocks, hardener flow monitoring, and radar-based level control with dual-threshold alarms.",
+    title: "Missed-Spray & Skip Detection",
+    description: "Automated missed-spray detection with alarm logging. Hanging fixture wire-break detection using micro-current sensing prevents product drops during conveyor transport.",
     advantage: "IATF 16949 compliant, batch traceability"
   },
   {
     icon: Palette,
     title: "20+ Color Fast Change System",
-    description: "Sames PPH707 rotary bells with automatic purge sequence. Color change in under 3 minutes with minimal waste.",
+    description: "Sames PPH707 rotary bells with automatic purge sequence. Color change in under 3 minutes with minimal waste. Integrated Lactec and Timmer bead-dispensing systems for sealing applications.",
     advantage: "High-mix low-volume production ready"
+  },
+  {
+    icon: Droplets,
+    title: "Transparent Paint Level Monitoring",
+    description: "Real-time paint liquid level monitoring with radar-based level control and dual-threshold alarms. HMI graphical display shows all tank levels with automated refill triggers.",
+    advantage: "Zero-downtime paint supply, visual management"
   },
   {
     icon: Cpu,
     title: "Water-Based Paint Temperature Control",
-    description: "Pipe-in-pipe thermal management maintaining ±1°C precision for water-based coatings, ensuring consistent atomization.",
+    description: "Pipe-in-pipe thermal management maintaining ±1°C precision for water-based coatings, ensuring consistent atomization and film formation across all spray stations.",
     advantage: "Industry-leading stability for water-borne systems"
   },
   {
     icon: Wifi,
-    title: "Remote Diagnostics & Industry 4.0",
-    description: "Robostudio/Shopfloor Editor remote access, PROFINET/Ethernet dual-redundant network, MES/SCADA integration ready.",
-    advantage: "50%+ faster fault response, digital twin ready"
+    title: "Remote Diagnostics & Programming",
+    description: "RobotStudio and ShopFloor Editor remote access enables off-site troubleshooting, program optimization, and software updates. PROFINET/Ethernet dual-redundant network ensures reliable connectivity.",
+    advantage: "50%+ faster fault response, minimize site visits"
   },
   {
-    icon: Flame,
-    title: "Integrated Pre-Treatment",
-    description: "RAPIDFLAME flame treatment robots share control platform with painting robots, synchronized takt time and process interlocks.",
-    advantage: "Reduced footprint, consistent surface activation"
+    icon: Monitor,
+    title: "MES/SCADA Integration",
+    description: "Full manufacturing execution system connectivity for equipment interconnection, runtime statistics, fault logging, and production data exchange with factory-level MES/ERP platforms.",
+    advantage: "Complete production traceability, data-driven decisions"
+  },
+  {
+    icon: Layers,
+    title: "Industry 4.0 & AI Intelligence",
+    description: "Data acquisition and intelligent analysis platform for predictive maintenance, spray parameter optimization, and production efficiency tracking. Digital twin capability for virtual commissioning.",
+    advantage: "Predictive maintenance, continuous process improvement"
   },
 ];
 
@@ -148,7 +172,7 @@ export default function Solutions() {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {techFeatures.map((feature, idx) => (
+              {techFeatures.slice(0, 6).map((feature, idx) => (
                 <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">
                   <CardContent className="p-6">
                     <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
@@ -156,6 +180,24 @@ export default function Solutions() {
                     </div>
                     <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                      {feature.description}
+                    </p>
+                    <div className="text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
+                      {feature.advantage}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+              {techFeatures.slice(6).map((feature, idx) => (
+                <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">
+                  <CardContent className="p-5">
+                    <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
+                      <feature.icon className="h-5 w-5 text-accent" />
+                    </div>
+                    <h3 className="font-semibold mb-2">{feature.title}</h3>
+                    <p className="text-muted-foreground text-xs leading-relaxed mb-2">
                       {feature.description}
                     </p>
                     <div className="text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
@@ -237,6 +279,72 @@ export default function Solutions() {
                   <div className="text-muted-foreground text-xs">Transfer Efficiency</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Typical System Configurations */}
+        <section className="border-b border-border bg-muted/30">
+          <div className="container-wide py-12 md:py-16">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+                <Flame className="h-4 w-4" />
+                System Configurations
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Proven Configuration Examples</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Real-world system architectures delivered for automotive plastic component painting applications.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <Card className="border-border bg-card">
+                <CardContent className="p-6">
+                  <div className="text-xs text-accent font-semibold uppercase tracking-wider mb-2">Compact Cell</div>
+                  <h3 className="font-semibold text-lg mb-3">2-3-2 Configuration</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />1 robot pre-treatment (flame/plasma)</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />2 robots primer spray</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />3 robots topcoat spray</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />2 robots clearcoat spray</li>
+                  </ul>
+                  <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground">
+                    <span className="text-accent font-medium">Typical capacity:</span> 65–90 parts/hour
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border bg-card">
+                <CardContent className="p-6">
+                  <div className="text-xs text-accent font-semibold uppercase tracking-wider mb-2">Mid-Scale Line</div>
+                  <h3 className="font-semibold text-lg mb-3">4-6-4 Dual-Color Configuration</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />4 robots pre-treatment station</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />6 robots basecoat with dual-color capability</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />4 robots clearcoat station</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />Quick color change system integrated</li>
+                  </ul>
+                  <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground">
+                    <span className="text-accent font-medium">Typical capacity:</span> 96+ parts/hour
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border bg-card">
+                <CardContent className="p-6">
+                  <div className="text-xs text-accent font-semibold uppercase tracking-wider mb-2">Large-Scale</div>
+                  <h3 className="font-semibold text-lg mb-3">4-6-6 Full Water-Based Line</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />4 robots water-wash pre-treatment</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />6 robots basecoat with RB1000i-WSC color changers</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />6 robots clearcoat with CBS cleaning stations</li>
+                    <li className="flex items-start gap-2"><span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />Full water-based paint temperature control</li>
+                  </ul>
+                  <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground">
+                    <span className="text-accent font-medium">Typical capacity:</span> 120+ parts/hour
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import {
   Users, Wrench, FileText, Settings, GraduationCap, Headphones,
-  CheckCircle2, ChevronRight, ArrowRight
+  CheckCircle2, ChevronRight, ArrowRight, MapPin, Shield, Clock
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 
@@ -176,6 +176,52 @@ export default function ServicesIndex() {
                   </div>
                 </FadeIn>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Service Coverage & Experience */}
+        <section className="py-16 md:py-20 border-b border-border">
+          <div className="container-wide">
+            <FadeIn>
+              <div className="mb-12">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                  Proven Capability
+                </p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+                  Service Track Record
+                </h2>
+                <div className="h-px w-12 bg-accent/50" />
+              </div>
+            </FadeIn>
+            <div className="grid md:grid-cols-3 gap-6">
+              <FadeIn>
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <MapPin className="h-6 w-6 text-accent mb-3" />
+                  <h3 className="font-semibold mb-2">Nationwide Coverage</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Service teams deployed across 30+ cities in China covering all major automotive manufacturing clusters — from Changchun in the north to Guangzhou in the south, with international project support in Thailand.
+                  </p>
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.05}>
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <Shield className="h-6 w-6 text-accent mb-3" />
+                  <h3 className="font-semibold mb-2">Multi-Brand Expertise</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Certified service capabilities across ABB, FANUC, Yaskawa, Kawasaki, and KUKA robot platforms. Spray equipment expertise spanning Sames, Graco, Ransburg, and Binks-Maple systems.
+                  </p>
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.1}>
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <Clock className="h-6 w-6 text-accent mb-3" />
+                  <h3 className="font-semibold mb-2">Rapid Response</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Remote diagnostics via RobotStudio/ShopFloor Editor for immediate troubleshooting. On-site emergency response within 24-48 hours for critical production-down situations across China.
+                  </p>
+                </div>
+              </FadeIn>
             </div>
           </div>
         </section>

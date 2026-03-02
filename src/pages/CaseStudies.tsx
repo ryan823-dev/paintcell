@@ -2,7 +2,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image, BarChart3, Factory, Bot } from "lucide-react";
+import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image, BarChart3, Factory, Bot, Wrench } from "lucide-react";
 import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
@@ -15,8 +15,8 @@ const industryIcons: Record<string, React.ReactNode> = {
 
 const projectMeta = [
   { location: "Kaifeng, China", robots: "Yaskawa + Ransburg", systems: "32 robots" },
-  { location: "Wuhan, China", robots: "ABB + ABB Atomizer", systems: "10 robots" },
-  { location: "Zhuhai, China", robots: "Kawasaki + Graco", systems: "4 robots" },
+  { location: "Wuhan, China", robots: "ABB IRB5500 + ABB Atomizer", systems: "10 robots" },
+  { location: "Zhuhai, China", robots: "Kawasaki + Graco", systems: "4 robots (7-axis)" },
   { location: "Shenzhen, China", robots: "Strategic Partnership", systems: "CASC" },
 ];
 
@@ -322,6 +322,58 @@ export default function CaseStudies() {
             </div>
           </div>
         </div>
+      </Section>
+
+      {/* Additional Project References */}
+      <Section variant="default">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+            <Wrench className="h-4 w-4" />
+            Project Portfolio
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Automotive Painting Line References</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Selected projects from our 17+ major automotive painting line deliveries, featuring ABB, FANUC, and multi-brand robot configurations.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Client</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Robot Platform</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Spray Equipment</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Configuration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { client: "FAW-Toyota (Dongfeng)", robot: "ABB IRB5500 / IRB6700", spray: "Graco H1050", config: "1+7 robots (2-3-2), primer/topcoat/clear" },
+                { client: "Zhengzhou Nissan", robot: "ABB IRB5500 / IRB6700", spray: "Graco H1050", config: "1+6 robots (1-3-2), multi-coat" },
+                { client: "Guangdong FAW-Toyota", robot: "ABB IRB5500", spray: "ABB RB1000i-WSC", config: "2+14 robots (4-6-4), water-based dual-color" },
+                { client: "Chengdu FAW-Toyota (Huatao)", robot: "ABB IRB5500 / IRB6700", spray: "Sames rotary bells", config: "1+7 robots (2-3-2), full turnkey" },
+                { client: "Changzhou Nanebot", robot: "ABB IRB5500 / IRB6700", spray: "Fast color change", config: "26+ robots (4-6-6), dual-color water-based" },
+                { client: "NorDAO Auto Systems (Chengdu)", robot: "FANUC MPX3500", spray: "Sames spray guns", config: "10 robots (2-4-4), dual-color" },
+                { client: "Jitai Vehicle Technology", robot: "FANUC MPX3500", spray: "Ransburg RMA660", config: "7 robots, bumper painting line" },
+                { client: "VINFAST (Thailand)", robot: "FANUC MPX2600", spray: "Integrated spray system", config: "International deployment, plastic parts" },
+                { client: "Zhejiang Jinfeiji Group", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "8 robots, water-based coating line" },
+                { client: "Minth Group", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "Trim & exterior component painting" },
+              ].map((project, idx) => (
+                <tr key={idx} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                  <td className="py-3 px-4 font-medium">{project.client}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{project.robot}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{project.spray}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{project.config}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-center text-xs text-muted-foreground mt-6">
+          Additional projects across 3C electronics, construction machinery, furniture, and sanitary ware industries available upon request.
+        </p>
       </Section>
 
       {/* Industry Experience Data Section */}

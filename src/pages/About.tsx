@@ -2,7 +2,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, Award, Users, Globe, Wrench, Building2, Rocket, Calendar, MapPin } from "lucide-react";
+import { ChevronRight, Award, Users, Globe, Wrench, Building2, Rocket, Calendar, MapPin, ShieldCheck, Car, Factory, Zap, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
@@ -68,11 +68,41 @@ const schemas = [
 ];
 
 const milestones = [
-  { year: "2010", title: "Company Founded", description: "Shanghai Tudou Technology established in Zhangjiang Hi-Tech Park, Pudong, Shanghai." },
-  { year: "2015", title: "Strategic Investment", description: "Received strategic investment from A-share listed company, validating our technology leadership." },
-  { year: "2018", title: "EV Market Entry", description: "Secured first new energy vehicle OEM contracts with leading Chinese EV manufacturers." },
-  { year: "2021", title: "Shenzhen Center", description: "Established Shenzhen Technical Center in partnership with CASC Aerospace Long-Hit." },
-  { year: "2024", title: "International Expansion", description: "Expanded to international markets with VINFAST project in Thailand." },
+  { year: "2010", title: "Company Founded", description: "Shanghai Tudou Technology established in Zhangjiang Hi-Tech Park, Pudong, Shanghai, with RMB 20 million registered capital." },
+  { year: "2013", title: "First Major Automotive Project", description: "Delivered first large-scale automotive painting system for FAW-Toyota with ABB IRB5500 robots in 2-3-2 configuration." },
+  { year: "2015", title: "Strategic Investment & ABB Partnership", description: "Received strategic investment from A-share listed company. Became authorized ABB system integrator for painting robots." },
+  { year: "2018", title: "EV Market Entry", description: "Secured new energy vehicle OEM contracts with leading Chinese EV manufacturers. Expanded to FANUC and Yaskawa robot platforms." },
+  { year: "2019", title: "Multi-Brand Expansion", description: "Expanded robot integration capabilities to include FANUC MPX series, Kawasaki, and CMA platforms for diverse application scenarios." },
+  { year: "2021", title: "Shenzhen Aerospace Center", description: "Established Shenzhen Technical Center in partnership with CASC Aerospace Long-Hit for aerospace-grade coating solutions." },
+  { year: "2024", title: "International Expansion", description: "Expanded to international markets with VINFAST project in Thailand. Completed 17+ major automotive painting line projects." },
+];
+
+const certifications = [
+  "ISO 9001 Quality Management System",
+  "High-Tech Enterprise Certification",
+  "Safety Production License",
+  "Multiple Software Copyrights & Patents",
+  "ABB Authorized System Integrator",
+  "ATEX-Compliant System Design Capability",
+];
+
+const keyClients = [
+  { name: "FAW-Toyota", sector: "Automotive OEM" },
+  { name: "Zhengzhou Nissan", sector: "Automotive OEM" },
+  { name: "Chengdu FAW-Toyota", sector: "Automotive OEM" },
+  { name: "Guangdong FAW-Toyota", sector: "Automotive OEM" },
+  { name: "VINFAST (Thailand)", sector: "Automotive OEM" },
+  { name: "NorDAO Auto Systems", sector: "Tier 1 Supplier" },
+  { name: "Changzhou Nanebot", sector: "Tier 1 Supplier" },
+  { name: "Minth Group (Minshi)", sector: "Tier 1 Supplier" },
+  { name: "Jitai Vehicle Technology", sector: "Tier 1 Supplier" },
+  { name: "Wuhan Minhui Molding", sector: "Tier 1 Supplier" },
+  { name: "Zhejiang Jinfeiji Group", sector: "Auto Parts" },
+  { name: "Ningbo Xingtong Auto Parts", sector: "Auto Parts" },
+  { name: "Qingdao Deshengtai Auto Parts", sector: "Auto Parts" },
+  { name: "Changzhou Feichi Auto Tech", sector: "Auto Parts" },
+  { name: "CASC Aerospace Long-Hit", sector: "Aerospace" },
+  { name: "Siyang SECO Technology", sector: "Industrial" },
 ];
 
 export default function About() {
@@ -137,13 +167,16 @@ export default function About() {
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Our Story</h2>
           <div className="prose prose-lg text-muted-foreground space-y-4">
             <p>
-              <strong className="text-foreground">Shanghai Tudou Technology Co., Ltd.</strong> was established in September 2010 in Zhangjiang Hi-Tech Park, Pudong New District, Shanghai. With a registered capital of RMB 20 million, we are an innovative automation company integrating design, R&D, manufacturing, installation, commissioning, and service.
+              <strong className="text-foreground">Shanghai Tudou Technology Co., Ltd.</strong> (formerly Shanghai Angshan Intelligent Machinery Co., Ltd.) was established in September 2010 in Zhangjiang Hi-Tech Park, Pudong New District, Shanghai. With a paid-in capital of RMB 20 million, we are an innovative automation company integrating system design, R&D, manufacturing, installation, commissioning, and lifecycle service.
             </p>
             <p>
-              Since our founding, we have focused on robotic automation and related products. Our team comprises top technical talents from leading domestic and international robot companies and well-known automotive enterprises, all with over 15 years of industry experience.
+              Since our founding, we have specialized in robotic painting automation and intelligent boundary products for industrial coating applications. Our team comprises senior technical talents recruited from leading international robot companies (ABB, FANUC, Yaskawa) and well-known automotive enterprises, each bringing 15+ years of industry experience in painting process engineering, robot integration, and system commissioning.
             </p>
             <p>
-              TD serves high-end clients across automotive body shops, automotive parts, rail transit, aerospace, construction machinery, 3C electronics, and furniture/bathroom industries — providing complete turnkey solutions that have earned high recognition from our customers.
+              TD serves high-end clients across <strong className="text-foreground">automotive OEM body shops, automotive plastic components (bumpers, mirrors, trim), rail transit, aerospace & defense, construction machinery, 3C electronics, and furniture & sanitary ware industries</strong>. We deliver complete turnkey solutions — from initial feasibility assessment and system design through equipment supply, installation, robot programming, spray parameter optimization, and production validation.
+            </p>
+            <p>
+              With 17+ completed major automotive painting line projects and deployment experience across 30+ cities in China plus international markets, TD has established itself as a trusted partner for manufacturers requiring high-quality, high-efficiency robotic coating systems.
             </p>
           </div>
         </div>
@@ -242,6 +275,75 @@ export default function About() {
             </div>
           </div>
         </div>
+      </Section>
+
+      {/* Certifications & Qualifications */}
+      <Section variant="muted">
+        <SectionHeader title="Certifications & Qualifications" description="Industry-recognized standards ensuring quality, safety, and engineering excellence" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          {certifications.map((cert) => (
+            <div key={cert} className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border">
+              <ShieldCheck className="h-5 w-5 text-accent shrink-0" />
+              <span className="text-sm font-medium">{cert}</span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Robot Brand Partnerships */}
+      <Section variant="default">
+        <SectionHeader title="Technology Partnerships" description="Multi-brand robot and spray equipment integration capability" />
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="font-semibold mb-4 flex items-center gap-2">
+              <Zap className="h-5 w-5 text-accent" />
+              Robot Brands
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              {["ABB (IRB5500, IRB6700)", "FANUC (MPX2600, MPX3500)", "Yaskawa", "Kawasaki", "KUKA", "CMA"].map((brand) => (
+                <div key={brand} className="flex items-center gap-2 p-3 rounded-lg bg-muted text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
+                  {brand}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4 flex items-center gap-2">
+              <Wrench className="h-5 w-5 text-accent" />
+              Spray Equipment Brands
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              {["SAMES KREMLIN", "Graco", "Ransburg", "Binks-Maple", "Carlisle", "Timmer"].map((brand) => (
+                <div key={brand} className="flex items-center gap-2 p-3 rounded-lg bg-muted text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
+                  {brand}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Key Clients */}
+      <Section variant="muted">
+        <SectionHeader title="Trusted by Industry Leaders" description="Selected clients across automotive, aerospace, and industrial sectors" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {keyClients.map((client) => (
+            <div key={client.name} className="p-4 rounded-lg bg-card border border-border hover:border-accent/30 transition-colors">
+              <div className="flex items-center gap-2 mb-1">
+                {client.sector === "Automotive OEM" ? <Car className="h-4 w-4 text-accent" /> :
+                 client.sector === "Aerospace" ? <Rocket className="h-4 w-4 text-accent" /> :
+                 <Factory className="h-4 w-4 text-accent" />}
+                <span className="text-xs text-accent font-medium">{client.sector}</span>
+              </div>
+              <div className="font-medium text-sm">{client.name}</div>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-sm text-muted-foreground mt-6">
+          Project footprint spanning 30+ cities across China, with international deployments in Thailand and expanding.
+        </p>
       </Section>
 
       <Section variant="muted">

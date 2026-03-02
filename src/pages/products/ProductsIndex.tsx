@@ -4,30 +4,32 @@ import { Button } from "@/components/ui/button";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import {
   Settings, Wrench, Gauge, Box, Cpu, Package,
-  ChevronRight, FileText, ArrowRight
+  ChevronRight, FileText, ArrowRight, Bot
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 
 const DOMAIN = "https://tdpaintcell.com";
 
 const productCategoryKeys = [
-  { key: "rotaryBells", icon: Settings, href: "/products/rotary-bells", brands: ["Dürr", "SAMES KREMLIN", "Ransburg"] },
-  { key: "sprayGuns", icon: Wrench, href: "/products/spray-guns", brands: ["SATA", "DeVilbiss", "Graco"] },
-  { key: "paintPumps", icon: Gauge, href: "/products/paint-pumps", brands: ["Graco", "ARO", "Wilden"] },
-  { key: "controlSystems", icon: Cpu, href: "/products/control-systems", brands: ["Siemens", "Allen-Bradley", "ABB"] },
-  { key: "colorChangeSystems", icon: Box, href: "/products/color-change", brands: ["Dürr", "SAMES KREMLIN", "Graco"] },
+  { key: "rotaryBells", icon: Settings, href: "/products/rotary-bells", brands: ["SAMES KREMLIN PPH707", "Ransburg Robobell", "Dürr EcoBell"] },
+  { key: "sprayGuns", icon: Wrench, href: "/products/spray-guns", brands: ["Graco H1050", "Ransburg RMA660", "Binks-Maple 15/30"] },
+  { key: "paintPumps", icon: Gauge, href: "/products/paint-pumps", brands: ["Graco P3:1", "Graco 4D150/350", "Timmer 1060"] },
+  { key: "controlSystems", icon: Cpu, href: "/products/control-systems", brands: ["Siemens S7-1500", "Allen-Bradley", "ABB IRC5"] },
+  { key: "colorChangeSystems", icon: Box, href: "/products/color-change", brands: ["ABB RB1000i-WSC", "Lactec", "Timmer"] },
   { key: "spareParts", icon: Package, href: "/products/spare-parts", brands: ["OEM Parts", "Service Kits", "Wear Items"] },
 ];
 
 const featuredBrands = [
-  { name: "ABB", category: "Robotics" },
-  { name: "FANUC", category: "Robotics" },
+  { name: "ABB", category: "Robotics (IRB5500, IRB6700)" },
+  { name: "FANUC", category: "Robotics (MPX2600, MPX3500)" },
+  { name: "Yaskawa", category: "Robotics" },
+  { name: "Kawasaki", category: "Robotics" },
   { name: "KUKA", category: "Robotics" },
-  { name: "Dürr", category: "Paint Systems" },
-  { name: "SAMES KREMLIN", category: "Spray Equipment" },
-  { name: "Graco", category: "Fluid Handling" },
-  { name: "SATA", category: "Spray Guns" },
-  { name: "Siemens", category: "Controls" },
+  { name: "SAMES KREMLIN", category: "Rotary Bells & Guns" },
+  { name: "Graco", category: "Fluid Handling & Guns" },
+  { name: "Ransburg", category: "Electrostatic Equipment" },
+  { name: "Binks-Maple", category: "Spray Equipment" },
+  { name: "Siemens", category: "PLC & Controls" },
 ];
 
 export default function ProductsIndex() {
@@ -128,6 +130,48 @@ export default function ProductsIndex() {
                 );
               })}
             </StaggerContainer>
+          </div>
+        </section>
+
+        {/* Robot Models Section */}
+        <section className="py-16 md:py-20 border-b border-border">
+          <div className="container-wide">
+            <FadeIn>
+              <div className="mb-12">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                  Robot Platforms
+                </p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+                  Painting Robot Models We Integrate
+                </h2>
+                <div className="h-px w-12 bg-accent/50" />
+              </div>
+            </FadeIn>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { brand: "ABB", model: "IRB 5500", spec: "Reach 2.98m, Payload 13kg", desc: "Dedicated painting robot with hollow wrist, explosion-proof design. Ideal for automotive bumpers, trim, and component painting.", use: "Most deployed model in TD projects" },
+                { brand: "ABB", model: "IRB 6700", spec: "Reach 2.6-3.2m, Payload 150-235kg", desc: "High-payload robot used for flame treatment, heavy fixturing, and pre-treatment stations in painting lines.", use: "Pre-treatment & material handling" },
+                { brand: "FANUC", model: "MPX 3500", spec: "Reach 1.56m, Painting-specific", desc: "Compact explosion-proof painting robot with integrated hollow arm for paint line routing. Fast axis speeds for high takt-time production.", use: "Bumper & plastic component lines" },
+                { brand: "FANUC", model: "MPX 2600", spec: "Reach 1.86m, Painting-specific", desc: "Extended-reach painting robot for larger parts and booth configurations. Used in international deployments including VINFAST Thailand.", use: "Versatile mid-range painting" },
+                { brand: "Kawasaki", model: "Painting Series", spec: "7-axis with linear track", desc: "7th-axis rail-mounted painting robots for extended reach on large parts such as excavator booms, frames, and structural components.", use: "Construction machinery & heavy parts" },
+                { brand: "CMA", model: "Painting Robots", spec: "6-axis, cost-effective", desc: "Chinese-manufactured painting robots offering competitive pricing for general industrial applications and 3C electronics coating.", use: "Industrial & 3C applications" },
+              ].map((robot, idx) => (
+                <FadeIn key={idx} delay={idx * 0.05}>
+                  <div className="rounded-xl border border-border bg-card p-6 h-full hover:border-accent/30 transition-colors">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Bot className="h-5 w-5 text-accent" />
+                      <span className="text-xs font-semibold uppercase tracking-wider text-accent">{robot.brand}</span>
+                    </div>
+                    <h3 className="text-lg font-semibold mb-1">{robot.model}</h3>
+                    <p className="text-xs text-muted-foreground mb-3 font-mono">{robot.spec}</p>
+                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{robot.desc}</p>
+                    <div className="text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
+                      {robot.use}
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </section>
 

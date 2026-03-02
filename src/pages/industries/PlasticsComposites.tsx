@@ -496,6 +496,56 @@ export default function PlasticsComposites() {
           </div>
         </section>
 
+        {/* PROJECT REFERENCES — PLASTICS */}
+        <section className="border-b border-border bg-muted/30">
+          <div className="container-wide py-12 md:py-16">
+            <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Project Track Record
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Plastic Component Painting References</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl">
+              TD has delivered 17+ major painting lines for automotive plastic exterior components — bumpers, mirrors, trim, and ventilation grilles — using ABB and FANUC robot platforms with integrated flame treatment and quick color change.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                { client: "FAW-Toyota (multiple plants)", config: "ABB IRB5500 + IRB6700 (2-3-2)", spray: "Graco H1050 / Sames rotary bells", highlight: "Flame pre-treatment + multi-coat" },
+                { client: "Guangdong FAW-Toyota", config: "14 ABB IRB5500 (4-6-4 dual-color)", spray: "ABB RB1000i-WSC color changer", highlight: "Full water-based paint line with CBS" },
+                { client: "Changzhou Nanebot (NIO Tier-1)", config: "26+ ABB robots (4-6-6)", spray: "Quick color change system", highlight: "Largest plastic parts line delivered" },
+                { client: "NorDAO Auto Systems", config: "10 FANUC MPX3500 (2-4-4)", spray: "Sames spray guns", highlight: "Dual-color bumper painting" },
+                { client: "Jitai Vehicle Technology", config: "7 FANUC MPX3500", spray: "Ransburg RMA660", highlight: "High-volume bumper production" },
+                { client: "Zhejiang Jinfeiji Group", config: "8 ABB IRB5500", spray: "Binks-Maple 15/30", highlight: "Water-based coating for plastic parts" },
+              ].map((project, idx) => (
+                <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">
+                  <CardContent className="p-5">
+                    <h3 className="font-semibold mb-2">{project.client}</h3>
+                    <div className="space-y-1.5 text-sm text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="text-accent font-medium shrink-0 w-16">Robots:</span>
+                        <span>{project.config}</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-accent font-medium shrink-0 w-16">Spray:</span>
+                        <span>{project.spray}</span>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
+                      {project.highlight}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground mt-6">
+              <Link to="/case-studies" className="text-accent underline underline-offset-2 hover:text-accent/80">
+                View all case studies and project details →
+              </Link>
+            </p>
+          </div>
+        </section>
+
         {/* 11. E-E-A-T BLOCK */}
         <section className="border-b border-border">
           <div className="container-wide py-10 md:py-12">

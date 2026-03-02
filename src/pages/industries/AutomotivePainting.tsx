@@ -178,14 +178,16 @@ export default function AutomotivePainting() {
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Typical Automotive Parts</h2>
             <p className="text-muted-foreground mb-4">Automotive component painting commonly includes:</p>
             <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside max-w-2xl">
-              <li>brackets and structural metal parts</li>
-              <li>housings and covers</li>
-              <li>fabricated metal assemblies</li>
-              <li>sub-components requiring consistent finish and controlled overspray</li>
-              <li>parts with complex geometry requiring repeatable spray paths</li>
+              <li>bumpers, front and rear fascia, and exterior trim</li>
+              <li>mirror housings, door handles, and pillar covers</li>
+              <li>instrument panels, console panels, and interior trim components</li>
+              <li>ventilation grilles, radiator grilles, and decorative bezels</li>
+              <li>wheel covers, hub caps, and aluminum wheel finishing</li>
+              <li>brackets, structural metal parts, and fabricated assemblies</li>
+              <li>complete vehicle body-in-white (BIW) painting for OEM lines</li>
             </ul>
             <p className="text-muted-foreground text-sm mt-4">
-              Final feasibility depends on part size, geometry, coating specification, and throughput targets.
+              Typical bumper dimensions: 2200mm(L) x 900mm(W) x 650mm(H), weight ~5kg. Production takt: 80-96 seconds per fixture.
             </p>
           </div>
         </section>
@@ -411,6 +413,56 @@ export default function AutomotivePainting() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ─── PROJECT REFERENCES ─── */}
+        <section className="border-b border-border bg-muted/30">
+          <div className="container-wide py-12 md:py-16">
+            <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              {t.industry?.projectTrack || "Project Track Record"}
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">Automotive Painting Project References</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl">
+              Selected projects from TD's 17+ completed automotive painting line deliveries, spanning bumper lines, trim component systems, and complete vehicle body shops.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                { client: "FAW-Toyota (Dongfeng)", config: "1 IRB6700 + 7 IRB5500 (2-3-2)", spray: "Graco H1050", highlight: "Multi-coat bumper line" },
+                { client: "Guangdong FAW-Toyota", config: "2 + 14 ABB IRB5500 (4-6-4)", spray: "ABB RB1000i-WSC", highlight: "Water-based dual-color, CBS cleaning" },
+                { client: "Changzhou Nanebot (NIO supplier)", config: "4+4+2+16 ABB robots (4-6-6)", spray: "Fast color change system", highlight: "26+ robots, dual-color water-based" },
+                { client: "NorDAO Auto Systems (Chengdu)", config: "10 FANUC MPX3500 (2-4-4)", spray: "Sames spray guns", highlight: "Dual-color plastic component line" },
+                { client: "Minth Group (Minshi)", config: "ABB IRB5500", spray: "Binks-Maple 15/30", highlight: "Exterior trim & chrome alternatives" },
+                { client: "VINFAST (Thailand)", config: "FANUC MPX2600", spray: "Integrated spray system", highlight: "International deployment" },
+              ].map((project, idx) => (
+                <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">
+                  <CardContent className="p-5">
+                    <h3 className="font-semibold mb-2">{project.client}</h3>
+                    <div className="space-y-1.5 text-sm text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="text-accent font-medium shrink-0 w-16">Robots:</span>
+                        <span>{project.config}</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-accent font-medium shrink-0 w-16">Spray:</span>
+                        <span>{project.spray}</span>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
+                      {project.highlight}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground mt-6">
+              <Link to="/case-studies" className="text-accent underline underline-offset-2 hover:text-accent/80">
+                View all case studies and project details →
+              </Link>
+            </p>
           </div>
         </section>
 
