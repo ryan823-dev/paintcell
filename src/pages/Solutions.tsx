@@ -1,6 +1,6 @@
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
-import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot } from "lucide-react";
+import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { solutions } from "@/data/solutionData";
 import { useI18n } from "@/i18n";
@@ -48,6 +48,25 @@ const techFeatures = [
     description: "RAPIDFLAME flame treatment robots share control platform with painting robots, synchronized takt time and process interlocks.",
     advantage: "Reduced footprint, consistent surface activation"
   },
+];
+
+const marketStats = [
+  { value: "30+", label: "Cities Covered", icon: MapPin, detail: "Nationwide deployment experience across major industrial regions" },
+  { value: "1–169", label: "Robots per Project", icon: Bot, detail: "From single-cell stations to 100+ robot mega-lines" },
+  { value: "60%+", label: "Automotive OEM", icon: Car, detail: "Primary focus on vehicle body & component painting" },
+  { value: "40%", label: "Industrial & Parts", icon: Factory, detail: "Heavy equipment, parts suppliers, and general industrial" },
+];
+
+const projectTypes = [
+  { label: "New Line Builds", pct: 60, color: "bg-accent" },
+  { label: "Line Modifications", pct: 33, color: "bg-blue-500" },
+  { label: "Capacity Expansions", pct: 7, color: "bg-emerald-500" },
+];
+
+const scaleBreakdown = [
+  { range: "1–10 robots", pct: 38, desc: "Single-cell & compact systems" },
+  { range: "11–40 robots", pct: 45, desc: "Mid-scale production lines" },
+  { range: "40+ robots", pct: 17, desc: "Complete OEM paint shops" },
 ];
 
 export default function Solutions() {
@@ -135,6 +154,94 @@ export default function Solutions() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Market Experience Section */}
+        <section className="border-b border-border">
+          <div className="container-wide py-12 md:py-16">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+                <BarChart3 className="h-4 w-4" />
+                Market Experience
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Proven Across Scale and Industry</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Track record spanning 30+ cities, from single-robot cells to 100+ robot complete paint shops, across automotive OEM and industrial sectors.
+              </p>
+            </div>
+
+            {/* Key Statistics */}
+            <div className="grid md:grid-cols-4 gap-4 mb-10">
+              {marketStats.map((stat, idx) => (
+                <Card key={idx} className="border-border bg-card text-center hover:border-accent/30 transition-colors">
+                  <CardContent className="p-6">
+                    <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-3">
+                      <stat.icon className="h-5 w-5 text-accent" />
+                    </div>
+                    <div className="text-2xl font-bold text-accent mb-1">{stat.value}</div>
+                    <div className="font-medium text-sm mb-2">{stat.label}</div>
+                    <div className="text-xs text-muted-foreground">{stat.detail}</div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Project Type Distribution */}
+              <Card className="border-border bg-card">
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-accent" />
+                    Project Type Distribution
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-4">Based on cumulative project portfolio</p>
+                  <div className="space-y-4">
+                    {projectTypes.map((type) => (
+                      <div key={type.label}>
+                        <div className="flex justify-between text-sm mb-1.5">
+                          <span className="font-medium">{type.label}</span>
+                          <span className="text-muted-foreground">{type.pct}%</span>
+                        </div>
+                        <div className="w-full bg-muted rounded-full h-2.5">
+                          <div className={`${type.color} h-2.5 rounded-full transition-all`} style={{ width: `${type.pct}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">
+                    Majority new-build projects, with significant retrofit and expansion capability.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Scale Breakdown */}
+              <Card className="border-border bg-card">
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-lg mb-1 flex items-center gap-2">
+                    <Bot className="h-5 w-5 text-accent" />
+                    System Scale Distribution
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-4">Robots per project across portfolio</p>
+                  <div className="space-y-4">
+                    {scaleBreakdown.map((scale) => (
+                      <div key={scale.range} className="flex items-center gap-4">
+                        <div className="w-24 text-sm font-medium shrink-0">{scale.range}</div>
+                        <div className="flex-1">
+                          <div className="w-full bg-muted rounded-full h-2.5">
+                            <div className="bg-accent h-2.5 rounded-full transition-all" style={{ width: `${scale.pct}%` }} />
+                          </div>
+                        </div>
+                        <div className="w-10 text-right text-sm text-muted-foreground">{scale.pct}%</div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">
+                    Flexible integration capability from compact cells to complete paint shop turnkey delivery.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

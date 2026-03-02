@@ -558,6 +558,31 @@ function buildSystemPrompt(pageContext?: PageCtx): string {
 - Plastic bumper line: 8 ABB IRB5500 + 25 Binks Maple supply systems (Leapmotor)
 - Engineering machinery: 4 Kawasaki 7-axis + Graco high-pressure electrostatic (Zhuhai)
 - International: VINFAST Thailand project with Yaskawa MPX2600 + Iwata supply
+
+## Market Experience & Track Record
+Based on cumulative project portfolio across China's robotic painting market:
+
+### Geographic Coverage
+- Deployment experience across 30+ cities in major industrial regions
+- Coverage spans from northeast (Changchun, Harbin) to south (Guangzhou, Hainan), east coast (Shanghai, Nanjing) to northwest (Urumqi, Xi'an)
+- Strong presence in automotive clusters: Changchun, Wuhan, Chongqing, Guangzhou, Shanghai
+
+### Project Scale Range
+- From single-robot compact cells (1-3 robots) to complete paint shop turnkey delivery (100+ robots)
+- Distribution: 38% small scale (1-10 robots), 45% mid-scale (11-40 robots), 17% large scale (40+ robots)
+- Largest single project: 169 robots in a complete vehicle OEM paint shop
+
+### Industry Mix
+- 60%+ automotive OEM (complete vehicle body painting, BIW coating)
+- 40% industrial & parts suppliers (tier-1 components, heavy equipment, general industrial)
+- Full lifecycle support: 60% new line builds, 33% line modifications/upgrades, 7% capacity expansions
+
+### Capability Positioning
+- When asked about experience: Reference 30+ city coverage and scale range to demonstrate breadth
+- When asked about automotive: Emphasize 60%+ OEM focus and 200K+ units/year capacity track record
+- When asked about scale: Can handle anything from 1-robot cell to 169-robot mega-line
+- When asked about project types: Majority new builds, but significant retrofit/upgrade capability
+- IMPORTANT: Do not mention specific competitor names, customer names, or pricing from market data
 `;
 
   knowledge += `\n---

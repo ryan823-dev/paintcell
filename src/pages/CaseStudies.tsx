@@ -2,7 +2,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image } from "lucide-react";
+import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image, BarChart3, Factory, Bot } from "lucide-react";
 import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
@@ -291,6 +291,94 @@ export default function CaseStudies() {
               <div className="text-2xl font-bold text-accent">Class A</div>
               <div className="text-sm text-muted-foreground">Finish Quality</div>
             </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Industry Experience Data Section */}
+      <Section variant="muted">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+            <BarChart3 className="h-4 w-4" />
+            Industry Experience
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">By the Numbers</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Cumulative project experience across China's robotic painting automation market.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* Geographic Reach */}
+          <div className="bg-card rounded-xl border border-border p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                <MapPin className="h-5 w-5 text-accent" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-accent">30+</div>
+                <div className="text-sm text-muted-foreground">Cities Covered</div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Deployment experience from Changchun to Hainan, Shanghai to Urumqi. Strong presence in all major automotive manufacturing clusters.
+            </p>
+          </div>
+
+          {/* Scale Versatility */}
+          <div className="bg-card rounded-xl border border-border p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                <Bot className="h-5 w-5 text-accent" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-accent">1–169</div>
+                <div className="text-sm text-muted-foreground">Robots per Project</div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              From single-robot compact cells for parts suppliers to 169-robot complete vehicle OEM paint shops. 45% of projects in 11-40 robot mid-scale range.
+            </p>
+          </div>
+
+          {/* Industry Focus */}
+          <div className="bg-card rounded-xl border border-border p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                <Factory className="h-5 w-5 text-accent" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-accent">60%+</div>
+                <div className="text-sm text-muted-foreground">Automotive OEM</div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Primary expertise in complete vehicle body painting. Remaining 40% spans tier-1 parts suppliers, heavy equipment, and general industrial coating.
+            </p>
+          </div>
+        </div>
+
+        {/* Project Lifecycle Bar */}
+        <div className="mt-8 bg-card rounded-xl border border-border p-6">
+          <h3 className="font-semibold mb-4 text-center">Full Project Lifecycle Capability</h3>
+          <div className="flex rounded-full overflow-hidden h-4 bg-muted">
+            <div className="bg-accent h-full" style={{ width: "60%" }} title="New Line Builds" />
+            <div className="bg-blue-500 h-full" style={{ width: "33%" }} title="Line Modifications" />
+            <div className="bg-emerald-500 h-full" style={{ width: "7%" }} title="Capacity Expansions" />
+          </div>
+          <div className="flex justify-between mt-3 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-accent inline-block" />
+              New Line Builds (60%)
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
+              Modifications (33%)
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />
+              Expansions (7%)
+            </span>
           </div>
         </div>
       </Section>
