@@ -243,6 +243,15 @@ export default function Index() {
         <title>TD Painting Systems | International Industrial Coating System Expert</title>
         <meta name="description" content="International industrial coating system expert providing turnkey painting shops, robotic workstations, paint supply systems, spare parts, and comprehensive technical services for automotive and industrial manufacturing." />
         <link rel="canonical" href={`${DOMAIN}/`} />
+        <meta property="og:title" content="TD Painting Systems | International Industrial Coating System Expert" />
+        <meta property="og:description" content="System-level integration of robotic spray painting cells and paint booth automation. 500+ systems deployed, 15+ years experience, 30+ countries served." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${DOMAIN}/`} />
+        <meta property="og:image" content={`${DOMAIN}/images/og-social-share.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="TD Painting Systems | International Industrial Coating System Expert" />
+        <meta name="twitter:description" content="System-level integration of robotic spray painting cells and paint booth automation. 500+ systems deployed across 30+ countries." />
+        <meta name="twitter:image" content={`${DOMAIN}/images/og-social-share.png`} />
         {jsonLdSchemas.map((schema, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
         ))}

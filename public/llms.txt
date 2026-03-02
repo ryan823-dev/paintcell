@@ -1,0 +1,81 @@
+# TD Robotic Painting Systems (PaintCell)
+
+> System-level integration of robotic spray painting cells and paint booth automation for automotive, industrial, appliance, and aerospace manufacturing.
+
+## Company Overview
+
+TD Robotic Painting Systems (brand: PaintCell) is a Shanghai-based engineering company specializing in the design, integration, and commissioning of robotic painting systems. Founded in 2000, the company serves 10+ industries worldwide with 500+ systems deployed across 30+ countries.
+
+## Core Services
+
+- **Robotic Painting System Integration**: Turnkey integration of industrial robots (ABB, Yaskawa, Kawasaki, FANUC), spray technology (electrostatic rotary bells, HVLP, airless), paint supply systems, booth automation, and PLC-based controls.
+- **Paint Booth Automation**: Engineering of spray booth airflow, overspray management, safety interlocks, and process controls for new builds or retrofit installations.
+- **Spray Robot Integration**: Selection, configuration, programming, and deployment of explosion-proof painting robots with hollow-wrist construction.
+- **Turnkey Paint Shop Delivery**: Complete paint shop engineering from pre-treatment through topcoat, including conveyor systems, curing ovens, and quality inspection.
+
+## Industries Served
+
+- Automotive OEM (complete vehicle body painting, 200K+ units/year capacity)
+- Automotive Tier-1 (bumpers, trim, mirrors, wheels)
+- Metal Parts & General Industrial
+- Construction & Heavy Equipment
+- Appliance & Consumer Electronics
+- Aerospace & Defense
+- Plastics & Composites
+- Battery & Energy Storage
+- Medical Device Coating
+- Furniture & Woodwork
+- Hardware & Sanitary
+
+## Key Technical Capabilities
+
+- Multi-brand robot integration on unified Siemens S7-1500 PLC platform
+- 20+ color fast change system (Sames PPH707, <3 min change, <150ml waste)
+- Water-based paint temperature control (pipe-in-pipe, +/-1C precision)
+- Electrostatic rotary bells: 60,000 RPM, 100kV cascade, 15-50mm bell cups
+- Vision-based part recognition and skip-station interlocks
+- Remote diagnostics via PROFINET/Ethernet dual-redundant network
+- IATF 16949 compliant quality control with batch traceability
+
+## Market Experience
+
+- 30+ cities covered across major industrial regions
+- Project scale: 1 to 169 robots per project
+- 60%+ automotive OEM focus, 40% industrial & parts suppliers
+- Project types: 60% new builds, 33% modifications, 7% expansions
+- 1,000+ robots deployed across 45+ vehicle painting projects
+
+## Typical Delivery Process
+
+1. Requirement Analysis (part geometry, volume, finish specs)
+2. Concept Design (3D layout, robot selection, process definition)
+3. Detail Engineering (electrical, mechanical, controls)
+4. Manufacturing & Factory Testing
+5. Installation & Commissioning
+6. Training & Handover
+- Typical deployment: 8-24 weeks after design approval
+
+## Standards & Compliance
+
+- CE marking, UL/NFPA, ATEX/IECEx certification
+- IATF 16949 quality management
+- ISO 13485 (medical device coating)
+- AS9100D/NADCAP (aerospace)
+- FDA 21 CFR Part 11 (medical)
+
+## Contact
+
+- Website: https://tdpaintcell.com
+- Email: info@tdpaintcell.com
+- Location: Shanghai, China
+
+## Important Pages
+
+- Solutions: https://tdpaintcell.com/solutions
+- Industries: https://tdpaintcell.com/industries
+- Case Studies: https://tdpaintcell.com/case-studies
+- About: https://tdpaintcell.com/about
+- Quote/Assessment: https://tdpaintcell.com/quote
+- Glossary: https://tdpaintcell.com/resources/glossary
+- FAQ: https://tdpaintcell.com/resources/faqs
+- Engineering Library: https://tdpaintcell.com/resources/engineering-library

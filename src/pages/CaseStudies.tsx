@@ -125,9 +125,38 @@ export default function CaseStudies() {
         <title>Case Studies — Robotic Painting Automation Success Stories | TD</title>
         <meta name="description" content="Explore real-world robotic painting automation implementations. Case studies from automotive, industrial, electronics, and aerospace industries showing measurable improvements in quality, throughput, and ROI." />
         <link rel="canonical" href={`${DOMAIN}/case-studies`} />
+        <meta property="og:title" content="Case Studies — Robotic Painting Automation Success Stories | TD" />
+        <meta property="og:description" content="Real-world robotic painting automation case studies across automotive, industrial, and aerospace industries." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${DOMAIN}/case-studies`} />
+        <meta property="og:image" content={`${DOMAIN}/images/projects/body-painting-yaskawa.jpg`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Robotic Painting Automation Case Studies | TD" />
+        <meta name="twitter:description" content="Real implementations showing measurable improvements in quality, throughput, and ROI." />
+        <meta name="twitter:image" content={`${DOMAIN}/images/projects/body-painting-yaskawa.jpg`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
         ))}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "@id": `${DOMAIN}/case-studies#videos`,
+          "name": "Robotic Painting Project Videos",
+          "itemListElement": projectVideos.map((v, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "item": {
+              "@type": "VideoObject",
+              "name": v.title,
+              "description": v.description,
+              "thumbnailUrl": `https://img.youtube.com/vi/${v.id}/maxresdefault.jpg`,
+              "uploadDate": "2024-01-01",
+              "contentUrl": `https://www.youtube.com/watch?v=${v.id}`,
+              "embedUrl": `https://www.youtube.com/embed/${v.id}`,
+              "publisher": { "@id": `${DOMAIN}/#organization` }
+            }
+          }))
+        })}</script>
       </Helmet>
 
       <section className="section-dark border-b border-white/10">

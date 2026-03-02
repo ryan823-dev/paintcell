@@ -75,8 +75,18 @@ export default function Solutions() {
   return (
     <>
       <Helmet>
-        <title>{t.solutions?.title || "Solutions"} | TD</title>
-        <meta name="description" content={t.solutions?.subtitle || ""} />
+        <title>Robotic Painting Automation Solutions — System Integration | TD</title>
+        <meta name="description" content="Turnkey robotic painting system integration, paint booth automation, and spray robot deployment. Multi-brand robot support (ABB, Yaskawa, FANUC), electrostatic rotary bells, and Industry 4.0 controls." />
+        <link rel="canonical" href="https://tdpaintcell.com/solutions" />
+        <meta property="og:title" content="Robotic Painting Automation Solutions | TD" />
+        <meta property="og:description" content="Turnkey robotic painting system integration with multi-brand robot support, electrostatic rotary bells, and Industry 4.0 controls." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tdpaintcell.com/solutions" />
+        <meta property="og:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Robotic Painting Automation Solutions | TD" />
+        <meta name="twitter:description" content="Turnkey robotic painting system integration with multi-brand robot support and Industry 4.0 controls." />
+        <meta name="twitter:image" content="https://tdpaintcell.com/images/og-social-share.png" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

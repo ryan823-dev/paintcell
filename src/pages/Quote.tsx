@@ -1,4 +1,5 @@
 import { useI18n } from "@/i18n";
+import { Helmet } from "react-helmet-async";
 import { QuoteWizard } from "@/components/quote/QuoteWizard";
 
 export default function Quote() {
@@ -6,6 +7,36 @@ export default function Quote() {
 
   return (
     <div className="bg-background min-h-screen">
+      <Helmet>
+        <title>Paint Cell Project Assessment — Configure Your System | TD</title>
+        <meta name="description" content="Start your robotic painting project assessment. Configure paint cell specifications including robot selection, spray technology, booth requirements, and production targets." />
+        <link rel="canonical" href="https://tdpaintcell.com/quote" />
+        <meta property="og:title" content="Paint Cell Project Assessment | TD" />
+        <meta property="og:description" content="Configure your robotic painting system. Select robots, spray technology, and booth specifications for your production requirements." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tdpaintcell.com/quote" />
+        <meta property="og:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Paint Cell Project Assessment | TD" />
+        <meta name="twitter:description" content="Configure your robotic painting system specifications and get an engineering assessment." />
+        <meta name="twitter:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": "https://tdpaintcell.com/quote#webpage",
+          "name": "Paint Cell Project Assessment",
+          "description": "Configure robotic painting system specifications and request an engineering assessment.",
+          "url": "https://tdpaintcell.com/quote",
+          "isPartOf": { "@id": "https://tdpaintcell.com/#website" },
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdpaintcell.com/" },
+              { "@type": "ListItem", "position": 2, "name": "Project Assessment", "item": "https://tdpaintcell.com/quote" }
+            ]
+          }
+        })}</script>
+      </Helmet>
       <div className="section-dark border-b border-white/10">
         <div className="container-wide pt-10 md:pt-14 pb-8">
           <div className="max-w-3xl">

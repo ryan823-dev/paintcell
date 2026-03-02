@@ -98,6 +98,15 @@ export default function About() {
         <title>About TD Robotic Painting Systems — 15+ Years of Automation Excellence</title>
         <meta name="description" content="TD Robotic Painting Systems (Shanghai Tudou Technology): 15+ years engineering robotic spray painting and paint booth automation. Serving Chery, Geely, NIO, Leapmotor and 500+ systems deployed." />
         <link rel="canonical" href={`${DOMAIN}/about`} />
+        <meta property="og:title" content="About TD Robotic Painting Systems — 15+ Years of Automation Excellence" />
+        <meta property="og:description" content="15+ years engineering robotic spray painting and paint booth automation. Serving automotive OEMs and industrial manufacturers with 500+ systems deployed." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${DOMAIN}/about`} />
+        <meta property="og:image" content={`${DOMAIN}/images/og-social-share.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About TD Robotic Painting Systems" />
+        <meta name="twitter:description" content="15+ years engineering robotic spray painting and paint booth automation. 500+ systems deployed across 30+ countries." />
+        <meta name="twitter:image" content={`${DOMAIN}/images/og-social-share.png`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
         ))}
