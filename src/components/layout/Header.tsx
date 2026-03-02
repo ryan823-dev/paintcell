@@ -48,6 +48,7 @@ export function Header() {
             { name: "Auto Body Painting", href: "/solutions/auto-body-painting", description: "Vehicle body coating lines" },
             { name: "Parts Painting", href: "/solutions/parts-painting", description: "Component finishing systems" },
             { name: "Industrial Coating", href: "/solutions/industrial-coating", description: "Heavy equipment & machinery" },
+            { name: "View All Solutions", href: "/solutions", description: "Browse all solutions & capabilities" },
           ],
         },
       ],
