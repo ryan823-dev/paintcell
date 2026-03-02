@@ -510,6 +510,56 @@ function buildSystemPrompt(pageContext?: PageCtx): string {
     knowledge += `\n## User Context from Page\nThe user is browsing content related to: industry="${ic.industry}", finish="${ic.finish}", throughput="${ic.throughput}". Prioritize this context when answering.\n`;
   }
 
+  // Core Technology Features (extracted from company technical documents)
+  knowledge += `
+## Core Technology Advantages
+
+### Multi-Brand Robot Integration Platform
+- Supports ABB (IRB5500/6700), Yaskawa (MPX3500/2600), Kawasaki, FANUC robots
+- Integrates with Sames, Ransburg, Binks, Graco spray equipment (rotary bells, gear pumps, color change valves)
+- Unified control on Siemens S7-1500 PLC + PROFINET industrial bus
+- Advantage: Break vendor lock-in, flexible equipment selection, reduced integration risk
+
+### Intelligent Quality Control System
+- Vision-based part recognition (model + position verification)
+- Skip-station interlocks (primer incomplete → block topcoat/clearcoat)
+- Hardener flow active monitoring (prevent clogging defects)
+- Radar-based electronic level control (dual-threshold alarms + pump interlock)
+- Compliance: IATF 16949, full batch traceability, MES integration
+
+### 20+ Color Fast Change System
+- Sames PPH707 high-speed electrostatic rotary bells
+- Automatic purge sequence: inject → retract → purge → clean
+- Color change under 3 minutes with <150ml purge waste
+- Supports water-based + solvent-based + 2K clearcoat multi-media
+
+### Water-Based Paint Temperature Control
+- Pipe-in-pipe thermal management system
+- Precision: ±1°C for water-based coatings
+- Ensures atomization stability and film thickness uniformity
+- Separate waste solvent collection for VOC compliance
+
+### Remote Diagnostics & Industry 4.0 Ready
+- Robostudio/Shopfloor Editor remote access modules
+- PROFINET + Ethernet dual-redundant network topology
+- HMI direct connection to MES/CCR systems
+- Digital twin interface ready (Web3D visualization, AI algorithm ports)
+- Result: 50%+ faster fault response, >80% remote diagnostic coverage
+
+### Integrated Pre-Treatment Robot Package
+- RAPIDFLAME flame treatment system (propane + natural gas + compressed air)
+- Shared PLC and HMI platform with painting robots
+- Synchronized takt time and process interlocks
+- Safety: Flame detection + logic interlock, ATEX compliant
+- Benefit: Reduced equipment investment and footprint
+
+## Reference Projects
+- Complete vehicle body painting: 32 Yaskawa robots, 200K units/year capacity (Kaifeng)
+- Plastic bumper line: 8 ABB IRB5500 + 25 Binks Maple supply systems (Leapmotor)
+- Engineering machinery: 4 Kawasaki 7-axis + Graco high-pressure electrostatic (Zhuhai)
+- International: VINFAST Thailand project with Yaskawa MPX2600 + Iwata supply
+`;
+
   knowledge += `\n---
 KNOWLEDGE USAGE INSTRUCTIONS:
 - Use the knowledge base above to provide specific, accurate answers with real data points (throughput, ROI, case references).

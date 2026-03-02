@@ -2,7 +2,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play } from "lucide-react";
+import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image } from "lucide-react";
 import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
@@ -35,6 +35,24 @@ const projectVideos = [
     id: "rJWsR-kE_AE", 
     title: "Spray Booth Interior", 
     description: "Conveyor system & safety controls" 
+  },
+];
+
+const oemGallery = [
+  {
+    src: "/images/projects/body-painting-yaskawa.jpg",
+    title: "Yaskawa Body Painting Line",
+    description: "4 Yaskawa robots painting complete vehicle body (BIW) with electrostatic rotary bells"
+  },
+  {
+    src: "/images/projects/body-painting-abb.jpg",
+    title: "ABB Robot Commissioning",
+    description: "6 ABB IRB5500 robots during installation and commissioning phase"
+  },
+  {
+    src: "/images/projects/body-painting-line.jpg",
+    title: "Complete Paint Line",
+    description: "Full vehicle body painting line with multi-robot configuration"
   },
 ];
 
@@ -221,6 +239,60 @@ export default function CaseStudies() {
         <p className="text-center text-sm text-muted-foreground mt-6">
           Project: Chengdu HTMS (Qingdao Huatao) — ABB IRB5500 + Centralized Paint Supply — Turnkey by TD
         </p>
+      </Section>
+
+      {/* OEM Body Painting Gallery */}
+      <Section variant="default">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+            <Image className="h-4 w-4" />
+            Vehicle OEM Projects
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Complete Body Painting Systems</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Full vehicle body-in-white (BIW) painting lines featuring Yaskawa and ABB robots with 200,000+ units annual capacity.
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {oemGallery.map((item, idx) => (
+            <div key={idx} className="bg-card rounded-xl border border-border overflow-hidden group hover:border-accent/30 transition-colors">
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-semibold mb-1">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="mt-8 bg-accent/5 rounded-xl p-6 border border-accent/10">
+          <div className="grid md:grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-2xl font-bold text-accent">200K+</div>
+              <div className="text-sm text-muted-foreground">Units/Year Capacity</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-accent">32</div>
+              <div className="text-sm text-muted-foreground">Robots per Line</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-accent">5</div>
+              <div className="text-sm text-muted-foreground">Coating Stations</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-accent">Class A</div>
+              <div className="text-sm text-muted-foreground">Finish Quality</div>
+            </div>
+          </div>
+        </div>
       </Section>
 
       <section className="section-dark border-t border-white/10">
