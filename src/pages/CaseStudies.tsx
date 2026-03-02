@@ -2,10 +2,23 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap } from "lucide-react";
 import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
+
+const industryIcons: Record<string, React.ReactNode> = {
+  Automotive: <Car className="h-5 w-5" />,
+  Industrial: <Truck className="h-5 w-5" />,
+  Aerospace: <Rocket className="h-5 w-5" />,
+};
+
+const projectMeta = [
+  { location: "Kaifeng, China", robots: "Yaskawa + Ransburg", systems: "32 robots" },
+  { location: "Wuhan, China", robots: "ABB + ABB Atomizer", systems: "10 robots" },
+  { location: "Zhuhai, China", robots: "Kawasaki + Graco", systems: "4 robots" },
+  { location: "Shenzhen, China", robots: "Strategic Partnership", systems: "CASC" },
+];
 
 export default function CaseStudies() {
   const { t } = useI18n();
@@ -92,13 +105,32 @@ export default function CaseStudies() {
 
       <Section variant="default">
         <div className="space-y-8">
-          {caseStudies.map((study) => (
-            <div key={study.id} className="bg-card rounded-xl border border-border overflow-hidden">
+          {caseStudies.map((study, idx) => (
+            <div key={study.id} className="bg-card rounded-xl border border-border overflow-hidden hover:border-accent/30 transition-colors">
               <div className="p-6 md:p-8">
                 <div className="flex flex-wrap items-center gap-3 mb-4">
-                  <span className="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full">{study.industry}</span>
+                  <span className="px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full flex items-center gap-1.5">
+                    {industryIcons[study.industry]}
+                    {study.industry}
+                  </span>
                   <h2 className="text-2xl font-bold">{study.title}</h2>
                 </div>
+                
+                {/* Project Meta Info */}
+                <div className="flex flex-wrap gap-4 mb-6 text-sm">
+                  <span className="flex items-center gap-1.5 text-muted-foreground">
+                    <MapPin className="h-4 w-4 text-accent" />
+                    {projectMeta[idx]?.location}
+                  </span>
+                  <span className="flex items-center gap-1.5 text-muted-foreground">
+                    <Zap className="h-4 w-4 text-accent" />
+                    {projectMeta[idx]?.robots}
+                  </span>
+                  <span className="px-2 py-0.5 bg-accent/5 text-accent rounded text-xs font-medium">
+                    {projectMeta[idx]?.systems}
+                  </span>
+                </div>
+
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
                     <h3 className="font-semibold mb-2 flex items-center gap-2">
@@ -116,13 +148,13 @@ export default function CaseStudies() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-2 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-accent" />
+                      <span className="w-2 h-2 rounded-full bg-green-500" />
                       {cs.outcomes || "Outcomes"}
                     </h3>
                     <ul className="space-y-1">
                       {study.outcomes.map((outcome, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <ArrowRight className="h-4 w-4 text-accent shrink-0 mt-0.5" />
+                          <ArrowRight className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
                           {outcome}
                         </li>
                       ))}
