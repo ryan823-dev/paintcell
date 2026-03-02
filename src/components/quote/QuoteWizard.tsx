@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useI18n } from "@/i18n";
 import { QuoteFormData, initialFormData } from "@/types/quote";
 import { wizardSteps } from "@/data/wizardSteps";
 import { WizardProgress } from "./WizardProgress";
 import { WizardStep } from "./WizardStep";
 import { WizardSummary } from "./WizardSummary";
 import { ContactForm } from "./ContactForm";
-import { SubmissionSuccess } from "./SubmissionSuccess";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,8 +17,9 @@ const TOTAL_STEPS = 8;
 export function QuoteWizard() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<QuoteFormData>(initialFormData);
-  const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { locale } = useI18n();
 
   const updateFormData = (field: keyof QuoteFormData, value: string | string[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -58,7 +60,7 @@ export function QuoteWizard() {
         return;
       }
       toast.success("Quote request submitted successfully!");
-      setSubmitted(true);
+      navigate(`/${locale}/thank-you`);
     } catch (error) {
       if (import.meta.env.DEV) console.error("Error submitting quote:", error);
       toast.error("An error occurred. Please try again.");
@@ -66,8 +68,6 @@ export function QuoteWizard() {
       setIsSubmitting(false);
     }
   };
-
-  if (submitted) return <SubmissionSuccess />;
 
   const isQuestionStep = currentStep < wizardSteps.length;
   const isSummaryStep = currentStep === wizardSteps.length;

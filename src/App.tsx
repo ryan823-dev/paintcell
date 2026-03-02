@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 
 // Lazy load other public pages
 const Quote = lazy(() => import("./pages/Quote"));
+const ThankYou = lazy(() => import("./pages/ThankYou"));
 const Applications = lazy(() => import("./pages/Applications"));
 const PaintCells = lazy(() => import("./pages/PaintCells"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
@@ -150,6 +151,7 @@ function PublicRoutes() {
     <Route element={<Layout />}>
       <Route index element={<Index />} />
       <Route path="quote" element={<Quote />} />
+      <Route path="thank-you" element={<ThankYou />} />
       <Route path="applications" element={<Applications />} />
       <Route path="paint-cells" element={<PaintCells />} />
       <Route path="case-studies" element={<CaseStudies />} />
