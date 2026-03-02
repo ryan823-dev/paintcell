@@ -27,7 +27,15 @@ const RequestSchema = z.object({
   messages: z.array(MessageSchema)
     .min(1, "At least one message is required")
     .max(MAX_MESSAGES, `Cannot exceed ${MAX_MESSAGES} messages`),
-  action: z.enum(["extract_requirements", "generate_summary"]).optional()
+  action: z.enum(["extract_requirements", "generate_summary"]).optional(),
+  pageContext: z.object({
+    currentPath: z.string().max(200),
+    industryContext: z.object({
+      industry: z.string().max(100),
+      finish: z.string().max(100),
+      throughput: z.string().max(50),
+    }).optional(),
+  }).optional(),
 });
 
 // Sanitize user input to prevent prompt injection
@@ -243,6 +251,277 @@ Always respond in plain text. Be helpful, professional, and engineering-focused.
 If asked about pricing: "Pricing depends on many factors specific to your application. I can help you document your requirements so our engineering team can prepare an accurate proposal."
 If asked to promise/guarantee: "I can help you explore options, but our engineering team will need to review the details before making any commitments."`;
 
+// ─── Knowledge Base ─────────────────────────────────────────────────────────
+// Structured data extracted from industryData.ts and solutionData.ts for
+// injection into the system prompt.  Gemini Flash has a 1 M-token context
+// window, so 15-20 K tokens of knowledge is well within budget.
+
+interface IndustryKB {
+  label: string;
+  slug: string;
+  finish: string;
+  throughput: string;
+  painPoints: string[];
+  systemModules: string[];
+  productionConfig: Record<string, string>;
+  roiMetrics: { label: string; value: string }[];
+  caseRefs: { part: string; config: string; capacity: string; roi: string }[];
+  faqs: { q: string; a: string }[];
+}
+
+interface SolutionKB {
+  label: string;
+  slug: string;
+  definition: string;
+  processSteps: string[];
+  configHighlights: string[];
+  constraints: string[];
+  roiMetrics: { label: string; value: string }[];
+  faqs: { q: string; a: string }[];
+}
+
+const INDUSTRIES: IndustryKB[] = [
+  {
+    label: "Automotive", slug: "automotive-painting",
+    finish: "Class A / industrial", throughput: "medium-high",
+    painPoints: ["Inconsistent finish quality across shifts", "Labor dependency & recruitment challenges", "Throughput bottlenecks in high-volume production", "30-50% overspray waste", "VOC emission compliance"],
+    systemModules: ["6-axis hollow-wrist robots", "Electrostatic rotary bell / HVLP", "Downdraft/crossdraft booths", "Centralized paint kitchen with color change", "PLC + HMI + MES integration"],
+    productionConfig: { partsPerHour: "200-400", paintType: "Solvent, water-based, 2K", finish: "Class A / OEM grade", automation: "Full robotic + auto color change", integration: "Conveyor-integrated" },
+    roiMetrics: [{ label: "Labor reduction", value: "50-70%" }, { label: "Throughput increase", value: "30-60%" }, { label: "Paint savings", value: "20-35%" }, { label: "ROI", value: "12-18 months" }],
+    caseRefs: [{ part: "Aluminum brackets", config: "2x robot, rotary bell", capacity: "320/hr", roi: "14mo" }, { part: "Plastic trim panels", config: "3x robot, HVLP", capacity: "180/hr", roi: "16mo" }, { part: "Steel housings", config: "1x robot, 2K", capacity: "240/hr", roi: "12mo" }],
+    faqs: [{ q: "How to automate painting in automotive?", a: "Start with feasibility assessment covering part geometry, production volume, and finish specs." }, { q: "Can robotic painting achieve Class A finish?", a: "Yes, with proper atomizer selection, process parameters, and booth environment control." }, { q: "Deployment time?", a: "16-24 weeks depending on complexity." }],
+  },
+  {
+    label: "Metal Parts", slug: "metal-parts-finishing",
+    finish: "industrial / protective", throughput: "medium",
+    painPoints: ["Uneven film build causing corrosion failures", "High labor costs", "CNC output bottleneck", "Complex geometry overspray", "Surface prep sensitivity"],
+    systemModules: ["6-axis extended reach robots", "Airless / air-assisted airless / HVLP", "Dry filter or water wash booths", "Pressure pot / diaphragm pump systems", "Recipe-based multi-part control"],
+    productionConfig: { partsPerHour: "80-250", paintType: "Primers, topcoats, 2K polyurethane", finish: "Industrial / protective / decorative", automation: "Robotic + fixture-based", integration: "Batch or inline" },
+    roiMetrics: [{ label: "Labor reduction", value: "40-60%" }, { label: "Throughput increase", value: "25-50%" }, { label: "Material savings", value: "15-30%" }, { label: "ROI", value: "14-22 months" }],
+    caseRefs: [{ part: "Steel enclosures", config: "2x robot, airless", capacity: "120/hr", roi: "18mo" }, { part: "Aluminum heat sinks", config: "1x robot, HVLP", capacity: "200/hr", roi: "15mo" }, { part: "Cast iron housings", config: "2x robot, 2K", capacity: "90/hr", roi: "20mo" }],
+    faqs: [{ q: "Best spray tech for metal parts?", a: "Airless/air-assisted for protective coatings; HVLP for decorative finishes." }, { q: "Can robots paint complex metal geometries?", a: "Yes, 6-axis robots with offline programming reach complex surfaces, cavities, and edges." }],
+  },
+  {
+    label: "Appliance", slug: "appliance-coating",
+    finish: "decorative / consumer-grade", throughput: "high",
+    painPoints: ["Color changeover delays", "Consumer-grade consistency demands", "High-volume throughput requirements", "Large panel overspray", "VOC regulatory compliance"],
+    systemModules: ["High-speed 6-axis robots", "Electrostatic bell/disc atomizers", "High-volume downdraft booths", "Fast color change <60s, 10+ colors", "Production scheduling + recipe selection"],
+    productionConfig: { partsPerHour: "300-600", paintType: "Water-based, UV curable, solvent", finish: "Consumer-grade decorative", automation: "Full robotic + auto color change", integration: "Conveyor-integrated" },
+    roiMetrics: [{ label: "Labor reduction", value: "60-80%" }, { label: "Throughput increase", value: "40-70%" }, { label: "Color changeover", value: "<60 seconds" }, { label: "ROI", value: "10-16 months" }],
+    caseRefs: [{ part: "Washing machine panels", config: "4x robot, electrostatic bell", capacity: "480/hr", roi: "12mo" }, { part: "Refrigerator doors", config: "3x robot, HVLP", capacity: "360/hr", roi: "14mo" }, { part: "AC unit housings", config: "2x robot, 2K", capacity: "200/hr", roi: "16mo" }],
+    faqs: [{ q: "How fast can robots change colors?", a: "Under 60 seconds with minimal waste, supporting 10+ colors." }],
+  },
+  {
+    label: "Construction Machinery", slug: "construction-machinery",
+    finish: "heavy-duty protective", throughput: "medium",
+    painPoints: ["Large parts 2-12m", "Thick film 100-200+ microns", "Complex weld seams", "Critical corrosion protection", "High paint consumption"],
+    systemModules: ["Rail-mounted robots with 7th-axis (8-12m reach)", "Airless/air-assisted for thick builds", "Oversized booths for 12m+ parts", "Heavy-duty turntables & positioners", "Recipe management per part type"],
+    productionConfig: { partsPerHour: "10-60", paintType: "High-build epoxy, polyurethane, 2K", finish: "Heavy-duty protective", automation: "Robotic + rail systems", integration: "Large-format booth" },
+    roiMetrics: [{ label: "Paint savings", value: "25-40%" }, { label: "Throughput increase", value: "30-50%" }, { label: "DFT consistency", value: "±5 micron" }, { label: "ROI", value: "14-20 months" }],
+    caseRefs: [{ part: "Excavator boom arms", config: "2x rail robots, airless", capacity: "18/hr", roi: "16mo" }, { part: "Loader bucket linkages", config: "1x robot, turntable", capacity: "30/hr", roi: "18mo" }],
+    faqs: [{ q: "Can robots handle large construction parts?", a: "Yes, rail-mounted robots with 7th-axis tracks extend reach to 8-12m." }, { q: "How are thick film builds handled?", a: "Multi-pass application with flash-off and automated DFT monitoring." }],
+  },
+  {
+    label: "Hardware & Sanitary", slug: "hardware-sanitary",
+    finish: "decorative / chrome-alternative", throughput: "medium-high",
+    painPoints: ["High decorative standards", "Complex small parts", "Chrome-plating phase-out (RoHS/REACH)", "High SKU count", "Chemical resistance needs"],
+    systemModules: ["Fine-atomization spray guns", "Multi-part batch fixtures", "Climate-controlled booth", "Fast color change for high-SKU", "Barcode/RFID part identification"],
+    productionConfig: { partsPerHour: "100-500", paintType: "Chrome-effect lacquers, metallic, clearcoats, epoxy", finish: "Decorative / chrome-alternative", automation: "Robotic + batch fixtures", integration: "Batch or conveyor" },
+    roiMetrics: [{ label: "Finish consistency", value: "±0.5 gloss units" }, { label: "Rework reduction", value: "70-90%" }, { label: "Material savings", value: "20-35%" }, { label: "ROI", value: "12-18 months" }],
+    caseRefs: [{ part: "Door handles", config: "2x robot, HVLP, batch", capacity: "300/hr", roi: "14mo" }, { part: "Bathroom faucets", config: "2x robot, chrome-effect", capacity: "180/hr", roi: "12mo" }],
+    faqs: [{ q: "What replaces chrome plating?", a: "Chrome-effect lacquers and metallic basecoat/clearcoat systems meet RoHS/REACH without hexavalent chromium." }],
+  },
+  {
+    label: "Furniture & Woodwork", slug: "furniture-woodwork",
+    finish: "lacquer / stain / UV", throughput: "medium",
+    painPoints: ["Runs/sags from hand spraying", "Skilled finisher shortage", "High material waste", "Finishing bottleneck", "Solvent exposure risks"],
+    systemModules: ["6-axis robots for furniture geometries", "HVLP / air-assisted airless", "Climate-controlled booths", "Conveyor/rotary table handling", "Optional UV curing integration"],
+    productionConfig: { partsPerHour: "60-200", paintType: "Lacquers, stains, UV coatings, water-based", finish: "Decorative / furniture-grade", automation: "Robotic + recipe management", integration: "Standalone or conveyor" },
+    roiMetrics: [{ label: "Labor reduction", value: "50-70%" }, { label: "Material savings", value: "20-40%" }, { label: "Throughput increase", value: "30-60%" }, { label: "ROI", value: "14-20 months" }],
+    caseRefs: [{ part: "Cabinet doors", config: "2x robot, HVLP", capacity: "120/hr", roi: "16mo" }, { part: "Table tops", config: "2x robot, UV cure", capacity: "60/hr", roi: "14mo" }],
+    faqs: [{ q: "What coatings for furniture?", a: "Lacquers (NC, acrylic, PU), stains, UV-curable, water-based, and pigmented paints." }],
+  },
+  {
+    label: "Aerospace & Defense", slug: "aerospace-defense",
+    finish: "mil-spec / aerospace-grade", throughput: "low-medium",
+    painPoints: ["Strict OEM/mil-spec compliance (MIL-PRF-85285, Boeing BMS)", "AS9100D/NADCAP traceability", "Hazardous chromate handling", "Complex masking", "High-mix low-volume"],
+    systemModules: ["Climate-controlled enclosed cells", "6-axis robots + offline programming", "HVLP and electrostatic systems", "Full traceability / batch records", "Hazmat ventilation & filtration"],
+    productionConfig: { partsPerHour: "5-40", paintType: "Chromate/non-chromate primers, PU topcoats, specialty", finish: "Mil-spec / aerospace-grade", automation: "Semi to full robotic", integration: "Batch with FAI support" },
+    roiMetrics: [{ label: "Rework reduction", value: "60-80%" }, { label: "Traceability", value: "100%" }, { label: "Operator exposure reduction", value: "95%+" }, { label: "ROI", value: "18-28 months" }],
+    caseRefs: [{ part: "Flight control surfaces", config: "2x robot, HVLP, enclosed", capacity: "12/hr", roi: "22mo" }, { part: "Interior panels", config: "2x robot, multi-color", capacity: "30/hr", roi: "18mo" }],
+    faqs: [{ q: "What specs govern aerospace coatings?", a: "OEM specs (Boeing BMS, Airbus AIMS), mil-specs (MIL-PRF-85285, MIL-PRF-23377), and AS9100D/NADCAP." }],
+  },
+  {
+    label: "Plastics & Composites", slug: "plastics-composites",
+    finish: "decorative / functional", throughput: "medium-high",
+    painPoints: ["Adhesion failures on low-energy substrates", "Static & dust attraction", "Molding variation", "Heat sensitivity", "Complex deep-draw geometries"],
+    systemModules: ["Flame/plasma/primer surface prep", "6-axis robots + vision", "HVLP / electrostatic / air-assisted", "Temperature-controlled booths", "IR/convection/air-dry curing"],
+    productionConfig: { partsPerHour: "80-300", paintType: "Primers, basecoats, clearcoats, soft-touch", finish: "Automotive-grade / decorative", automation: "Robotic + surface prep integration", integration: "Inline or batch" },
+    roiMetrics: [{ label: "Adhesion failures reduced", value: "90%+" }, { label: "Transfer efficiency", value: "65-85%" }, { label: "Throughput increase", value: "35-60%" }, { label: "ROI", value: "12-18 months" }],
+    caseRefs: [{ part: "Automotive bumpers", config: "3x robot, flame prep", capacity: "180/hr", roi: "14mo" }, { part: "Electronics housings", config: "2x robot, plasma", capacity: "240/hr", roi: "12mo" }],
+    faqs: [{ q: "Why is painting plastics different?", a: "Low surface energy, static buildup, heat sensitivity, and outgassing require specialized surface preparation." }],
+  },
+  {
+    label: "Battery & Energy Storage", slug: "battery-coating",
+    finish: "functional / thermal barrier", throughput: "medium-high",
+    painPoints: ["±5 micron coating tolerance", "ISO 7/8 cleanroom requirements", "Gigafactory volume scaling", "Specialized material handling", "OEM traceability/MES demands"],
+    systemModules: ["Servo-controlled precision dispensing", "ISO 7/8 cleanroom enclosures", "IP65+ cleanroom-rated robots", "Inline 3D scanning + thermal imaging", "Automotive-grade MES/SPC connectivity"],
+    productionConfig: { partsPerHour: "100-500", paintType: "Thermal barrier, ceramic, silicone, dielectric", finish: "Functional / thermal management", automation: "Full robotic + inline inspection", integration: "Cleanroom-integrated" },
+    roiMetrics: [{ label: "DFT consistency", value: "±5 micron" }, { label: "Scrap reduction", value: "85-95%" }, { label: "Throughput increase", value: "200-400%" }, { label: "ROI", value: "8-14 months" }],
+    caseRefs: [{ part: "Battery cell casings", config: "2x robot, precision dispense", capacity: "300/hr", roi: "10mo" }, { part: "Module thermal barriers", config: "3x robot, ceramic spray", capacity: "120/hr", roi: "12mo" }],
+    faqs: [{ q: "What coatings for batteries?", a: "Thermal barrier, ceramic insulation, dielectric, and silicone materials for thermal management and fire resistance." }],
+  },
+  {
+    label: "Medical Device", slug: "medical-device-coating",
+    finish: "biocompatible / antimicrobial", throughput: "low-medium",
+    painPoints: ["FDA 21 CFR Part 11 / ISO 13485 compliance", "ISO 10993 biocompatibility validation", "Micrometer-level precision", "ISO 5-7 cleanroom production", "Full lot traceability"],
+    systemModules: ["Ultra-precision micro-dispensing", "21 CFR Part 11 validated controls", "ISO 5-7 cleanroom enclosures", "Compact cleanroom-certified robots", "Automated IQ/OQ/PQ documentation"],
+    productionConfig: { partsPerHour: "20-200", paintType: "PTFE, silicone, antimicrobial, hydrophilic, drug-eluting", finish: "Biocompatible / functional", automation: "Robotic + validated process", integration: "Cleanroom + sterilization workflow" },
+    roiMetrics: [{ label: "Coating uniformity", value: "±2 micron" }, { label: "Regulatory compliance", value: "100%" }, { label: "Rework reduction", value: "90-98%" }, { label: "ROI", value: "14-24 months" }],
+    caseRefs: [{ part: "Surgical instruments", config: "1x robot, PTFE", capacity: "150/hr", roi: "18mo" }, { part: "Orthopedic implants", config: "2x robot, hydroxyapatite", capacity: "60/hr", roi: "20mo" }],
+    faqs: [{ q: "What regulatory requirements?", a: "FDA 21 CFR Part 11, ISO 13485, ISO 10993, and EU MDR." }, { q: "Can small implants be coated robotically?", a: "Yes, micro-dispensing with sub-millimeter accuracy." }],
+  },
+];
+
+const SOLUTIONS: SolutionKB[] = [
+  {
+    label: "Robotic Painting System Integration", slug: "robotic-painting-system",
+    definition: "Turnkey integration of industrial robots, spray process, paint supply, booth/airflow, controls, and commissioning for repeatable coating quality.",
+    processSteps: ["Part Positioning (fixture/conveyor)", "Spray Execution (electrostatic/HVLP/air)", "Paint Supply & Fluid Control", "Booth Airflow & Overspray Management", "Controls & Safety (PLC+HMI)", "Process Verification"],
+    configHighlights: ["Robot brands: ABB/FANUC/KUKA", "Spray tech: electrostatic, HVLP, air spray", "New booth build or existing booth integration", "ATEX-ready configurations available", "Single or multi-color changeover"],
+    constraints: ["System integration, not standalone equipment", "Final config during engineering assessment", "Primary focus: automotive + industrial finishing"],
+    roiMetrics: [{ label: "Coating consistency", value: "Repeatable" }, { label: "Manual dependency", value: "Reduced" }, { label: "Throughput", value: "Stabilized" }, { label: "Lead time", value: "8-12 weeks" }],
+    faqs: [{ q: "What is robotic painting system integration?", a: "Turnkey integration of robots, spray process, paint supply, booth, controls, and commissioning." }, { q: "New booth or existing?", a: "Both. New build or retrofit into existing booth environment." }, { q: "ATEX support?", a: "Yes, configured based on site classification and process requirements." }],
+  },
+  {
+    label: "Paint Booth Automation", slug: "paint-booth-automation",
+    definition: "Engineering and integration of spray booth airflow/ventilation, overspray management, safety interlocks, paint process controls, and robotic spray execution into a stable finishing environment.",
+    processSteps: ["Airflow & Ventilation control", "Safety Design & interlocks", "Controls Integration (PLC+HMI)", "Paint Supply coordination", "Monitoring & Alarms"],
+    configHighlights: ["New booth build or retrofit", "Airflow/ventilation aligned with spray process", "ATEX-ready where applicable", "Controls + safety logic update"],
+    constraints: ["Final config depends on paint type, throughput, site constraints", "Finalized during engineering assessment"],
+    roiMetrics: [{ label: "Quality stability", value: "Improved" }, { label: "Production continuity", value: "Stabilized" }, { label: "Rework", value: "Reduced" }, { label: "Lead time", value: "8-12 weeks" }],
+    faqs: [{ q: "What is paint booth automation?", a: "Integration of airflow, overspray management, safety, controls, and robotic spray into a stable finishing environment." }, { q: "How does it affect quality?", a: "Stable booth environment reduces variability and supports repeatable finishes." }],
+  },
+  {
+    label: "Spray Robot Integration", slug: "spray-robot-integration",
+    definition: "Selection, configuration, programming, and deployment of industrial robots for spray painting: explosion-proof design, hollow-wrist construction, and specialized path programming.",
+    processSteps: ["Requirements Analysis (geometry, volume, quality)", "Robot Selection (reach, speed, EX-proof)", "Cell Layout Design (3D)", "Path Programming (offline + on-site)", "Production Validation (Cpk, cycle time)"],
+    configHighlights: ["Compact robots for small parts (900-1400mm reach)", "Standard painting robots (1800-2500mm reach)", "Extended reach (2800mm+) on linear track", "Explosion-proof ATEX/IECEx certified", "Hollow wrist for paint line routing"],
+    constraints: ["ATEX/IECEx certification required for solvent-based", "Hollow wrist strongly recommended", "Painting-specific programming expertise required"],
+    roiMetrics: [{ label: "Transfer efficiency", value: "30% → 65-85%" }, { label: "Cycle time reduction", value: "20-50%" }, { label: "Quality Cpk", value: ">1.33" }, { label: "Payback", value: "14-24 months" }],
+    faqs: [{ q: "How is a painting robot different?", a: "Explosion-proof, hollow wrist for paint lines, specialized painting software, and process I/O for gun control." }, { q: "Can robots be reprogrammed for new parts?", a: "Yes, offline programming from CAD without stopping production." }],
+  },
+];
+
+// ─── Dynamic System Prompt Builder ──────────────────────────────────────────
+
+interface PageCtx {
+  currentPath?: string;
+  industryContext?: { industry?: string; finish?: string; throughput?: string };
+}
+
+function getPageType(path: string): { type: "industry" | "solution" | "product" | "resource" | "other"; slug?: string } {
+  const clean = path.replace(/^\/(en|zh|ja|ko|de|fr|es|pt|ar)(\/|$)/, "/");
+  const indMatch = clean.match(/^\/industries\/([a-z-]+)/);
+  if (indMatch) return { type: "industry", slug: indMatch[1] };
+  const solMatch = clean.match(/^\/solutions\/([a-z-]+)/);
+  if (solMatch) return { type: "solution", slug: solMatch[1] };
+  if (clean.startsWith("/products")) return { type: "product" };
+  if (clean.startsWith("/resources")) return { type: "resource" };
+  return { type: "other" };
+}
+
+function formatIndustryFull(ind: IndustryKB): string {
+  let s = `### ${ind.label} (/${ind.slug})\n`;
+  s += `Finish: ${ind.finish} | Throughput: ${ind.throughput}\n`;
+  s += `Pain points: ${ind.painPoints.join("; ")}\n`;
+  s += `System modules: ${ind.systemModules.join("; ")}\n`;
+  s += `Production: ${Object.entries(ind.productionConfig).map(([k, v]) => `${k}: ${v}`).join(", ")}\n`;
+  s += `ROI: ${ind.roiMetrics.map(m => `${m.label} ${m.value}`).join(", ")}\n`;
+  s += `Case references:\n${ind.caseRefs.map(c => `  - ${c.part}: ${c.config}, ${c.capacity}, ROI ${c.roi}`).join("\n")}\n`;
+  s += `FAQs:\n${ind.faqs.map(f => `  Q: ${f.q}\n  A: ${f.a}`).join("\n")}\n`;
+  return s;
+}
+
+function formatIndustrySummary(ind: IndustryKB): string {
+  return `- ${ind.label}: ${ind.finish}, ${ind.throughput} throughput, ${ind.productionConfig.partsPerHour} parts/hr, ROI ${ind.roiMetrics.find(m => m.label.toLowerCase().includes("roi"))?.value || "varies"}`;
+}
+
+function formatSolutionFull(sol: SolutionKB): string {
+  let s = `### ${sol.label} (/${sol.slug})\n`;
+  s += `${sol.definition}\n`;
+  s += `Process: ${sol.processSteps.join(" → ")}\n`;
+  s += `Config highlights: ${sol.configHighlights.join("; ")}\n`;
+  s += `Constraints: ${sol.constraints.join("; ")}\n`;
+  s += `ROI: ${sol.roiMetrics.map(m => `${m.label} ${m.value}`).join(", ")}\n`;
+  s += `FAQs:\n${sol.faqs.map(f => `  Q: ${f.q}\n  A: ${f.a}`).join("\n")}\n`;
+  return s;
+}
+
+function formatSolutionSummary(sol: SolutionKB): string {
+  return `- ${sol.label}: ${sol.definition.slice(0, 120)}...`;
+}
+
+function buildSystemPrompt(pageContext?: PageCtx): string {
+  const page = pageContext?.currentPath ? getPageType(pageContext.currentPath) : { type: "other" as const };
+
+  let knowledge = "\n\n---\nPAINTCELL KNOWLEDGE BASE\n\n";
+  knowledge += "## Company Overview\nTD Robotic Painting Systems (brand: PaintCell) provides end-to-end robotic painting system integration for 10+ industries worldwide. We integrate robots (ABB/FANUC/KUKA), spray technology (electrostatic/HVLP/airless), paint booth automation, paint supply systems, and PLC-based controls. Our delivery process: Requirement Analysis → Concept Design → Detail Engineering → Manufacturing → Factory Testing → Installation → Training & Handover. Typical deployment: 8-24 weeks after design approval.\n\n";
+
+  if (page.type === "industry" && page.slug) {
+    const focused = INDUSTRIES.find(i => i.slug === page.slug);
+    if (focused) {
+      knowledge += "## CURRENT PAGE INDUSTRY (provide detailed answers for this industry)\n";
+      knowledge += formatIndustryFull(focused);
+      knowledge += "\n## Other Industries We Serve\n";
+      for (const ind of INDUSTRIES) {
+        if (ind.slug !== page.slug) knowledge += formatIndustrySummary(ind) + "\n";
+      }
+    } else {
+      for (const ind of INDUSTRIES) knowledge += formatIndustryFull(ind) + "\n";
+    }
+    knowledge += "\n## Solutions\n";
+    for (const sol of SOLUTIONS) knowledge += formatSolutionSummary(sol) + "\n";
+  } else if (page.type === "solution" && page.slug) {
+    const focused = SOLUTIONS.find(s => s.slug === page.slug);
+    if (focused) {
+      knowledge += "## CURRENT PAGE SOLUTION (provide detailed answers for this solution)\n";
+      knowledge += formatSolutionFull(focused);
+      knowledge += "\n## Other Solutions\n";
+      for (const sol of SOLUTIONS) {
+        if (sol.slug !== page.slug) knowledge += formatSolutionSummary(sol) + "\n";
+      }
+    } else {
+      for (const sol of SOLUTIONS) knowledge += formatSolutionFull(sol) + "\n";
+    }
+    knowledge += "\n## Industries We Serve\n";
+    for (const ind of INDUSTRIES) knowledge += formatIndustrySummary(ind) + "\n";
+  } else {
+    // Homepage, product pages, resource pages, or unknown - provide balanced overview
+    knowledge += "## Industries We Serve (10 industries)\n";
+    for (const ind of INDUSTRIES) knowledge += formatIndustrySummary(ind) + "\n";
+    knowledge += "\n## Solutions We Offer\n";
+    for (const sol of SOLUTIONS) knowledge += formatSolutionFull(sol) + "\n";
+  }
+
+  // Add industry context hint from frontend if available
+  if (pageContext?.industryContext) {
+    const ic = pageContext.industryContext;
+    knowledge += `\n## User Context from Page\nThe user is browsing content related to: industry="${ic.industry}", finish="${ic.finish}", throughput="${ic.throughput}". Prioritize this context when answering.\n`;
+  }
+
+  knowledge += `\n---
+KNOWLEDGE USAGE INSTRUCTIONS:
+- Use the knowledge base above to provide specific, accurate answers with real data points (throughput, ROI, case references).
+- When the user asks about an industry, reference its pain points, system modules, production config, and case references.
+- When the user asks about solutions, reference process steps, config highlights, and constraints.
+- If the user's question spans multiple industries or solutions, provide a comparative overview.
+- Always maintain constraints: no pricing, no guarantees, human engineers confirm final scope.
+---\n`;
+
+  return SYSTEM_PROMPT + knowledge;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -293,7 +572,7 @@ serve(async (req) => {
       );
     }
     
-    const { messages: rawMessages, action } = validationResult.data;
+    const { messages: rawMessages, action, pageContext } = validationResult.data;
     
     // Sanitize all user messages to prevent prompt injection
     const messages = rawMessages.map(msg => ({
@@ -302,13 +581,114 @@ serve(async (req) => {
     }));
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
-    if (!LOVABLE_API_KEY) {
-      console.error("Missing API key configuration");
+    const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
+    const DASHSCOPE_API_KEY = Deno.env.get("DASHSCOPE_API_KEY");
+
+    // Provider fallback chain: Lovable → OpenRouter → DashScope
+    interface AIProvider {
+      name: string;
+      endpoint: string;
+      apiKey: string | undefined;
+      model: string;
+      extraHeaders?: Record<string, string>;
+    }
+
+    const providers: AIProvider[] = [
+      LOVABLE_API_KEY ? {
+        name: "lovable",
+        endpoint: "https://ai.gateway.lovable.dev/v1/chat/completions",
+        apiKey: LOVABLE_API_KEY,
+        model: "google/gemini-3-flash-preview",
+      } : null,
+      OPENROUTER_API_KEY ? {
+        name: "openrouter",
+        endpoint: "https://openrouter.ai/api/v1/chat/completions",
+        apiKey: OPENROUTER_API_KEY,
+        model: "anthropic/claude-3.5-haiku",
+        extraHeaders: { "HTTP-Referer": "https://tdpaintcell.com", "X-Title": "PaintCell AI Assistant" },
+      } : null,
+      DASHSCOPE_API_KEY ? {
+        name: "dashscope",
+        endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+        apiKey: DASHSCOPE_API_KEY,
+        model: "qwen-plus",
+      } : null,
+    ].filter((p): p is AIProvider => p !== null);
+
+    if (providers.length === 0) {
+      console.error("No AI provider API keys configured");
       return new Response(
         JSON.stringify({ error: "Service configuration error" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Unified AI call with automatic fallback
+    async function callAIWithFallback(
+      systemContent: string,
+      chatMessages: { role: string; content: string }[],
+      options: { stream?: boolean; temperature?: number } = {}
+    ): Promise<Response> {
+      const { stream = false, temperature } = options;
+
+      for (let i = 0; i < providers.length; i++) {
+        const provider = providers[i];
+        try {
+          const headers: Record<string, string> = {
+            Authorization: `Bearer ${provider.apiKey}`,
+            "Content-Type": "application/json",
+            ...provider.extraHeaders,
+          };
+
+          const body: Record<string, unknown> = {
+            model: provider.model,
+            messages: [
+              { role: "system", content: systemContent },
+              ...chatMessages,
+            ],
+          };
+          if (stream) body.stream = true;
+          if (temperature !== undefined) body.temperature = temperature;
+
+          const response = await fetch(provider.endpoint, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body),
+          });
+
+          // If response is OK, return it
+          if (response.ok) {
+            console.log(`AI provider: ${provider.name} succeeded`);
+            return response;
+          }
+
+          // Retriable failures → try next provider
+          const status = response.status;
+          if (status === 429 || status === 402 || status === 500 || status === 502 || status === 503) {
+            const errText = await response.text().catch(() => "");
+            console.warn(`AI provider ${provider.name} failed (${status}): ${errText.slice(0, 200)}`);
+            if (i < providers.length - 1) {
+              console.log(`Falling back to next provider: ${providers[i + 1].name}`);
+              continue;
+            }
+          }
+
+          // Non-retriable failure on last provider → return as-is
+          return response;
+        } catch (err) {
+          // Network error → try next provider
+          console.warn(`AI provider ${provider.name} network error: ${err instanceof Error ? err.message : "unknown"}`);
+          if (i < providers.length - 1) {
+            console.log(`Falling back to next provider: ${providers[i + 1].name}`);
+            continue;
+          }
+          // All providers failed
+          throw err;
+        }
+      }
+
+      // Should not reach here, but safety fallback
+      throw new Error("All AI providers exhausted");
     }
 
     // Handle requirement extraction action
@@ -374,25 +754,11 @@ Valid values for each field:
 - decision_structure: single_decision_maker, small_technical_team, cross_functional_team, not_sure
 - current_need: concept_layout, feasibility_review, budgetary_estimate, compliance_risk_review, general_discussion`;
 
-      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
-          messages: [
-            { role: "system", content: extractionPrompt },
-            ...messages,
-          ],
-          temperature: 0.1,
-        }),
-      });
+      const response = await callAIWithFallback(extractionPrompt, messages, { temperature: 0.1 });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("AI gateway error:", response.status, errorText);
+        console.error("AI extraction error:", response.status, errorText);
         return new Response(JSON.stringify({ error: "Failed to extract requirements" }), {
           status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -433,25 +799,11 @@ End with a note: "Note: This summary is for discussion purposes. Our engineering
 
 Keep it concise and professional.`;
 
-      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
-          messages: [
-            { role: "system", content: summaryPrompt },
-            ...messages,
-          ],
-          temperature: 0.3,
-        }),
-      });
+      const response = await callAIWithFallback(summaryPrompt, messages, { temperature: 0.3 });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("AI gateway error:", response.status, errorText);
+        console.error("AI summary error:", response.status, errorText);
         return new Response(JSON.stringify({ error: "Failed to generate summary" }), {
           status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -466,22 +818,9 @@ Keep it concise and professional.`;
       });
     }
 
-    // Regular chat - use streaming
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
-        ],
-        stream: true,
-      }),
-    });
+    // Regular chat - use streaming with dynamic knowledge-enriched prompt + fallback
+    const systemPrompt = buildSystemPrompt(pageContext);
+    const response = await callAIWithFallback(systemPrompt, messages, { stream: true });
 
     if (!response.ok) {
       if (response.status === 429) {

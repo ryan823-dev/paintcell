@@ -10,15 +10,17 @@ import { ChatMessage, ChatMessageType } from "./ChatMessage";
 import { RequirementSummary } from "./RequirementSummary";
 import { ContactFormModal } from "./ContactFormModal";
 import { QuoteFormData, initialFormData } from "@/types/quote";
+import type { PageContext } from "./FloatingAssistantButton";
 
 interface AIChatPanelProps {
   onClose: () => void;
   initialMessage?: string | null;
+  pageContext?: PageContext;
 }
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-presales-chat`;
 
-export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
+export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPanelProps) {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessageType[]>([
     {
@@ -75,6 +77,7 @@ export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
         },
         body: JSON.stringify({
           messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+          pageContext,
         }),
       });
 
@@ -173,6 +176,7 @@ export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
           body: JSON.stringify({
             messages: messages.map(m => ({ role: m.role, content: m.content })),
             action: "generate_summary",
+            pageContext,
           }),
         }),
         fetch(CHAT_URL, {
@@ -184,6 +188,7 @@ export function AIChatPanel({ onClose, initialMessage }: AIChatPanelProps) {
           body: JSON.stringify({
             messages: messages.map(m => ({ role: m.role, content: m.content })),
             action: "extract_requirements",
+            pageContext,
           }),
         }),
       ]);

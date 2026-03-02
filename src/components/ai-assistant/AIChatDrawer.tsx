@@ -2,14 +2,16 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { AIChatPanel } from "./AIChatPanel";
 import { ConsultationIntroScreen } from "./ConsultationIntroScreen";
+import type { PageContext } from "./FloatingAssistantButton";
 
 interface AIChatDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialProjectMessage?: string | null;
+  pageContext?: PageContext;
 }
 
-export function AIChatDrawer({ open, onOpenChange, initialProjectMessage }: AIChatDrawerProps) {
+export function AIChatDrawer({ open, onOpenChange, initialProjectMessage, pageContext }: AIChatDrawerProps) {
   const [hasStarted, setHasStarted] = useState(false);
   const [initialMessage, setInitialMessage] = useState<string | null>(null);
 
@@ -47,7 +49,7 @@ export function AIChatDrawer({ open, onOpenChange, initialProjectMessage }: AICh
                 No pricing. Human engineers confirm final scope.
               </SheetDescription>
             </SheetHeader>
-            <AIChatPanel onClose={handleClose} initialMessage={effectiveMessage} />
+            <AIChatPanel onClose={handleClose} initialMessage={effectiveMessage} pageContext={pageContext} />
           </>
         ) : (
           <ConsultationIntroScreen onSelectOption={handleSelectOption} />

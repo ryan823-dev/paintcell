@@ -6,10 +6,20 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AIChatDrawer } from "./AIChatDrawer";
 
+export interface PageContext {
+  currentPath: string;
+  industryContext?: {
+    industry: string;
+    finish: string;
+    throughput: string;
+  };
+}
+
 export function FloatingAssistantButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [projectMessage, setProjectMessage] = useState<string | null>(null);
+  const [pageContext, setPageContext] = useState<PageContext>({ currentPath: "/" });
   const location = useLocation();
 
   const isHomepage = location.pathname === "/";
@@ -23,6 +33,11 @@ export function FloatingAssistantButton() {
     }
   }, []);
 
+  // Keep pageContext.currentPath in sync with route changes
+  useEffect(() => {
+    setPageContext(prev => ({ ...prev, currentPath: location.pathname }));
+  }, [location.pathname]);
+
   // Listen for programmatic trigger from homepage panel
   useEffect(() => {
     const handleTrigger = () => {
@@ -30,6 +45,14 @@ export function FloatingAssistantButton() {
       if (msg) {
         setProjectMessage(msg);
         sessionStorage.removeItem("project-init-message");
+      }
+      // Read industry-context set by industry/solution pages
+      const ctxRaw = sessionStorage.getItem("industry-context");
+      if (ctxRaw) {
+        try {
+          const ctx = JSON.parse(ctxRaw);
+          setPageContext(prev => ({ ...prev, industryContext: ctx }));
+        } catch { /* ignore malformed */ }
       }
       setIsOpen(true);
     };
@@ -49,6 +72,13 @@ export function FloatingAssistantButton() {
         if (msg) {
           setProjectMessage(msg);
           sessionStorage.removeItem("project-init-message");
+        }
+        const ctxRaw = sessionStorage.getItem("industry-context");
+        if (ctxRaw) {
+          try {
+            const ctx = JSON.parse(ctxRaw);
+            setPageContext(prev => ({ ...prev, industryContext: ctx }));
+          } catch { /* ignore malformed */ }
         }
         setIsOpen(true);
       }} />
@@ -70,7 +100,17 @@ export function FloatingAssistantButton() {
               onAnimationComplete={() => setHasAnimated(true)}
             >
               <Button
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                  // Read industry-context when opening from floating button
+                  const ctxRaw = sessionStorage.getItem("industry-context");
+                  if (ctxRaw) {
+                    try {
+                      const ctx = JSON.parse(ctxRaw);
+                      setPageContext(prev => ({ ...prev, industryContext: ctx }));
+                    } catch { /* ignore malformed */ }
+                  }
+                  setIsOpen(true);
+                }}
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
                   "bg-accent hover:bg-accent/90",
@@ -115,6 +155,7 @@ export function FloatingAssistantButton() {
           if (!open) setProjectMessage(null);
         }}
         initialProjectMessage={projectMessage}
+        pageContext={pageContext}
       />
     </>
   );
