@@ -1,6 +1,6 @@
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
-import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car } from "lucide-react";
+import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car, Wrench } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { solutions } from "@/data/solutionData";
 import { useI18n } from "@/i18n";
@@ -154,6 +154,79 @@ export default function Solutions() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Equipment Integration Gallery */}
+        <section className="border-b border-border">
+          <div className="container-wide py-12 md:py-16">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+                <Wrench className="h-4 w-4" />
+                Equipment Integration
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Robot + Atomizer Integration</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Precision integration of painting robots with high-speed rotary bell atomizers — hollow-wrist routing, electrostatic cascade, and CAN-bus process control.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card rounded-xl border border-border overflow-hidden group hover:border-accent/30 transition-colors">
+                <div className="aspect-[4/5] relative overflow-hidden">
+                  <img
+                    src="/images/products/abb-robot-internals.jpg"
+                    alt="ABB painting robot with hollow-wrist internal routing for paint lines, air supply, and electrostatic cables"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold mb-1">Hollow-Wrist Internal Routing</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Paint supply lines, shaping air hoses, electrostatic HV cables, and PROFINET communication routed through the robot arm — eliminating external cable interference and enabling full 6-axis freedom of motion.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-card rounded-xl border border-border overflow-hidden group hover:border-accent/30 transition-colors">
+                <div className="aspect-[4/5] relative overflow-hidden">
+                  <img
+                    src="/images/products/abb-sames-rotary-bell.jpg"
+                    alt="ABB painting robot with Sames rotary bell atomizer and protective capot installed"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold mb-1">Sames Rotary Bell Integration</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    High-speed electrostatic rotary bell (up to 60,000 RPM) with 100kV cascade, dual shaping air control, and CAN-bus communication — achieving 65-85% transfer efficiency on automotive-grade finishes.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 bg-accent/5 rounded-xl p-5 border border-accent/10">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
+                <div>
+                  <div className="font-bold text-accent">60K RPM</div>
+                  <div className="text-muted-foreground text-xs">Bell Speed</div>
+                </div>
+                <div>
+                  <div className="font-bold text-accent">100 kV</div>
+                  <div className="text-muted-foreground text-xs">Electrostatic Cascade</div>
+                </div>
+                <div>
+                  <div className="font-bold text-accent">15–50 mm</div>
+                  <div className="text-muted-foreground text-xs">Bell Cup Range</div>
+                </div>
+                <div>
+                  <div className="font-bold text-accent">65–85%</div>
+                  <div className="text-muted-foreground text-xs">Transfer Efficiency</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

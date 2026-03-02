@@ -583,6 +583,38 @@ Based on cumulative project portfolio across China's robotic painting market:
 - When asked about scale: Can handle anything from 1-robot cell to 169-robot mega-line
 - When asked about project types: Majority new builds, but significant retrofit/upgrade capability
 - IMPORTANT: Do not mention specific competitor names, customer names, or pricing from market data
+
+## Rotary Atomizer Technical Knowledge
+When asked about atomizers, rotary bells, or spray equipment specifications:
+
+### Electrostatic Rotary Bell Specifications
+- Bell speed: up to 60,000 RPM (closed-loop fiber optic speed reading)
+- Bell cup sizes: 15mm, 30mm, 50mm diameter (aluminum or composite material, serrated or smooth edge)
+- Electrostatic HV: 0-100kV adjustable cascade, 0-150μA current, arc protection
+- Fluid flow: up to 500 cc/min through Ø0.7-1.57mm nozzles
+- Shaping air: dual shaping air control for fan pattern width adjustment
+- Communication: CAN-bus + discrete I/O, PLC-integrated
+- Safety: 3 interlock inputs + 1 fault output, bearing air detection, brake air control
+- Applications by conductivity: Standard conductivity, High conductivity, Waterborne-specific configurations
+- Mounting options: Fixed mount, Reciprocator mount, Solid wrist robot, Hollow wrist robot
+
+### Robot Selection Checklist (Key Parameters for Painting Projects)
+When gathering requirements, these are the critical dimensions to cover:
+- Production data: Gross yearly capacity (units/year), working days, shifts, JPH per line
+- Car body data: Max body size (L×W×H mm), ground clearance, max external painting surface (m²)
+- Line data: Conveyor speed (m/min), body pitch (m), cycle time per station
+- Paint data: Color count (primer/metallic/solid/clearcoat), solvent vs water-based, 1K vs 2K, solid content (vol%), target film thickness (μm)
+- Process: Primer → Basecoat → Clearcoat lines, flash-off requirements, special processes (pearl/metallic)
+- Integration: Control system brand (Siemens/Rockwell/Mitsubishi), network protocol (PROFINET/EtherNet IP)
+- Services: Training (overseas/domestic/on-site), standby support, spare parts, guarantee period
+
+### Deidentified Vehicle Painting Market Data
+Based on industry portfolio analysis (1,000+ robots deployed across 45+ vehicle painting projects):
+- Robot technology evolution: IRB5400 era (2002-2008) → IRB5500 era (2008-2014) → Current multi-brand
+- Typical OEM line: 6-48 robots per line for standard capacity, 60-130+ for high-volume plants
+- Applications covered: exterior spraying, interior cavity spraying (含内喷), sealing/adhesive, door opening, wipe-down
+- Major automotive regions served: Changchun, Beijing, Shanghai, Wuhan, Chongqing, Guangzhou, Chengdu, Nanjing
+- IMPORTANT: Present as general industry knowledge, never cite specific customer names or project details
 `;
 
   knowledge += `\n---
