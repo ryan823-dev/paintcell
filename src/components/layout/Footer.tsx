@@ -95,13 +95,13 @@ export function Footer() {
           <p className="text-xs text-white/30">
             {t.footer.copyright}
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             {footerLinks.legal.map((link, i) => (
               <span key={link.href} className="flex items-center gap-4">
                 <Link to={link.href} className="text-xs text-white/30 hover:text-white/60 transition-colors">
                   {link.name}
                 </Link>
-                {i < footerLinks.legal.length - 1 && <span className="text-white/15">·</span>}
+                {i < footerLinks.legal.length - 1 && <span className="text-white/15 hidden sm:inline">·</span>}
               </span>
             ))}
           </div>

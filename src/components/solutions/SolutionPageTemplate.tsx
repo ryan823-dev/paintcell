@@ -129,18 +129,18 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               <Sparkles className="h-3 w-3" />
               Solution
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight max-w-3xl text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight max-w-3xl text-white">
               {data.heroTitle}
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl mb-8">
               {data.heroSubtitle}
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+              <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl w-full sm:w-auto">
                 Start Project Assessment
                 <ChevronRight className="h-4 w-4" />
               </Button>
-              <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-white/30 text-white hover:bg-white/10">
+              <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-white/30 text-white hover:bg-white/10 w-full sm:w-auto">
                 <Link to="/quote">Talk to an Engineer</Link>
               </Button>
             </div>
@@ -392,8 +392,8 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {data.roiMetrics.map((m, i) => (
                 <Card key={i} className="border-border bg-card text-center">
-                  <CardContent className="p-5">
-                    <div className="text-xl md:text-2xl font-bold text-accent mb-1">{m.value}</div>
+                  <CardContent className="p-4 sm:p-5">
+                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-accent mb-1">{m.value}</div>
                     <div className="text-xs text-muted-foreground font-medium">{m.label}</div>
                   </CardContent>
                 </Card>
@@ -418,7 +418,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
                 <div key={i} className="flex gap-4 items-start">
                   <div className="flex flex-col items-center">
                     <span className="flex items-center justify-center h-8 w-8 rounded-full bg-accent text-accent-foreground text-xs font-bold shrink-0">{i + 1}</span>
-                    {i < data.timeline.length - 1 && <div className="w-px flex-1 bg-border mt-1" />}
+                    {i < data.timeline.length - 1 && <div className="w-px flex-1 bg-border mt-1 max-h-[60px]" />}
                   </div>
                   <div className="pb-4">
                     <div className="flex items-center gap-2 mb-1">
@@ -520,11 +520,11 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
               <p className="text-white/60 text-sm mb-6 max-w-xl">
                 Tell us whether you need a new booth or integration into an existing booth, your parts/coating requirements, throughput targets, and ATEX classification (if applicable).
               </p>
-              <div className="flex flex-wrap gap-3">
-                <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl w-full sm:w-auto">
                   Start Project Assessment <ChevronRight className="h-4 w-4" />
                 </Button>
-                <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-white/30 text-white hover:bg-white/10">
+                <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-white/30 text-white hover:bg-white/10 w-full sm:w-auto">
                   <Link to="/quote">Talk to an Engineer</Link>
                 </Button>
               </div>

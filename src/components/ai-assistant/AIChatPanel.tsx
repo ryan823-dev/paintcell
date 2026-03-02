@@ -295,7 +295,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
 
       {/* Draggable resize handle */}
       {!showSummary && (
-        <div className="relative group cursor-row-resize select-none flex items-center justify-center py-1 border-t border-primary-foreground/15 hover:border-accent/40 transition-colors"
+        <div className="relative group cursor-row-resize select-none touch-none flex items-center justify-center py-1 border-t border-primary-foreground/15 hover:border-accent/40 transition-colors"
           onMouseDown={(e) => {
             e.preventDefault();
             const startY = e.clientY;
@@ -314,6 +314,24 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
             document.addEventListener('mousemove', onMouseMove);
             document.addEventListener('mouseup', onMouseUp);
           }}
+          onTouchStart={(e) => {
+            const startY = e.touches[0].clientY;
+            const inputEl = (e.currentTarget.nextElementSibling as HTMLElement);
+            const startHeight = inputEl?.offsetHeight || 56;
+
+            const onTouchMove = (ev: TouchEvent) => {
+              ev.preventDefault();
+              const delta = startY - ev.touches[0].clientY;
+              const newHeight = Math.max(56, Math.min(300, startHeight + delta));
+              if (inputEl) inputEl.style.height = `${newHeight}px`;
+            };
+            const onTouchEnd = () => {
+              document.removeEventListener('touchmove', onTouchMove);
+              document.removeEventListener('touchend', onTouchEnd);
+            };
+            document.addEventListener('touchmove', onTouchMove, { passive: false });
+            document.addEventListener('touchend', onTouchEnd);
+          }}
         >
           <GripHorizontal className="h-4 w-4 text-primary-foreground/20 group-hover:text-accent/60 transition-colors" />
         </div>
@@ -321,7 +339,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
 
       {/* Input Area */}
       {!showSummary && (
-        <div className="p-4 bg-background" style={{ height: 80 }}>
+        <div className="p-4 bg-background min-h-[80px]">
           <div className="flex gap-2 h-full">
             <Textarea
               value={input}

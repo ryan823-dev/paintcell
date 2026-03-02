@@ -132,7 +132,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                   <Sparkles className="h-3 w-3" />
                   {data.industryLabel} Solutions
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight">
                   {data.heroTitle}
                 </h1>
                 <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-8 max-w-xl">
@@ -259,7 +259,23 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
               {t.industry.configTitle}
             </h2>
             <Card className="border-border bg-card overflow-hidden">
-              <div className="overflow-x-auto">
+              {/* Mobile: stacked card layout */}
+              <div className="md:hidden">
+                {[
+                  [t.industry.partsPerHour, data.productionConfig.partsPerHour],
+                  [t.industry.paintType, data.productionConfig.paintType],
+                  [t.industry.finishRequirement, data.productionConfig.finishRequirement],
+                  [t.industry.automationLevel, data.productionConfig.automationLevel],
+                  [t.industry.lineIntegration, data.productionConfig.lineIntegration],
+                ].map(([label, value], i) => (
+                  <div key={i} className="py-3 px-5 border-b border-border last:border-0">
+                    <dt className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">{label}</dt>
+                    <dd className="text-sm font-medium">{value}</dd>
+                  </div>
+                ))}
+              </div>
+              {/* Desktop: table layout */}
+              <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border bg-muted/50">
@@ -300,8 +316,8 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {data.roiMetrics.map((metric, i) => (
                 <Card key={i} className="border-border bg-card text-center">
-                  <CardContent className="p-6">
-                    <div className="text-2xl md:text-3xl font-bold text-accent mb-2">{metric.value}</div>
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent mb-2">{metric.value}</div>
                     <div className="text-sm text-muted-foreground font-medium">{metric.label}</div>
                   </CardContent>
                 </Card>
@@ -326,9 +342,9 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                   <CardContent className="p-5 space-y-3">
                     <h3 className="font-semibold text-sm">{ref.partType}</h3>
                     <div className="space-y-1.5 text-sm">
-                      <div className="flex justify-between"><span className="text-muted-foreground">{t.industry.system}</span><span className="font-medium">{ref.systemConfig}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">{t.industry.capacity}</span><span className="font-medium">{ref.capacity}</span></div>
-                      <div className="flex justify-between"><span className="text-muted-foreground">{t.industry.roi}</span><span className="font-medium text-accent">{ref.roi}</span></div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5"><span className="text-muted-foreground">{t.industry.system}</span><span className="font-medium">{ref.systemConfig}</span></div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5"><span className="text-muted-foreground">{t.industry.capacity}</span><span className="font-medium">{ref.capacity}</span></div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5"><span className="text-muted-foreground">{t.industry.roi}</span><span className="font-medium text-accent">{ref.roi}</span></div>
                     </div>
                   </CardContent>
                 </Card>
@@ -346,10 +362,10 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
             <p className="text-white/60 mb-8 max-w-2xl">
               {t.industry.feasibilitySubtitle}
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3">
               <Button
                 onClick={handleStartConsultation}
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold h-11 px-6 gap-2 rounded-xl w-full sm:w-auto"
               >
                 <Bot className="h-4 w-4" />
                 {t.industry.startAI}
@@ -360,7 +376,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                   const assistantButton = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
                   if (assistantButton) assistantButton.click();
                 }}
-                className="h-11 px-6 gap-2 rounded-xl border-white/30 text-white hover:bg-white/10"
+                className="h-11 px-6 gap-2 rounded-xl border-white/30 text-white hover:bg-white/10 w-full sm:w-auto"
               >
                 <MessageSquare className="h-4 w-4" />
                 {t.industry.talkEngineer}
@@ -368,7 +384,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
               <Button
                 variant="outline"
                 onClick={() => navigate("/quote")}
-                className="h-11 px-6 gap-2 rounded-xl border-white/30 text-white hover:bg-white/10"
+                className="h-11 px-6 gap-2 rounded-xl border-white/30 text-white hover:bg-white/10 w-full sm:w-auto"
               >
                 <Upload className="h-4 w-4" />
                 {t.industry.useForm}
@@ -395,7 +411,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
                       {step.step}
                     </span>
                     {step.step < deliverySteps.length && (
-                      <div className="w-px flex-1 bg-border mt-1" />
+                      <div className="w-px flex-1 bg-border mt-1 max-h-[60px]" />
                     )}
                   </div>
                   <div className="pb-6">

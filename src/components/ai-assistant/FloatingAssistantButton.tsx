@@ -91,7 +91,7 @@ export function FloatingAssistantButton() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-6 right-4 sm:right-6 z-50 max-w-[calc(100vw-2rem)]"
           >
             <motion.div
               initial={!hasAnimated ? { scale: 1 } : false}
@@ -119,7 +119,8 @@ export function FloatingAssistantButton() {
                   "transition-all duration-200"
                 )}
               >
-                Start a project consultation
+                <span className="sm:hidden">Consult</span>
+                <span className="hidden sm:inline">Start a project consultation</span>
               </Button>
             </motion.div>
           </motion.div>

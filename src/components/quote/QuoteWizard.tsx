@@ -83,7 +83,7 @@ export function QuoteWizard() {
     <div className="max-w-4xl mx-auto">
       <WizardProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} stepTitles={stepTitles} />
 
-      <div className="rounded-2xl border border-border bg-card p-6 md:p-8 min-h-[400px]">
+      <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 md:p-8 min-h-[400px]">
         {isQuestionStep && (
           <WizardStep step={wizardSteps[currentStep]} formData={formData} updateFormData={updateFormData} />
         )}
@@ -91,12 +91,12 @@ export function QuoteWizard() {
         {isContactStep && <ContactForm formData={formData} updateFormData={updateFormData} />}
       </div>
 
-      <div className="flex justify-between mt-6">
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between mt-6">
         <Button
           variant="outline"
           onClick={handlePrev}
           disabled={currentStep === 0}
-          className="gap-2"
+          className="gap-2 w-full sm:w-auto"
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
@@ -106,7 +106,7 @@ export function QuoteWizard() {
           <Button
             onClick={handleSubmit}
             disabled={!formData.contact_name || !formData.contact_email || !formData.contact_company || isSubmitting}
-            className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
+            className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 w-full sm:w-auto"
           >
             {isSubmitting ? (
               <>
@@ -121,7 +121,7 @@ export function QuoteWizard() {
           <Button
             onClick={handleNext}
             disabled={!validateCurrentStep()}
-            className="gap-2 bg-accent hover:bg-accent/90 text-accent-foreground"
+            className="gap-2 bg-accent hover:bg-accent/90 text-accent-foreground w-full sm:w-auto"
           >
             {isSummaryStep ? "Continue to Contact" : "Next"}
             <ChevronRight className="h-4 w-4" />
