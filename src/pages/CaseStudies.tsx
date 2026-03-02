@@ -2,7 +2,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap } from "lucide-react";
+import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play } from "lucide-react";
 import { useI18n } from "@/i18n";
 
 const DOMAIN = "https://tdpaintcell.com";
@@ -18,6 +18,24 @@ const projectMeta = [
   { location: "Wuhan, China", robots: "ABB + ABB Atomizer", systems: "10 robots" },
   { location: "Zhuhai, China", robots: "Kawasaki + Graco", systems: "4 robots" },
   { location: "Shenzhen, China", robots: "Strategic Partnership", systems: "CASC" },
+];
+
+const projectVideos = [
+  { 
+    id: "SKiURpSAWWY", 
+    title: "Paint Line Facility Tour", 
+    description: "Walkthrough of multi-station robotic spray booths" 
+  },
+  { 
+    id: "rPuVP-NLk3Y", 
+    title: "Centralized Paint Supply", 
+    description: "Stainless steel pressure tanks & piping system" 
+  },
+  { 
+    id: "rJWsR-kE_AE", 
+    title: "Spray Booth Interior", 
+    description: "Conveyor system & safety controls" 
+  },
 ];
 
 export default function CaseStudies() {
@@ -165,6 +183,44 @@ export default function CaseStudies() {
             </div>
           ))}
         </div>
+      </Section>
+
+      {/* Project Videos Section */}
+      <Section variant="muted">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+            <Play className="h-4 w-4" />
+            Project Videos
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Qingdao Huatao Painting Facility</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Take a virtual tour of a complete automotive plastic component painting line featuring ABB robots, centralized paint supply, and multi-station spray booths.
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {projectVideos.map((video) => (
+            <div key={video.id} className="bg-card rounded-xl border border-border overflow-hidden">
+              <div className="aspect-[9/16] relative">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.id}`}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-semibold mb-1">{video.title}</h3>
+                <p className="text-sm text-muted-foreground">{video.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <p className="text-center text-sm text-muted-foreground mt-6">
+          Project: Chengdu HTMS (Qingdao Huatao) — ABB IRB5500 + Centralized Paint Supply — Turnkey by TD
+        </p>
       </Section>
 
       <section className="section-dark border-t border-white/10">
