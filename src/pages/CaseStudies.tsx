@@ -333,7 +333,7 @@ export default function CaseStudies() {
           </span>
           <h2 className="text-2xl md:text-3xl font-bold mb-3">Automotive Painting Line References</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Selected projects from our 17+ major automotive painting line deliveries, featuring ABB, FANUC, and multi-brand robot configurations.
+            Selected projects from our 25+ major automotive painting line deliveries, featuring ABB, FANUC, Yaskawa, CMA, and multi-brand robot configurations.
           </p>
         </div>
 
@@ -359,6 +359,14 @@ export default function CaseStudies() {
                 { client: "VINFAST (Thailand)", robot: "FANUC MPX2600", spray: "Integrated spray system", config: "International deployment, plastic parts" },
                 { client: "Zhejiang Jinfeiji Group", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "8 robots, water-based coating line" },
                 { client: "Minth Group", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "Trim & exterior component painting" },
+                { client: "Leap Motor (Jinhua)", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "8 robots + 25 centralized paint supply systems" },
+                { client: "Chery Automobile (2nd Coating)", robot: "Yaskawa + SAMES", spray: "SAMES rotary cup", config: "3-6-3 config, full body exterior spraying" },
+                { client: "Chery Henan (Kaifeng Major)", robot: "Yaskawa + Ransburg", spray: "Ransburg Robobell", config: "4-6-4 exterior + 4-4 interior + UBC/UBS gluing" },
+                { client: "Geely Sichuan Commercial Vehicle", robot: "ABB IRB5500", spray: "ABB rotary cup", config: "3-6-3 config, primer/topcoat/clear" },
+                { client: "Nobuo Auto Systems (Tianjin)", robot: "Yaskawa MPX3500", spray: "Integrated spray", config: "10 robots (2-4-4), both-sides spraying" },
+                { client: "Huakai Meyer (Ningbo)", robot: "Yaskawa GP180 + MPX3500", spray: "Integrated spray", config: "1+5 robots (1-2-2), snowflake pretreatment" },
+                { client: "Zibo OEM Body Line", robot: "ABB IRB5500", spray: "ABB RB1000i", config: "4-6-4-4-4 full config, 200K units/year" },
+                { client: "Anhui Xinzhou Technology", robot: "CMA GR6150-2900", spray: "Centralized paint supply", config: "6 robots (1-3-2), turnkey project" },
               ].map((project, idx) => (
                 <tr key={idx} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                   <td className="py-3 px-4 font-medium">{project.client}</td>
@@ -372,7 +380,7 @@ export default function CaseStudies() {
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-6">
-          Additional projects across 3C electronics, construction machinery, furniture, and sanitary ware industries available upon request.
+          Additional projects across general industrial automation (treadmill lines, steel sampling, palletizing), 3C electronics, construction machinery, rail transit, wind power, and furniture/sanitary ware industries available upon request.
         </p>
       </Section>
 

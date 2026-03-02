@@ -1,6 +1,6 @@
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
-import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car, Wrench, Eye, AlertTriangle, Droplets, Monitor, Radio, Layers } from "lucide-react";
+import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin, BarChart3, Factory, TrendingUp, Car, Wrench, Eye, AlertTriangle, Droplets, Monitor, Radio, Layers, Play } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { solutions } from "@/data/solutionData";
 import { useI18n } from "@/i18n";
@@ -111,6 +111,39 @@ export default function Solutions() {
         <meta name="twitter:title" content="Robotic Painting Automation Solutions | TD" />
         <meta name="twitter:description" content="Turnkey robotic painting system integration with multi-brand robot support and Industry 4.0 controls." />
         <meta name="twitter:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Painting Technology Videos",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "VideoObject",
+                "name": "ABB PixelPaint: Precision Dual-Color Robotic Spraying Technology",
+                "description": "Advanced dual-color robotic painting using ABB PixelPaint technology with 20-50 micron droplet precision.",
+                "thumbnailUrl": "https://img.youtube.com/vi/3BrSu1yeQ1k/maxresdefault.jpg",
+                "uploadDate": "2024-01-01",
+                "contentUrl": "https://www.youtube.com/watch?v=3BrSu1yeQ1k",
+                "embedUrl": "https://www.youtube.com/embed/3BrSu1yeQ1k"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "VideoObject",
+                "name": "How Bead System Works in Industrial Automation",
+                "description": "3D animation of Timmer bead dispensing system for automotive sealing applications.",
+                "thumbnailUrl": "https://img.youtube.com/vi/msv45NaSMXc/maxresdefault.jpg",
+                "uploadDate": "2024-01-01",
+                "contentUrl": "https://www.youtube.com/watch?v=msv45NaSMXc",
+                "embedUrl": "https://www.youtube.com/embed/msv45NaSMXc"
+              }
+            }
+          ]
+        })}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -285,6 +318,61 @@ export default function Solutions() {
 
         {/* Typical System Configurations */}
         <section className="border-b border-border bg-muted/30">
+
+          {/* Technology in Action - Video Section */}
+          <div className="container-wide py-12 md:py-16 border-b border-border">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+                <Play className="h-4 w-4" />
+                Technology in Action
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">See Our Technology at Work</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Advanced painting automation technologies demonstrated through real equipment and 3D simulation.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-card rounded-xl border border-border overflow-hidden hover:border-accent/30 transition-colors">
+                <div className="aspect-video relative">
+                  <iframe
+                    src="https://www.youtube.com/embed/3BrSu1yeQ1k"
+                    title="ABB PixelPaint: Precision Dual-Color Robotic Spraying Technology"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold text-lg mb-1">ABB PixelPaint Dual-Color Technology</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Precision dual-color robotic spraying using ABB PixelPaint technology. Multiple robots coordinate wall-mounted, floor-mounted, and inverted configurations to achieve sharp two-tone finishes with 20–50 micron droplet control.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-card rounded-xl border border-border overflow-hidden hover:border-accent/30 transition-colors">
+                <div className="aspect-video relative">
+                  <iframe
+                    src="https://www.youtube.com/embed/msv45NaSMXc"
+                    title="How Bead System Works in Industrial Automation"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold text-lg mb-1">Timmer Bead Dispensing System</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    3D animation walkthrough of the Timmer bead dispensing system used in automotive sealing applications. Precision material delivery through automated track-guided bead application for consistent seal quality.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="container-wide py-12 md:py-16">
             <div className="text-center mb-10">
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
