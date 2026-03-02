@@ -10,6 +10,8 @@ const industryOrder = [
   "automotive-painting",
   "metal-parts-finishing",
   "appliance-coating",
+  "battery-coating",
+  "medical-device-coating",
   "construction-machinery",
   "hardware-sanitary",
   "furniture-woodwork",

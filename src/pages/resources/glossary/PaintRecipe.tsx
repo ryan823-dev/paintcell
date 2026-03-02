@@ -1,32 +1,39 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Paint Recipe | Paint Cell Glossary",
-  "description": "Definition of paint recipe management in automated robotic painting systems."
-};
+import { useI18n } from "@/i18n/context";
 
 export default function PaintRecipe() {
+  const { t, locale } = useI18n();
+  const term = t.glossaryTerms?.paintRecipe || {};
+  const sections = t.glossaryTerms?.sectionTitles || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": term.metaTitle || "Paint Recipe Management | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of paint recipe management in automated robotic painting systems.",
+    "inLanguage": locale,
+  };
+
   return (
     <ResourcePageLayout
-      title="Paint Recipe"
-      metaTitle="Paint Recipe Management | Paint Cell Glossary"
-      metaDescription="Definition of paint recipe management in automated robotic painting systems."
+      title={term.title || "Paint Recipe"}
+      metaTitle={term.metaTitle || "Paint Recipe Management | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of paint recipe management in automated robotic painting systems."}
       breadcrumbs={[
-        { label: "Glossary", href: "/resources/glossary" },
-        { label: "Paint Recipe" },
+        { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
+        { label: term.title || "Paint Recipe" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        A paint recipe is a stored set of process parameters that define how a specific part should be painted, including robot path, spray gun settings (flow rate, atomization pressure, fan width), booth conditions, and curing parameters. Recipe management enables consistent quality across production runs and simplifies changeover between part types.
+        {term.answerBox || "A paint recipe is a stored set of process parameters that define how a specific part should be painted, including robot path, spray gun settings (flow rate, atomization pressure, fan width), booth conditions, and curing parameters. Recipe management enables consistent quality across production runs and simplifies changeover between part types."}
       </AnswerBox>
 
-      <ContentSection title="Why it matters in paint cells">
+      <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>
         <BulletList
-          items={[
+          items={term.whyMatters || [
             "Ensures repeatability when returning to previously painted parts",
             "Reduces setup time for high-mix production environments",
             "Enables traceability by linking batch records to specific recipes",
@@ -35,9 +42,9 @@ export default function PaintRecipe() {
         />
       </ContentSection>
 
-      <ContentSection title="Typical recipe parameters">
+      <ContentSection title={sections.typicalRecipeParams || "Typical recipe parameters"}>
         <BulletList
-          items={[
+          items={term.typicalRecipeParams || [
             "Robot program selection and TCP speed settings",
             "Fluid flow rate and atomization air pressure",
             "Electrostatic voltage (if applicable)",

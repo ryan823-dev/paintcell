@@ -122,7 +122,9 @@ const schemas_static = [
 ];
 
 export default function ColorChangeSystems() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.colorChangeSystems || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
   
   const faqs = useMemo(() => [
     { question: t.knowledgeFaqs.colorChange.q1, answer: t.knowledgeFaqs.colorChange.a1 },
@@ -153,8 +155,8 @@ export default function ColorChangeSystems() {
   return (
     <>
       <Helmet>
-        <title>Color Change Systems in Robotic Painting: Types, Selection & ROI | TD</title>
-        <meta name="description" content="Complete guide to paint color change systems for robotic spray painting. Compare manual, quick-disconnect, automatic, and pigging systems with changeover times and ROI analysis." />
+        <title>{article.metaTitle || "Color Change Systems in Robotic Painting: Types, Selection & ROI | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Complete guide to paint color change systems for robotic spray painting. Compare manual, quick-disconnect, automatic, and pigging systems with changeover times and ROI analysis."} />
         <link rel="canonical" href={`${DOMAIN}/resources/knowledge/color-change-systems`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -167,15 +169,15 @@ export default function ColorChangeSystems() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink>
+                <BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink asChild><Link to="/resources">Resources</Link></BreadcrumbLink>
+                <BreadcrumbLink asChild><Link to="/resources">{breadcrumbs.resources || "Resources"}</Link></BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Color Change Systems</BreadcrumbPage>
+                <BreadcrumbPage>{article.title || "Color Change Systems"}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

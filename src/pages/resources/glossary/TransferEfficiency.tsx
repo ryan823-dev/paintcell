@@ -1,32 +1,39 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Transfer Efficiency | Paint Cell Glossary",
-  "description": "Definition of transfer efficiency and why it matters in paint cell feasibility assessment."
-};
+import { useI18n } from "@/i18n/context";
 
 export default function TransferEfficiency() {
+  const { t, locale } = useI18n();
+  const term = t.glossaryTerms?.transferEfficiency || {};
+  const sections = t.glossaryTerms?.sectionTitles || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": term.metaTitle || "Transfer Efficiency | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of transfer efficiency and why it matters in paint cell feasibility assessment.",
+    "inLanguage": locale,
+  };
+
   return (
     <ResourcePageLayout
-      title="Transfer Efficiency"
-      metaTitle="Transfer Efficiency | Paint Cell Glossary"
-      metaDescription="Definition of transfer efficiency and why it matters in paint cell feasibility assessment."
+      title={term.title || "Transfer Efficiency"}
+      metaTitle={term.metaTitle || "Transfer Efficiency | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of transfer efficiency and why it matters in paint cell feasibility assessment."}
       breadcrumbs={[
-        { label: "Glossary", href: "/resources/glossary" },
-        { label: "Transfer Efficiency" },
+        { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
+        { label: term.title || "Transfer Efficiency" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        Transfer efficiency is the percentage of sprayed paint that reaches the part. It influences paint consumption, overspray, and finish repeatability. In paint cell assessment, it depends on part presentation, spray distance/angle, and airflow conditions.
+        {term.answerBox || "Transfer efficiency is the percentage of sprayed paint that reaches the part. It influences paint consumption, overspray, and finish repeatability. In paint cell assessment, it depends on part presentation, spray distance/angle, and airflow conditions."}
       </AnswerBox>
 
-      <ContentSection title="Why it matters in paint cells">
+      <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>
         <BulletList
-          items={[
+          items={term.whyMatters || [
             "Affects material usage and waste handling",
             "Influences finish uniformity and rework risk",
             "Ties directly to path design and part presentation quality",
@@ -34,9 +41,9 @@ export default function TransferEfficiency() {
         />
       </ContentSection>
 
-      <ContentSection title="What to watch for">
+      <ContentSection title={sections.watchFor || "What to watch for"}>
         <BulletList
-          items={[
+          items={term.watchFor || [
             "Assuming ideal efficiency without geometry trials",
             "Ignoring airflow impacts on deposition",
           ]}

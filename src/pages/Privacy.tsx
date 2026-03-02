@@ -1,91 +1,76 @@
 import { Helmet } from "react-helmet-async";
+import { useI18n } from "@/i18n/context";
 
 export default function Privacy() {
+  const { t } = useI18n();
+  const page = t.legalPages?.privacy || {};
+
   return (
     <>
       <Helmet>
-        <title>Privacy Policy | TDPaintCell</title>
-        <meta name="description" content="Privacy Policy for TDPaintCell - how we collect, use, and protect your personal information." />
+        <title>{page.title || "Privacy Policy"} | TDPaintCell</title>
+        <meta name="description" content={page.metaDesc || "Privacy Policy for TDPaintCell - how we collect, use, and protect your personal information."} />
       </Helmet>
       
       <div className="container-wide py-16 md:py-24">
         <article className="max-w-3xl mx-auto prose prose-slate dark:prose-invert">
-          <h1>Privacy Policy</h1>
-          <p className="text-muted-foreground">Last updated: 2026-01-01</p>
+          <h1>{page.title || "Privacy Policy"}</h1>
+          <p className="text-muted-foreground">{page.lastUpdated || "Last updated"}: 2026-01-01</p>
 
-          <h2>Overview</h2>
-          <p>
-            TDPaintCell ("we", "us", "our") respects your privacy. This Privacy Policy explains how we collect, use, and protect personal information when you visit tdpaintcell.com (the "Site") or contact us for an engineering-led project assessment.
-          </p>
+          <h2>{page.overview?.title || "Overview"}</h2>
+          <p>{page.overview?.content || ""}</p>
 
-          <h2>Information we collect</h2>
-          <p>We may collect the following categories of information:</p>
+          <h2>{page.infoCollect?.title || "Information we collect"}</h2>
+          <p>{page.infoCollect?.intro || "We may collect the following categories of information:"}</p>
           <ul>
-            <li>Contact information you provide, such as your name, company, email address, phone number, and job role.</li>
-            <li>Project-related information you submit through forms or consultations, such as part descriptions, photos, CAD links, throughput targets, and site constraints.</li>
-            <li>Technical information collected automatically, such as device type, browser type, IP address, pages viewed, and approximate location derived from IP.</li>
-            <li>Cookies and similar technologies, as described in our Cookie Policy.</li>
+            {(page.infoCollect?.items || []).map((item: string, i: number) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
 
-          <h2>How we use information</h2>
-          <p>We use information to:</p>
+          <h2>{page.howUse?.title || "How we use information"}</h2>
+          <p>{page.howUse?.intro || "We use information to:"}</p>
           <ul>
-            <li>Respond to inquiries and provide engineering review or project consultation</li>
-            <li>Evaluate feasibility and prepare a project-specific assessment or proposal</li>
-            <li>Improve the Site, its content, and user experience</li>
-            <li>Protect the Site from fraud, abuse, and security risks</li>
-            <li>Comply with legal obligations where applicable</li>
+            {(page.howUse?.items || []).map((item: string, i: number) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
 
-          <h2>Legal bases (where applicable)</h2>
-          <p>
-            Depending on your location, we may process information based on one or more of the following legal bases: your consent, performance of a contract or steps prior to entering a contract, legitimate interests (such as responding to business inquiries and improving our services), and legal compliance.
-          </p>
+          <h2>{page.legalBases?.title || "Legal bases (where applicable)"}</h2>
+          <p>{page.legalBases?.content || ""}</p>
 
-          <h2>Sharing of information</h2>
-          <p>We do not sell your personal information. We may share information only when necessary:</p>
+          <h2>{page.sharing?.title || "Sharing of information"}</h2>
+          <p>{page.sharing?.intro || "We do not sell your personal information. We may share information only when necessary:"}</p>
           <ul>
-            <li>Service providers (e.g., website hosting, analytics, email delivery) who process data on our behalf under appropriate safeguards</li>
-            <li>Professional advisors (legal, accounting) where required</li>
-            <li>Authorities if required by law or to protect rights and safety</li>
+            {(page.sharing?.items || []).map((item: string, i: number) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
 
-          <h2>International transfers</h2>
+          <h2>{page.international?.title || "International transfers"}</h2>
+          <p>{page.international?.content || ""}</p>
+
+          <h2>{page.retention?.title || "Data retention"}</h2>
+          <p>{page.retention?.content || ""}</p>
+
+          <h2>{page.security?.title || "Security"}</h2>
+          <p>{page.security?.content || ""}</p>
+
+          <h2>{page.rights?.title || "Your rights"}</h2>
+          <p>{page.rights?.content || ""}</p>
           <p>
-            Your information may be processed in countries other than your own. Where required, we use appropriate safeguards for cross-border transfers.
+            {page.rights?.contact || "To exercise rights, contact:"} <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
           </p>
 
-          <h2>Data retention</h2>
-          <p>
-            We retain personal information only as long as necessary for the purposes described in this policy, including responding to inquiries, maintaining business records, and meeting legal requirements.
-          </p>
+          <h2>{page.children?.title || "Children's privacy"}</h2>
+          <p>{page.children?.content || ""}</p>
 
-          <h2>Security</h2>
-          <p>
-            We use reasonable administrative, technical, and organizational measures designed to protect information. However, no method of transmission or storage is completely secure.
-          </p>
+          <h2>{page.changes?.title || "Changes to this policy"}</h2>
+          <p>{page.changes?.content || ""}</p>
 
-          <h2>Your rights</h2>
+          <h2>{page.contact?.title || "Contact"}</h2>
           <p>
-            Depending on your jurisdiction, you may have rights such as access, correction, deletion, objection, restriction, and data portability. You may also withdraw consent where processing is based on consent.
-          </p>
-          <p>
-            To exercise rights, contact: <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
-          </p>
-
-          <h2>Children's privacy</h2>
-          <p>
-            The Site is intended for business users and is not directed to children.
-          </p>
-
-          <h2>Changes to this policy</h2>
-          <p>
-            We may update this Privacy Policy from time to time. The "Last updated" date will reflect the latest version.
-          </p>
-
-          <h2>Contact</h2>
-          <p>
-            For privacy requests and questions, contact: <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
+            {page.contact?.content || "For privacy requests and questions, contact:"} <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
           </p>
         </article>
       </div>

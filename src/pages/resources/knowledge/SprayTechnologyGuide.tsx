@@ -12,18 +12,21 @@ import {
 import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Spray Technology Selection Guide: Electrostatic vs HVLP vs Conventional",
-  "author": { "@type": "Organization", "name": "TD Engineering Team" },
-  "datePublished": "2026-02-20",
-  "dateModified": "2026-02-27",
-  "publisher": { "@type": "Organization", "name": "TD Painting System" },
-};
-
 export default function SprayTechnologyGuide() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.sprayTechnologyGuide || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": article.metaTitle || "Spray Technology Selection Guide: Electrostatic vs HVLP vs Conventional",
+    "author": { "@type": "Organization", "name": "TD Engineering Team" },
+    "datePublished": "2026-02-20",
+    "dateModified": "2026-02-27",
+    "publisher": { "@type": "Organization", "name": "TD Painting System" },
+    "inLanguage": locale,
+  };
   
   const faqs = useMemo(() => [
     { q: t.knowledgeFaqs.sprayTechnology.q1, a: t.knowledgeFaqs.sprayTechnology.a1 },
@@ -41,8 +44,8 @@ export default function SprayTechnologyGuide() {
   return (
     <>
       <Helmet>
-        <title>Spray Technology Selection: Electrostatic vs HVLP vs Conventional | TD</title>
-        <meta name="description" content="Comprehensive guide to selecting spray technology for industrial painting. Compare electrostatic, HVLP, and conventional air spray for transfer efficiency, finish quality, and application suitability." />
+        <title>{article.metaTitle || "Spray Technology Selection: Electrostatic vs HVLP vs Conventional | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Comprehensive guide to selecting spray technology for industrial painting. Compare electrostatic, HVLP, and conventional air spray for transfer efficiency, finish quality, and application suitability."} />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/spray-technology-guide" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
@@ -54,9 +57,9 @@ export default function SprayTechnologyGuide() {
           <div className="container-wide py-3">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">Knowledge</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>Spray Technology Guide</BreadcrumbPage></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">{breadcrumbs.knowledge || "Knowledge"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>{article.title || "Spray Technology Guide"}</BreadcrumbPage></BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>

@@ -12,18 +12,21 @@ import {
 import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Paint Booth Design Basics for Robotic Spray Painting",
-  "author": { "@type": "Organization", "name": "TD Engineering Team" },
-  "datePublished": "2026-02-01",
-  "dateModified": "2026-02-12",
-  "publisher": { "@type": "Organization", "name": "TD Painting System" },
-};
-
 export default function PaintBoothDesignBasics() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.paintBoothDesignBasics || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": article.metaTitle || "Paint Booth Design Basics for Robotic Spray Painting",
+    "author": { "@type": "Organization", "name": "TD Engineering Team" },
+    "datePublished": "2026-02-01",
+    "dateModified": "2026-02-12",
+    "publisher": { "@type": "Organization", "name": "TD Painting System" },
+    "inLanguage": locale,
+  };
   
   const faqs = useMemo(() => [
     { q: t.knowledgeFaqs.boothDesign.q1, a: t.knowledgeFaqs.boothDesign.a1 },
@@ -41,8 +44,8 @@ export default function PaintBoothDesignBasics() {
   return (
     <>
       <Helmet>
-        <title>Paint Booth Design Basics | Technical Insights | TD</title>
-        <meta name="description" content="Expert guide on paint booth design for robotic spray painting. Covers airflow types, sizing methodology, ventilation requirements, and common design mistakes." />
+        <title>{article.metaTitle || "Paint Booth Design Basics | Technical Insights | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Expert guide on paint booth design for robotic spray painting. Covers airflow types, sizing methodology, ventilation requirements, and common design mistakes."} />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/paint-booth-design-basics" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
@@ -53,9 +56,9 @@ export default function PaintBoothDesignBasics() {
           <div className="container-wide py-3">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">Knowledge</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>Paint Booth Design Basics</BreadcrumbPage></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">{breadcrumbs.knowledge || "Knowledge"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>{article.title || "Paint Booth Design Basics"}</BreadcrumbPage></BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
@@ -69,7 +72,7 @@ export default function PaintBoothDesignBasics() {
             <span className="flex items-center gap-1"><Award className="h-3 w-3" /> ISO 9001 Certified Integrator</span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold mb-6">Paint Booth Design Basics for Robotic Spray Painting</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6">{article.title || "Paint Booth Design Basics for Robotic Spray Painting"}</h1>
           <p className="text-muted-foreground leading-relaxed mb-8 text-base">
             A well-designed spray booth is the foundation of any robotic painting system. It controls the spray environment, captures overspray, manages ventilation, and ensures compliance with safety regulations. This guide covers fundamental design principles, sizing methodology, common mistakes, and TD's engineering approach.
           </p>

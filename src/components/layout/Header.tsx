@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
-import { Menu, X, Sparkles, ChevronDown, Factory, Bot, Droplets, Wrench, Users, Settings, Car, Refrigerator, HardDrive, FileText, BookOpen } from "lucide-react";
+import { Menu, X, Sparkles, ChevronDown, Factory, Bot, Droplets, Wrench, Users, Settings, Car, Refrigerator, HardDrive, FileText, BookOpen, Layers } from "lucide-react";
 import tdLogo from "@/assets/td-logo.png";
 import { useI18n } from "@/i18n";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -39,6 +39,7 @@ export function Header() {
             { name: "Turnkey Painting Shops", nameZh: "整体涂装车间", href: "/solutions/turnkey-painting-shop", icon: Factory, description: "Complete painting shop solutions" },
             { name: "Robotic Workstations", nameZh: "机器人工作站", href: "/paint-cells", icon: Bot, description: "Integrated painting cells" },
             { name: "Paint Supply Systems", nameZh: "输调漆系统", href: "/solutions/paint-supply-systems", icon: Droplets, description: "Centralized supply & mixing" },
+            { name: "Paint Process Flow", nameZh: "工艺流程", href: "/solutions/paint-process-flow", icon: Layers, description: "Complete coating line stages" },
           ],
         },
         {

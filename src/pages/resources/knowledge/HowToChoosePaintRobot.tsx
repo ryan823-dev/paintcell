@@ -12,18 +12,21 @@ import {
 import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "How to Choose a Paint Robot for Industrial Spray Painting",
-  "author": { "@type": "Organization", "name": "TD Engineering Team" },
-  "datePublished": "2026-01-15",
-  "dateModified": "2026-02-12",
-  "publisher": { "@type": "Organization", "name": "TD Painting System" },
-};
-
 export default function HowToChoosePaintRobot() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.howToChoosePaintRobot || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": article.metaTitle || "How to Choose a Paint Robot for Industrial Spray Painting",
+    "author": { "@type": "Organization", "name": "TD Engineering Team" },
+    "datePublished": "2026-01-15",
+    "dateModified": "2026-02-12",
+    "publisher": { "@type": "Organization", "name": "TD Painting System" },
+    "inLanguage": locale,
+  };
   
   const faqs = useMemo(() => [
     { q: t.knowledgeFaqs.choosePaintRobot.q1, a: t.knowledgeFaqs.choosePaintRobot.a1 },
@@ -41,8 +44,8 @@ export default function HowToChoosePaintRobot() {
   return (
     <>
       <Helmet>
-        <title>How to Choose a Paint Robot | Technical Insights | TD</title>
-        <meta name="description" content="Expert guide on selecting industrial painting robots. Covers robot types, key specifications, selection criteria, and common mistakes. Downloadable checklist included." />
+        <title>{article.metaTitle || "How to Choose a Paint Robot | Technical Insights | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Expert guide on selecting industrial painting robots. Covers robot types, key specifications, selection criteria, and common mistakes. Downloadable checklist included."} />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/how-to-choose-paint-robot" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
@@ -54,9 +57,9 @@ export default function HowToChoosePaintRobot() {
           <div className="container-wide py-3">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">Knowledge</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>How to Choose a Paint Robot</BreadcrumbPage></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">{breadcrumbs.knowledge || "Knowledge"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>{article.title || "How to Choose a Paint Robot"}</BreadcrumbPage></BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
@@ -71,7 +74,7 @@ export default function HowToChoosePaintRobot() {
             <span className="flex items-center gap-1"><Award className="h-3 w-3" /> ISO 9001 Certified Integrator</span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold mb-6">How to Choose a Paint Robot for Industrial Spray Painting</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6">{article.title || "How to Choose a Paint Robot for Industrial Spray Painting"}</h1>
           
           <p className="text-muted-foreground leading-relaxed mb-8 text-base">
             Selecting the right painting robot is a critical engineering decision that affects coating quality, throughput, and long-term system reliability. This guide covers the fundamental selection criteria, key specifications to evaluate, common mistakes to avoid, and TD's systematic approach to robot specification.

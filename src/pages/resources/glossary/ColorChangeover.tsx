@@ -1,32 +1,39 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Color Changeover | Paint Cell Glossary",
-  "description": "Definition of color changeover and why it matters in paint cell feasibility assessment."
-};
+import { useI18n } from "@/i18n/context";
 
 export default function ColorChangeover() {
+  const { t, locale } = useI18n();
+  const term = t.glossaryTerms?.colorChangeover || {};
+  const sections = t.glossaryTerms?.sectionTitles || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": term.metaTitle || "Color Changeover | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of color changeover and why it matters in paint cell feasibility assessment.",
+    "inLanguage": locale,
+  };
+
   return (
     <ResourcePageLayout
-      title="Color Changeover"
-      metaTitle="Color Changeover | Paint Cell Glossary"
-      metaDescription="Definition of color changeover and why it matters in paint cell feasibility assessment."
+      title={term.title || "Color Changeover"}
+      metaTitle={term.metaTitle || "Color Changeover | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of color changeover and why it matters in paint cell feasibility assessment."}
       breadcrumbs={[
-        { label: "Glossary", href: "/resources/glossary" },
-        { label: "Color Changeover" },
+        { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
+        { label: term.title || "Color Changeover" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        Color changeover is the time and procedure required to switch paints or colors safely and consistently. It often dominates downtime and real throughput more than robot speed. Feasibility reviews should quantify changeover frequency, cleaning expectations, and acceptable downtime.
+        {term.answerBox || "Color changeover is the time and procedure required to switch paints or colors safely and consistently. It often dominates downtime and real throughput more than robot speed. Feasibility reviews should quantify changeover frequency, cleaning expectations, and acceptable downtime."}
       </AnswerBox>
 
-      <ContentSection title="Why it matters in paint cells">
+      <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>
         <BulletList
-          items={[
+          items={term.whyMatters || [
             "Drives real capacity and scheduling stability",
             "Impacts operator routine and maintenance workload",
             "Can affect quality if cleaning is inconsistent",
@@ -34,9 +41,9 @@ export default function ColorChangeover() {
         />
       </ContentSection>
 
-      <ContentSection title="What to watch for">
+      <ContentSection title={sections.watchFor || "What to watch for"}>
         <BulletList
-          items={[
+          items={term.watchFor || [
             "Ignoring cleaning time in throughput estimates",
             "Overlooking who owns changeover steps (boundary)",
           ]}

@@ -142,7 +142,9 @@ const schemas_static = [
 ];
 
 export default function PaintDefectsGuide() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.paintDefectsGuide || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
   
   const faqs = useMemo(() => [
     { question: t.knowledgeFaqs.paintDefects.q1, answer: t.knowledgeFaqs.paintDefects.a1 },
@@ -173,8 +175,8 @@ export default function PaintDefectsGuide() {
   return (
     <>
       <Helmet>
-        <title>Paint Defects Guide: Identification, Causes & Prevention | TD</title>
-        <meta name="description" content="Comprehensive guide to common paint defects in industrial spray painting. Learn to identify orange peel, runs, fisheyes, adhesion failures with causes and prevention strategies." />
+        <title>{article.metaTitle || "Paint Defects Guide: Identification, Causes & Prevention | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Comprehensive guide to common paint defects in industrial spray painting. Learn to identify orange peel, runs, fisheyes, adhesion failures with causes and prevention strategies."} />
         <link rel="canonical" href={`${DOMAIN}/resources/knowledge/paint-defects-guide`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -187,15 +189,15 @@ export default function PaintDefectsGuide() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink>
+                <BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink asChild><Link to="/resources">Resources</Link></BreadcrumbLink>
+                <BreadcrumbLink asChild><Link to="/resources">{breadcrumbs.resources || "Resources"}</Link></BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Paint Defects Guide</BreadcrumbPage>
+                <BreadcrumbPage>{article.title || "Paint Defects Guide"}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

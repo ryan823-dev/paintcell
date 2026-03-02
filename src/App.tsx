@@ -89,6 +89,8 @@ const PlasticsComposites = lazy(() => import("./pages/industries/PlasticsComposi
 const AerospaceDefense = lazy(() => import("./pages/industries/AerospaceDefense"));
 const ConstructionMachinery = lazy(() => import("./pages/industries/ConstructionMachinery"));
 const HardwareSanitary = lazy(() => import("./pages/industries/HardwareSanitary"));
+const BatteryCoating = lazy(() => import("./pages/industries/BatteryCoating"));
+const MedicalDeviceCoating = lazy(() => import("./pages/industries/MedicalDeviceCoating"));
 
 // Lazy load Solution pages
 const Solutions = lazy(() => import("./pages/Solutions"));
@@ -96,10 +98,12 @@ const SolutionPage = lazy(() => import("./pages/SolutionPage"));
 const RoboticPaintingSystem = lazy(() => import("./pages/solutions/RoboticPaintingSystem"));
 const TurnkeyPaintingShop = lazy(() => import("./pages/solutions/TurnkeyPaintingShop"));
 const PaintSupplySystems = lazy(() => import("./pages/solutions/PaintSupplySystems"));
+const PaintProcessFlow = lazy(() => import("./pages/solutions/PaintProcessFlow"));
 
 // Lazy load Products pages
 const ProductsIndex = lazy(() => import("./pages/products/ProductsIndex"));
 const ProductCategory = lazy(() => import("./pages/products/ProductCategory"));
+const ControlSystems = lazy(() => import("./pages/products/ControlSystems"));
 
 // Lazy load Services pages
 const ServicesIndex = lazy(() => import("./pages/services/ServicesIndex"));
@@ -213,10 +217,12 @@ function PublicRoutes() {
       <Route path="solutions/robotic-painting-system" element={<RoboticPaintingSystem />} />
       <Route path="solutions/turnkey-painting-shop" element={<TurnkeyPaintingShop />} />
       <Route path="solutions/paint-supply-systems" element={<PaintSupplySystems />} />
+      <Route path="solutions/paint-process-flow" element={<PaintProcessFlow />} />
       <Route path="solutions/:slug" element={<SolutionPage />} />
 
       {/* Products pages */}
       <Route path="products" element={<ProductsIndex />} />
+      <Route path="products/control-systems" element={<ControlSystems />} />
       <Route path="products/:category" element={<ProductCategory />} />
 
       {/* Services pages */}
@@ -233,6 +239,8 @@ function PublicRoutes() {
       <Route path="industries/aerospace-defense" element={<AerospaceDefense />} />
       <Route path="industries/construction-machinery" element={<ConstructionMachinery />} />
       <Route path="industries/hardware-sanitary" element={<HardwareSanitary />} />
+      <Route path="industries/battery-coating" element={<BatteryCoating />} />
+      <Route path="industries/medical-device-coating" element={<MedicalDeviceCoating />} />
       <Route path="industries/:slug" element={<IndustryPage />} />
 
       <Route path="*" element={<NotFound />} />

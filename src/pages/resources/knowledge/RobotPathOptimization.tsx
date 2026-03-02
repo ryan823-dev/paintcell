@@ -12,18 +12,21 @@ import {
 import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Robot Spray Path Optimization: Techniques for Consistent Coating Quality",
-  "author": { "@type": "Organization", "name": "TD Engineering Team" },
-  "datePublished": "2026-02-22",
-  "dateModified": "2026-02-27",
-  "publisher": { "@type": "Organization", "name": "TD Painting System" },
-};
-
 export default function RobotPathOptimization() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.robotPathOptimization || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": article.metaTitle || "Robot Spray Path Optimization: Techniques for Consistent Coating Quality",
+    "author": { "@type": "Organization", "name": "TD Engineering Team" },
+    "datePublished": "2026-02-22",
+    "dateModified": "2026-02-27",
+    "publisher": { "@type": "Organization", "name": "TD Painting System" },
+    "inLanguage": locale,
+  };
   
   const faqs = useMemo(() => [
     { q: t.knowledgeFaqs.pathOptimization.q1, a: t.knowledgeFaqs.pathOptimization.a1 },
@@ -41,8 +44,8 @@ export default function RobotPathOptimization() {
   return (
     <>
       <Helmet>
-        <title>Robot Spray Path Optimization for Consistent Coating | TD</title>
-        <meta name="description" content="Technical guide to optimizing robotic spray paths for consistent paint coverage. Learn about path strategies, gun distance control, overlap techniques, and cycle time optimization." />
+        <title>{article.metaTitle || "Robot Spray Path Optimization for Consistent Coating | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Technical guide to optimizing robotic spray paths for consistent paint coverage. Learn about path strategies, gun distance control, overlap techniques, and cycle time optimization."} />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/robot-path-optimization" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
@@ -54,9 +57,9 @@ export default function RobotPathOptimization() {
           <div className="container-wide py-3">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">Knowledge</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>Robot Path Optimization</BreadcrumbPage></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">{breadcrumbs.knowledge || "Knowledge"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>{article.title || "Robot Path Optimization"}</BreadcrumbPage></BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>

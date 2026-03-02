@@ -1,32 +1,39 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Robot Teach Pendant | Paint Cell Glossary",
-  "description": "Definition of robot teach pendant and its use in programming robotic painting systems."
-};
+import { useI18n } from "@/i18n/context";
 
 export default function TeachPendant() {
+  const { t, locale } = useI18n();
+  const term = t.glossaryTerms?.teachPendant || {};
+  const sections = t.glossaryTerms?.sectionTitles || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": term.metaTitle || "Robot Teach Pendant | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of robot teach pendant and its use in programming robotic painting systems.",
+    "inLanguage": locale,
+  };
+
   return (
     <ResourcePageLayout
-      title="Robot Teach Pendant"
-      metaTitle="Robot Teach Pendant | Paint Cell Glossary"
-      metaDescription="Definition of robot teach pendant and its use in programming robotic painting systems."
+      title={term.title || "Robot Teach Pendant"}
+      metaTitle={term.metaTitle || "Robot Teach Pendant | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of robot teach pendant and its use in programming robotic painting systems."}
       breadcrumbs={[
-        { label: "Glossary", href: "/resources/glossary" },
-        { label: "Teach Pendant" },
+        { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
+        { label: term.title || "Teach Pendant" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        A teach pendant is the handheld programming device used to manually guide a robot through positions and motions, recording waypoints that form the robot's path program. In painting applications, operators use the pendant to teach spray paths by jogging the robot while observing spray coverage, then fine-tuning parameters like speed and gun triggers.
+        {term.answerBox || "A teach pendant is the handheld programming device used to manually guide a robot through positions and motions, recording waypoints that form the robot's path program. In painting applications, operators use the pendant to teach spray paths by jogging the robot while observing spray coverage, then fine-tuning parameters like speed and gun triggers."}
       </AnswerBox>
 
-      <ContentSection title="Why it matters in paint cells">
+      <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>
         <BulletList
-          items={[
+          items={term.whyMatters || [
             "Primary tool for creating and modifying spray paths",
             "Enables on-site path optimization based on actual results",
             "Operator skill with pendant affects path quality and teach time",
@@ -35,9 +42,9 @@ export default function TeachPendant() {
         />
       </ContentSection>
 
-      <ContentSection title="Teaching vs offline programming">
+      <ContentSection title={sections.teachingVsOffline || "Teaching vs offline programming"}>
         <BulletList
-          items={[
+          items={term.teachingVsOffline || [
             "Pendant teaching: Hands-on, sees real part, time-consuming",
             "Offline programming: CAD-based, faster, requires calibration",
             "Most paint cells use combination: offline base path, pendant refinement",

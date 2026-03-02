@@ -1,32 +1,39 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Spray Pattern | Paint Cell Glossary",
-  "description": "Definition of spray pattern characteristics and optimization in robotic painting."
-};
+import { useI18n } from "@/i18n/context";
 
 export default function SprayPattern() {
+  const { t, locale } = useI18n();
+  const term = t.glossaryTerms?.sprayPattern || {};
+  const sections = t.glossaryTerms?.sectionTitles || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": term.metaTitle || "Spray Pattern | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of spray pattern characteristics and optimization in robotic painting.",
+    "inLanguage": locale,
+  };
+
   return (
     <ResourcePageLayout
-      title="Spray Pattern"
-      metaTitle="Spray Pattern | Paint Cell Glossary"
-      metaDescription="Definition of spray pattern characteristics and optimization in robotic painting."
+      title={term.title || "Spray Pattern"}
+      metaTitle={term.metaTitle || "Spray Pattern | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of spray pattern characteristics and optimization in robotic painting."}
       breadcrumbs={[
-        { label: "Glossary", href: "/resources/glossary" },
-        { label: "Spray Pattern" },
+        { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
+        { label: term.title || "Spray Pattern" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        Spray pattern refers to the shape, size, and paint distribution of the atomized paint cloud as it exits the spray gun and deposits on the workpiece. Common patterns include round (circular), flat (elliptical fan), and wide-fan configurations. Pattern characteristics directly impact coverage uniformity, edge definition, and material efficiency.
+        {term.answerBox || "Spray pattern refers to the shape, size, and paint distribution of the atomized paint cloud as it exits the spray gun and deposits on the workpiece. Common patterns include round (circular), flat (elliptical fan), and wide-fan configurations. Pattern characteristics directly impact coverage uniformity, edge definition, and material efficiency."}
       </AnswerBox>
 
-      <ContentSection title="Why it matters in paint cells">
+      <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>
         <BulletList
-          items={[
+          items={term.whyMatters || [
             "Pattern width determines required overlap for uniform coverage",
             "Pattern shape affects robot path planning and cycle time",
             "Consistent pattern critical for repeatable film build",
@@ -35,9 +42,9 @@ export default function SprayPattern() {
         />
       </ContentSection>
 
-      <ContentSection title="Key pattern characteristics">
+      <ContentSection title={sections.keyCharacteristics || "Key pattern characteristics"}>
         <BulletList
-          items={[
+          items={term.keyCharacteristics || [
             "Width: Measured at specified distance (e.g., 200mm at 250mm gun distance)",
             "Distribution: Should be uniform or slightly tapered at edges",
             "Atomization: Fine droplets produce smoother finish quality",
@@ -46,9 +53,9 @@ export default function SprayPattern() {
         />
       </ContentSection>
 
-      <ContentSection title="Common pattern problems">
+      <ContentSection title={sections.commonProblems || "Common pattern problems"}>
         <BulletList
-          items={[
+          items={term.commonProblems || [
             "Heavy center (banana pattern) indicates clogged air cap or worn tip",
             "Split pattern suggests too high atomization pressure",
             "Teardrop shape indicates fluid or air balance issue",

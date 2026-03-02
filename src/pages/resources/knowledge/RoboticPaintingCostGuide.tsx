@@ -12,18 +12,21 @@ import {
 import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
-const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Robotic Painting Cost Guide — Investment Analysis for Industrial Automation",
-  "author": { "@type": "Organization", "name": "TD Engineering Team" },
-  "datePublished": "2026-01-20",
-  "dateModified": "2026-02-12",
-  "publisher": { "@type": "Organization", "name": "TD Painting System" },
-};
-
 export default function RoboticPaintingCostGuide() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const article = t.knowledge?.roboticPaintingCostGuide || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": article.metaTitle || "Robotic Painting Cost Guide — Investment Analysis for Industrial Automation",
+    "author": { "@type": "Organization", "name": "TD Engineering Team" },
+    "datePublished": "2026-01-20",
+    "dateModified": "2026-02-12",
+    "publisher": { "@type": "Organization", "name": "TD Painting System" },
+    "inLanguage": locale,
+  };
   
   const faqs = useMemo(() => [
     { q: t.knowledgeFaqs.costGuide.q1, a: t.knowledgeFaqs.costGuide.a1 },
@@ -41,8 +44,8 @@ export default function RoboticPaintingCostGuide() {
   return (
     <>
       <Helmet>
-        <title>Robotic Painting Cost Guide | Technical Insights | TD</title>
-        <meta name="description" content="Expert guide on robotic painting system costs. Covers capital investment breakdown, operating costs, ROI calculation methodology, and cost optimization strategies." />
+        <title>{article.metaTitle || "Robotic Painting Cost Guide | Technical Insights | TD"}</title>
+        <meta name="description" content={article.metaDesc || "Expert guide on robotic painting system costs. Covers capital investment breakdown, operating costs, ROI calculation methodology, and cost optimization strategies."} />
         <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/robotic-painting-cost-guide" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
@@ -53,9 +56,9 @@ export default function RoboticPaintingCostGuide() {
           <div className="container-wide py-3">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">Home</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">Knowledge</Link></BreadcrumbLink></BreadcrumbItem>
-                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>Robotic Painting Cost Guide</BreadcrumbPage></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbLink asChild><Link to="/">{breadcrumbs.home || "Home"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbLink asChild><Link to="/resources/engineering-library">{breadcrumbs.knowledge || "Knowledge"}</Link></BreadcrumbLink></BreadcrumbItem>
+                <BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbPage>{article.title || "Robotic Painting Cost Guide"}</BreadcrumbPage></BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
@@ -69,7 +72,7 @@ export default function RoboticPaintingCostGuide() {
             <span className="flex items-center gap-1"><Award className="h-3 w-3" /> ISO 9001 Certified Integrator</span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold mb-6">Robotic Painting Cost Guide</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6">{article.title || "Robotic Painting Cost Guide"}</h1>
           <p className="text-muted-foreground leading-relaxed mb-8 text-base">
             Understanding the true cost of robotic painting automation requires looking beyond the equipment price tag. This guide breaks down capital investment components, ongoing operating costs, ROI calculation methodology, and strategies for optimizing your automation investment.
           </p>

@@ -6,64 +6,17 @@ import {
   Settings, Wrench, Gauge, Box, Cpu, Package,
   ChevronRight, FileText, ArrowRight
 } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 
 const DOMAIN = "https://tdpaintcell.com";
 
-const productCategories = [
-  {
-    icon: Settings,
-    title: "Rotary Bells",
-    titleZh: "旋杯",
-    description: "High-speed electrostatic rotary atomizers for automotive and industrial coating applications. Achieve superior transfer efficiency and finish quality.",
-    href: "/products/rotary-bells",
-    brands: ["Dürr", "SAMES KREMLIN", "Ransburg"],
-    features: ["Electrostatic charging", "High-speed rotation", "Automatic cleaning"],
-  },
-  {
-    icon: Wrench,
-    title: "Spray Guns",
-    titleZh: "喷枪",
-    description: "HVLP, air spray, and electrostatic spray guns for manual and robotic applications. Precision atomization for various coating materials.",
-    href: "/products/spray-guns",
-    brands: ["SATA", "DeVilbiss", "Graco"],
-    features: ["HVLP technology", "Air spray", "Electrostatic options"],
-  },
-  {
-    icon: Gauge,
-    title: "Paint Pumps",
-    titleZh: "供漆泵",
-    description: "Diaphragm and piston pumps for paint supply systems. Reliable material delivery for production coating lines.",
-    href: "/products/paint-pumps",
-    brands: ["Graco", "ARO", "Wilden"],
-    features: ["Diaphragm pumps", "Piston pumps", "Ratio controllers"],
-  },
-  {
-    icon: Cpu,
-    title: "Control Systems",
-    titleZh: "控制系统",
-    description: "PLC-based control systems, robot controllers, and process automation for integrated painting lines.",
-    href: "/products/control-systems",
-    brands: ["Siemens", "Allen-Bradley", "ABB"],
-    features: ["PLC automation", "HMI interfaces", "Data logging"],
-  },
-  {
-    icon: Box,
-    title: "Color Change Systems",
-    titleZh: "换色系统",
-    description: "Fast color change valve blocks, manifolds, and flushing systems for multi-color production lines.",
-    href: "/products/color-change",
-    brands: ["Dürr", "SAMES KREMLIN", "Graco"],
-    features: ["Quick change valves", "Flush systems", "Waste reduction"],
-  },
-  {
-    icon: Package,
-    title: "Spare Parts",
-    titleZh: "备件",
-    description: "Genuine replacement parts and consumables for spray equipment maintenance and repair.",
-    href: "/products/spare-parts",
-    brands: ["OEM Parts", "Service Kits", "Wear Items"],
-    features: ["Fast delivery", "OEM quality", "Technical support"],
-  },
+const productCategoryKeys = [
+  { key: "rotaryBells", icon: Settings, href: "/products/rotary-bells", brands: ["Dürr", "SAMES KREMLIN", "Ransburg"] },
+  { key: "sprayGuns", icon: Wrench, href: "/products/spray-guns", brands: ["SATA", "DeVilbiss", "Graco"] },
+  { key: "paintPumps", icon: Gauge, href: "/products/paint-pumps", brands: ["Graco", "ARO", "Wilden"] },
+  { key: "controlSystems", icon: Cpu, href: "/products/control-systems", brands: ["Siemens", "Allen-Bradley", "ABB"] },
+  { key: "colorChangeSystems", icon: Box, href: "/products/color-change", brands: ["Dürr", "SAMES KREMLIN", "Graco"] },
+  { key: "spareParts", icon: Package, href: "/products/spare-parts", brands: ["OEM Parts", "Service Kits", "Wear Items"] },
 ];
 
 const featuredBrands = [
@@ -78,6 +31,9 @@ const featuredBrands = [
 ];
 
 export default function ProductsIndex() {
+  const { t } = useI18n();
+  const page = t.productsPage || {};
+
   return (
     <>
       <Helmet>
@@ -97,20 +53,20 @@ export default function ProductsIndex() {
                     <Package className="h-5 w-5 text-accent" />
                   </div>
                   <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
-                    Product Catalog
+                    {page.badge || "Product Catalog"}
                   </span>
                 </div>
                 <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-                  Coating Equipment & Parts
+                  {page.heroTitle || "Coating Equipment & Parts"}
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground mb-6 max-w-3xl">
-                  Quality spray equipment, pumps, control systems, and spare parts from leading manufacturers. Technical support and fast delivery for your coating operations.
+                  {page.heroSubtitle || "Quality spray equipment, pumps, control systems, and spare parts from leading manufacturers. Technical support and fast delivery for your coating operations."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Button asChild size="lg" className="rounded-xl">
                     <Link to="/quote">
                       <FileText className="h-4 w-4 mr-2" />
-                      Request Quote
+                      {page.requestQuote || "Request Quote"}
                     </Link>
                   </Button>
                 </div>
@@ -125,49 +81,52 @@ export default function ProductsIndex() {
             <FadeIn>
               <div className="mb-12">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                  Categories
+                  {page.categoriesLabel || "Categories"}
                 </p>
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                  Product Categories
+                  {page.categoriesTitle || "Product Categories"}
                 </h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
             <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {productCategories.map((category) => (
-                <StaggerItem key={category.title}>
-                  <Link
-                    to={category.href}
-                    className="group block rounded-xl border border-border bg-card p-6 h-full hover:border-accent/30 transition-all duration-300"
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                        <category.icon className="h-6 w-6 text-accent" />
+              {productCategoryKeys.map((category) => {
+                const categoryData = page[category.key] || {};
+                return (
+                  <StaggerItem key={category.key}>
+                    <Link
+                      to={category.href}
+                      className="group block rounded-xl border border-border bg-card p-6 h-full hover:border-accent/30 transition-all duration-300"
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                          <category.icon className="h-6 w-6 text-accent" />
+                        </div>
+                        <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
                       </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <h3 className="text-lg font-semibold mb-3">{category.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{category.description}</p>
-                    
-                    {/* Brands */}
-                    <div className="pt-4 border-t border-border">
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-2">
-                        Brands
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {category.brands.map((brand) => (
-                          <span
-                            key={brand}
-                            className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
-                          >
-                            {brand}
-                          </span>
-                        ))}
+                      <h3 className="text-lg font-semibold mb-3">{categoryData.title || category.key}</h3>
+                      <p className="text-sm text-muted-foreground mb-4">{categoryData.description || ""}</p>
+                      
+                      {/* Brands */}
+                      <div className="pt-4 border-t border-border">
+                        <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-2">
+                          {page.brands || "Brands"}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {category.brands.map((brand) => (
+                            <span
+                              key={brand}
+                              className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
+                            >
+                              {brand}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </StaggerItem>
-              ))}
+                    </Link>
+                  </StaggerItem>
+                );
+              })}
             </StaggerContainer>
           </div>
         </section>
@@ -178,10 +137,10 @@ export default function ProductsIndex() {
             <FadeIn>
               <div className="mb-12 text-center">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                  Technology Partners
+                  {page.partnersLabel || "Technology Partners"}
                 </p>
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                  Brands We Work With
+                  {page.partnersTitle || "Brands We Work With"}
                 </h2>
                 <div className="h-px w-12 bg-accent/50 mx-auto" />
               </div>
@@ -213,15 +172,15 @@ export default function ProductsIndex() {
             <FadeIn>
               <div className="max-w-2xl mx-auto text-center">
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-4 text-white">
-                  Need Equipment or Parts?
+                  {page.ctaTitle || "Need Equipment or Parts?"}
                 </h2>
                 <p className="text-sm text-white/60 mb-8">
-                  Contact us for product specifications, pricing, and availability. Technical support included.
+                  {page.ctaSubtitle || "Contact us for product specifications, pricing, and availability. Technical support included."}
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                   <Button asChild size="lg" className="rounded-xl bg-accent hover:bg-accent/90">
                     <Link to="/quote">
-                      Request Product Quote
+                      {page.ctaButton || "Request Product Quote"}
                     </Link>
                   </Button>
                 </div>

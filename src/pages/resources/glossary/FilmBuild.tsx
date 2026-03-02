@@ -1,32 +1,39 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Film Build | Paint Cell Glossary",
-  "description": "Definition of film build and why it matters in paint cell feasibility assessment."
-};
+import { useI18n } from "@/i18n/context";
 
 export default function FilmBuild() {
+  const { t, locale } = useI18n();
+  const term = t.glossaryTerms?.filmBuild || {};
+  const sections = t.glossaryTerms?.sectionTitles || {};
+  const breadcrumbs = t.resources?.breadcrumbs || {};
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": term.metaTitle || "Film Build | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of film build and why it matters in paint cell feasibility assessment.",
+    "inLanguage": locale,
+  };
+
   return (
     <ResourcePageLayout
-      title="Film Build"
-      metaTitle="Film Build | Paint Cell Glossary"
-      metaDescription="Definition of film build and why it matters in paint cell feasibility assessment."
+      title={term.title || "Film Build"}
+      metaTitle={term.metaTitle || "Film Build | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of film build and why it matters in paint cell feasibility assessment."}
       breadcrumbs={[
-        { label: "Glossary", href: "/resources/glossary" },
-        { label: "Film Build" },
+        { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
+        { label: term.title || "Film Build" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        Film build is the thickness of applied paint after spraying and curing/drying. It is a key requirement input that affects spray parameters, cycle time, and quality checks. In paint cells, film build targets must be paired with acceptable variability and inspection expectations.
+        {term.answerBox || "Film build is the thickness of applied paint after spraying and curing/drying. It is a key requirement input that affects spray parameters, cycle time, and quality checks. In paint cells, film build targets must be paired with acceptable variability and inspection expectations."}
       </AnswerBox>
 
-      <ContentSection title="Why it matters in paint cells">
+      <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>
         <BulletList
-          items={[
+          items={term.whyMatters || [
             "Determines number of passes and path time",
             "Impacts inspection and acceptable variability",
             "Links to atomization stability and environmental control",
@@ -34,9 +41,9 @@ export default function FilmBuild() {
         />
       </ContentSection>
 
-      <ContentSection title="What to watch for">
+      <ContentSection title={sections.watchFor || "What to watch for"}>
         <BulletList
-          items={[
+          items={term.watchFor || [
             "Targets without tolerance ranges or acceptance criteria",
             "Confusing appearance uniformity with film build specs",
           ]}
