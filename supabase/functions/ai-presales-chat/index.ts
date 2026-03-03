@@ -439,7 +439,7 @@ serve(async (req) => {
       } : null,
       DASHSCOPE_API_KEY ? {
         name: "dashscope",
-        endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+        endpoint: "https://coding.dashscope.aliyuncs.com/v1/chat/completions",
         apiKey: DASHSCOPE_API_KEY,
         model: "qwen-plus",
       } : null,
