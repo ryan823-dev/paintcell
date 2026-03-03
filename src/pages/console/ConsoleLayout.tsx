@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { 
   Loader2, 
@@ -22,7 +21,9 @@ import {
   ImageIcon,
   Globe,
   Wrench,
-  ShieldCheck
+  ShieldCheck,
+  LayoutGrid,
+  Images
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +40,8 @@ const navSections = [
     title: "页面内容 / Page Content",
     items: [
       { href: "/console/home", label: "首页 / Home", icon: Home },
+      { href: "/console/home-banners", label: "首页轮播 / Banners", icon: Images },
+      { href: "/console/why-cards", label: "为何选择 / Why Cards", icon: LayoutGrid },
       { href: "/console/about", label: "关于我们 / About", icon: Info },
       { href: "/console/paint-cells", label: "喷涂单元 / Paint Cells", icon: Droplets },
       { href: "/console/applications", label: "应用场景 / Applications", icon: Factory },
@@ -72,39 +75,17 @@ export default function ConsoleLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session?.user) {
-        navigate("/console");
-        return;
-      }
-
-      const { data: isAdminOrEditor } = await supabase
-        .rpc("is_admin_or_editor", { _user_id: session.user.id });
-      
-      if (!isAdminOrEditor) {
-        await supabase.auth.signOut();
-        navigate("/console");
-        return;
-      }
-
-      setLoading(false);
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_OUT") {
-        navigate("/console");
-      }
-    });
-
-    return () => subscription.unsubscribe();
+    // 简单的登录状态检查
+    const isLoggedIn = localStorage.getItem("console_auth") === "true";
+    if (!isLoggedIn) {
+      navigate("/console");
+      return;
+    }
+    setLoading(false);
   }, [navigate]);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
+  const handleLogout = () => {
+    localStorage.removeItem("console_auth");
     navigate("/console");
   };
 
