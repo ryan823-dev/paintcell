@@ -410,31 +410,27 @@ serve(async (req) => {
       content: msg.role === "user" ? sanitizeMessage(msg.content) : msg.content
     }));
     
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
     const DASHSCOPE_API_KEY = Deno.env.get("DASHSCOPE_API_KEY");
 
-    // Provider fallback chain: Lovable → OpenRouter → DashScope
+    // Provider fallback chain: OpenRouter (Claude Haiku) → DashScope (Qwen Plus)
+    // Lovable gateway removed — OpenRouter is the primary provider for customer-facing AI
     interface AIProvider {
       name: string;
       endpoint: string;
       apiKey: string | undefined;
       model: string;
+      timeoutMs: number;
       extraHeaders?: Record<string, string>;
     }
 
     const providers: AIProvider[] = [
-      LOVABLE_API_KEY ? {
-        name: "lovable",
-        endpoint: "https://ai.gateway.lovable.dev/v1/chat/completions",
-        apiKey: LOVABLE_API_KEY,
-        model: "google/gemini-3-flash-preview",
-      } : null,
       OPENROUTER_API_KEY ? {
         name: "openrouter",
         endpoint: "https://openrouter.ai/api/v1/chat/completions",
         apiKey: OPENROUTER_API_KEY,
         model: "anthropic/claude-3.5-haiku",
+        timeoutMs: 15000, // 15s timeout
         extraHeaders: { "HTTP-Referer": "https://tdpaintcell.com", "X-Title": "PaintCell AI Assistant" },
       } : null,
       DASHSCOPE_API_KEY ? {
@@ -442,6 +438,7 @@ serve(async (req) => {
         endpoint: "https://coding.dashscope.aliyuncs.com/v1/chat/completions",
         apiKey: DASHSCOPE_API_KEY,
         model: "qwen-plus",
+        timeoutMs: 30000, // 30s timeout (last resort, be patient)
       } : null,
     ].filter((p): p is AIProvider => p !== null);
 
@@ -480,11 +477,17 @@ serve(async (req) => {
           if (stream) body.stream = true;
           if (temperature !== undefined) body.temperature = temperature;
 
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), provider.timeoutMs);
+
           const response = await fetch(provider.endpoint, {
             method: "POST",
             headers,
             body: JSON.stringify(body),
+            signal: controller.signal,
           });
+
+          clearTimeout(timeout);
 
           // If response is OK, return it
           if (response.ok) {
@@ -492,18 +495,16 @@ serve(async (req) => {
             return response;
           }
 
-          // Retriable failures → try next provider
+          // Any non-OK response → try next provider
           const status = response.status;
-          if (status === 429 || status === 402 || status === 500 || status === 502 || status === 503) {
-            const errText = await response.text().catch(() => "");
-            console.warn(`AI provider ${provider.name} failed (${status}): ${errText.slice(0, 200)}`);
-            if (i < providers.length - 1) {
-              console.log(`Falling back to next provider: ${providers[i + 1].name}`);
-              continue;
-            }
+          const errText = await response.text().catch(() => "");
+          console.warn(`AI provider ${provider.name} failed (${status}): ${errText.slice(0, 200)}`);
+          if (i < providers.length - 1) {
+            console.log(`Falling back to next provider: ${providers[i + 1].name}`);
+            continue;
           }
 
-          // Non-retriable failure on last provider → return as-is
+          // Last provider also failed → return error
           return response;
         } catch (err) {
           // Network error → try next provider
