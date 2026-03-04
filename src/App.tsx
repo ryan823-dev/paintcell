@@ -33,6 +33,7 @@ const Insights = lazy(() => import("./pages/resources/Insights"));
 const FAQs = lazy(() => import("./pages/resources/FAQs"));
 const PaintCellFeasibilityChecks = lazy(() => import("./pages/resources/PaintCellFeasibilityChecks"));
 const AutomationBoundary = lazy(() => import("./pages/resources/AutomationBoundary"));
+const DynamicArticle = lazy(() => import("./pages/resources/DynamicArticle"));
 
 // Lazy load Standards & Compliance pages
 const StandardsCompliance = lazy(() => import("./pages/resources/StandardsCompliance"));
@@ -209,6 +210,9 @@ function PublicRoutes() {
 
       {/* Knowledge articles */}
       <Route path="resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
+
+      {/* Dynamic database-driven article (Vertax CMS push pipeline) */}
+      <Route path="resources/articles/:slug" element={<DynamicArticle />} />
       <Route path="resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
       <Route path="resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
       <Route path="resources/knowledge/spray-technology-guide" element={<SprayTechnologyGuide />} />

@@ -1,15 +1,38 @@
+import { useState, useEffect } from "react";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
 import { ArrowRight, BookOpen, FileText, HelpCircle } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { supabase } from "@/integrations/supabase/client";
+
+interface DynamicPost {
+  title: string;
+  title_zh: string | null;
+  slug: string;
+}
 
 export default function EngineeringLibrary() {
   const { t, locale } = useI18n();
+  const isZh = locale === "zh-CN";
   const res = t.resources?.engineeringLibrary || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   const sections = t.resources?.sections || {};
   const cards = res.cards || {};
+
+  const [dynamicPosts, setDynamicPosts] = useState<DynamicPost[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("resources_posts")
+      .select("title, title_zh, slug")
+      .eq("status", "published")
+      .order("published_at", { ascending: false })
+      .limit(10)
+      .then(({ data }) => {
+        if (data) setDynamicPosts(data as DynamicPost[]);
+      });
+  }, []);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -85,6 +108,19 @@ export default function EngineeringLibrary() {
 
       <ContentSection title={sections.featured || "Featured"}>
         <ul className="space-y-4">
+          {/* Dynamic articles from database (Vertax CMS pipeline) */}
+          {dynamicPosts.map((post) => (
+            <li key={post.slug}>
+              <Link
+                to={`/resources/articles/${post.slug}`}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+              >
+                <ArrowRight className="h-4 w-4" />
+                {(isZh && post.title_zh) ? post.title_zh : post.title}
+              </Link>
+            </li>
+          ))}
+          {/* Static featured articles */}
           <li>
             <Link
               to="/resources/guides/paint-cell-feasibility-checks"
