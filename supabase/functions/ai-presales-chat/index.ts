@@ -437,7 +437,7 @@ serve(async (req) => {
         name: "dashscope",
         endpoint: "https://coding.dashscope.aliyuncs.com/v1/chat/completions",
         apiKey: DASHSCOPE_API_KEY,
-        model: "qwen-plus",
+        model: "qwen3-coder-plus",
         timeoutMs: 30000, // 30s timeout (last resort, be patient)
       } : null,
     ].filter((p): p is AIProvider => p !== null);
