@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, FileText, Settings2, Loader2, GripHorizontal } from "lucide-react";
+import { Send, FileText, Settings2, GripHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
@@ -11,6 +11,7 @@ import { RequirementSummary } from "./RequirementSummary";
 import { ContactFormModal } from "./ContactFormModal";
 import { QuoteFormData, initialFormData } from "@/types/quote";
 import type { PageContext } from "./FloatingAssistantButton";
+import { ChatStatusIndicator } from "./ChatStatusIndicator";
 
 interface AIChatPanelProps {
   onClose: () => void;
@@ -31,6 +32,8 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState<'idle' | 'thinking' | 'typing' | 'processing' | 'generating-summary' | 'completed'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
   const [showSummary, setShowSummary] = useState(false);
   const [summary, setSummary] = useState("");
   const [extractedRequirements, setExtractedRequirements] = useState<Partial<QuoteFormData>>({});
@@ -55,6 +58,19 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
   // Count turns for summary suggestion
   const userTurnCount = messages.filter(m => m.role === "user").length;
 
+  // Update status helper
+  const updateStatus = useCallback((status: 'idle' | 'thinking' | 'typing' | 'processing' | 'generating-summary' | 'completed', message?: string) => {
+    setCurrentStatus(status);
+    setStatusMessage(message || '');
+    if (status === 'idle') {
+      setTimeout(() => {
+        if (currentStatus !== 'idle') {
+          setCurrentStatus('idle');
+        }
+      }, 1000); // Keep completion status visible for a moment before going idle
+    }
+  }, [currentStatus]);
+
   // Stream chat response
   const streamChat = useCallback(async (userMessage: string) => {
     const userMsg: ChatMessageType = {
@@ -65,10 +81,13 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
     
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
+    updateStatus('processing', "Sending your message to PaintCell AI...");
 
     let assistantContent = "";
     
     try {
+      updateStatus('thinking', "PaintCell AI is analyzing your question...");
+      
       const response = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
@@ -94,6 +113,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
 
       // Add assistant message placeholder
       setMessages(prev => [...prev, { role: "assistant", content: "", timestamp: new Date() }]);
+      updateStatus('typing', "PaintCell AI is preparing a response...");
 
       while (true) {
         const { done, value } = await reader.read();
@@ -134,6 +154,8 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
           }
         }
       }
+      
+      updateStatus('completed', "Response received");
     } catch (error) {
       // Log error without exposing details to console in production
       if (import.meta.env.DEV) {
@@ -142,10 +164,14 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
       toast.error("Failed to send message. Please try again.");
       // Remove the empty assistant message if error
       setMessages(prev => prev.filter(m => m.content !== ""));
+      updateStatus('idle');
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+        updateStatus('idle');
+      }, 500); // Brief delay to show completion state
     }
-  }, [messages]);
+  }, [messages, updateStatus]);
 
   const handleSend = useCallback(() => {
     const trimmed = input.trim();
@@ -164,6 +190,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
   // Generate summary
   const handleGenerateSummary = async () => {
     setIsLoading(true);
+    updateStatus('generating-summary', "Compiling project requirements and generating summary...");
     try {
       // Get both summary and extracted requirements
       const [summaryRes, extractRes] = await Promise.all([
@@ -203,14 +230,19 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
       setSummary(summaryData.summary || "");
       setExtractedRequirements(extractData.requirements || {});
       setShowSummary(true);
+      updateStatus('completed', "Summary generated successfully");
     } catch (error) {
       // Log error without exposing details to console in production
       if (import.meta.env.DEV) {
         console.error("Summary error:", error);
       }
       toast.error("Failed to generate summary. Please try again.");
+      updateStatus('idle');
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+        updateStatus('idle');
+      }, 500); // Brief delay to show completion state
     }
   };
 
@@ -250,11 +282,11 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
             <ChatMessage key={index} message={message} />
           ))}
           
-          {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm">Thinking...</span>
-            </div>
+          {(isLoading || currentStatus !== 'idle') && messages[messages.length - 1]?.role !== "assistant" && (
+            <ChatStatusIndicator 
+              status={currentStatus} 
+              message={statusMessage} 
+            />
           )}
 
           {/* Summary Section */}
@@ -358,6 +390,15 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
               <Send className="h-4 w-4" />
             </Button>
           </div>
+          {/* Display current status message below the input */}
+          {currentStatus !== 'idle' && (
+            <div className="mt-2">
+              <ChatStatusIndicator 
+                status={currentStatus} 
+                message={statusMessage} 
+              />
+            </div>
+          )}
         </div>
       )}
 
