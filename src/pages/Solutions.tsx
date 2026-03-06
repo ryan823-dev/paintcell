@@ -134,6 +134,19 @@ export default function Solutions() {
               "position": 2,
               "item": {
                 "@type": "VideoObject",
+                "name": "SAMES PPH707 & EVO Robotic Painting System — Automotive Body Spraying Demo",
+                "description": "Automotive body painting with SAMES PPH707 and EVO rotary bell applicators for OEM-grade finish.",
+                "thumbnailUrl": "https://img.youtube.com/vi/jiuSdDpWygE/maxresdefault.jpg",
+                "uploadDate": "2024-01-01",
+                "contentUrl": "https://www.youtube.com/watch?v=jiuSdDpWygE",
+                "embedUrl": "https://www.youtube.com/embed/jiuSdDpWygE"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "VideoObject",
                 "name": "How Bead System Works in Industrial Automation",
                 "description": "3D animation of Timmer bead dispensing system for automotive sealing applications.",
                 "thumbnailUrl": "https://img.youtube.com/vi/msv45NaSMXc/maxresdefault.jpg",
@@ -332,7 +345,7 @@ export default function Solutions() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-card rounded-xl border border-border overflow-hidden hover:border-accent/30 transition-colors">
                 <div className="aspect-video relative">
                   <iframe
@@ -348,6 +361,25 @@ export default function Solutions() {
                   <h3 className="font-semibold text-lg mb-1">ABB PixelPaint Dual-Color Technology</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Precision dual-color robotic spraying using ABB PixelPaint technology. Multiple robots coordinate wall-mounted, floor-mounted, and inverted configurations to achieve sharp two-tone finishes with 20–50 micron droplet control.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-card rounded-xl border border-border overflow-hidden hover:border-accent/30 transition-colors">
+                <div className="aspect-video relative">
+                  <iframe
+                    src="https://www.youtube.com/embed/jiuSdDpWygE"
+                    title="SAMES PPH707 & EVO Robotic Painting System — Automotive Body Spraying Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold text-lg mb-1">SAMES PPH707 & EVO Robotic Painting</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Automotive body painting with SAMES PPH707 and EVO rotary bell applicators. Multi-robot booth configuration with electrostatic coating for high transfer efficiency and OEM-grade surface finish.
                   </p>
                 </div>
               </div>
