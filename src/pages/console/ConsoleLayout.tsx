@@ -26,6 +26,8 @@ import {
   Images
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 // Navigation organized by section
 const navSections = [
@@ -75,17 +77,29 @@ export default function ConsoleLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    // 简单的登录状态检查
-    const isLoggedIn = localStorage.getItem("console_auth") === "true";
-    if (!isLoggedIn) {
-      navigate("/console");
-      return;
-    }
-    setLoading(false);
+    // 检查 Supabase 会话
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/console");
+        return;
+      }
+      setLoading(false);
+    };
+    checkSession();
+
+    // 监听认证状态变化
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        navigate("/console");
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("console_auth");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     navigate("/console");
   };
 

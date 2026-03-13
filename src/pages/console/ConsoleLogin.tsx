@@ -7,46 +7,57 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Lock } from "lucide-react";
-
-// 简单的管理员凭据 (生产环境建议使用更安全的方式)
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "paintcell2024";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ConsoleLogin() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 检查是否已登录
-    const isLoggedIn = localStorage.getItem("console_auth") === "true";
-    if (isLoggedIn) {
-      navigate("/console/dashboard");
-    }
-    setChecking(false);
+    // 检查是否已有 Supabase 会话
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/console/dashboard");
+      }
+      setChecking(false);
+    };
+    checkSession();
+
+    // 监听认证状态变化
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        navigate("/console/dashboard");
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // 模拟网络延迟
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      localStorage.setItem("console_auth", "true");
+    if (error) {
+      toast({
+        title: "登录失败",
+        description: error.message === "Invalid login credentials" 
+          ? "邮箱或密码错误" 
+          : error.message,
+        variant: "destructive",
+      });
+    } else {
       toast({
         title: "登录成功",
         description: "欢迎回来",
-      });
-      navigate("/console/dashboard");
-    } else {
-      toast({
-        title: "登录失败",
-        description: "用户名或密码错误",
-        variant: "destructive",
       });
     }
     
@@ -78,16 +89,16 @@ export default function ConsoleLogin() {
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">用户名</Label>
+                <Label htmlFor="email">邮箱</Label>
                 <Input
-                  id="username"
-                  type="text"
-                  placeholder="请输入用户名"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder="请输入邮箱"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
-                  autoComplete="username"
+                  autoComplete="email"
                 />
               </div>
               <div className="space-y-2">
