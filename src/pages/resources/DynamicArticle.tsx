@@ -88,17 +88,26 @@ export default function DynamicArticle() {
     ? article.meta_description_zh
     : (article.meta_description || article.summary || "");
 
-  const categoryLabel = {
-    "learning-center": "Engineering Library",
-    "tools-templates": "Tools & Templates",
+  const categoryLabel: Record<string, string> = {
+    "engineering-library": "Engineering Library",
+    "standards-compliance": "Standards & Compliance",
     "glossary": "Glossary",
-  }[article.category || "learning-center"] || "Engineering Library";
-
-  const categoryHref = {
-    "learning-center": "/resources/engineering-library",
-    "tools-templates": "/resources/tools-templates",
+    "tools-templates": "Tools & Templates",
+    // Legacy mappings
+    "learning-center": "Engineering Library",
+  };
+  
+  const categoryHref: Record<string, string> = {
+    "engineering-library": "/resources/engineering-library",
+    "standards-compliance": "/resources/standards-compliance",
     "glossary": "/resources/glossary",
-  }[article.category || "learning-center"] || "/resources/engineering-library";
+    "tools-templates": "/resources/tools-templates",
+    // Legacy mappings
+    "learning-center": "/resources/engineering-library",
+  };
+  
+  const catLabel = categoryLabel[article.category || "engineering-library"] || "Engineering Library";
+  const catHref = categoryHref[article.category || "engineering-library"] || "/resources/engineering-library";
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -127,7 +136,7 @@ export default function DynamicArticle() {
         metaDescription={metaDescription}
         breadcrumbs={[
           { label: "Resources", href: "/resources/engineering-library" },
-          { label: categoryLabel, href: categoryHref },
+          { label: catLabel, href: catHref },
           { label: title },
         ]}
         structuredData={structuredData}
