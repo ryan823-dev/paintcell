@@ -245,9 +245,10 @@ export default function ResourceEditor() {
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="learning-center">Learning Center</SelectItem>
-                  <SelectItem value="tools-templates">Tools & Templates</SelectItem>
+                  <SelectItem value="engineering-library">Engineering Library</SelectItem>
+                  <SelectItem value="standards-compliance">Standards & Compliance</SelectItem>
                   <SelectItem value="glossary">Glossary</SelectItem>
+                  <SelectItem value="tools-templates">Tools & Templates</SelectItem>
                 </SelectContent>
               </Select>
             </div>

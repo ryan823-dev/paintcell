@@ -1286,7 +1286,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "editor"
       content_status: "draft" | "review" | "published"
-      resource_category: "learning-center" | "tools-templates" | "glossary"
+      resource_category: "engineering-library" | "standards-compliance" | "glossary" | "tools-templates"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1416,7 +1416,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "editor"],
       content_status: ["draft", "review", "published"],
-      resource_category: ["learning-center", "tools-templates", "glossary"],
+      resource_category: ["engineering-library", "standards-compliance", "glossary", "tools-templates"],
     },
   },
 } as const
