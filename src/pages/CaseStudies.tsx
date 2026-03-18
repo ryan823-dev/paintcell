@@ -14,10 +14,10 @@ const industryIcons: Record<string, React.ReactNode> = {
 };
 
 const projectMeta = [
-  { location: "Kaifeng, China", robots: "Yaskawa + Ransburg", systems: "32 robots" },
-  { location: "Wuhan, China", robots: "ABB IRB5500 + ABB Atomizer", systems: "10 robots" },
+  { location: "Kaifeng, China", robots: "Yaskawa + Ransburg", systems: "32 robots, 200K units/year" },
+  { location: "Wuhan, China", robots: "ABB IRB5500 + ABB Atomizer", systems: "96 seconds/fixture" },
   { location: "Zhuhai, China", robots: "Kawasaki + Graco", systems: "4 robots (7-axis)" },
-  { location: "Shenzhen, China", robots: "Strategic Partnership", systems: "CASC" },
+  { location: "Dongtai, China", robots: "ABB IRB5500 + ABB RB1000i", systems: "70 seconds/fixture" },
 ];
 
 const projectVideos = [
@@ -67,7 +67,7 @@ export default function CaseStudies() {
       outcomes: [cs.study1Outcome1 || "", cs.study1Outcome2 || "", cs.study1Outcome3 || "", cs.study1Outcome4 || ""],
     },
     {
-      id: 2, title: cs.study2Title || "Heavy Equipment Manufacturer", industry: cs.study2Industry || "Industrial",
+      id: 2, title: cs.study2Title || "EV — Plastic Component Painting", industry: cs.study2Industry || "Automotive",
       challenge: cs.study2Challenge || "", solution: cs.study2Solution || "",
       outcomes: [cs.study2Outcome1 || "", cs.study2Outcome2 || "", cs.study2Outcome3 || "", cs.study2Outcome4 || ""],
     },
@@ -75,11 +75,6 @@ export default function CaseStudies() {
       id: 3, title: cs.study3Title || "Consumer Electronics Contract Manufacturer", industry: cs.study3Industry || "Electronics",
       challenge: cs.study3Challenge || "", solution: cs.study3Solution || "",
       outcomes: [cs.study3Outcome1 || "", cs.study3Outcome2 || "", cs.study3Outcome3 || "", cs.study3Outcome4 || ""],
-    },
-    {
-      id: 4, title: cs.study4Title || "Aerospace Component Supplier", industry: cs.study4Industry || "Aerospace",
-      challenge: cs.study4Challenge || "", solution: cs.study4Solution || "",
-      outcomes: [cs.study4Outcome1 || "", cs.study4Outcome2 || "", cs.study4Outcome3 || "", cs.study4Outcome4 || ""],
     },
   ];
 
@@ -89,7 +84,7 @@ export default function CaseStudies() {
       "@type": "CollectionPage",
       "@id": `${DOMAIN}/case-studies#webpage`,
       name: "Robotic Painting Automation Case Studies",
-      description: "Real implementations demonstrating measurable improvements in quality, throughput, and operational efficiency across automotive, industrial, electronics, and aerospace industries.",
+      description: "Real implementations demonstrating measurable improvements in quality, throughput, and operational efficiency across automotive and industrial applications.",
       url: `${DOMAIN}/case-studies`,
       isPartOf: { "@id": `${DOMAIN}/#website` },
       mainEntity: {
@@ -119,14 +114,44 @@ export default function CaseStudies() {
     },
   ];
 
+  // 真实项目数据来自PDF
+  const automotiveExteriorProjects = [
+    { client: "FAW-VW Fuwei High-tech (Changchun)", robot: "ABB IRB5500 / IRB6700", spray: "Graco H1050", config: "1+7 robots (2-3-2), flame treatment + primer/topcoat/clear, centralized paint supply" },
+    { client: "Yangzhou Yaqi Auto Parts", robot: "ABB IRB5500 / IRB6700", spray: "Graco H1050", config: "1+6 robots (1-3-2), flame treatment + multi-coat, centralized paint supply" },
+    { client: "Qingdao Huatao Auto Mold", robot: "ABB IRB5500", spray: "Timmer 1060", config: "Robot system + centralized paint supply" },
+    { client: "Jiangsu Jinchen Auto Trim", robot: "ABB IRB5500", spray: "Binks Maple 15/30", config: "2+14 robots (4-6-4), water-based topcoat with ABB RB1000i-WSC atomizer" },
+    { client: "FAW-VW Dongyang Plastic Parts (Changchun)", robot: "ABB IRB5500", spray: "ABB atomizer", config: "Robot system for plastic components" },
+    { client: "Qinhuangdao Weikawei Co., Ltd.", robot: "ABB IRB5500", spray: "Graco 4D150/350", config: "Robot system + centralized paint supply" },
+    { client: "Leap Motor Co., Ltd.", robot: "ABB IRB5500", spray: "Binks Maple 15/30", config: "8 ABB IRB5500 robots + 25 centralized paint supply systems" },
+    { client: "Chongqing Baling Auto Parts", robot: "ABB IRB5500", spray: "Binks Maple 15/30", config: "Robot system + centralized paint supply" },
+    { client: "Ningbo Zhongjun Senchi Auto Parts", robot: "ABB IRB5500", spray: "ABB atomizer", config: "Robot system" },
+    { client: "Changheng Auto Parts (Dingzhou)", robot: "ABB IRB5500", spray: "Graco P3:1", config: "1+6 robots (1-3-2), flame treatment + centralized paint supply" },
+    { client: "Zhejiang Wuchan Chemical Group (Ningbo)", robot: "ABB IRB5500", spray: "Binks Maple 15/30", config: "Robot system + centralized paint supply" },
+    { client: "Wuhan Mingjie Mold", robot: "ABB IRB5500", spray: "Binks centralized system", config: "Robot system + centralized paint supply" },
+    { client: "Nobo Auto Systems (Tianjin)", robot: "Yaskawa MPX3500", spray: "Binks centralized system", config: "10 robots (2-4-4), dual-side spraying, turnkey" },
+    { client: "Huakai Meyer Auto Systems (Ningbo)", robot: "Yaskawa GP180 + MPX3500", spray: "Integrated spray system", config: "1+5 robots (1-2-2), snowflake pretreatment, turnkey" },
+    { client: "VINFAST Thailand Project", robot: "Yaskawa MPX2600", spray: "Iwata centralized system", config: "International project, plastic exterior parts" },
+    { client: "Chongqing Guangneng Wanxi Technology", robot: "Yaskawa MPX2600", spray: "Graco centralized system", config: "10 robots, offline spraying, centralized paint supply" },
+    { client: "Hongri Auto (Jinzhai)", robot: "Yaskawa MPX3500", spray: "Binks centralized system", config: "Robot system for vehicle body exterior" },
+  ];
+
+  const oemBodyProjects = [
+    { client: "Chery Automobile (2nd Coating)", robot: "Yaskawa", spray: "SAMES rotary cup", config: "3-6-3 config, full body exterior spraying" },
+    { client: "Geely Sichuan Commercial Vehicle (Nanchong)", robot: "ABB IRB5500", spray: "ABB rotary cup", config: "3-6-3 config, primer/topcoat/clear" },
+    { client: "Chery Henan (Kaifeng Major Coating)", robot: "Yaskawa", spray: "Ransburg Robobell", config: "4-6-4 exterior + 4-4 interior + UBC/UBS gluing, 200K units/year" },
+    { client: "Shangrao Geely EV Commercial Vehicle", robot: "ABB IRB5500", spray: "ABB rotary cup", config: "3-6-3 config exterior + 2 UBC robots" },
+    { client: "NIO Anhui", robot: "KUKA", spray: "Foam application", config: "1 robot for automotive cavity foaming" },
+    { client: "Hongri Auto (Jinzhai)", robot: "Yaskawa", spray: "Yaskawa spray system", config: "7 robots for vehicle body exterior" },
+  ];
+
   return (
     <>
       <Helmet>
         <title>Case Studies — Robotic Painting Automation Success Stories | TD</title>
-        <meta name="description" content="Explore real-world robotic painting automation implementations. Case studies from automotive, industrial, electronics, and aerospace industries showing measurable improvements in quality, throughput, and ROI." />
+        <meta name="description" content="Explore real-world robotic painting automation implementations. Case studies from automotive OEM and Tier-1 suppliers showing measurable improvements in quality, throughput, and ROI." />
         <link rel="canonical" href={`${DOMAIN}/case-studies`} />
         <meta property="og:title" content="Case Studies — Robotic Painting Automation Success Stories | TD" />
-        <meta property="og:description" content="Real-world robotic painting automation case studies across automotive, industrial, and aerospace industries." />
+        <meta property="og:description" content="Real-world robotic painting automation case studies across automotive and industrial applications." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={`${DOMAIN}/case-studies`} />
         <meta property="og:image" content={`${DOMAIN}/images/projects/body-painting-yaskawa.jpg`} />
@@ -324,16 +349,16 @@ export default function CaseStudies() {
         </div>
       </Section>
 
-      {/* Additional Project References */}
+      {/* Automotive Exterior Parts Projects */}
       <Section variant="default">
         <div className="text-center mb-10">
           <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
             <Wrench className="h-4 w-4" />
-            Project Portfolio
+            Exterior Parts Projects
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold mb-3">Automotive Painting Line References</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Automotive Exterior Parts Painting References</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Selected projects from our 25+ major automotive painting line deliveries, featuring ABB, FANUC, Yaskawa, CMA, and multi-brand robot configurations.
+            17+ projects for bumpers, mirrors, trim and other exterior plastic components featuring ABB and Yaskawa paint robots.
           </p>
         </div>
 
@@ -348,26 +373,7 @@ export default function CaseStudies() {
               </tr>
             </thead>
             <tbody>
-              {[
-                { client: "FAW-Toyota (Dongfeng)", robot: "ABB IRB5500 / IRB6700", spray: "Graco H1050", config: "1+7 robots (2-3-2), primer/topcoat/clear" },
-                { client: "Zhengzhou Nissan", robot: "ABB IRB5500 / IRB6700", spray: "Graco H1050", config: "1+6 robots (1-3-2), multi-coat" },
-                { client: "Guangdong FAW-Toyota", robot: "ABB IRB5500", spray: "ABB RB1000i-WSC", config: "2+14 robots (4-6-4), water-based dual-color" },
-                { client: "Chengdu FAW-Toyota (Huatao)", robot: "ABB IRB5500 / IRB6700", spray: "Sames rotary bells", config: "1+7 robots (2-3-2), full turnkey" },
-                { client: "Changzhou Nanebot", robot: "ABB IRB5500 / IRB6700", spray: "Fast color change", config: "26+ robots (4-6-6), dual-color water-based" },
-                { client: "NorDAO Auto Systems (Chengdu)", robot: "FANUC MPX3500", spray: "Sames spray guns", config: "10 robots (2-4-4), dual-color" },
-                { client: "Jitai Vehicle Technology", robot: "FANUC MPX3500", spray: "Ransburg RMA660", config: "7 robots, bumper painting line" },
-                { client: "VINFAST (Thailand)", robot: "FANUC MPX2600", spray: "Integrated spray system", config: "International deployment, plastic parts" },
-                { client: "Zhejiang Jinfeiji Group", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "8 robots, water-based coating line" },
-                { client: "Minth Group", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "Trim & exterior component painting" },
-                { client: "Leap Motor (Jinhua)", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "8 robots + 25 centralized paint supply systems" },
-                { client: "Chery Automobile (2nd Coating)", robot: "Yaskawa + SAMES", spray: "SAMES rotary cup", config: "3-6-3 config, full body exterior spraying" },
-                { client: "Chery Henan (Kaifeng Major)", robot: "Yaskawa + Ransburg", spray: "Ransburg Robobell", config: "4-6-4 exterior + 4-4 interior + UBC/UBS gluing" },
-                { client: "Geely Sichuan Commercial Vehicle", robot: "ABB IRB5500", spray: "ABB rotary cup", config: "3-6-3 config, primer/topcoat/clear" },
-                { client: "Nobuo Auto Systems (Tianjin)", robot: "Yaskawa MPX3500", spray: "Integrated spray", config: "10 robots (2-4-4), both-sides spraying" },
-                { client: "Huakai Meyer (Ningbo)", robot: "Yaskawa GP180 + MPX3500", spray: "Integrated spray", config: "1+5 robots (1-2-2), snowflake pretreatment" },
-                { client: "Zibo OEM Body Line", robot: "ABB IRB5500", spray: "ABB RB1000i", config: "4-6-4-4-4 full config, 200K units/year" },
-                { client: "Anhui Xinzhou Technology", robot: "CMA GR6150-2900", spray: "Centralized paint supply", config: "6 robots (1-3-2), turnkey project" },
-              ].map((project, idx) => (
+              {automotiveExteriorProjects.map((project, idx) => (
                 <tr key={idx} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
                   <td className="py-3 px-4 font-medium">{project.client}</td>
                   <td className="py-3 px-4 text-muted-foreground">{project.robot}</td>
@@ -378,14 +384,47 @@ export default function CaseStudies() {
             </tbody>
           </table>
         </div>
+      </Section>
 
-        <p className="text-center text-xs text-muted-foreground mt-6">
-          Additional projects across general industrial automation (treadmill lines, steel sampling, palletizing), 3C electronics, construction machinery, rail transit, wind power, and furniture/sanitary ware industries available upon request.
-        </p>
+      {/* OEM Body Painting Projects */}
+      <Section variant="muted">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
+            <Car className="h-4 w-4" />
+            OEM Body Lines
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Vehicle OEM Body Painting Lines</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Complete vehicle body painting systems for major OEMs including Chery, Geely, NIO, and Hongri.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Client</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Robot Platform</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Spray Equipment</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Configuration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {oemBodyProjects.map((project, idx) => (
+                <tr key={idx} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                  <td className="py-3 px-4 font-medium">{project.client}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{project.robot}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{project.spray}</td>
+                  <td className="py-3 px-4 text-muted-foreground">{project.config}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Section>
 
       {/* Industry Experience Data Section */}
-      <Section variant="muted">
+      <Section variant="default">
         <div className="text-center mb-10">
           <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 text-accent text-sm font-medium rounded-full mb-4">
             <BarChart3 className="h-4 w-4" />
@@ -421,12 +460,12 @@ export default function CaseStudies() {
                 <Bot className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-accent">1–169</div>
+                <div className="text-2xl font-bold text-accent">1–32</div>
                 <div className="text-sm text-muted-foreground">Robots per Project</div>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              From single-robot compact cells for parts suppliers to 169-robot complete vehicle OEM paint shops. 45% of projects in 11-40 robot mid-scale range.
+              From single-robot compact cells for parts suppliers to 32-robot complete vehicle OEM paint shops. Flexible solutions for all production scales.
             </p>
           </div>
 
