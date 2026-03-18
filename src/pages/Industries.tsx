@@ -13,10 +13,8 @@ const industryOrder = [
   "battery-coating",
   "medical-device-coating",
   "construction-machinery",
-  "hardware-sanitary",
   "furniture-woodwork",
-  "aerospace-defense",
-  "plastics-composites",
+  "automotive-exterior-parts",
 ];
 
 export default function Industries() {
@@ -27,16 +25,16 @@ export default function Industries() {
       <Helmet>
         <title>Industry Solutions — Robotic Painting Automation | TD</title>
         <meta name="description" content="Explore robotic spray painting automation solutions by industry. Automotive, metal parts, appliances, construction machinery, aerospace, battery coating, medical devices, and more." />
-        <link rel="canonical" href="https://tdpaintcell.com/industries" />
+        <link rel="canonical" href="https://tdpaint.com/industries" />
         <meta property="og:title" content="Industry Solutions — Robotic Painting Automation | TD" />
         <meta property="og:description" content="Robotic spray painting automation solutions for 10+ industries: automotive, metal parts, appliances, construction, aerospace, and more." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tdpaintcell.com/industries" />
-        <meta property="og:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <meta property="og:url" content="https://tdpaint.com/industries" />
+        <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Industry Solutions — Robotic Painting Automation | TD" />
         <meta name="twitter:description" content="Robotic spray painting automation for 10+ industries including automotive, metal parts, and appliances." />
-        <meta name="twitter:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <meta name="twitter:image" content="https://tdpaint.com/images/og-social-share.png" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

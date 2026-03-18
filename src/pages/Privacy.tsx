@@ -59,7 +59,7 @@ export default function Privacy() {
           <h2>{page.rights?.title || "Your rights"}</h2>
           <p>{page.rights?.content || ""}</p>
           <p>
-            {page.rights?.contact || "To exercise rights, contact:"} <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
+            {page.rights?.contact || "To exercise rights, contact:"} <a href="mailto:engineering@tdpaint.com">engineering@tdpaint.com</a>.
           </p>
 
           <h2>{page.children?.title || "Children's privacy"}</h2>
@@ -70,7 +70,7 @@ export default function Privacy() {
 
           <h2>{page.contact?.title || "Contact"}</h2>
           <p>
-            {page.contact?.content || "For privacy requests and questions, contact:"} <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
+            {page.contact?.content || "For privacy requests and questions, contact:"} <a href="mailto:engineering@tdpaint.com">engineering@tdpaint.com</a>.
           </p>
         </article>
       </div>

@@ -46,7 +46,7 @@ export default function SprayTechnologyGuide() {
       <Helmet>
         <title>{article.metaTitle || "Spray Technology Selection: Electrostatic vs HVLP vs Conventional | TD"}</title>
         <meta name="description" content={article.metaDesc || "Comprehensive guide to selecting spray technology for industrial painting. Compare electrostatic, HVLP, and conventional air spray for transfer efficiency, finish quality, and application suitability."} />
-        <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/spray-technology-guide" />
+        <link rel="canonical" href="https://tdpaint.com/resources/knowledge/spray-technology-guide" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
       </Helmet>

@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { locales, defaultLocale, Locale } from "@/i18n/types";
 
-const SITE_URL = "https://tdpaintcell.com";
+const SITE_URL = "https://tdpaint.com";
 
 /**
  * Map locale codes to hreflang attribute values.

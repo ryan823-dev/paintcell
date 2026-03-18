@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const partCategories = [
   { category: "Excavator Components", examples: "Boom arms, buckets, cab frames, counterweights, track frames" },
@@ -66,7 +66,7 @@ export default function ConstructionMachinery() {
       url: DOMAIN,
       logo: `${DOMAIN}/images/td-logo.png`,
       description: "Engineering and integration of robotic painting systems and paint booth automation.",
-      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaint.com" },
     },
     {
       "@context": "https://schema.org",

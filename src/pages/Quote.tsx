@@ -10,29 +10,29 @@ export default function Quote() {
       <Helmet>
         <title>Paint Cell Project Assessment — Configure Your System | TD</title>
         <meta name="description" content="Start your robotic painting project assessment. Configure paint cell specifications including robot selection, spray technology, booth requirements, and production targets." />
-        <link rel="canonical" href="https://tdpaintcell.com/quote" />
+        <link rel="canonical" href="https://tdpaint.com/quote" />
         <meta property="og:title" content="Paint Cell Project Assessment | TD" />
         <meta property="og:description" content="Configure your robotic painting system. Select robots, spray technology, and booth specifications for your production requirements." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tdpaintcell.com/quote" />
-        <meta property="og:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <meta property="og:url" content="https://tdpaint.com/quote" />
+        <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Paint Cell Project Assessment | TD" />
         <meta name="twitter:description" content="Configure your robotic painting system specifications and get an engineering assessment." />
-        <meta name="twitter:image" content="https://tdpaintcell.com/images/og-social-share.png" />
+        <meta name="twitter:image" content="https://tdpaint.com/images/og-social-share.png" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "@id": "https://tdpaintcell.com/quote#webpage",
+          "@id": "https://tdpaint.com/quote#webpage",
           "name": "Paint Cell Project Assessment",
           "description": "Configure robotic painting system specifications and request an engineering assessment.",
-          "url": "https://tdpaintcell.com/quote",
-          "isPartOf": { "@id": "https://tdpaintcell.com/#website" },
+          "url": "https://tdpaint.com/quote",
+          "isPartOf": { "@id": "https://tdpaint.com/#website" },
           "breadcrumb": {
             "@type": "BreadcrumbList",
             "itemListElement": [
-              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdpaintcell.com/" },
-              { "@type": "ListItem", "position": 2, "name": "Project Assessment", "item": "https://tdpaintcell.com/quote" }
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdpaint.com/" },
+              { "@type": "ListItem", "position": 2, "name": "Project Assessment", "item": "https://tdpaint.com/quote" }
             ]
           }
         })}</script>

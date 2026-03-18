@@ -52,7 +52,7 @@ export default function Terms() {
 
           <h2>{page.contact?.title || "Contact"}</h2>
           <p>
-            {page.contact?.content || "Questions about these Terms:"} <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
+            {page.contact?.content || "Questions about these Terms:"} <a href="mailto:engineering@tdpaint.com">engineering@tdpaint.com</a>.
           </p>
         </article>
       </div>

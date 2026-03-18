@@ -175,7 +175,7 @@ export const solutions: Record<string, SolutionData> = {
 
   "paint-booth-automation": {
     slug: "paint-booth-automation",
-    canonicalDomain: "https://tdpaintcell.com",
+    canonicalDomain: "https://tdpaint.com",
     metaTitle: "Paint Booth Automation | Robotic Paint Booth Integration & ATEX Options | TD",
     metaDescription: "Engineering and integration of paint booth automation for robotic spray painting. New booth build or retrofit into existing booths, airflow/ventilation design support, controls integration, and ATEX-ready configurations for automotive and industrial finishing.",
     heroTitle: "Paint Booth Automation for Robotic Spray Painting",

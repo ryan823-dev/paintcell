@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowLeft, BookOpen, MessageSquare } from "lucide-react";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 export default function ThankYou() {
   return (

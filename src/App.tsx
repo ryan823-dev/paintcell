@@ -87,10 +87,8 @@ const AutomotivePainting = lazy(() => import("./pages/industries/AutomotivePaint
 const ApplianceCoating = lazy(() => import("./pages/industries/ApplianceCoating"));
 const MetalPartsFinishing = lazy(() => import("./pages/industries/MetalPartsFinishing"));
 const FurnitureWoodwork = lazy(() => import("./pages/industries/FurnitureWoodwork"));
-const PlasticsComposites = lazy(() => import("./pages/industries/PlasticsComposites"));
-const AerospaceDefense = lazy(() => import("./pages/industries/AerospaceDefense"));
+const AutomotiveExteriorParts = lazy(() => import("./pages/industries/AutomotiveExteriorParts"));
 const ConstructionMachinery = lazy(() => import("./pages/industries/ConstructionMachinery"));
-const HardwareSanitary = lazy(() => import("./pages/industries/HardwareSanitary"));
 const BatteryCoating = lazy(() => import("./pages/industries/BatteryCoating"));
 const MedicalDeviceCoating = lazy(() => import("./pages/industries/MedicalDeviceCoating"));
 
@@ -243,10 +241,8 @@ function PublicRoutes() {
       <Route path="industries/appliance-coating" element={<ApplianceCoating />} />
       <Route path="industries/metal-parts-finishing" element={<MetalPartsFinishing />} />
       <Route path="industries/furniture-woodwork" element={<FurnitureWoodwork />} />
-      <Route path="industries/plastics-composites" element={<PlasticsComposites />} />
-      <Route path="industries/aerospace-defense" element={<AerospaceDefense />} />
+      <Route path="industries/automotive-exterior-parts" element={<AutomotiveExteriorParts />} />
       <Route path="industries/construction-machinery" element={<ConstructionMachinery />} />
-      <Route path="industries/hardware-sanitary" element={<HardwareSanitary />} />
       <Route path="industries/battery-coating" element={<BatteryCoating />} />
       <Route path="industries/medical-device-coating" element={<MedicalDeviceCoating />} />
       <Route path="industries/:slug" element={<IndustryPage />} />

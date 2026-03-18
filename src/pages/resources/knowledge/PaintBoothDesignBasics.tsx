@@ -46,7 +46,7 @@ export default function PaintBoothDesignBasics() {
       <Helmet>
         <title>{article.metaTitle || "Paint Booth Design Basics | Technical Insights | TD"}</title>
         <meta name="description" content={article.metaDesc || "Expert guide on paint booth design for robotic spray painting. Covers airflow types, sizing methodology, ventilation requirements, and common design mistakes."} />
-        <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/paint-booth-design-basics" />
+        <link rel="canonical" href="https://tdpaint.com/resources/knowledge/paint-booth-design-basics" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
       </Helmet>

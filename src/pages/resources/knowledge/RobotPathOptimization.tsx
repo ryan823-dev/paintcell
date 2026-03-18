@@ -46,7 +46,7 @@ export default function RobotPathOptimization() {
       <Helmet>
         <title>{article.metaTitle || "Robot Spray Path Optimization for Consistent Coating | TD"}</title>
         <meta name="description" content={article.metaDesc || "Technical guide to optimizing robotic spray paths for consistent paint coverage. Learn about path strategies, gun distance control, overlap techniques, and cycle time optimization."} />
-        <link rel="canonical" href="https://tdpaintcell.com/resources/knowledge/robot-path-optimization" />
+        <link rel="canonical" href="https://tdpaint.com/resources/knowledge/robot-path-optimization" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) })}</script>
       </Helmet>

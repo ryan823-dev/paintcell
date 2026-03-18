@@ -37,7 +37,7 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
     if (assistantButton) assistantButton.click();
   };
 
-  const domain = "https://tdpaintcell.com";
+  const domain = "https://tdpaint.com";
   const pageUrl = `${domain}/industries/${data.slug}`;
 
   const organizationSchema = {

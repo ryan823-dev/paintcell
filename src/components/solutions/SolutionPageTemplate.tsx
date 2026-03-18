@@ -26,7 +26,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
     window.scrollTo(0, 0);
   }, [data.slug]);
 
-  const domain = data.canonicalDomain || "https://tdpaintcell.com";
+  const domain = data.canonicalDomain || "https://tdpaint.com";
   const pageUrl = `${domain}/solutions/${data.slug}`;
 
   // Build standardized JSON-LD schemas with @id linking

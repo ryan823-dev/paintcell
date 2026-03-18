@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const workflowSteps = [
   { title: "Assessment", desc: "Product types, finish requirements, volume, current process evaluation" },
@@ -283,7 +283,7 @@ export default function FurnitureWoodwork() {
               Related industries:{" "}
               <Link to="/industries/metal-parts-finishing" className="text-accent underline underline-offset-2 hover:text-accent/80">Metal Parts Finishing</Link>
               {" · "}
-              <Link to="/industries/plastics-composites" className="text-accent underline underline-offset-2 hover:text-accent/80">Plastics & Composites</Link>
+              <Link to="/industries/automotive-exterior-parts" className="text-accent underline underline-offset-2 hover:text-accent/80">Automotive Exterior Parts</Link>
             </p>
           </div>
         </section>

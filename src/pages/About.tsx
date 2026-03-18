@@ -5,7 +5,7 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, Award, Users, Globe, Wrench, Building2, Rocket, Calendar, MapPin, ShieldCheck, Car, Factory, Zap, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const schemas = [
   {
@@ -40,7 +40,7 @@ const schemas = [
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "info@tdpaintcell.com",
+      email: "info@tdpaint.com",
       availableLanguage: ["English", "Chinese", "Japanese"],
     },
     sameAs: [],
@@ -173,7 +173,7 @@ export default function About() {
               Since our founding, we have specialized in robotic painting automation and intelligent boundary products for industrial coating applications. Our team comprises senior technical talents recruited from leading international robot companies (ABB, FANUC, Yaskawa) and well-known automotive enterprises, each bringing 15+ years of industry experience in painting process engineering, robot integration, and system commissioning.
             </p>
             <p>
-              TD serves high-end clients across <strong className="text-foreground">automotive OEM body shops, automotive plastic components (bumpers, mirrors, trim), rail transit, aerospace & defense, construction machinery, 3C electronics, and furniture & sanitary ware industries</strong>. We deliver complete turnkey solutions — from initial feasibility assessment and system design through equipment supply, installation, robot programming, spray parameter optimization, and production validation.
+              TD serves high-end clients across <strong className="text-foreground">automotive OEM body shops, automotive plastic components (bumpers, mirrors, trim), rail transit, construction machinery, 3C electronics, and furniture & sanitary ware industries</strong>. We deliver complete turnkey solutions — from initial feasibility assessment and system design through equipment supply, installation, robot programming, spray parameter optimization, and production validation.
             </p>
             <p>
               With 17+ completed major automotive painting line projects and deployment experience across 30+ cities in China plus international markets, TD has established itself as a trusted partner for manufacturers requiring high-quality, high-efficiency robotic coating systems.

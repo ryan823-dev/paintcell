@@ -18,7 +18,7 @@ import { AIChatDrawer } from "@/components/ai-assistant/AIChatDrawer";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const jsonLdSchemas_static = [
   {
@@ -29,7 +29,7 @@ const jsonLdSchemas_static = [
     "url": DOMAIN,
     "logo": `${DOMAIN}/images/td-logo.png`,
     "description": "Engineering and integration of robotic painting systems and paint booth automation.",
-    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
+    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaint.com" },
   },
   {
     "@context": "https://schema.org",

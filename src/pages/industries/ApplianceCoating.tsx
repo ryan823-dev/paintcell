@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const workflowSteps = [
   { title: "Assessment", desc: "Parts, coating spec, booth situation, ATEX needs" },

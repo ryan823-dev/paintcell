@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const productCategoryKeys = [
   { key: "rotaryBells", icon: Settings, href: "/products/rotary-bells", brands: ["SAMES KREMLIN PPH707", "Ransburg Robobell", "Dürr EcoBell"] },

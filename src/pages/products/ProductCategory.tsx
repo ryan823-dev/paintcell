@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/animations";
 import { ChevronRight, FileText, ArrowLeft } from "lucide-react";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 // Category data - in production this would come from database
 const categoryData: Record<string, {

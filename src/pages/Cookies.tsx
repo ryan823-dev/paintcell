@@ -43,7 +43,7 @@ export default function Cookies() {
 
           <h2>{page.contact?.title || "Contact"}</h2>
           <p>
-            {page.contact?.content || "For questions:"} <a href="mailto:engineering@tdpaintcell.com">engineering@tdpaintcell.com</a>.
+            {page.contact?.content || "For questions:"} <a href="mailto:engineering@tdpaint.com">engineering@tdpaint.com</a>.
           </p>
         </article>
       </div>

@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const workflowSteps = [
   { title: "Assessment", desc: "Production volume, cleanroom requirements, coating specifications" },
@@ -65,7 +65,7 @@ export default function BatteryCoating() {
       url: DOMAIN,
       logo: `${DOMAIN}/images/td-logo.png`,
       description: "Engineering and integration of robotic painting systems and paint booth automation.",
-      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaint.com" },
     },
     {
       "@context": "https://schema.org",
@@ -257,7 +257,7 @@ export default function BatteryCoating() {
               Related industries:{" "}
               <Link to="/industries/automotive-painting" className="text-accent underline underline-offset-2 hover:text-accent/80">Automotive Painting</Link>
               {" · "}
-              <Link to="/industries/plastics-composites" className="text-accent underline underline-offset-2 hover:text-accent/80">Plastics & Composites</Link>
+              <Link to="/industries/automotive-exterior-parts" className="text-accent underline underline-offset-2 hover:text-accent/80">Automotive Exterior Parts</Link>
             </p>
           </div>
         </section>

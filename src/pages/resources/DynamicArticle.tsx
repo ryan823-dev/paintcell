@@ -126,7 +126,7 @@ export default function DynamicArticle() {
       <Helmet>
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
-        <link rel="canonical" href={`https://www.tdpaintcell.com/${locale}/resources/articles/${article.slug}`} />
+        <link rel="canonical" href={`https://www.tdpaint.com/${locale}/resources/articles/${article.slug}`} />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 

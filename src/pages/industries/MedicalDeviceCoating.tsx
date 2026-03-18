@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const workflowSteps = [
   { title: "Assessment", desc: "Device classification, regulatory requirements, coating specifications" },
@@ -65,7 +65,7 @@ export default function MedicalDeviceCoating() {
       url: DOMAIN,
       logo: `${DOMAIN}/images/td-logo.png`,
       description: "Engineering and integration of robotic painting systems and paint booth automation.",
-      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaint.com" },
     },
     {
       "@context": "https://schema.org",
@@ -255,9 +255,7 @@ export default function MedicalDeviceCoating() {
             <p className="text-muted-foreground text-sm mt-4">This is system integration, not standalone equipment supply.</p>
             <p className="text-muted-foreground text-sm mt-4">
               Related industries:{" "}
-              <Link to="/industries/aerospace-defense" className="text-accent underline underline-offset-2 hover:text-accent/80">Aerospace & Defense</Link>
-              {" · "}
-              <Link to="/industries/plastics-composites" className="text-accent underline underline-offset-2 hover:text-accent/80">Plastics & Composites</Link>
+              <Link to="/industries/automotive-exterior-parts" className="text-accent underline underline-offset-2 hover:text-accent/80">Automotive Exterior Parts</Link>
             </p>
           </div>
         </section>

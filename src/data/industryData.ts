@@ -301,18 +301,6 @@ export const industries: Record<string, IndustryData> = {
     ],
   },
 
-  "hardware-sanitary": {
-    slug: "hardware-sanitary",
-    industry: "hardware",
-    industryLabel: "Hardware & Sanitary",
-    metaTitle: "Robotic Painting Automation for Hardware & Sanitary Products | TD",
-    metaDescription: "Robotic spray coating systems for hardware fittings and sanitary ware. Decorative finishes, chrome alternatives, and chemical-resistant coatings for handles, faucets, and bathroom products.",
-    heroTitle: "Robotic painting automation for hardware & sanitary",
-    heroSubtitle: "Engineered systems for decorative finishes on fittings, fixtures, and sanitary products.",
-    heroImage: "/industry-heroes/hardware.jpg",
-    ctaText: "Start your hardware project",
-    examplePrompt: "We manufacture bathroom faucets and door handles, need consistent metallic finish replacing chrome plating.",
-    aiContext: { industry: "hardware-sanitary", finish: "decorative / chrome-alternative", throughput: "medium-high" },
     painPoints: [
       { title: "High decorative standards", description: "Gloss, metallic effect, and color consistency demands exceed typical industrial coating requirements." },
       { title: "Complex small parts", description: "Handles, knobs, and fittings require full coverage on all surfaces including recessed areas." },
@@ -407,18 +395,6 @@ export const industries: Record<string, IndustryData> = {
     ],
   },
 
-  "aerospace-defense": {
-    slug: "aerospace-defense",
-    industry: "aerospace",
-    industryLabel: "Aerospace & Defense",
-    metaTitle: "Robotic Painting Automation for Aerospace & Defense | TD",
-    metaDescription: "Robotic spray coating systems for aerospace and defense components. Mil-spec finishing with full traceability, AS9100D compliance, and NADCAP-ready process control for flight-critical parts.",
-    heroTitle: "Robotic painting automation for aerospace & defense",
-    heroSubtitle: "Engineered systems for mil-spec and aerospace-grade finishing with full traceability.",
-    heroImage: "/industry-heroes/aerospace.jpg",
-    ctaText: "Start your aerospace project",
-    examplePrompt: "We need automated primer and topcoat application for flight control surfaces, MIL-PRF-85285 compliant.",
-    aiContext: { industry: "aerospace", finish: "mil-spec / aerospace-grade", throughput: "low-medium" },
     painPoints: [
       { title: "Specification compliance", description: "Strict OEM specs (Boeing BMS, Airbus AIMS), mil-specs (MIL-PRF-85285, MIL-PRF-23377), and industry standards require documented compliance." },
       { title: "Traceability requirements", description: "AS9100D and NADCAP require full traceability of coating processes, paint batches, and environmental conditions." },
@@ -460,11 +436,11 @@ export const industries: Record<string, IndustryData> = {
     ],
   },
 
-  "plastics-composites": {
-    slug: "plastics-composites",
+  "automotive-exterior-parts": {
+    slug: "automotive-exterior-parts",
     industry: "plastics",
-    industryLabel: "Plastics & Composites",
-    metaTitle: "Robotic Coating Automation for Plastics & Composites | TD",
+    industryLabel: "Automotive Exterior Parts",
+    metaTitle: "Robotic Coating Automation for Automotive Exterior Parts | TD",
     metaDescription: "Automated spray coating systems for plastic and composite parts. Specialized surface preparation and adhesion-optimized processes for automotive, consumer, and industrial applications.",
     heroTitle: "Robotic coating automation for plastics & composites",
     heroSubtitle: "Engineered systems for adhesion-critical coatings on plastic and composite substrates.",

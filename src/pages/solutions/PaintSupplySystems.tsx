@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 export default function PaintSupplySystems() {
   const { t } = useI18n();

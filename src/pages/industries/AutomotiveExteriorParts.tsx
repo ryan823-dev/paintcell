@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const workflowSteps = [
   { title: "Assessment", desc: "Substrate analysis, adhesion testing, surface prep evaluation" },
@@ -61,7 +61,7 @@ const productCategories = [
   },
 ];
 
-export default function PlasticsComposites() {
+export default function AutomotiveExteriorParts() {
   const { t } = useI18n();
   const [inputValue, setInputValue] = useState(
     "We manufacture automotive bumpers and need consistent basecoat/clearcoat finish with proper adhesion."
@@ -91,7 +91,7 @@ export default function PlasticsComposites() {
       url: DOMAIN,
       logo: `${DOMAIN}/images/td-logo.png`,
       description: "Engineering and integration of robotic painting systems and paint booth automation.",
-      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaintcell.com" },
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaint.com" },
     },
     {
       "@context": "https://schema.org",
@@ -105,18 +105,18 @@ export default function PlasticsComposites() {
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "@id": `${DOMAIN}/industries/plastics-composites#service`,
-      name: "Plastics & Composites Coating Automation",
+      "@id": `${DOMAIN}/industries/automotive-exterior-parts#service`,
+      name: "Automotive Exterior Parts Coating Automation",
       description: "Engineering and integration of robotic spray coating systems for plastic and composite parts.",
       provider: { "@id": `${DOMAIN}/#organization` },
       serviceType: "Robotic Coating System Integration",
       areaServed: "Worldwide",
-      mainEntityOfPage: { "@id": `${DOMAIN}/industries/plastics-composites#webpage` },
+      mainEntityOfPage: { "@id": `${DOMAIN}/industries/automotive-exterior-parts#webpage` },
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "@id": `${DOMAIN}/industries/plastics-composites#faq`,
+      "@id": `${DOMAIN}/industries/automotive-exterior-parts#faq`,
       mainEntity: faqs.map(f => ({
         "@type": "Question",
         name: f.question,
@@ -126,21 +126,21 @@ export default function PlasticsComposites() {
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": `${DOMAIN}/industries/plastics-composites#breadcrumb`,
+      "@id": `${DOMAIN}/industries/automotive-exterior-parts#breadcrumb`,
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
         { "@type": "ListItem", position: 2, name: "Industries", item: `${DOMAIN}/industries/` },
-        { "@type": "ListItem", position: 3, name: "Plastics & Composites", item: `${DOMAIN}/industries/plastics-composites` },
+        { "@type": "ListItem", position: 3, name: "Automotive Exterior Parts", item: `${DOMAIN}/industries/automotive-exterior-parts` },
       ],
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "@id": `${DOMAIN}/industries/plastics-composites#webpage`,
-      name: "Plastics & Composites Coating Automation",
-      url: `${DOMAIN}/industries/plastics-composites`,
+      "@id": `${DOMAIN}/industries/automotive-exterior-parts#webpage`,
+      name: "Automotive Exterior Parts Coating Automation",
+      url: `${DOMAIN}/industries/automotive-exterior-parts`,
       isPartOf: { "@id": `${DOMAIN}/#website` },
-      mainEntity: { "@id": `${DOMAIN}/industries/plastics-composites#service` },
+      mainEntity: { "@id": `${DOMAIN}/industries/automotive-exterior-parts#service` },
       inLanguage: "en",
     },
   ], [faqs]);
@@ -159,9 +159,9 @@ export default function PlasticsComposites() {
   return (
     <>
       <Helmet>
-        <title>Plastics & Composites Coating Automation | Robotic Spray Systems | TD</title>
+        <title>Automotive Exterior Parts Coating Automation | Robotic Spray Systems | TD</title>
         <meta name="description" content="Robotic spray coating systems for plastic and composite parts. Specialized surface preparation, adhesion-optimized processes for automotive bumpers, consumer electronics, and industrial plastic components." />
-        <link rel="canonical" href={`${DOMAIN}/industries/plastics-composites`} />
+        <link rel="canonical" href={`${DOMAIN}/industries/automotive-exterior-parts`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
         ))}
@@ -182,7 +182,7 @@ export default function PlasticsComposites() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Plastics & Composites</BreadcrumbPage>
+                <BreadcrumbPage>Automotive Exterior Parts</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -192,7 +192,7 @@ export default function PlasticsComposites() {
         <section className="border-b border-border">
           <div className="container-wide py-12 md:py-20">
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-6 leading-tight">
-              Plastics & Composites Coating Automation
+              Automotive Exterior Parts Coating Automation
             </h1>
             <div className="max-w-3xl space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
               <p>
@@ -605,7 +605,7 @@ export default function PlasticsComposites() {
         </section>
 
         {/* Explore Links */}
-        <ExploreLinks currentPath="/industries/plastics-composites" />
+        <ExploreLinks currentPath="/industries/automotive-exterior-parts" />
       </div>
     </>
   );

@@ -27,7 +27,7 @@ interface Benefit {
   modalContent: BenefitModalContent;
 }
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const homepageFAQs = [
   {
@@ -74,7 +74,7 @@ const jsonLdSchemas = [
     "url": DOMAIN,
     "logo": `${DOMAIN}/images/og-social-share.png`,
     "description": "International industrial coating system expert providing turnkey painting shops, robotic workstations, paint supply systems, and technical services.",
-    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaintcell.com" },
+    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaint.com" },
   },
   {
     "@context": "https://schema.org",

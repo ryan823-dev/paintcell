@@ -5,7 +5,7 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image, BarChart3, Factory, Bot, Wrench } from "lucide-react";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaintcell.com";
+const DOMAIN = "https://tdpaint.com";
 
 const industryIcons: Record<string, React.ReactNode> = {
   Automotive: <Car className="h-5 w-5" />,

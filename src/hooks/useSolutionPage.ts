@@ -36,7 +36,7 @@ function mapDbToSolutionData(row: Record<string, unknown>): SolutionData {
     relatedIndustries: Array.isArray(row.related_industries) ? row.related_industries : [],
     relatedKnowledge: Array.isArray(row.related_knowledge) ? row.related_knowledge : [],
     eeat: (row.eeat as SolutionData["eeat"]) || undefined,
-    canonicalDomain: "https://tdpaintcell.com",
+    canonicalDomain: "https://tdpaint.com",
   };
 }
 
