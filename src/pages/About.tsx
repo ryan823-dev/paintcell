@@ -71,7 +71,7 @@ const milestones = [
   { year: "2010", title: "Company Founded", description: "Shanghai Tudou Technology established in Zhangjiang Hi-Tech Park, Pudong, Shanghai, with RMB 20 million registered capital." },
   { year: "2013", title: "First Major Automotive Project", description: "Delivered first large-scale automotive painting system for FAW-Toyota with ABB IRB5500 robots in 2-3-2 configuration." },
   { year: "2015", title: "Strategic Investment & ABB Partnership", description: "Received strategic investment from A-share listed company. Became authorized ABB system integrator for painting robots." },
-  { year: "2018", title: "EV Market Entry", description: "Secured new energy vehicle OEM contracts with leading Chinese EV manufacturers. Expanded to FANUC and Yaskawa robot platforms." },
+  { year: "2018", title: "EV Market Entry", description: "Secured EV OEM contracts with leading Chinese EV manufacturers. Expanded to FANUC and Yaskawa robot platforms." },
   { year: "2019", title: "Multi-Brand Expansion", description: "Expanded robot integration capabilities to include FANUC MPX series, Kawasaki, and CMA platforms for diverse application scenarios." },
   { year: "2021", title: "Shenzhen Aerospace Center", description: "Established Shenzhen Technical Center in partnership with CASC Aerospace Long-Hit for aerospace-grade coating solutions." },
   { year: "2024", title: "International Expansion", description: "Expanded to international markets with VINFAST project in Thailand. Completed 17+ major automotive painting line projects." },

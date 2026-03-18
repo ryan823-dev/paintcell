@@ -247,7 +247,7 @@ export const en: Record<string, Record<string, any>> = {
     study1Outcome2: "32 integrated robot systems operational",
     study1Outcome3: "Class A finish quality on all surfaces",
     study1Outcome4: "Full interior/exterior automation with door/lid handling",
-    study2Title: "New Energy Vehicle — Plastic Component Painting",
+    study2Title: "EV — Plastic Component Painting",
     study2Industry: "Automotive",
     study2Challenge: "A leading Chinese EV manufacturer needed high-quality painting systems for plastic exterior components including bumpers, mirrors, and trim parts at their Wuhan facility. The challenge involved achieving consistent finish on complex plastic geometries while maintaining fast cycle times (65-96 seconds per fixture) to meet aggressive production schedules. Flame treatment was required for plastic adhesion.",
     study2Solution: "TD engineered two specialized robotic cells using ABB robots with ABB electrostatic rotary atomizers. The bumper line features: flame treatment station (1 robot), primer spray (1 robot), topcoat spray (2 robots), and clearcoat spray (1 robot), achieving 96-second cycle time. The component line includes primer, topcoat, and clearcoat stations with 5 ABB robots total, achieving 65-90 second cycle times. Both systems feature automated recipe management for multiple part variants.",
