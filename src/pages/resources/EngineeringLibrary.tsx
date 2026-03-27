@@ -7,9 +7,11 @@ import { useI18n } from "@/i18n/context";
 import { supabase } from "@/integrations/supabase/client";
 
 interface DynamicPost {
+  id: string;
   title: string;
   title_zh: string | null;
   slug: string;
+  subcategory: string | null;
 }
 
 export default function EngineeringLibrary() {
@@ -20,19 +22,46 @@ export default function EngineeringLibrary() {
   const sections = t.resources?.sections || {};
   const cards = res.cards || {};
 
-  const [dynamicPosts, setDynamicPosts] = useState<DynamicPost[]>([]);
+  const [insightsPosts, setInsightsPosts] = useState<DynamicPost[]>([]);
+  const [guidesPosts, setGuidesPosts] = useState<DynamicPost[]>([]);
+  const [faqsPosts, setFaqsPosts] = useState<DynamicPost[]>([]);
 
   useEffect(() => {
-    supabase
-      .from("resources_posts")
-      .select("title, title_zh, slug")
-      .eq("status", "published")
-      .order("published_at", { ascending: false })
-      .limit(10)
-      .then(({ data }) => {
-        if (data) setDynamicPosts(data as DynamicPost[]);
-      });
+    // Fetch posts by subcategory
+    const fetchPosts = async () => {
+      const { data, error } = await supabase
+        .from("resources_posts")
+        .select("id, title, title_zh, slug, subcategory")
+        .eq("status", "published")
+        .eq("category", "engineering-library")
+        .order("published_at", { ascending: false });
+
+      if (!error && data) {
+        const posts = data as DynamicPost[];
+        setInsightsPosts(posts.filter(p => p.subcategory === "insights"));
+        setGuidesPosts(posts.filter(p => p.subcategory === "guides-checklists"));
+        setFaqsPosts(posts.filter(p => p.subcategory === "faqs"));
+      }
+    };
+
+    fetchPosts();
   }, []);
+
+  const renderPostList = (posts: DynamicPost[]) => (
+    <ul className="space-y-3">
+      {posts.map((post) => (
+        <li key={post.id}>
+          <Link
+            to={`/resources/articles/${post.slug}`}
+            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+          >
+            <ArrowRight className="h-4 w-4" />
+            {(isZh && post.title_zh) ? post.title_zh : post.title}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -78,6 +107,9 @@ export default function EngineeringLibrary() {
             <p className="text-sm text-muted-foreground">
               {cards.insights?.desc || "Short engineering viewpoints and boundary-setting notes"}
             </p>
+            {insightsPosts.length > 0 && (
+              <p className="text-xs text-primary mt-2">{insightsPosts.length} articles</p>
+            )}
           </Link>
           <Link
             to="/resources/engineering-library/guides-checklists"
@@ -90,6 +122,9 @@ export default function EngineeringLibrary() {
             <p className="text-sm text-muted-foreground">
               {cards.guidesChecklists?.desc || "Practical evaluation steps and preparation templates"}
             </p>
+            {guidesPosts.length > 0 && (
+              <p className="text-xs text-primary mt-2">{guidesPosts.length} articles</p>
+            )}
           </Link>
           <Link
             to="/resources/engineering-library/faqs"
@@ -102,25 +137,52 @@ export default function EngineeringLibrary() {
             <p className="text-sm text-muted-foreground">
               {cards.faqs?.desc || "Concise answers to common engineering questions"}
             </p>
+            {faqsPosts.length > 0 && (
+              <p className="text-xs text-primary mt-2">{faqsPosts.length} articles</p>
+            )}
           </Link>
         </div>
       </ContentSection>
 
-      <ContentSection title={sections.featured || "Featured"}>
+      {/* Dynamic content by subcategory */}
+      {faqsPosts.length > 0 && (
+        <ContentSection title="Recent FAQs">
+          {renderPostList(faqsPosts)}
+          <Link
+            to="/resources/engineering-library/faqs"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mt-4"
+          >
+            View all FAQs <ArrowRight className="h-3 w-3" />
+          </Link>
+        </ContentSection>
+      )}
+
+      {insightsPosts.length > 0 && (
+        <ContentSection title="Recent Insights">
+          {renderPostList(insightsPosts)}
+          <Link
+            to="/resources/engineering-library/insights"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mt-4"
+          >
+            View all Insights <ArrowRight className="h-3 w-3" />
+          </Link>
+        </ContentSection>
+      )}
+
+      {guidesPosts.length > 0 && (
+        <ContentSection title="Recent Guides & Checklists">
+          {renderPostList(guidesPosts)}
+          <Link
+            to="/resources/engineering-library/guides-checklists"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mt-4"
+          >
+            View all Guides <ArrowRight className="h-3 w-3" />
+          </Link>
+        </ContentSection>
+      )}
+
+      <ContentSection title={sections.featured || "Featured Resources"}>
         <ul className="space-y-4">
-          {/* Dynamic articles from database (Vertax CMS pipeline) */}
-          {dynamicPosts.map((post) => (
-            <li key={post.slug}>
-              <Link
-                to={`/resources/articles/${post.slug}`}
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
-              >
-                <ArrowRight className="h-4 w-4" />
-                {(isZh && post.title_zh) ? post.title_zh : post.title}
-              </Link>
-            </li>
-          ))}
-          {/* Static featured articles */}
           <li>
             <Link
               to="/resources/guides/paint-cell-feasibility-checks"
