@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,21 @@ import type { Tables, Enums } from "@/integrations/supabase/types";
 type ResourcePost = Tables<"resources_posts">;
 type ResourceCategory = Enums<"resource_category">;
 
+const categorySubcategories: Record<string, { value: string; label: string }[]> = {
+  "engineering-library": [
+    { value: "insights", label: "Insights" },
+    { value: "guides-checklists", label: "Guides & Checklists" },
+    { value: "faqs", label: "FAQs" },
+  ],
+  "standards-compliance": [
+    { value: "ventilation-airflow", label: "Ventilation & Airflow" },
+    { value: "voc-solvent-handling", label: "VOC/Solvent Handling" },
+    { value: "grounding-static-control", label: "Grounding & Static Control" },
+  ],
+  "glossary": [],
+  "tools-templates": [],
+};
+
 const defaultResource: Partial<ResourcePost> = {
   title: "",
   slug: "",
@@ -22,6 +37,7 @@ const defaultResource: Partial<ResourcePost> = {
   body: "",
   answer_box: "",
   category: null,
+  subcategory: null,
   status: "draft",
   meta_title: "",
   meta_description: "",
@@ -30,12 +46,25 @@ const defaultResource: Partial<ResourcePost> = {
 export default function ResourceEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isNew = id === "new";
-  
+
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [resource, setResource] = useState<Partial<ResourcePost>>(defaultResource);
+  const [resource, setResource] = useState<Partial<ResourcePost>>(() => {
+    // Initialize with URL params for new resources
+    if (isNew) {
+      const category = searchParams.get("category") as ResourceCategory | null;
+      const subcategory = searchParams.get("subcategory");
+      return {
+        ...defaultResource,
+        category,
+        subcategory,
+      };
+    }
+    return defaultResource;
+  });
 
   useEffect(() => {
     if (!isNew && id) {
@@ -78,6 +107,15 @@ export default function ResourceEditor() {
     }));
   };
 
+  const handleCategoryChange = (category: ResourceCategory) => {
+    // Reset subcategory when category changes
+    setResource((prev) => ({
+      ...prev,
+      category,
+      subcategory: null,
+    }));
+  };
+
   const handleSave = async () => {
     if (!resource.title || !resource.slug) {
       toast({
@@ -90,20 +128,23 @@ export default function ResourceEditor() {
 
     setSaving(true);
 
+    const resourceData = {
+      title: resource.title,
+      slug: resource.slug,
+      summary: resource.summary || null,
+      body: resource.body || null,
+      answer_box: resource.answer_box || null,
+      category: resource.category || null,
+      subcategory: resource.subcategory || null,
+      status: resource.status || "draft",
+      meta_title: resource.meta_title || null,
+      meta_description: resource.meta_description || null,
+    };
+
     if (isNew) {
       const { data, error } = await supabase
         .from("resources_posts")
-        .insert({
-          title: resource.title,
-          slug: resource.slug,
-          summary: resource.summary || null,
-          body: resource.body || null,
-          answer_box: resource.answer_box || null,
-          category: resource.category || null,
-          status: resource.status || "draft",
-          meta_title: resource.meta_title || null,
-          meta_description: resource.meta_description || null,
-        })
+        .insert(resourceData)
         .select()
         .single();
 
@@ -120,16 +161,7 @@ export default function ResourceEditor() {
     } else {
       const { error } = await supabase
         .from("resources_posts")
-        .update({
-          title: resource.title,
-          slug: resource.slug,
-          summary: resource.summary || null,
-          body: resource.body || null,
-          answer_box: resource.answer_box || null,
-          category: resource.category || null,
-          meta_title: resource.meta_title || null,
-          meta_description: resource.meta_description || null,
-        })
+        .update(resourceData)
         .eq("id", id);
 
       if (error) {
@@ -148,7 +180,7 @@ export default function ResourceEditor() {
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this resource?")) return;
-    
+
     setDeleting(true);
     const { error } = await supabase
       .from("resources_posts")
@@ -175,6 +207,8 @@ export default function ResourceEditor() {
       </div>
     );
   }
+
+  const availableSubcategories = resource.category ? categorySubcategories[resource.category] || [] : [];
 
   return (
     <div className="max-w-3xl">
@@ -239,7 +273,7 @@ export default function ResourceEditor() {
               <Label htmlFor="category">Category</Label>
               <Select
                 value={resource.category || ""}
-                onValueChange={(value) => setResource({ ...resource, category: value as ResourceCategory })}
+                onValueChange={(value) => handleCategoryChange(value as ResourceCategory)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
@@ -252,6 +286,26 @@ export default function ResourceEditor() {
                 </SelectContent>
               </Select>
             </div>
+            {availableSubcategories.length > 0 && (
+              <div className="space-y-2">
+                <Label htmlFor="subcategory">Subcategory</Label>
+                <Select
+                  value={resource.subcategory || ""}
+                  onValueChange={(value) => setResource({ ...resource, subcategory: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select subcategory" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableSubcategories.map((sub) => (
+                      <SelectItem key={sub.value} value={sub.value}>
+                        {sub.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="summary">Summary</Label>
               <Textarea

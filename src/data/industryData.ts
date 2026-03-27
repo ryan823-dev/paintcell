@@ -301,6 +301,18 @@ export const industries: Record<string, IndustryData> = {
     ],
   },
 
+  "appliance-hardware": {
+    slug: "appliance-hardware",
+    industry: "appliance",
+    industryLabel: "Appliance Hardware",
+    metaTitle: "Robotic Painting Automation for Appliance Hardware | TD",
+    metaDescription: "Automated spray finishing for appliance hardware, sanitary fixtures, and decorative metal parts. Chrome-effect finishes and consistent decorative coating.",
+    heroTitle: "Robotic finishing automation for appliance hardware",
+    heroSubtitle: "Precision decorative coating for handles, knobs, and sanitary fixtures.",
+    heroImage: "/industry-heroes/appliance.jpg",
+    ctaText: "Start your appliance hardware project",
+    examplePrompt: "We produce bathroom faucet handles and need chrome-effect lacquer coating for consistent finish.",
+    aiContext: { industry: "appliance", finish: "chrome-effect / decorative", throughput: "high" },
     painPoints: [
       { title: "High decorative standards", description: "Gloss, metallic effect, and color consistency demands exceed typical industrial coating requirements." },
       { title: "Complex small parts", description: "Handles, knobs, and fittings require full coverage on all surfaces including recessed areas." },
@@ -395,6 +407,18 @@ export const industries: Record<string, IndustryData> = {
     ],
   },
 
+  "aerospace-coating": {
+    slug: "aerospace-coating",
+    industry: "aerospace",
+    industryLabel: "Aerospace Coating",
+    metaTitle: "Robotic Coating Automation for Aerospace | TD",
+    metaDescription: "Automated coating systems for aerospace components. Mil-spec compliance, full traceability, and hazardous coating handling for aviation and defense applications.",
+    heroTitle: "Robotic coating automation for aerospace",
+    heroSubtitle: "Engineered systems for mil-spec compliance and full process traceability.",
+    heroImage: "/industry-heroes/aerospace.jpg",
+    ctaText: "Start your aerospace project",
+    examplePrompt: "We manufacture flight control surfaces and need mil-spec compliant coating with full traceability.",
+    aiContext: { industry: "aerospace", finish: "mil-spec / aerospace-grade", throughput: "low" },
     painPoints: [
       { title: "Specification compliance", description: "Strict OEM specs (Boeing BMS, Airbus AIMS), mil-specs (MIL-PRF-85285, MIL-PRF-23377), and industry standards require documented compliance." },
       { title: "Traceability requirements", description: "AS9100D and NADCAP require full traceability of coating processes, paint batches, and environmental conditions." },

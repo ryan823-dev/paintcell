@@ -64,6 +64,7 @@ const TeachPendant = lazy(() => import("./pages/resources/glossary/TeachPendant"
 const GunDistance = lazy(() => import("./pages/resources/glossary/GunDistance"));
 const CureTime = lazy(() => import("./pages/resources/glossary/CureTime"));
 const HollowWrist = lazy(() => import("./pages/resources/glossary/HollowWrist"));
+const DynamicGlossaryTerm = lazy(() => import("./pages/resources/DynamicGlossaryTerm"));
 
 // Lazy load Tools & Templates pages
 const ToolsTemplates = lazy(() => import("./pages/resources/ToolsTemplates"));
@@ -199,6 +200,8 @@ function PublicRoutes() {
       <Route path="resources/glossary/gun-distance" element={<GunDistance />} />
       <Route path="resources/glossary/cure-time" element={<CureTime />} />
       <Route path="resources/glossary/hollow-wrist" element={<HollowWrist />} />
+      {/* Dynamic glossary term from database */}
+      <Route path="resources/glossary/:slug" element={<DynamicGlossaryTerm />} />
 
       {/* Tools & Templates routes */}
       <Route path="resources/tools-templates" element={<ToolsTemplates />} />

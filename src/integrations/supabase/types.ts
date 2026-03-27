@@ -918,6 +918,7 @@ export type Database = {
           published_at: string | null
           slug: string
           status: Database["public"]["Enums"]["content_status"]
+          subcategory: string | null
           summary: string | null
           summary_zh: string | null
           title: string
@@ -942,6 +943,7 @@ export type Database = {
           published_at?: string | null
           slug: string
           status?: Database["public"]["Enums"]["content_status"]
+          subcategory?: string | null
           summary?: string | null
           summary_zh?: string | null
           title: string
@@ -966,6 +968,7 @@ export type Database = {
           published_at?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["content_status"]
+          subcategory?: string | null
           summary?: string | null
           summary_zh?: string | null
           title?: string
