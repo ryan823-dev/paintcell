@@ -23,7 +23,8 @@ import {
   Wrench,
   ShieldCheck,
   LayoutGrid,
-  Images
+  Images,
+  HelpCircle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -57,6 +58,7 @@ const navSections = [
       { href: "/console/resources", label: "资源库 / Resources", icon: BookOpen },
       { href: "/console/industry-pages", label: "行业页面 / Industries", icon: Globe },
       { href: "/console/solution-pages", label: "方案页面 / Solutions", icon: Wrench },
+      { href: "/console/faq-pages", label: "FAQ 页面 / FAQ Pages", icon: HelpCircle },
       { href: "/console/media", label: "媒体库 / Media", icon: ImageIcon },
     ],
   },

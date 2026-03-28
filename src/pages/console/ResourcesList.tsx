@@ -14,12 +14,11 @@ type ResourcePost = Tables<"resources_posts">;
 const categoryConfig = {
   "engineering-library": {
     title: "Engineering Library",
-    description: "Technical insights, guides, and FAQs for paint cell engineering",
+    description: "Technical insights and guides for paint cell engineering",
     icon: BookOpen,
     subcategories: [
       { value: "insights", label: "Insights" },
       { value: "guides-checklists", label: "Guides & Checklists" },
-      { value: "faqs", label: "FAQs" },
     ],
   },
   "standards-compliance": {

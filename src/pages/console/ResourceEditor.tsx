@@ -19,7 +19,6 @@ const categorySubcategories: Record<string, { value: string; label: string }[]> 
   "engineering-library": [
     { value: "insights", label: "Insights" },
     { value: "guides-checklists", label: "Guides & Checklists" },
-    { value: "faqs", label: "FAQs" },
   ],
   "standards-compliance": [
     { value: "ventilation-airflow", label: "Ventilation & Airflow" },
