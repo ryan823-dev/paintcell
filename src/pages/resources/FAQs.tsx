@@ -6,26 +6,18 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
-interface FAQPage {
+interface FAQPost {
   id: string;
-  slug: string;
   title: string;
   title_zh: string | null;
-  summary: string;
+  slug: string;
+  body: string | null;
+  body_zh: string | null;
+  answer_box: string | null;
+  answer_box_zh: string | null;
+  summary: string | null;
   summary_zh: string | null;
-  faqs: { question: string; answer: string }[];
-  faqs_zh: { question: string; answer: string }[];
-  meta_title: string | null;
-  meta_title_zh: string | null;
-  meta_description: string | null;
-  meta_description_zh: string | null;
 }
 
 export default function FAQs() {
@@ -36,61 +28,50 @@ export default function FAQs() {
   const sections = t.resources?.sections || {};
   const faqItems = res.items || [];
 
-  const [faqPages, setFaqPages] = useState<FAQPage[]>([]);
+  const [dynamicFAQs, setDynamicFAQs] = useState<FAQPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase
-      .from("faq_pages")
-      .select("id, slug, title, title_zh, summary, summary_zh, faqs, faqs_zh, meta_title, meta_title_zh, meta_description, meta_description_zh")
+      .from("resources_posts")
+      .select("id, title, title_zh, slug, body, body_zh, answer_box, answer_box_zh, summary, summary_zh")
       .eq("status", "published")
+      .eq("category", "engineering-library")
+      .eq("subcategory", "faqs")
       .order("published_at", { ascending: false })
       .then(({ data, error }) => {
         if (!error && data) {
-          setFaqPages(data as FAQPage[]);
+          setDynamicFAQs(data as FAQPost[]);
         }
         setLoading(false);
       });
   }, []);
 
-  // Generate FAQPage schema from all FAQ items
-  const generateSchema = () => {
-    const allFAQItems: { question: string; answer: string }[] = [];
-
-    // Collect all FAQ items from published pages
-    faqPages.forEach((page) => {
-      const items = isZh && page.faqs_zh?.length ? page.faqs_zh : page.faqs;
-      if (items?.length) {
-        allFAQItems.push(...items);
-      }
-    });
-
-    // If no dynamic FAQs, use static fallback
-    if (allFAQItems.length === 0 && faqItems.length > 0) {
-      allFAQItems.push(...(faqItems as { q: string; a: string }[]).map((item) => ({
-        question: item.q,
-        answer: item.a,
-      })));
-    }
-
-    return {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "name": res.metaTitle || "Paint Cell FAQs | Engineering Library",
-      "description": res.metaDesc || "Concise answers to common questions about paint cell feasibility, site readiness, and what inputs are needed.",
-      "inLanguage": locale,
-      "mainEntity": allFAQItems.slice(0, 10).map((item) => ({
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "name": res.metaTitle || "Paint Cell FAQs | Engineering Library",
+    "description": res.metaDesc || "Concise answers to common questions about paint cell feasibility, site readiness, and what inputs are needed.",
+    "inLanguage": locale,
+    "mainEntity": [
+      ...dynamicFAQs.slice(0, 5).map((item) => ({
         "@type": "Question",
-        "name": item.question,
+        "name": (isZh && item.title_zh) ? item.title_zh : item.title,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": item.answer,
-        },
+          "text": (isZh && item.answer_box_zh) ? item.answer_box_zh : (item.answer_box || item.summary || "")
+        }
       })),
-    };
+      ...faqItems.slice(0, 2).map((item: { q: string; a: string }) => ({
+        "@type": "Question",
+        "name": item.q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.a
+        }
+      }))
+    ]
   };
-
-  const structuredData = generateSchema();
 
   return (
     <ResourcePageLayout
@@ -98,7 +79,7 @@ export default function FAQs() {
       metaTitle={res.metaTitle || "Paint Cell FAQs | Engineering Library"}
       metaDescription={res.metaDesc || "Concise answers to common questions about paint cell feasibility, site readiness, and what inputs are needed."}
       breadcrumbs={[
-        { label: breadcrumbs.resources || "Resources", href: "/resources" },
+        { label: breadcrumbs.engineeringLibrary || "Engineering Library", href: "/resources/engineering-library" },
         { label: breadcrumbs.faqs || "FAQs" },
       ]}
       structuredData={structuredData}
@@ -114,121 +95,98 @@ export default function FAQs() {
           </div>
         ) : (
           <div className="space-y-8">
-            {/* Dynamic FAQ Pages from database */}
-            {faqPages.map((page) => {
-              const items = isZh && page.faqs_zh?.length ? page.faqs_zh : page.faqs;
-              const pageTitle = isZh && page.title_zh ? page.title_zh : page.title;
-
-              if (!items?.length) return null;
+            {/* Dynamic FAQs from database */}
+            {dynamicFAQs.map((item) => {
+              const title = (isZh && item.title_zh) ? item.title_zh : item.title;
+              const body = (isZh && item.body_zh) ? item.body_zh : item.body;
+              const answerBox = (isZh && item.answer_box_zh) ? item.answer_box_zh : item.answer_box;
 
               return (
-                <div key={page.id} className="space-y-4">
-                  <h2 className="text-lg font-semibold text-foreground">
-                    {pageTitle}
-                  </h2>
-                  {(isZh && page.summary_zh ? page.summary_zh : page.summary) && (
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {isZh && page.summary_zh ? page.summary_zh : page.summary}
-                    </p>
+                <div key={item.id} className="border-b border-border pb-6 last:border-0">
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q: {title}
+                  </h3>
+                  {answerBox && (
+                    <p className="text-muted-foreground mb-3">{answerBox}</p>
                   )}
-                  <Accordion type="single" collapsible className="w-full">
-                    {items.map((item, index) => (
-                      <AccordionItem key={index} value={`${page.id}-${index}`}>
-                        <AccordionTrigger className="text-left">
-                          {item.question}
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div className="prose prose-sm max-w-none text-muted-foreground">
-                            <ReactMarkdown>{item.answer}</ReactMarkdown>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
+                  {body && (
+                    <div className="prose prose-sm max-w-none text-muted-foreground">
+                      <ReactMarkdown>{body}</ReactMarkdown>
+                    </div>
+                  )}
                 </div>
               );
             })}
 
             {/* Static FAQs as fallback */}
-            {faqPages.length === 0 && faqItems.length > 0 && (
-              <Accordion type="single" collapsible className="w-full">
-                {(faqItems as { q: string; a: string }[]).map((item, index) => (
-                  <AccordionItem key={index} value={`static-${index}`}>
-                    <AccordionTrigger className="text-left">
-                      {item.q}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="text-muted-foreground">{item.a}</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            )}
+            {dynamicFAQs.length === 0 && faqItems.length > 0 && faqItems.map((item: { q: string; a: string }, index: number) => (
+              <div key={index}>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Q{index + 1}: {item.q}
+                </h3>
+                <p className="text-muted-foreground">
+                  {item.a}
+                </p>
+              </div>
+            ))}
 
             {/* Default static FAQs */}
-            {faqPages.length === 0 && faqItems.length === 0 && (
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="default-1">
-                  <AccordionTrigger className="text-left">
-                    Can you provide an instant quote from the website?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      No. Early accuracy depends on geometry, takt/changeover, and site constraints. We start with a structured pre-engineering assessment to determine what must be validated.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="default-2">
-                  <AccordionTrigger className="text-left">
-                    What is the minimum information you need to assess feasibility?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      Part photos or CAD, finish target (visual vs functional), takt or parts/hour, changeover frequency/batch size, and basic site constraints (space, booth/room, ventilation info if known).
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="default-3">
-                  <AccordionTrigger className="text-left">
-                    What makes a paint cell "not a good fit"?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      High variation with frequent unplanned changeovers, unstable part presentation, or unknown/unmet ventilation/EHS constraints.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="default-4">
-                  <AccordionTrigger className="text-left">
-                    How do you handle touch-up and manual work?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      We define an explicit automation boundary. Prep, masking, touch-up, and inspection often remain manual and must be planned to avoid unrealistic expectations.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="default-5">
-                  <AccordionTrigger className="text-left">
-                    Does throughput depend only on robot speed?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      No. Handling, indexing, curing/dry time, and changeover/cleaning often dominate real capacity.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="default-6">
-                  <AccordionTrigger className="text-left">
-                    What site constraints matter most early?
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <p className="text-muted-foreground">
-                      Ventilation/airflow, paint handling routines, grounding/static control, and the facility's EHS approval path.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+            {dynamicFAQs.length === 0 && faqItems.length === 0 && (
+              <>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q1: Can you provide an instant quote from the website?
+                  </h3>
+                  <p className="text-muted-foreground">
+                    No. Early accuracy depends on geometry, takt/changeover, and site constraints. We start with a structured pre-engineering assessment to determine what must be validated.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q2: What is the minimum information you need to assess feasibility?
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Part photos or CAD, finish target (visual vs functional), takt or parts/hour, changeover frequency/batch size, and basic site constraints (space, booth/room, ventilation info if known).
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q3: What makes a paint cell "not a good fit"?
+                  </h3>
+                  <p className="text-muted-foreground">
+                    High variation with frequent unplanned changeovers, unstable part presentation, or unknown/unmet ventilation/EHS constraints.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q4: How do you handle touch-up and manual work?
+                  </h3>
+                  <p className="text-muted-foreground">
+                    We define an explicit automation boundary. Prep, masking, touch-up, and inspection often remain manual and must be planned to avoid unrealistic expectations.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q5: Does throughput depend only on robot speed?
+                  </h3>
+                  <p className="text-muted-foreground">
+                    No. Handling, indexing, curing/dry time, and changeover/cleaning often dominate real capacity.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    Q6: What site constraints matter most early?
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Ventilation/airflow, paint handling routines, grounding/static control, and the facility's EHS approval path.
+                  </p>
+                </div>
+              </>
             )}
           </div>
         )}

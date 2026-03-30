@@ -134,8 +134,6 @@ const SolutionPagesList = lazy(() => import("./pages/console/SolutionPagesList")
 const SolutionPageEditor = lazy(() => import("./pages/console/SolutionPageEditor"));
 const WhyCardsEditor = lazy(() => import("./pages/console/WhyCardsEditor"));
 const HomeBannersEditor = lazy(() => import("./pages/console/HomeBannersEditor"));
-const FAQList = lazy(() => import("./pages/console/FAQList"));
-const FAQEditor = lazy(() => import("./pages/console/FAQEditor"));
 
 const queryClient = new QueryClient();
 
@@ -287,8 +285,6 @@ const App = () => (
                 <Route path="/console/industry-pages/:id" element={<IndustryPageEditor />} />
                 <Route path="/console/solution-pages" element={<SolutionPagesList />} />
                 <Route path="/console/solution-pages/:id" element={<SolutionPageEditor />} />
-                <Route path="/console/faq-pages" element={<FAQList />} />
-                <Route path="/console/faq-pages/:id" element={<FAQEditor />} />
                 <Route path="/console/why-cards" element={<WhyCardsEditor />} />
                 <Route path="/console/home-banners" element={<HomeBannersEditor />} />
                 <Route path="/console/users" element={<UserManagement />} />
