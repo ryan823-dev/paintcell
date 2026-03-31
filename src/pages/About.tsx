@@ -24,16 +24,16 @@ const schemas = [
     },
     areaServed: "Worldwide",
     knowsAbout: [
-      "Robotic spray painting",
+      "Robotic painting",
       "Paint booth automation",
       "Industrial coating systems",
       "Electrostatic painting",
-      "HVLP spray technology",
+      "HVLP technology",
     ],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Room D23, 4th Floor, Building D, No. 399 Jianyun Road",
-      addressLocality: "Pudong New District",
+      streetAddress: "4th Floor, Building 7, No. 3888 Beiqing Road",
+      addressLocality: "Qingpu District",
       addressRegion: "Shanghai",
       addressCountry: "CN",
     },
@@ -75,6 +75,7 @@ const milestones = [
   { year: "2019", title: "Multi-Brand Expansion", description: "Expanded robot integration capabilities to include FANUC MPX series, Kawasaki, and CMA platforms for diverse application scenarios." },
   { year: "2021", title: "Shenzhen Aerospace Center", description: "Established Shenzhen Technical Center in partnership with CASC Aerospace Long-Hit for aerospace-grade coating solutions." },
   { year: "2024", title: "International Expansion", description: "Expanded to international markets with VINFAST project in Thailand. Completed 17+ major automotive painting line projects." },
+  { year: "2026", title: "Company Relocation", description: "Relocated headquarters to new facility in Qingpu District, Shanghai with expanded R&D and technical center." },
 ];
 
 const certifications = [
@@ -126,16 +127,16 @@ export default function About() {
     <>
       <Helmet>
         <title>About TD Robotic Painting Systems — 15+ Years of Automation Excellence</title>
-        <meta name="description" content="TD Robotic Painting Systems (Shanghai Tudou Technology): 15+ years engineering robotic spray painting and paint booth automation. Serving Chery, Geely, NIO, Leapmotor and 500+ systems deployed." />
+        <meta name="description" content="TD Robotic Painting Systems (Shanghai Tudou Technology): 15+ years engineering robotic painting and paint booth automation. Serving Chery, Geely, NIO, Leapmotor and 500+ systems deployed." />
         <link rel="canonical" href={`${DOMAIN}/about`} />
         <meta property="og:title" content="About TD Robotic Painting Systems — 15+ Years of Automation Excellence" />
-        <meta property="og:description" content="15+ years engineering robotic spray painting and paint booth automation. Serving automotive OEMs and industrial manufacturers with 500+ systems deployed." />
+        <meta property="og:description" content="15+ years engineering robotic painting and paint booth automation. Serving automotive OEMs and industrial manufacturers with 500+ systems deployed." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={`${DOMAIN}/about`} />
         <meta property="og:image" content={`${DOMAIN}/images/og-social-share.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About TD Robotic Painting Systems" />
-        <meta name="twitter:description" content="15+ years engineering robotic spray painting and paint booth automation. 500+ systems deployed across 30+ countries." />
+        <meta name="twitter:description" content="15+ years engineering robotic painting and paint booth automation. 500+ systems deployed across 30+ countries." />
         <meta name="twitter:image" content={`${DOMAIN}/images/og-social-share.png`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -311,7 +312,7 @@ export default function About() {
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
               <Wrench className="h-5 w-5 text-accent" />
-              Spray Equipment Brands
+              Paint Equipment Brands
             </h3>
             <div className="grid grid-cols-2 gap-3">
               {["SAMES KREMLIN", "Graco", "Ransburg", "Binks-Maple", "Carlisle", "Timmer"].map((brand) => (

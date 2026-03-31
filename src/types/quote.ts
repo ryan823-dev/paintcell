@@ -1,7 +1,8 @@
-// Quote Wizard Types - Authoritative 26-Question Specification
+// Quote Wizard Types - Updated Specification
 
 export interface QuoteFormData {
   // Step 1 - Application Context
+  project_scale: string;
   application_material: string;
   project_primary_goal: string[];
   project_stage: string;
@@ -49,6 +50,7 @@ export interface QuoteFormData {
 }
 
 export const initialFormData: QuoteFormData = {
+  project_scale: "",
   application_material: "",
   project_primary_goal: [],
   project_stage: "",
@@ -106,6 +108,11 @@ export interface WizardStep {
 
 // Human-readable labels for summary display
 export const optionLabels: Record<string, string> = {
+  // Project Scale
+  paint_cell: "Paint Cell (Single Workstation)",
+  paint_booth: "Paint Booth (Multiple Stations)",
+  paint_shop: "Paint Shop (Full Facility)",
+
   // Application Material
   metal_parts: "Metal Parts",
   plastic_components: "Plastic Components",
@@ -215,13 +222,16 @@ export const optionLabels: Record<string, string> = {
   modular_required: "Modular Design Required",
 
   // Compliance Requirements
-  ce: "CE Marking",
-  ul_nfpa: "UL / NFPA",
-  atex: "ATEX",
+  ce: "CE Marking (EU)",
+  ul_nfpa: "UL / NFPA (North America)",
+  atex: "ATEX (EU Explosive Atmospheres)",
+  iecex: "IECEx (International)",
+  tiis: "TIIS (Japan)",
+  ccc_ex: "CCC Ex (China)",
   local_only: "Local Requirements Only",
 
   // Installation Environment
-  existing_booth: "Existing Booth",
+  existing_booth: "Existing Paint Booth",
   standalone_cell_env: "Standalone Cell",
   integrated_line: "Integrated Line",
   brownfield_retrofit: "Brownfield Retrofit",
@@ -237,10 +247,12 @@ export const optionLabels: Record<string, string> = {
   exhaust_ventilation: "Exhaust / Ventilation",
   to_be_provided: "To Be Provided",
 
-  // Paint Type (spray painting only - no powder)
+  // Paint Type
   solvent_based: "Solvent-Based Paint",
   water_based: "Water-Based Paint",
-  uv_curable: "UV Curable Paint",
+  powder_coating: "Powder Coating",
+  uv_curable: "UV Curable Coating",
+  high_solids: "High-Solids Paint",
   multiple_types: "Multiple Types",
 
   // Project Timeline

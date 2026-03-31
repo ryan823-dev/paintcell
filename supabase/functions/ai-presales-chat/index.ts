@@ -431,7 +431,7 @@ serve(async (req) => {
         apiKey: OPENROUTER_API_KEY,
         model: "anthropic/claude-3.5-haiku",
         timeoutMs: 15000, // 15s timeout
-        extraHeaders: { "HTTP-Referer": "https://tdpaintcell.com", "X-Title": "PaintCell AI Assistant" },
+        extraHeaders: { "HTTP-Referer": "https://tdpaint.com", "X-Title": "TD Paint AI Assistant" },
       } : null,
       DASHSCOPE_API_KEY ? {
         name: "dashscope",

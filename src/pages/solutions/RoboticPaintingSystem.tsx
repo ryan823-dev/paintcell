@@ -45,7 +45,7 @@ const jsonLdSchemas_static = [
     "@type": "Service",
     "@id": `${DOMAIN}/solutions/robotic-painting-system#service`,
     "name": "Robotic Painting System Integration",
-    "description": "End-to-end integration of robotic spray painting cells and paint booth automation for automotive components and industrial finishing, including robot selection, spray process configuration, controls integration, commissioning, and ATEX-ready options where required.",
+    "description": "End-to-end integration of robotic painting cells and paint booth automation for automotive components and industrial finishing, including robot selection, paint process configuration, controls integration, commissioning, and ATEX-ready options where required.",
     "provider": { "@id": `${DOMAIN}/#organization` },
     "serviceType": "Industrial Automation",
     "areaServed": "Worldwide",

@@ -133,6 +133,13 @@ export default function CaseStudies() {
     { client: "VINFAST Thailand Project", robot: "Yaskawa MPX2600", spray: "Iwata centralized system", config: "International project, plastic exterior parts" },
     { client: "Chongqing Guangneng Wanxi Technology", robot: "Yaskawa MPX2600", spray: "Graco centralized system", config: "10 robots, offline spraying, centralized paint supply" },
     { client: "Hongri Auto (Jinzhai)", robot: "Yaskawa MPX3500", spray: "Binks centralized system", config: "Robot system for vehicle body exterior" },
+    // New projects from company presentation
+    { client: "Zhengzhou Nissan", robot: "Yaskawa", spray: "Ransburg rotary cup", config: "Multi-station painting system" },
+    { client: "Chengdu FAW-Toyota", robot: "ABB IRB5500", spray: "ABB atomizer", config: "Complete vehicle painting line" },
+    { client: "Guangdong FAW-Toyota", robot: "ABB IRB5500", spray: "ABB RB1000i-WSC", config: "Water-based dual-color system with CBS cleaning" },
+    { client: "Changzhou Nanebot (NIO supplier)", robot: "ABB IRB5500", spray: "Fast color change system", config: "26+ robots, dual-color water-based" },
+    { client: "NorDAO Auto Systems (Chengdu)", robot: "FANUC MPX3500", spray: "Sames spray guns", config: "Dual-color plastic component line" },
+    { client: "Minth Group (Minshi)", robot: "ABB IRB5500", spray: "Binks-Maple 15/30", config: "Exterior trim & chrome alternatives" },
   ];
 
   const oemBodyProjects = [

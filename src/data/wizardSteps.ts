@@ -3,9 +3,21 @@ import { WizardStep } from "@/types/quote";
 export const wizardSteps: WizardStep[] = [
   {
     title: "Application Context",
-    description: "Defines the scope and objectives for your paint cell project.",
+    description: "Defines the scope and objectives for your paint automation project.",
     helperText: "Helps determine robot reach, booth sizing, and automation complexity.",
     questions: [
+      {
+        id: "project_scale",
+        label: "What is the scale of your painting project?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "paint_cell", label: "Paint Cell (Single Workstation)" },
+          { value: "paint_booth", label: "Paint Booth (Multiple Stations)" },
+          { value: "paint_shop", label: "Paint Shop (Full Facility)" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
       {
         id: "application_material",
         label: "What type of material will be painted?",
@@ -51,7 +63,7 @@ export const wizardSteps: WizardStep[] = [
   {
     title: "Part Characteristics",
     description: "Defines physical constraints for fixturing and robot motion planning.",
-    helperText: "Part geometry and presentation affect spray path complexity and cycle time.",
+    helperText: "Part geometry and presentation affect paint path complexity and cycle time.",
     questions: [
       {
         id: "part_size",
@@ -255,18 +267,21 @@ export const wizardSteps: WizardStep[] = [
   {
     title: "Compliance & Site Conditions",
     description: "Identifies regulatory requirements and site integration constraints.",
-    helperText: "Booth ventilation, ATEX zones, and paint chemistry affect equipment selection.",
+    helperText: "Hazardous area classification (ATEX/IECEx zones), ventilation, and paint chemistry drive explosion-proof equipment selection.",
     questions: [
       {
         id: "compliance_requirements",
-        label: "What compliance standards apply? (Select all that apply)",
+        label: "What compliance / certification standards apply? (Select all that apply)",
         type: "checkbox",
         required: true,
         minSelections: 1,
         options: [
-          { value: "ce", label: "CE Marking" },
-          { value: "ul_nfpa", label: "UL / NFPA" },
-          { value: "atex", label: "ATEX (Explosive Atmospheres)" },
+          { value: "ce", label: "CE Marking (EU)" },
+          { value: "atex", label: "ATEX (EU Explosive Atmospheres)" },
+          { value: "iecex", label: "IECEx (International)" },
+          { value: "ul_nfpa", label: "UL / NFPA (North America)" },
+          { value: "tiis", label: "TIIS (Japan)" },
+          { value: "ccc_ex", label: "CCC Ex (China)" },
           { value: "local_only", label: "Local Requirements Only" },
           { value: "not_sure", label: "Not Sure" },
         ],
@@ -277,7 +292,7 @@ export const wizardSteps: WizardStep[] = [
         type: "radio",
         required: true,
         options: [
-          { value: "existing_booth", label: "Existing Spray Booth" },
+          { value: "existing_booth", label: "Existing Paint Booth" },
           { value: "standalone_cell", label: "Standalone Paint Cell (New)" },
           { value: "integrated_line", label: "Integrated Production Line" },
           { value: "brownfield_retrofit", label: "Brownfield Retrofit" },
@@ -311,14 +326,16 @@ export const wizardSteps: WizardStep[] = [
       },
       {
         id: "paint_type",
-        label: "What type of liquid paint will be sprayed? (Select all that apply)",
+        label: "What type of paint / coating will be applied? (Select all that apply)",
         type: "checkbox",
         required: true,
         minSelections: 1,
         options: [
           { value: "solvent_based", label: "Solvent-Based Paint" },
           { value: "water_based", label: "Water-Based Paint" },
-          { value: "uv_curable", label: "UV Curable Paint" },
+          { value: "powder_coating", label: "Powder Coating" },
+          { value: "uv_curable", label: "UV Curable Coating" },
+          { value: "high_solids", label: "High-Solids Paint" },
           { value: "multiple_types", label: "Multiple Types" },
           { value: "not_sure", label: "Not Sure" },
         ],

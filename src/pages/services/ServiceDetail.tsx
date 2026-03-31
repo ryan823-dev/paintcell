@@ -116,7 +116,7 @@ export default function ServiceDetail() {
     <>
       <Helmet>
         <title>{data.title || ""} | TD Painting Systems</title>
-        <meta name="description" content={data.description || ""} />
+        <meta name="description" content={data.description || "Professional technical services for industrial coating systems including solution design, project management, commissioning, and maintenance."} />
         <link rel="canonical" href={`${DOMAIN}/services/${slug}`} />
       </Helmet>
 

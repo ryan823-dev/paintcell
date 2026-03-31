@@ -19,9 +19,26 @@ const categoryData: Record<string, {
     titleZh: "旋杯",
     description: "High-speed electrostatic rotary atomizers for automotive and industrial coating applications.",
     products: [
-      { name: "High-Speed Bells", description: "60,000+ RPM for fine atomization", brands: ["Dürr", "SAMES KREMLIN"] },
-      { name: "Standard Bells", description: "General purpose electrostatic atomizers", brands: ["Ransburg", "Graco"] },
-      { name: "Waterborne Bells", description: "Optimized for water-based coatings", brands: ["Dürr", "SAMES KREMLIN"] },
+      { 
+        name: "High-Speed Bells", 
+        description: "60,000 RPM, 100kV cascade, bell cups 15-50mm", 
+        brands: ["Dürr", "SAMES KREMLIN", "ABB RB1000i"] 
+      },
+      { 
+        name: "Standard Bells", 
+        description: "General purpose electrostatic atomizers, 30,000-45,000 RPM", 
+        brands: ["Ransburg Robobell 925", "Graco G1 Copes"] 
+      },
+      { 
+        name: "Waterborne Bells", 
+        description: "Optimized for water-based coatings, external charge", 
+        brands: ["Dürr EcoBell", "SAMES PPH707"] 
+      },
+      {
+        name: "Miniature Bells",
+        description: "For small parts and touch-up, 80,000 RPM",
+        brands: ["SAMES MiniBell", "Graco MicroBell"]
+      },
     ],
   },
   "spray-guns": {
@@ -29,9 +46,26 @@ const categoryData: Record<string, {
     titleZh: "喷枪",
     description: "HVLP, air spray, and electrostatic spray guns for manual and robotic applications.",
     products: [
-      { name: "HVLP Guns", description: "High volume low pressure for efficiency", brands: ["SATA", "DeVilbiss"] },
-      { name: "Air Spray Guns", description: "Traditional atomization technology", brands: ["Graco", "Binks"] },
-      { name: "Electrostatic Guns", description: "Enhanced transfer efficiency", brands: ["Ransburg", "Graco"] },
+      { 
+        name: "HVLP Guns", 
+        description: "High volume low pressure, <10 psi at cap, 65-75% transfer efficiency", 
+        brands: ["SATAjet", "DeVilbiss GTi", "Graco Ultra"] 
+      },
+      { 
+        name: "Air Spray Guns", 
+        description: "Traditional atomization, 40-80 psi, 25-40% transfer efficiency", 
+        brands: ["Graco H1050", "Binks-Maple 15/30", "SAMES"] 
+      },
+      { 
+        name: "Electrostatic Guns", 
+        description: "40-100kV, 75-95% transfer efficiency, wrap-around coverage", 
+        brands: ["Ransburg 704", "Graco Pro Xp", "SAMES F209"] 
+      },
+      {
+        name: "Robotic Spray Guns",
+        description: "Hollow wrist design, explosion-proof, ATEX certified",
+        brands: ["Graco H1050 Robot", "Binks-Maple Robot", "Timmer 1060"]
+      },
     ],
   },
   "paint-pumps": {
@@ -39,9 +73,26 @@ const categoryData: Record<string, {
     titleZh: "供漆泵",
     description: "Diaphragm and piston pumps for paint supply systems.",
     products: [
-      { name: "Diaphragm Pumps", description: "For low to medium viscosity materials", brands: ["Graco", "ARO"] },
-      { name: "Piston Pumps", description: "High pressure applications", brands: ["Graco", "Wilden"] },
-      { name: "Ratio Controllers", description: "2K material mixing systems", brands: ["Graco", "SAMES KREMLIN"] },
+      { 
+        name: "Diaphragm Pumps", 
+        description: "For low to medium viscosity, air-operated, explosion-proof", 
+        brands: ["Graco Husky", "ARO", "Wilden"] 
+      },
+      { 
+        name: "Piston Pumps", 
+        description: "High pressure up to 350 bar, for viscous materials", 
+        brands: ["Graco HFR", "Graco Matrix", "SAMES"] 
+      },
+      { 
+        name: "Gear Pumps", 
+        description: "Precise metering, constant pressure, low pulsation", 
+        brands: ["Graco", "SAMES KREMLIN"] 
+      },
+      {
+        name: "2K Ratio Controllers",
+        description: "Precision mixing of base and catalyst, 1:1 to 10:1 ratios",
+        brands: ["Graco Reactor", "SAMES KREMLIN"]
+      },
     ],
   },
   "control-systems": {
@@ -49,9 +100,26 @@ const categoryData: Record<string, {
     titleZh: "控制系统",
     description: "PLC-based control systems and robot controllers for painting automation.",
     products: [
-      { name: "PLC Systems", description: "Industrial automation controllers", brands: ["Siemens", "Allen-Bradley"] },
-      { name: "Robot Controllers", description: "Paint robot integration", brands: ["ABB", "FANUC", "KUKA"] },
-      { name: "HMI Panels", description: "Operator interface systems", brands: ["Siemens", "Pro-face"] },
+      { 
+        name: "PLC Systems", 
+        description: "Siemens S7-1500, Allen-Bradley ControlLogix, PROFINET/EtherNet/IP", 
+        brands: ["Siemens", "Allen-Bradley", "Mitsubishi"] 
+      },
+      { 
+        name: "Robot Controllers", 
+        description: "IRC5 (ABB), R-30iB (FANUC), KRC4 (KUKA), painting-specific software", 
+        brands: ["ABB", "FANUC", "KUKA", "Yaskawa"] 
+      },
+      { 
+        name: "HMI Panels", 
+        description: "Touch screen operator interface, recipe management", 
+        brands: ["Siemens", "Pro-face", "Allen-Bradley"] 
+      },
+      {
+        name: "Safety Systems",
+        description: "ATEX-certified safety controllers, emergency stops, gas detection",
+        brands: ["Pilz", "SICK", "Omron"]
+      },
     ],
   },
   "color-change": {
@@ -59,9 +127,26 @@ const categoryData: Record<string, {
     titleZh: "换色系统",
     description: "Fast color change valve blocks and flushing systems.",
     products: [
-      { name: "Valve Blocks", description: "Multi-color manifolds", brands: ["Dürr", "SAMES KREMLIN"] },
-      { name: "Flush Systems", description: "Solvent management", brands: ["Graco", "Dürr"] },
-      { name: "Color Selectors", description: "Automated color routing", brands: ["SAMES KREMLIN", "Graco"] },
+      { 
+        name: "Valve Blocks", 
+        description: "Multi-color manifolds, 2-20 colors, <3 min change time", 
+        brands: ["Dürr", "SAMES KREMLIN PPH707", "Graco"] 
+      },
+      { 
+        name: "Flush Boxes", 
+        description: "Solvent management, <150ml waste per color change", 
+        brands: ["Graco", "Dürr"] 
+      },
+      { 
+        name: "Color Selectors", 
+        description: "Automated color routing with recipe management", 
+        brands: ["SAMES KREMLIN", "Graco"] 
+      },
+      {
+        name: "Fast Color Change Guns",
+        description: "Integrated valve-in-gun, zero cross-contamination",
+        brands: ["SAMES PPH707", "Graco Fusion"]
+      },
     ],
   },
   "spare-parts": {
@@ -69,9 +154,31 @@ const categoryData: Record<string, {
     titleZh: "备件",
     description: "Genuine replacement parts and consumables for spray equipment.",
     products: [
-      { name: "Seals & O-Rings", description: "Pump and valve seals", brands: ["OEM"] },
-      { name: "Nozzles & Tips", description: "Spray pattern components", brands: ["OEM"] },
-      { name: "Service Kits", description: "Maintenance packages", brands: ["OEM"] },
+      { 
+        name: "Seals & O-Rings", 
+        description: "Pump and valve seals, chemical-resistant materials", 
+        brands: ["OEM", "Graco", "SAMES"] 
+      },
+      { 
+        name: "Nozzles & Tips", 
+        description: "Spray pattern components, various orifice sizes", 
+        brands: ["OEM", "Graco", "Binks"] 
+      },
+      { 
+        name: "Service Kits", 
+        description: "Preventive maintenance packages", 
+        brands: ["OEM", "Graco", "ABB"] 
+      },
+      {
+        name: "Bell Cups",
+        description: "15-50mm diameter, various patterns for rotary atomizers",
+        brands: ["Dürr", "SAMES", "ABB"]
+      },
+      {
+        name: "Turbines & Bearings",
+        description: "High-speed rotation components, 60,000+ RPM rated",
+        brands: ["OEM", "FAG", "SKF"]
+      },
     ],
   },
 };
@@ -101,7 +208,7 @@ export default function ProductCategory() {
     <>
       <Helmet>
         <title>{data.title} | TD Painting Systems</title>
-        <meta name="description" content={data.description} />
+        <meta name="description" content={data.description || "Industrial coating equipment for automotive and industrial applications."} />
         <link rel="canonical" href={`${DOMAIN}/products/${category}`} />
       </Helmet>
 

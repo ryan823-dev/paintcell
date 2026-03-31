@@ -407,7 +407,7 @@ export default function FurnitureWoodwork() {
               Further reading:{" "}
               <Link to="/resources/knowledge/how-to-choose-paint-robot" className="text-accent underline underline-offset-2 hover:text-accent/80">How to Choose a Paint Robot</Link>
               {" · "}
-              <Link to="/resources/knowledge/spray-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Spray Technology Guide</Link>
+              <Link to="/resources/knowledge/paint-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Paint Technology Guide</Link>
             </p>
           </div>
         </section>

@@ -65,17 +65,17 @@ TD Robotic Painting Systems (brand: PaintCell) is a Shanghai-based engineering c
 
 ## Contact
 
-- Website: https://tdpaintcell.com
-- Email: info@tdpaintcell.com
+- Website: https://tdpaint.com
+- Email: info@tdpaint.com
 - Location: Shanghai, China
 
 ## Important Pages
 
-- Solutions: https://tdpaintcell.com/solutions
-- Industries: https://tdpaintcell.com/industries
-- Case Studies: https://tdpaintcell.com/case-studies
-- About: https://tdpaintcell.com/about
-- Quote/Assessment: https://tdpaintcell.com/quote
-- Glossary: https://tdpaintcell.com/resources/glossary
-- FAQ: https://tdpaintcell.com/resources/faqs
-- Engineering Library: https://tdpaintcell.com/resources/engineering-library
+- Solutions: https://tdpaint.com/solutions
+- Industries: https://tdpaint.com/industries
+- Case Studies: https://tdpaint.com/case-studies
+- About: https://tdpaint.com/about
+- Quote/Assessment: https://tdpaint.com/quote
+- Glossary: https://tdpaint.com/resources/glossary
+- FAQ: https://tdpaint.com/resources/faqs
+- Engineering Library: https://tdpaint.com/resources/engineering-library

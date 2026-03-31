@@ -239,8 +239,8 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "PaintCell <noreply@tdpaintcell.com>",
-        to: ["engineering@tdpaintcell.com"],
+        from: "TD Paint <noreply@tdpaint.com>",
+        to: ["engineering@tdpaint.com"],
         reply_to: data.contact_email,
         subject: `[${escapeHtml(data.source || "Quote")}] New Lead: ${escapeHtml(data.contact_company)}`,
         html: emailHtml,
@@ -267,7 +267,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log("Email sent successfully to engineering@tdpaintcell.com");
+    console.log("Email sent successfully to engineering@tdpaint.com");
 
     // Update lead with email sent timestamp
     if (insertedLead?.id) {

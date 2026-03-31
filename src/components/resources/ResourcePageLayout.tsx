@@ -1,4 +1,5 @@
 import { ReactNode, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ interface ResourcePageLayoutProps {
   children: ReactNode;
   showCTA?: boolean;
   structuredData?: object;
+  canonicalPath?: string;
 }
 
 export function ResourcePageLayout({
@@ -34,7 +36,54 @@ export function ResourcePageLayout({
   children,
   showCTA = true,
   structuredData,
+  canonicalPath,
 }: ResourcePageLayoutProps) {
+  // Generate canonical URL
+  const canonicalUrl = canonicalPath
+    ? `https://tdpaint.com${canonicalPath}`
+    : `https://tdpaint.com${breadcrumbs[breadcrumbs.length - 1]?.href || ""}`;
+
+  // Organization Schema
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TD Painting Systems",
+    "url": "https://tdpaint.com",
+    "logo": "https://tdpaint.com/td-logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "engineering@tdpaint.com",
+      "contactType": "Customer Service"
+    }
+  };
+
+  // Generate BreadcrumbList schema for SEO/AEO
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://tdpaint.com/"
+      },
+      ...breadcrumbs.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 2,
+        "name": item.label,
+        ...(item.href ? { "item": `https://tdpaint.com${item.href}` } : {})
+      }))
+    ]
+  };
+
+  // SpeakableSpecification for voice search (AEO)
+  const speakableSchema = {
+    "@context": "https://schema.org",
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".prose", "h1"]
+  };
+
   useEffect(() => {
     document.title = metaTitle;
     const metaDescEl = document.querySelector('meta[name="description"]');
@@ -69,6 +118,19 @@ export function ResourcePageLayout({
 
   return (
     <div className="min-h-screen">
+      {/* SEO Structured Data via Helmet */}
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(speakableSchema)}</script>
+        {structuredData && (
+          <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        )}
+      </Helmet>
+
       {/* Breadcrumb */}
       <div className="border-b border-border bg-muted/30">
         <div className="container-wide py-3">

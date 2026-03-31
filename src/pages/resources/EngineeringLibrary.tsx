@@ -89,6 +89,7 @@ export default function EngineeringLibrary() {
         { label: breadcrumbs.engineeringLibrary || "Engineering Library" },
       ]}
       structuredData={structuredData}
+      canonicalPath="/resources/engineering-library"
     >
       <p className="text-lg text-muted-foreground mb-10">
         {res.description || "Engineering notes for paint cell feasibility, constraints, and project readiness. Written to support engineering-led evaluation—not marketing claims."}

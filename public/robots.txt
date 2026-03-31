@@ -1,32 +1,44 @@
 User-agent: *
 Allow: /
 
-# Allow major AI / search crawlers explicitly (SPA sites benefit from clarity)
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 10
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Legitimate AI Search Bots (ChatGPT, Google AI, Perplexity)
 User-agent: GPTBot
 Allow: /
 
 User-agent: Google-Extended
 Allow: /
 
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Amazonbot
+User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://tdpaintcell.com/sitemap.xml
+# Block aggressive/unknown crawlers
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot
+Crawl-delay: 5
+
+Sitemap: https://tdpaint.com/sitemap.xml

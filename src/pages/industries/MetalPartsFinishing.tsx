@@ -189,7 +189,7 @@ export default function MetalPartsFinishing() {
             <p className="text-muted-foreground mb-4">General metal finishing environments often face:</p>
             <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside max-w-2xl">
               <li>inconsistent finish quality with manual spraying across different operators</li>
-              <li>high labor costs and difficulty finding skilled spray painters</li>
+              <li>high labor costs and difficulty finding skilled paint operators</li>
               <li>excessive paint waste and overspray with manual processes</li>
               <li>variable throughput and unpredictable cycle times</li>
               <li>difficulty maintaining quality across high part variety and mixed-model production</li>
@@ -378,7 +378,7 @@ export default function MetalPartsFinishing() {
               {" · "}
               <Link to="/resources/knowledge/robotic-painting-cost-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Robotic Painting Cost Guide</Link>
               {" · "}
-              <Link to="/resources/knowledge/spray-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Spray Technology Guide</Link>
+              <Link to="/resources/knowledge/paint-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Paint Technology Guide</Link>
             </p>
           </div>
         </section>

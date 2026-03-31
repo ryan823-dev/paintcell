@@ -462,7 +462,7 @@ export default function AutomotiveExteriorParts() {
             </p>
             <p className="text-muted-foreground text-sm mt-4">
               Further reading:{" "}
-              <Link to="/resources/knowledge/spray-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Spray Technology Guide</Link>
+              <Link to="/resources/knowledge/paint-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Paint Technology Guide</Link>
               {" · "}
               <Link to="/resources/glossary/electrostatic-spraying" className="text-accent underline underline-offset-2 hover:text-accent/80">Electrostatic Spraying</Link>
             </p>

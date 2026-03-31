@@ -15,7 +15,7 @@ export function ContactForm({ formData, updateFormData }: ContactFormProps) {
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground mb-2">Contact Information</h2>
         <p className="text-muted-foreground">
-          Complete your assessment by providing your contact details. We'll reach out to discuss your Paint Cell project.
+          Complete your assessment by providing your contact details. We'll reach out to discuss your paint automation project.
         </p>
       </div>
 

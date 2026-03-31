@@ -26,7 +26,7 @@ export default function ThankYou() {
           </h1>
 
           <p className="text-lg text-muted-foreground mb-8 animate-fade-in">
-            Thank you for your interest in our robotic spray painting solutions.
+            Thank you for your interest in our robotic painting solutions.
             Our engineering team will review your requirements and contact you within
             <strong className="text-foreground"> 1-2 business days</strong> to discuss your project in detail.
           </p>

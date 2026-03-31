@@ -430,12 +430,12 @@ export default function AutomotivePainting() {
 
             <div className="grid md:grid-cols-2 gap-4">
               {[
-                { client: "FAW-Toyota (Dongfeng)", config: "1 IRB6700 + 7 IRB5500 (2-3-2)", spray: "Graco H1050", highlight: "Multi-coat bumper line" },
-                { client: "Guangdong FAW-Toyota", config: "2 + 14 ABB IRB5500 (4-6-4)", spray: "ABB RB1000i-WSC", highlight: "Water-based dual-color, CBS cleaning" },
-                { client: "Changzhou Nanebot (NIO supplier)", config: "4+4+2+16 ABB robots (4-6-6)", spray: "Fast color change system", highlight: "26+ robots, dual-color water-based" },
-                { client: "NorDAO Auto Systems (Chengdu)", config: "10 FANUC MPX3500 (2-4-4)", spray: "Sames spray guns", highlight: "Dual-color plastic component line" },
-                { client: "Minth Group (Minshi)", config: "ABB IRB5500", spray: "Binks-Maple 15/30", highlight: "Exterior trim & chrome alternatives" },
-                { client: "VINFAST (Thailand)", config: "FANUC MPX2600", spray: "Integrated spray system", highlight: "International deployment" },
+                { client: "FAW-Toyota (Dongfeng)", config: "1 IRB6700 + 7 IRB5500 (2-3-2)", paintSystem: "Graco H1050", highlight: "Multi-coat bumper line" },
+                { client: "Guangdong FAW-Toyota", config: "2 + 14 ABB IRB5500 (4-6-4)", paintSystem: "ABB RB1000i-WSC", highlight: "Water-based dual-color, CBS cleaning" },
+                { client: "Changzhou Nanebot (NIO supplier)", config: "4+4+2+16 ABB robots (4-6-6)", paintSystem: "Fast color change system", highlight: "26+ robots, dual-color water-based" },
+                { client: "NorDAO Auto Systems (Chengdu)", config: "10 FANUC MPX3500 (2-4-4)", paintSystem: "Sames spray guns", highlight: "Dual-color plastic component line" },
+                { client: "Minth Group (Minshi)", config: "ABB IRB5500", paintSystem: "Binks-Maple 15/30", highlight: "Exterior trim & chrome alternatives" },
+                { client: "VINFAST (Thailand)", config: "FANUC MPX2600", paintSystem: "Integrated spray system", highlight: "International deployment" },
               ].map((project, idx) => (
                 <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">
                   <CardContent className="p-5">
@@ -446,8 +446,8 @@ export default function AutomotivePainting() {
                         <span>{project.config}</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <span className="text-accent font-medium shrink-0 w-16">Spray:</span>
-                        <span>{project.spray}</span>
+                        <span className="text-accent font-medium shrink-0 w-16">Paint:</span>
+                        <span>{project.paintSystem}</span>
                       </div>
                     </div>
                     <div className="mt-3 text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">

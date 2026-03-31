@@ -21,6 +21,10 @@ const ThankYou = lazy(() => import("./pages/ThankYou"));
 const Applications = lazy(() => import("./pages/Applications"));
 const PaintCells = lazy(() => import("./pages/PaintCells"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
+
+// Case Study detail pages
+const QingdaoHuataoCaseStudy = lazy(() => import("./pages/case-studies/QingdaoHuataoCaseStudy"));
+
 const About = lazy(() => import("./pages/About"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -76,10 +80,43 @@ const FeasibilityChecklist = lazy(() => import("./pages/resources/tools/Feasibil
 const HowToChoosePaintRobot = lazy(() => import("./pages/resources/knowledge/HowToChoosePaintRobot"));
 const RoboticPaintingCostGuide = lazy(() => import("./pages/resources/knowledge/RoboticPaintingCostGuide"));
 const PaintBoothDesignBasics = lazy(() => import("./pages/resources/knowledge/PaintBoothDesignBasics"));
-const SprayTechnologyGuide = lazy(() => import("./pages/resources/knowledge/SprayTechnologyGuide"));
+const PaintTechnologyGuide = lazy(() => import("./pages/resources/knowledge/PaintTechnologyGuide"));
+const FlameTreatment = lazy(() => import("./pages/resources/knowledge/FlameTreatment"));
+const SnowflakeCleaning = lazy(() => import("./pages/resources/knowledge/SnowflakeCleaning"));
 const RobotPathOptimization = lazy(() => import("./pages/resources/knowledge/RobotPathOptimization"));
 const PaintDefectsGuide = lazy(() => import("./pages/resources/knowledge/PaintDefectsGuide"));
 const ColorChangeSystems = lazy(() => import("./pages/resources/knowledge/ColorChangeSystems"));
+const PaintSupplyKnowledge = lazy(() => import("./pages/resources/knowledge/PaintSupplySystems"));
+const HVLPSprayGunGuide = lazy(() => import("./pages/resources/knowledge/HVLPSprayGunGuide"));
+const PaintingRobotSelectionGuide = lazy(() => import("./pages/resources/knowledge/PaintingRobotSelectionGuide"));
+const ROICalculator = lazy(() => import("./pages/resources/tools/ROICalculator"));
+
+// Lazy load new resource pages (Batch 1)
+const VisionInspection = lazy(() => import("./pages/resources/VisionInspection"));
+const BallTrackSystems = lazy(() => import("./pages/resources/BallTrackSystems"));
+const InlineThicknessMeasurement = lazy(() => import("./pages/resources/InlineThicknessMeasurement"));
+
+// Lazy load new resource pages (Batch 2 - Equipment)
+const ReciprocatorSpraySystems = lazy(() => import("./pages/resources/ReciprocatorSpraySystems"));
+const ElectrostaticBellAtomizers = lazy(() => import("./pages/resources/ElectrostaticBellAtomizers"));
+const PowderCoatingSystems = lazy(() => import("./pages/resources/PowderCoatingSystems"));
+
+// Lazy load new resource pages (Batch 3 - Technology & Systems)
+const SprayGunTechnology = lazy(() => import("./pages/resources/SprayGunTechnology"));
+const PaintBoothFiltration = lazy(() => import("./pages/resources/PaintBoothFiltration"));
+const RobotBrandComparison = lazy(() => import("./pages/resources/RobotBrandComparison"));
+const BoothControlSystems = lazy(() => import("./pages/resources/BoothControlSystems"));
+const EnvironmentalCompliance = lazy(() => import("./pages/resources/EnvironmentalCompliance"));
+const HVLPvsRotaryBell = lazy(() => import("./pages/resources/technology/HVLPvsRotaryBell"));
+const RobotvsManualSpray = lazy(() => import("./pages/resources/technology/RobotvsManualSpray"));
+
+// Lazy load new resource pages (Batch 4 - Applications)
+const WheelCoatingApplications = lazy(() => import("./pages/resources/WheelCoatingApplications"));
+
+// Lazy load Regional Market pages
+const VietnamMarket = lazy(() => import("./pages/markets/VietnamMarket"));
+const ThailandMarket = lazy(() => import("./pages/markets/ThailandMarket"));
+const UAEMarket = lazy(() => import("./pages/markets/UAEMarket"));
 
 // Lazy load Industry pages
 const IndustryPage = lazy(() => import("./pages/IndustryPage"));
@@ -105,6 +142,8 @@ const PaintProcessFlow = lazy(() => import("./pages/solutions/PaintProcessFlow")
 const ProductsIndex = lazy(() => import("./pages/products/ProductsIndex"));
 const ProductCategory = lazy(() => import("./pages/products/ProductCategory"));
 const ControlSystems = lazy(() => import("./pages/products/ControlSystems"));
+const BellCleaningSystem = lazy(() => import("./pages/products/BellCleaningSystem"));
+const PiggingColorChangeSystem = lazy(() => import("./pages/products/PiggingColorChangeSystem"));
 
 // Lazy load Services pages
 const ServicesIndex = lazy(() => import("./pages/services/ServicesIndex"));
@@ -157,6 +196,7 @@ function PublicRoutes() {
       <Route path="applications" element={<Applications />} />
       <Route path="paint-cells" element={<PaintCells />} />
       <Route path="case-studies" element={<CaseStudies />} />
+      <Route path="case-studies/qingdao-huatao" element={<QingdaoHuataoCaseStudy />} />
       <Route path="about" element={<About />} />
 
       {/* Legal pages */}
@@ -208,6 +248,7 @@ function PublicRoutes() {
       <Route path="resources/tools-templates/paint-cell-rfq-template" element={<PaintCellRFQTemplate />} />
       <Route path="resources/tools-templates/site-readiness-checklist" element={<SiteReadinessChecklist />} />
       <Route path="resources/tools-templates/feasibility-checklist" element={<FeasibilityChecklist />} />
+      <Route path="resources/tools/roi-calculator" element={<ROICalculator />} />
 
       {/* Knowledge articles */}
       <Route path="resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
@@ -216,10 +257,42 @@ function PublicRoutes() {
       <Route path="resources/articles/:slug" element={<DynamicArticle />} />
       <Route path="resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
       <Route path="resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
-      <Route path="resources/knowledge/spray-technology-guide" element={<SprayTechnologyGuide />} />
+      <Route path="resources/knowledge/paint-technology-guide" element={<PaintTechnologyGuide />} />
+      <Route path="resources/knowledge/flame-treatment" element={<FlameTreatment />} />
+      <Route path="resources/knowledge/snowflake-cleaning" element={<SnowflakeCleaning />} />
       <Route path="resources/knowledge/robot-path-optimization" element={<RobotPathOptimization />} />
       <Route path="resources/knowledge/paint-defects-guide" element={<PaintDefectsGuide />} />
       <Route path="resources/knowledge/color-change-systems" element={<ColorChangeSystems />} />
+      <Route path="resources/knowledge/paint-supply-systems" element={<PaintSupplyKnowledge />} />
+      <Route path="resources/knowledge/hvlp-spray-gun-guide" element={<HVLPSprayGunGuide />} />
+      <Route path="resources/knowledge/painting-robot-selection-guide" element={<PaintingRobotSelectionGuide />} />
+
+      {/* Quality & Equipment articles (Batch 1) */}
+      <Route path="resources/quality-control/vision-inspection" element={<VisionInspection />} />
+      <Route path="resources/quality-control/inline-thickness-measurement" element={<InlineThicknessMeasurement />} />
+      <Route path="resources/equipment/ball-track-systems" element={<BallTrackSystems />} />
+
+      {/* Equipment articles (Batch 2 - US/EU terminology) */}
+      <Route path="resources/equipment/reciprocator-spray-systems" element={<ReciprocatorSpraySystems />} />
+      <Route path="resources/equipment/electrostatic-bell-atomizers" element={<ElectrostaticBellAtomizers />} />
+      <Route path="resources/knowledge/powder-coating-systems" element={<PowderCoatingSystems />} />
+
+      {/* Technology & Systems articles (Batch 3) */}
+      <Route path="resources/technology/spray-gun-technology" element={<SprayGunTechnology />} />
+      <Route path="resources/technology/hvlp-vs-rotary-bell" element={<HVLPvsRotaryBell />} />
+      <Route path="resources/technology/robot-vs-manual-spray" element={<RobotvsManualSpray />} />
+      <Route path="resources/equipment/paint-booth-filtration" element={<PaintBoothFiltration />} />
+      <Route path="resources/knowledge/industrial-robot-brands" element={<RobotBrandComparison />} />
+      <Route path="resources/technology/booth-control-systems" element={<BoothControlSystems />} />
+      <Route path="resources/standards-compliance/environmental-regulations" element={<EnvironmentalCompliance />} />
+
+      {/* Application articles (Batch 4) */}
+      <Route path="resources/applications/wheel-coating" element={<WheelCoatingApplications />} />
+
+      {/* Regional Market Landing Pages */}
+      <Route path="solutions/robotic-painting-vietnam" element={<VietnamMarket />} />
+      <Route path="solutions/robotic-painting-thailand" element={<ThailandMarket />} />
+      <Route path="solutions/robotic-painting-uae" element={<UAEMarket />} />
 
       {/* Solution pages */}
       <Route path="solutions" element={<Solutions />} />
@@ -232,6 +305,8 @@ function PublicRoutes() {
       {/* Products pages */}
       <Route path="products" element={<ProductsIndex />} />
       <Route path="products/control-systems" element={<ControlSystems />} />
+      <Route path="products/bell-cleaning-system" element={<BellCleaningSystem />} />
+      <Route path="products/pigging-color-change-system" element={<PiggingColorChangeSystem />} />
       <Route path="products/:category" element={<ProductCategory />} />
 
       {/* Services pages */}
