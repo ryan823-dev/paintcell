@@ -215,6 +215,24 @@ export const videoLibrary: VideoMetadata[] = [
     ],
     category: 'case-study',
     ossPath: 'videos/case-studies/baosteel-wheel-coating.mp4'
+  },
+
+  // === Pigging / Color Change System Videos ===
+  {
+    id: 'pigging-color-change-demo',
+    filename: '1700056643809856.mp4',
+    title: 'Pigging Color Change System Operation Demo',
+    description: 'Demonstration of pigging technology for rapid color change in multi-color painting operations. Shows the complete pigging cycle including pig launch, paint recovery, line flush, and new color loading. Essential reference for understanding how pigging systems achieve 95%+ paint recovery and sub-90-second color changes.',
+    keywords: [
+      'pigging system',
+      'color change',
+      'paint recovery',
+      'rapid changeover',
+      'multi-color painting',
+      'paint supply system'
+    ],
+    category: 'process',
+    ossPath: 'videos/knowledge/pigging-color-change-demo.mp4'
   }
 ];
 

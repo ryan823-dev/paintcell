@@ -16,21 +16,22 @@ import { FadeIn } from "@/components/animations";
 
 const DOMAIN = "https://tdpaint.com";
 
+// OSS-hosted videos - see src/data/videoLibrary.ts for metadata
 const demoVideos = [
   {
-    src: "/videos/bell-cleaning-demo-1.mp4",
-    title: "Automatic Bell Cleaning Cycle",
-    description: "Complete automated cleaning sequence for rotary bell atomizers",
+    src: `${DOMAIN}/videos/knowledge/bell-cleaning-demo-1.mp4`,
+    title: "Rotary Bell Atomizer Cleaning Process Demo - Part 1",
+    description: "Step-by-step demonstration of rotary bell atomizer cleaning procedure",
   },
   {
-    src: "/videos/bell-cleaning-demo-2.mp4",
-    title: "Internal Passage Cleaning",
-    description: "High-pressure solvent flushing through bell turbine and shaft",
+    src: `${DOMAIN}/videos/knowledge/bell-cleaning-demo-2.mp4`,
+    title: "Rotary Bell Atomizer Cleaning Process Demo - Part 2",
+    description: "Post-cleaning inspection, cup reassembly, and performance verification",
   },
   {
-    src: "/videos/bell-cleaning-demo-3.mp4",
-    title: "Quick Changeover Process",
-    description: "Rapid bell cup exchange and system purge",
+    src: `${DOMAIN}/videos/knowledge/rotary-bell-troubleshooting.mp4`,
+    title: "Rotary Bell Atomizer Troubleshooting Guide",
+    description: "Diagnostic procedures for common rotary bell atomizer issues",
   },
 ];
 
