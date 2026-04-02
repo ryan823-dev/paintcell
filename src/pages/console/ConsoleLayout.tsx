@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { 
-  Loader2, 
-  LogOut, 
-  Home, 
-  FileText, 
-  BookOpen, 
+import {
+  Loader2,
+  LogOut,
+  Home,
+  FileText,
+  BookOpen,
   Scale,
   Menu,
   X,
@@ -23,7 +23,9 @@ import {
   Wrench,
   ShieldCheck,
   LayoutGrid,
-  Images
+  Images,
+  Package,
+  Video
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,6 +57,8 @@ const navSections = [
     items: [
       { href: "/console/case-studies", label: "案例研究 / Case Studies", icon: FileText },
       { href: "/console/resources", label: "资源库 / Resources", icon: BookOpen },
+      { href: "/console/products", label: "产品目录 / Products", icon: Package },
+      { href: "/console/videos", label: "视频库 / Videos", icon: Video },
       { href: "/console/industry-pages", label: "行业页面 / Industries", icon: Globe },
       { href: "/console/solution-pages", label: "方案页面 / Solutions", icon: Wrench },
       { href: "/console/media", label: "媒体库 / Media", icon: ImageIcon },

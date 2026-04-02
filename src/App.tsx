@@ -144,6 +144,7 @@ const ProductCategory = lazy(() => import("./pages/products/ProductCategory"));
 const ControlSystems = lazy(() => import("./pages/products/ControlSystems"));
 const BellCleaningSystem = lazy(() => import("./pages/products/BellCleaningSystem"));
 const PiggingColorChangeSystem = lazy(() => import("./pages/products/PiggingColorChangeSystem"));
+const DynamicProduct = lazy(() => import("./pages/products/DynamicProduct"));
 
 // Lazy load Services pages
 const ServicesIndex = lazy(() => import("./pages/services/ServicesIndex"));
@@ -173,6 +174,10 @@ const SolutionPagesList = lazy(() => import("./pages/console/SolutionPagesList")
 const SolutionPageEditor = lazy(() => import("./pages/console/SolutionPageEditor"));
 const WhyCardsEditor = lazy(() => import("./pages/console/WhyCardsEditor"));
 const HomeBannersEditor = lazy(() => import("./pages/console/HomeBannersEditor"));
+const ProductsList = lazy(() => import("./pages/console/ProductsList"));
+const ProductEditor = lazy(() => import("./pages/console/ProductEditor"));
+const VideosList = lazy(() => import("./pages/console/VideosList"));
+const VideoEditor = lazy(() => import("./pages/console/VideoEditor"));
 
 const queryClient = new QueryClient();
 
@@ -307,6 +312,7 @@ function PublicRoutes() {
       <Route path="products/control-systems" element={<ControlSystems />} />
       <Route path="products/bell-cleaning-system" element={<BellCleaningSystem />} />
       <Route path="products/pigging-color-change-system" element={<PiggingColorChangeSystem />} />
+      <Route path="products/item/:slug" element={<DynamicProduct />} />
       <Route path="products/:category" element={<ProductCategory />} />
 
       {/* Services pages */}
@@ -362,6 +368,10 @@ const App = () => (
                 <Route path="/console/solution-pages/:id" element={<SolutionPageEditor />} />
                 <Route path="/console/why-cards" element={<WhyCardsEditor />} />
                 <Route path="/console/home-banners" element={<HomeBannersEditor />} />
+                <Route path="/console/products" element={<ProductsList />} />
+                <Route path="/console/products/:id" element={<ProductEditor />} />
+                <Route path="/console/videos" element={<VideosList />} />
+                <Route path="/console/videos/:id" element={<VideoEditor />} />
                 <Route path="/console/users" element={<UserManagement />} />
                 <Route path="/console/policies" element={<LegalPages />} />
               </Route>
