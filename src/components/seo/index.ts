@@ -14,5 +14,8 @@
 
 export { BreadcrumbSchema, createBreadcrumbSchema } from "./BreadcrumbSchema";
 export { Hreflang } from "./Hreflang";
+export { SeoLocaleEnforcer } from "./SeoLocaleEnforcer";
 export { SpeakableSchema, ArticleWithSpeakable } from "./SpeakableSchema";
 export { ServiceSchema, services } from "./ServiceSchema";
+export { TopicClusterDirectory } from "./TopicClusterDirectory";
+export { TopicClusterNavigator } from "./TopicClusterNavigator";

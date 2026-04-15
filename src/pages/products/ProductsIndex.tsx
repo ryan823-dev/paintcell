@@ -7,8 +7,8 @@ import {
   ChevronRight, FileText, ArrowRight, Bot
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
-
-const DOMAIN = "https://tdpaint.com";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
+import { publicCmsAvailability } from "@/lib/publicCms";
 
 const productCategoryKeys = [
   { key: "rotaryBells", icon: Settings, href: "/products/rotary-bells", brands: ["SAMES KREMLIN PPH707", "Ransburg Robobell", "Dürr EcoBell"] },
@@ -35,13 +35,66 @@ const featuredBrands = [
 export default function ProductsIndex() {
   const { t } = useI18n();
   const page = t.productsPage || {};
+  const publicProductCmsEnabled = publicCmsAvailability.products;
+  const robotModels = page.robotModels || [
+    {
+      brand: "ABB",
+      model: "IRB 5500",
+      spec: "Reach 2.98m, Payload 13kg",
+      description:
+        "Dedicated painting robot with hollow wrist, explosion-proof design. Ideal for automotive bumpers, trim, and component painting.",
+      use: "Most deployed model in TD projects",
+    },
+    {
+      brand: "ABB",
+      model: "IRB 6700",
+      spec: "Reach 2.6-3.2m, Payload 150-235kg",
+      description:
+        "High-payload robot used for flame treatment, heavy fixturing, and pre-treatment stations in painting lines.",
+      use: "Pre-treatment & material handling",
+    },
+    {
+      brand: "FANUC",
+      model: "MPX 3500",
+      spec: "Reach 1.56m, Painting-specific",
+      description:
+        "Compact explosion-proof painting robot with integrated hollow arm for paint line routing. Fast axis speeds for high takt-time production.",
+      use: "Bumper & plastic component lines",
+    },
+    {
+      brand: "FANUC",
+      model: "MPX 2600",
+      spec: "Reach 1.86m, Painting-specific",
+      description:
+        "Extended-reach painting robot for larger parts and booth configurations. Used in international deployments including VINFAST Thailand.",
+      use: "Versatile mid-range painting",
+    },
+    {
+      brand: "Kawasaki",
+      model: "Painting Series",
+      spec: "7-axis with linear track",
+      description:
+        "7th-axis rail-mounted painting robots for extended reach on large parts such as excavator booms, frames, and structural components.",
+      use: "Construction machinery & heavy parts",
+    },
+    {
+      brand: "CMA",
+      model: "Painting Robots",
+      spec: "6-axis, cost-effective",
+      description:
+        "Chinese-manufactured painting robots offering competitive pricing for general industrial applications and 3C electronics coating.",
+      use: "Industrial & 3C applications",
+    },
+  ];
+  const localizedFeaturedBrands = page.featuredBrands || featuredBrands;
+  const canonicalUrl = useCanonicalUrl("/products");
 
   return (
     <>
       <Helmet>
-        <title>Products | Spray Equipment, Pumps & Spare Parts | TD Painting Systems</title>
-        <meta name="description" content="Industrial coating equipment including rotary bells, spray guns, paint pumps, control systems, and spare parts. Quality products from leading brands for automotive and industrial applications." />
-        <link rel="canonical" href={`${DOMAIN}/products`} />
+        <title>{page.metaTitle || "Products | Spray Equipment, Pumps & Spare Parts | TD Painting Systems"}</title>
+        <meta name="description" content={page.metaDescription || "Industrial coating equipment including rotary bells, spray guns, paint pumps, control systems, and spare parts. Quality products from leading brands for automotive and industrial applications."} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="bg-background">
@@ -69,6 +122,14 @@ export default function ProductsIndex() {
                     <Link to="/quote">
                       <FileText className="h-4 w-4 mr-2" />
                       {page.requestQuote || "Request Quote"}
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="rounded-xl">
+                    <Link to={publicProductCmsEnabled ? "/products/catalog" : "/products/rotary-bells"}>
+                      <ArrowRight className="h-4 w-4 mr-2" />
+                      {publicProductCmsEnabled
+                        ? page.catalogButton || "Browse CMS Catalog"
+                        : page.catalogFallbackButton || "Browse Categories"}
                     </Link>
                   </Button>
                 </div>
@@ -139,23 +200,16 @@ export default function ProductsIndex() {
             <FadeIn>
               <div className="mb-12">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                  Robot Platforms
+                  {page.robotPlatformsLabel || "Robot Platforms"}
                 </p>
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                  Painting Robot Models We Integrate
+                  {page.robotPlatformsTitle || "Painting Robot Models We Integrate"}
                 </h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { brand: "ABB", model: "IRB 5500", spec: "Reach 2.98m, Payload 13kg", desc: "Dedicated painting robot with hollow wrist, explosion-proof design. Ideal for automotive bumpers, trim, and component painting.", use: "Most deployed model in TD projects" },
-                { brand: "ABB", model: "IRB 6700", spec: "Reach 2.6-3.2m, Payload 150-235kg", desc: "High-payload robot used for flame treatment, heavy fixturing, and pre-treatment stations in painting lines.", use: "Pre-treatment & material handling" },
-                { brand: "FANUC", model: "MPX 3500", spec: "Reach 1.56m, Painting-specific", desc: "Compact explosion-proof painting robot with integrated hollow arm for paint line routing. Fast axis speeds for high takt-time production.", use: "Bumper & plastic component lines" },
-                { brand: "FANUC", model: "MPX 2600", spec: "Reach 1.86m, Painting-specific", desc: "Extended-reach painting robot for larger parts and booth configurations. Used in international deployments including VINFAST Thailand.", use: "Versatile mid-range painting" },
-                { brand: "Kawasaki", model: "Painting Series", spec: "7-axis with linear track", desc: "7th-axis rail-mounted painting robots for extended reach on large parts such as excavator booms, frames, and structural components.", use: "Construction machinery & heavy parts" },
-                { brand: "CMA", model: "Painting Robots", spec: "6-axis, cost-effective", desc: "Chinese-manufactured painting robots offering competitive pricing for general industrial applications and 3C electronics coating.", use: "Industrial & 3C applications" },
-              ].map((robot, idx) => (
+              {robotModels.map((robot, idx) => (
                 <FadeIn key={idx} delay={idx * 0.05}>
                   <div className="rounded-xl border border-border bg-card p-6 h-full hover:border-accent/30 transition-colors">
                     <div className="flex items-center gap-2 mb-3">
@@ -164,7 +218,7 @@ export default function ProductsIndex() {
                     </div>
                     <h3 className="text-lg font-semibold mb-1">{robot.model}</h3>
                     <p className="text-xs text-muted-foreground mb-3 font-mono">{robot.spec}</p>
-                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{robot.desc}</p>
+                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{robot.description}</p>
                     <div className="text-xs text-accent font-medium bg-accent/5 px-2 py-1 rounded inline-block">
                       {robot.use}
                     </div>
@@ -190,7 +244,7 @@ export default function ProductsIndex() {
               </div>
             </FadeIn>
             <div className="flex flex-wrap justify-center gap-4">
-              {featuredBrands.map((brand, index) => (
+              {localizedFeaturedBrands.map((brand, index) => (
                 <FadeIn key={brand.name} delay={index * 0.05}>
                   <div className="flex items-center gap-3 px-5 py-3 rounded-xl border border-border bg-card">
                     <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground">

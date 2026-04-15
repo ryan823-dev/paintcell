@@ -73,11 +73,11 @@ export const services = {
     serviceType: "Paint Booth Engineering",
     url: "https://tdpaint.com/solutions/paint-booth-automation"
   },
-  sprayRobotIntegration: {
-    name: "Spray Robot Integration",
-    description: "Industrial robot integration for spray painting applications, including ABB, FANUC, and Yaskawa robot programming and path optimization.",
+  paintRobotIntegration: {
+    name: "Paint Robot Integration",
+    description: "Industrial robot integration for painting applications, including ABB, FANUC, and Yaskawa robot programming and path optimization.",
     serviceType: "Robot Integration Services",
-    url: "https://tdpaint.com/solutions/spray-robot-integration"
+    url: "https://tdpaint.com/solutions/paint-robot-integration"
   },
   turnkeyPaintingShop: {
     name: "Turnkey Painting Shop",

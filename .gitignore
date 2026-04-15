@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+.qoder/
 
 # Vercel temp files
 .vercel-tmp/

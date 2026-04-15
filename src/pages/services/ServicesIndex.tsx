@@ -4,16 +4,33 @@ import { Button } from "@/components/ui/button";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import {
   Users, Wrench, FileText, Settings, GraduationCap, Headphones,
-  CheckCircle2, ChevronRight, ArrowRight, MapPin, Shield, Clock
+  CheckCircle2, ChevronRight, MapPin, Shield, Clock
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
-
-const DOMAIN = "https://tdpaint.com";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 export default function ServicesIndex() {
   const { t } = useI18n();
   const page = t.servicesPage || {};
   const process = page.process || {};
+  const trackRecordCards = page.trackRecordCards || [
+    {
+      title: "Nationwide Coverage",
+      description:
+        "Service teams deployed across 30+ cities in China covering major automotive manufacturing clusters with additional international project support in Thailand.",
+    },
+    {
+      title: "Multi-Brand Expertise",
+      description:
+        "Certified service capabilities across ABB, FANUC, Yaskawa, Kawasaki, and KUKA robot platforms. Spray equipment expertise spanning Sames, Graco, Ransburg, and Binks-Maple systems.",
+    },
+    {
+      title: "Rapid Response",
+      description:
+        "Remote diagnostics via RobotStudio and ShopFloor Editor for immediate troubleshooting. On-site emergency response within 24-48 hours for critical production situations across China.",
+    },
+  ];
+  const canonicalUrl = useCanonicalUrl("/services");
   
   const serviceCategories = [
     { key: "solutionDesign", icon: FileText, href: "/services/solution-design" },
@@ -35,9 +52,9 @@ export default function ServicesIndex() {
   return (
     <>
       <Helmet>
-        <title>Technical Services | Engineering, Commissioning & Maintenance | TD Painting Systems</title>
-        <meta name="description" content="Comprehensive technical services for industrial coating systems: solution design, project management, commissioning, maintenance, and training. Expert support for your painting operations." />
-        <link rel="canonical" href={`${DOMAIN}/services`} />
+        <title>{page.metaTitle || "Technical Services | Engineering, Commissioning & Maintenance | TD Painting Systems"}</title>
+        <meta name="description" content={page.metaDescription || "Comprehensive technical services for industrial coating systems: solution design, project management, commissioning, maintenance, and training. Expert support for your painting operations."} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="bg-background">
@@ -186,10 +203,10 @@ export default function ServicesIndex() {
             <FadeIn>
               <div className="mb-12">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                  Proven Capability
+                  {page.trackRecordLabel || "Proven Capability"}
                 </p>
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                  Service Track Record
+                  {page.trackRecordTitle || "Service Track Record"}
                 </h2>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
@@ -198,27 +215,27 @@ export default function ServicesIndex() {
               <FadeIn>
                 <div className="rounded-xl border border-border bg-card p-6">
                   <MapPin className="h-6 w-6 text-accent mb-3" />
-                  <h3 className="font-semibold mb-2">Nationwide Coverage</h3>
+                  <h3 className="font-semibold mb-2">{trackRecordCards[0]?.title || "Nationwide Coverage"}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Service teams deployed across 30+ cities in China covering all major automotive manufacturing clusters — from Changchun in the north to Guangzhou in the south, with international project support in Thailand.
+                    {trackRecordCards[0]?.description || "Service teams deployed across 30+ cities in China covering major automotive manufacturing clusters with additional international project support in Thailand."}
                   </p>
                 </div>
               </FadeIn>
               <FadeIn delay={0.05}>
                 <div className="rounded-xl border border-border bg-card p-6">
                   <Shield className="h-6 w-6 text-accent mb-3" />
-                  <h3 className="font-semibold mb-2">Multi-Brand Expertise</h3>
+                  <h3 className="font-semibold mb-2">{trackRecordCards[1]?.title || "Multi-Brand Expertise"}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Certified service capabilities across ABB, FANUC, Yaskawa, Kawasaki, and KUKA robot platforms. Spray equipment expertise spanning Sames, Graco, Ransburg, and Binks-Maple systems.
+                    {trackRecordCards[1]?.description || "Certified service capabilities across ABB, FANUC, Yaskawa, Kawasaki, and KUKA robot platforms. Spray equipment expertise spanning Sames, Graco, Ransburg, and Binks-Maple systems."}
                   </p>
                 </div>
               </FadeIn>
               <FadeIn delay={0.1}>
                 <div className="rounded-xl border border-border bg-card p-6">
                   <Clock className="h-6 w-6 text-accent mb-3" />
-                  <h3 className="font-semibold mb-2">Rapid Response</h3>
+                  <h3 className="font-semibold mb-2">{trackRecordCards[2]?.title || "Rapid Response"}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Remote diagnostics via RobotStudio/ShopFloor Editor for immediate troubleshooting. On-site emergency response within 24-48 hours for critical production-down situations across China.
+                    {trackRecordCards[2]?.description || "Remote diagnostics via RobotStudio and ShopFloor Editor for immediate troubleshooting. On-site emergency response within 24-48 hours for critical production situations across China."}
                   </p>
                 </div>
               </FadeIn>

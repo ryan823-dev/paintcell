@@ -475,7 +475,7 @@ export const coreComponents: Product[] = [
     },
     applications: [
       "Automotive painting systems",
-      "Multi-color coating lines",
+      "Multi-color paint lines",
       "High-frequency color changes",
       "Special paint applications"
     ],

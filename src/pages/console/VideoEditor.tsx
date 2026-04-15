@@ -7,38 +7,23 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { ImageUpload } from "@/components/console";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Save, ArrowLeft, Trash2 } from "lucide-react";
+import type { Enums, Tables } from "@/integrations/supabase/types";
 
-const categoryOptions = [
+type VideoPost = Tables<"videos">;
+type VideoCategory = Enums<"video_category">;
+type ContentStatus = Enums<"content_status">;
+
+const categoryOptions: Array<{ value: VideoCategory; label: string }> = [
   { value: "cleaning", label: "Cleaning" },
   { value: "process", label: "Process" },
   { value: "equipment", label: "Equipment" },
   { value: "case-study", label: "Case Study" },
   { value: "knowledge", label: "Knowledge" },
 ];
-
-interface VideoPost {
-  id: string;
-  video_id: string;
-  title: string;
-  slug: string;
-  description: string | null;
-  category: string | null;
-  video_url: string;
-  thumbnail_url: string | null;
-  duration_seconds: number | null;
-  keywords: string[] | null;
-  status: "draft" | "review" | "published";
-  published_at: string | null;
-  meta_title: string | null;
-  meta_description: string | null;
-  transcript: string | null;
-  sort_order: number;
-  is_visible: boolean;
-  created_at: string;
-  updated_at: string;
-}
 
 const defaultVideo: Partial<VideoPost> = {
   video_id: "",
@@ -69,7 +54,10 @@ export default function VideoEditor() {
   const [deleting, setDeleting] = useState(false);
   const [video, setVideo] = useState<Partial<VideoPost>>(() => {
     if (isNew) {
-      const category = searchParams.get("category");
+      const categoryParam = searchParams.get("category");
+      const category = categoryOptions.some((option) => option.value === categoryParam)
+        ? (categoryParam as VideoCategory)
+        : null;
       return {
         ...defaultVideo,
         category,
@@ -157,17 +145,88 @@ export default function VideoEditor() {
 
     setSaving(true);
 
+    const normalizedSlug = video.slug
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    if (!normalizedSlug) {
+      toast({
+        title: "Validation Error",
+        description: "Slug must contain letters or numbers",
+        variant: "destructive",
+      });
+      setSaving(false);
+      return;
+    }
+
+    if (normalizedSlug !== video.slug) {
+      setVideo((prev) => ({ ...prev, slug: normalizedSlug }));
+    }
+
+    if (isNew) {
+      const { data: existingSlug, error: slugError } = await supabase
+        .from("videos")
+        .select("id")
+        .eq("slug", normalizedSlug)
+        .limit(1);
+
+      if (slugError) {
+        toast({ title: "Error", description: slugError.message, variant: "destructive" });
+        setSaving(false);
+        return;
+      }
+
+      if (existingSlug && existingSlug.length > 0) {
+        toast({
+          title: "Validation Error",
+          description: "Slug already exists. Please choose a different slug.",
+          variant: "destructive",
+        });
+        setSaving(false);
+        return;
+      }
+
+      const { data: existingVideoId, error: videoIdError } = await supabase
+        .from("videos")
+        .select("id")
+        .eq("video_id", video.video_id)
+        .limit(1);
+
+      if (videoIdError) {
+        toast({ title: "Error", description: videoIdError.message, variant: "destructive" });
+        setSaving(false);
+        return;
+      }
+
+      if (existingVideoId && existingVideoId.length > 0) {
+        toast({
+          title: "Validation Error",
+          description: "Video ID already exists. Please choose a different ID.",
+          variant: "destructive",
+        });
+        setSaving(false);
+        return;
+      }
+    }
+
+    const publishedAt =
+      (video.status || "draft") === "published"
+        ? video.published_at || new Date().toISOString()
+        : null;
+
     const videoData = {
       video_id: video.video_id,
       title: video.title,
-      slug: video.slug,
+      slug: normalizedSlug,
       description: video.description || null,
-      category: video.category || null,
+      category: (video.category as VideoCategory | null) || null,
       video_url: video.video_url,
       thumbnail_url: video.thumbnail_url || null,
       duration_seconds: video.duration_seconds || null,
       keywords: video.keywords || [],
-      status: video.status || "draft",
+      status: (video.status as ContentStatus | null) || "draft",
+      published_at: publishedAt,
       meta_title: video.meta_title || null,
       meta_description: video.meta_description || null,
       transcript: video.transcript || null,
@@ -306,7 +365,9 @@ export default function VideoEditor() {
                 <Label htmlFor="category">Category</Label>
                 <Select
                   value={video.category || ""}
-                  onValueChange={(value) => setVideo({ ...video, category: value })}
+                  onValueChange={(value) =>
+                    setVideo({ ...video, category: value as VideoCategory })
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -324,7 +385,7 @@ export default function VideoEditor() {
                 <Label htmlFor="status">Status</Label>
                 <Select
                   value={video.status || "draft"}
-                  onValueChange={(value: "draft" | "review" | "published") =>
+                  onValueChange={(value: ContentStatus) =>
                     setVideo({ ...video, status: value })
                   }
                 >
@@ -338,6 +399,18 @@ export default function VideoEditor() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <div className="space-y-0.5">
+                <Label>Visible</Label>
+                <p className="text-xs text-muted-foreground">
+                  Controls whether the video is visible on the public site
+                </p>
+              </div>
+              <Switch
+                checked={video.is_visible ?? true}
+                onCheckedChange={(checked) => setVideo({ ...video, is_visible: checked })}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
@@ -370,13 +443,21 @@ export default function VideoEditor() {
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="thumbnail_url">Thumbnail URL</Label>
-              <Input
-                id="thumbnail_url"
-                value={video.thumbnail_url || ""}
-                onChange={(e) => setVideo({ ...video, thumbnail_url: e.target.value })}
-                placeholder="https://..."
+              <ImageUpload
+                label="Thumbnail"
+                hint="Optional thumbnail for listings and social previews"
+                value={video.thumbnail_url || null}
+                onChange={(url) => setVideo({ ...video, thumbnail_url: url })}
               />
+              <div className="space-y-2">
+                <Label htmlFor="thumbnail_url">Thumbnail URL (optional)</Label>
+                <Input
+                  id="thumbnail_url"
+                  value={video.thumbnail_url || ""}
+                  onChange={(e) => setVideo({ ...video, thumbnail_url: e.target.value })}
+                  placeholder="https://..."
+                />
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">

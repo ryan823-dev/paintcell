@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Plus, Edit, Eye, EyeOff, Package, Settings, Droplets, Palette, Wrench, Sparkles } from "lucide-react";
 
@@ -122,6 +123,23 @@ export default function ProductsList() {
     }
   };
 
+  const toggleVisibility = async (product: Product) => {
+    const { error } = await supabase
+      .from("products_posts")
+      .update({ is_visible: !product.is_visible })
+      .eq("id", product.id);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update visibility",
+        variant: "destructive",
+      });
+    } else {
+      fetchProducts();
+    }
+  };
+
   const getProductsByCategory = (category: string) => {
     return products.filter((p) => p.category === category);
   };
@@ -217,6 +235,11 @@ export default function ProductsList() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
+                            <Switch
+                              checked={product.is_visible}
+                              onCheckedChange={() => toggleVisibility(product)}
+                              title={product.is_visible ? "Visible" : "Hidden"}
+                            />
                             <Button
                               variant="ghost"
                               size="sm"

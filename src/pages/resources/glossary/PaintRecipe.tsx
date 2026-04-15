@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function PaintRecipe() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.paintRecipe || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function PaintRecipe() {
     "@type": "WebPage",
     "name": term.metaTitle || "Paint Recipe Management | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of paint recipe management in automated robotic painting systems.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

@@ -1,46 +1,51 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { Loader2, Plus, Eye, EyeOff, Trash2, Edit, ChevronUp, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Edit,
+  Eye,
+  EyeOff,
+  Loader2,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { BilingualField, ImageUpload } from "@/components/console";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface HomeBanner {
   id: string;
   title_en: string | null;
-  title_zh: string | null;
   subtitle_en: string | null;
-  subtitle_zh: string | null;
   image_url: string;
   link_url: string | null;
   link_text_en: string | null;
-  link_text_zh: string | null;
   sort_order: number;
   is_visible: boolean;
   created_at: string;
   updated_at: string;
 }
 
-const defaultBanner: Partial<HomeBanner> = {
+type EditableBanner = Partial<Omit<HomeBanner, "created_at" | "updated_at">>;
+
+const defaultBanner: EditableBanner = {
   title_en: "",
-  title_zh: "",
   subtitle_en: "",
-  subtitle_zh: "",
   image_url: "",
   link_url: "",
   link_text_en: "",
-  link_text_zh: "",
   sort_order: 0,
   is_visible: true,
 };
@@ -50,11 +55,11 @@ export default function HomeBannersEditor() {
   const [saving, setSaving] = useState(false);
   const [banners, setBanners] = useState<HomeBanner[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingBanner, setEditingBanner] = useState<Partial<HomeBanner> | null>(null);
+  const [editingBanner, setEditingBanner] = useState<EditableBanner | null>(null);
   const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
-    fetchBanners();
+    void fetchBanners();
   }, []);
 
   const fetchBanners = async () => {
@@ -65,13 +70,14 @@ export default function HomeBannersEditor() {
 
     if (error) {
       toast({
-        title: "加载失败 / Load Error",
-        description: "无法加载轮播图 / Failed to load banners",
+        title: "Load Error",
+        description: "Failed to load banners.",
         variant: "destructive",
       });
     } else {
-      setBanners((data as HomeBanner[]) || []);
+      setBanners(data || []);
     }
+
     setLoading(false);
   };
 
@@ -88,9 +94,7 @@ export default function HomeBannersEditor() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("确定要删除此轮播图吗？/ Are you sure you want to delete this banner?")) {
-      return;
-    }
+    if (!confirm("Delete this banner?")) return;
 
     const { error } = await supabase
       .from("home_banners")
@@ -99,26 +103,24 @@ export default function HomeBannersEditor() {
 
     if (error) {
       toast({
-        title: "删除失败 / Delete Failed",
-        description: "请重试 / Please try again",
+        title: "Delete Failed",
+        description: "Please try again.",
         variant: "destructive",
       });
     } else {
       toast({
-        title: "删除成功 / Deleted",
-        description: "轮播图已删除 / Banner deleted",
+        title: "Deleted",
+        description: "Banner deleted.",
       });
-      fetchBanners();
+      await fetchBanners();
     }
   };
 
   const handleSave = async () => {
-    if (!editingBanner) return;
-
-    if (!editingBanner.image_url) {
+    if (!editingBanner?.image_url) {
       toast({
-        title: "缺少图片 / Image Required",
-        description: "请上传轮播图图片 / Please upload a banner image",
+        title: "Image Required",
+        description: "Please upload a banner image.",
         variant: "destructive",
       });
       return;
@@ -128,44 +130,34 @@ export default function HomeBannersEditor() {
 
     const payload = {
       title_en: editingBanner.title_en || null,
-      title_zh: editingBanner.title_zh || null,
       subtitle_en: editingBanner.subtitle_en || null,
-      subtitle_zh: editingBanner.subtitle_zh || null,
       image_url: editingBanner.image_url,
       link_url: editingBanner.link_url || null,
       link_text_en: editingBanner.link_text_en || null,
-      link_text_zh: editingBanner.link_text_zh || null,
       sort_order: editingBanner.sort_order || 0,
       is_visible: editingBanner.is_visible ?? true,
     };
 
-    let error;
-    if (isNew) {
-      const result = await supabase.from("home_banners").insert(payload);
-      error = result.error;
-    } else {
-      const result = await supabase
-        .from("home_banners")
-        .update(payload)
-        .eq("id", editingBanner.id);
-      error = result.error;
-    }
+    const result = isNew
+      ? await supabase.from("home_banners").insert(payload)
+      : await supabase.from("home_banners").update(payload).eq("id", editingBanner.id);
 
-    if (error) {
+    if (result.error) {
       toast({
-        title: "保存失败 / Save Failed",
-        description: error.message,
+        title: "Save Failed",
+        description: result.error.message,
         variant: "destructive",
       });
     } else {
       toast({
-        title: "保存成功 / Saved",
-        description: isNew ? "轮播图已创建 / Banner created" : "轮播图已更新 / Banner updated",
+        title: "Saved",
+        description: isNew ? "Banner created." : "Banner updated.",
       });
       setDialogOpen(false);
       setEditingBanner(null);
-      fetchBanners();
+      await fetchBanners();
     }
+
     setSaving(false);
   };
 
@@ -177,42 +169,45 @@ export default function HomeBannersEditor() {
 
     if (error) {
       toast({
-        title: "更新失败 / Update Failed",
+        title: "Update Failed",
         variant: "destructive",
       });
     } else {
-      fetchBanners();
+      await fetchBanners();
     }
+  };
+
+  const updateSortOrders = async (orderedBanners: HomeBanner[]) => {
+    for (const [index, banner] of orderedBanners.entries()) {
+      await supabase
+        .from("home_banners")
+        .update({ sort_order: index })
+        .eq("id", banner.id);
+    }
+
+    await fetchBanners();
   };
 
   const moveUp = async (index: number) => {
     if (index === 0) return;
-    const newBanners = [...banners];
-    [newBanners[index - 1], newBanners[index]] = [newBanners[index], newBanners[index - 1]];
-    await updateSortOrders(newBanners);
+    const next = [...banners];
+    [next[index - 1], next[index]] = [next[index], next[index - 1]];
+    await updateSortOrders(next);
   };
 
   const moveDown = async (index: number) => {
     if (index === banners.length - 1) return;
-    const newBanners = [...banners];
-    [newBanners[index], newBanners[index + 1]] = [newBanners[index + 1], newBanners[index]];
-    await updateSortOrders(newBanners);
+    const next = [...banners];
+    [next[index], next[index + 1]] = [next[index + 1], next[index]];
+    await updateSortOrders(next);
   };
 
-  const updateSortOrders = async (orderedBanners: HomeBanner[]) => {
-    for (let i = 0; i < orderedBanners.length; i++) {
-      await supabase
-        .from("home_banners")
-        .update({ sort_order: i })
-        .eq("id", orderedBanners[i].id);
-    }
-    fetchBanners();
-  };
-
-  const updateEditing = (field: keyof HomeBanner, value: string | boolean | number | null) => {
-    if (editingBanner) {
-      setEditingBanner({ ...editingBanner, [field]: value });
-    }
+  const updateEditing = (
+    field: keyof EditableBanner,
+    value: string | boolean | number | null,
+  ) => {
+    if (!editingBanner) return;
+    setEditingBanner({ ...editingBanner, [field]: value });
   };
 
   if (loading) {
@@ -225,74 +220,71 @@ export default function HomeBannersEditor() {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">首页轮播图 / Home Banners</h1>
-          <p className="text-muted-foreground">
-            管理首页顶部轮播图 / Manage home page hero banners
-          </p>
+          <h1 className="text-2xl font-bold">Home Banners</h1>
+          <p className="text-muted-foreground">Manage hero banners shown on the home page.</p>
         </div>
         <Button onClick={handleAdd}>
-          <Plus className="h-4 w-4 mr-2" />
-          添加轮播图 / Add Banner
+          <Plus className="mr-2 h-4 w-4" />
+          Add Banner
         </Button>
       </div>
 
       {banners.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
-            暂无轮播图，点击上方按钮添加 / No banners yet. Click the button above to add one.
+            No banners yet. Add one to get started.
           </CardContent>
         </Card>
       ) : (
         <div className="space-y-3">
           {banners.map((banner, index) => (
-            <Card key={banner.id} className={!banner.is_visible ? "opacity-60" : ""}>
+            <Card key={banner.id} className={banner.is_visible ? "" : "opacity-60"}>
               <CardContent className="py-4">
                 <div className="flex items-center gap-4">
-                  {/* Thumbnail */}
-                  <div className="w-32 h-20 flex-shrink-0 rounded overflow-hidden bg-muted">
+                  <div className="h-20 w-32 flex-shrink-0 overflow-hidden rounded bg-muted">
                     <img
                       src={banner.image_url}
                       alt={banner.title_en || "Banner"}
-                      className="w-full h-full object-cover"
+                      className="h-full w-full object-cover"
                     />
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-medium truncate">
-                      {banner.title_en || banner.title_zh || "无标题 / Untitled"}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="truncate font-medium">
+                      {banner.title_en || "Untitled"}
                     </h3>
-                    {banner.subtitle_en && (
-                      <p className="text-sm text-muted-foreground truncate">
+                    {banner.subtitle_en ? (
+                      <p className="truncate text-sm text-muted-foreground">
                         {banner.subtitle_en}
                       </p>
-                    )}
-                    <div className="flex items-center gap-2 mt-1">
-                      {banner.is_visible ? (
-                        <span className="text-xs text-green-600 flex items-center gap-1">
-                          <Eye className="h-3 w-3" /> 显示中
-                        </span>
-                      ) : (
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <EyeOff className="h-3 w-3" /> 已隐藏
-                        </span>
-                      )}
-                      {banner.link_url && (
-                        <span className="text-xs text-blue-600">
-                          → {banner.link_url}
-                        </span>
-                      )}
+                    ) : null}
+                    <div className="mt-1 flex items-center gap-2">
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                        {banner.is_visible ? (
+                          <>
+                            <Eye className="h-3 w-3" />
+                            Visible
+                          </>
+                        ) : (
+                          <>
+                            <EyeOff className="h-3 w-3" />
+                            Hidden
+                          </>
+                        )}
+                      </span>
+                      {banner.link_url ? (
+                        <span className="text-xs text-blue-600">{banner.link_url}</span>
+                      ) : null}
                     </div>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex items-center gap-1">
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => moveUp(index)}
+                      onClick={() => void moveUp(index)}
                       disabled={index === 0}
                       className="h-8 w-8 p-0"
                     >
@@ -301,7 +293,7 @@ export default function HomeBannersEditor() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => moveDown(index)}
+                      onClick={() => void moveDown(index)}
                       disabled={index === banners.length - 1}
                       className="h-8 w-8 p-0"
                     >
@@ -310,14 +302,10 @@ export default function HomeBannersEditor() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => toggleVisibility(banner)}
+                      onClick={() => void toggleVisibility(banner)}
                       className="h-8 w-8 p-0"
                     >
-                      {banner.is_visible ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
+                      {banner.is_visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </Button>
                     <Button
                       variant="ghost"
@@ -330,7 +318,7 @@ export default function HomeBannersEditor() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleDelete(banner.id)}
+                      onClick={() => void handleDelete(banner.id)}
                       className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -343,93 +331,89 @@ export default function HomeBannersEditor() {
         </div>
       )}
 
-      {/* Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>
-              {isNew ? "添加轮播图 / Add Banner" : "编辑轮播图 / Edit Banner"}
-            </DialogTitle>
+            <DialogTitle>{isNew ? "Add Banner" : "Edit Banner"}</DialogTitle>
           </DialogHeader>
 
-          {editingBanner && (
+          {editingBanner ? (
             <div className="space-y-6 py-4">
               <ImageUpload
-                label="轮播图图片 / Banner Image *"
-                hint="建议尺寸: 1920x600px / Recommended: 1920x600px"
-                value={editingBanner.image_url}
+                label="Banner Image"
+                hint="Recommended size: 1920x600px"
+                value={editingBanner.image_url || ""}
                 onChange={(url) => updateEditing("image_url", url || "")}
               />
 
               <BilingualField
-                label="标题 / Title"
+                label="Title"
                 valueEn={editingBanner.title_en}
-                valueZh={editingBanner.title_zh}
-                onChangeEn={(v) => updateEditing("title_en", v)}
-                onChangeZh={(v) => updateEditing("title_zh", v)}
+                onChangeEn={(value) => updateEditing("title_en", value)}
               />
 
               <BilingualField
-                label="副标题 / Subtitle"
+                label="Subtitle"
                 valueEn={editingBanner.subtitle_en}
-                valueZh={editingBanner.subtitle_zh}
-                onChangeEn={(v) => updateEditing("subtitle_en", v)}
-                onChangeZh={(v) => updateEditing("subtitle_zh", v)}
+                onChangeEn={(value) => updateEditing("subtitle_en", value)}
                 multiline
                 rows={2}
               />
 
               <div className="space-y-2">
-                <Label>链接地址 / Link URL</Label>
+                <Label>Link URL</Label>
                 <Input
                   value={editingBanner.link_url || ""}
-                  onChange={(e) => updateEditing("link_url", e.target.value)}
-                  placeholder="/quote 或 https://..."
+                  onChange={(event) => updateEditing("link_url", event.target.value)}
+                  placeholder="/quote or https://..."
                 />
               </div>
 
               <BilingualField
-                label="链接按钮文本 / Link Button Text"
-                hint="留空则不显示按钮 / Leave empty to hide button"
+                label="Link Button Text"
+                hint="Leave empty to hide the button."
                 valueEn={editingBanner.link_text_en}
-                valueZh={editingBanner.link_text_zh}
-                onChangeEn={(v) => updateEditing("link_text_en", v)}
-                onChangeZh={(v) => updateEditing("link_text_zh", v)}
+                onChangeEn={(value) => updateEditing("link_text_en", value)}
               />
 
-              <div className="flex items-center justify-between pt-4 border-t">
+              <div className="flex items-center justify-between border-t pt-4">
                 <div className="flex items-center gap-2">
                   <Switch
                     checked={editingBanner.is_visible ?? true}
                     onCheckedChange={(checked) => updateEditing("is_visible", checked)}
                   />
-                  <Label>显示此轮播图 / Show this banner</Label>
+                  <Label>Show this banner</Label>
                 </div>
+
                 <div className="flex items-center gap-2">
-                  <Label>排序 / Order:</Label>
+                  <Label>Order</Label>
                   <Input
                     type="number"
                     value={editingBanner.sort_order || 0}
-                    onChange={(e) => updateEditing("sort_order", parseInt(e.target.value) || 0)}
+                    onChange={(event) =>
+                      updateEditing("sort_order", Number.parseInt(event.target.value, 10) || 0)
+                    }
                     className="w-20"
                   />
                 </div>
               </div>
             </div>
-          )}
+          ) : null}
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>
-              取消 / Cancel
+              Cancel
             </Button>
-            <Button onClick={handleSave} disabled={saving}>
+            <Button onClick={() => void handleSave()} disabled={saving}>
               {saving ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  保存中...
+                  Saving...
                 </>
+              ) : isNew ? (
+                "Create"
               ) : (
-                isNew ? "创建 / Create" : "保存 / Save"
+                "Save"
               )}
             </Button>
           </DialogFooter>

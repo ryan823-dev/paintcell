@@ -113,8 +113,8 @@ export default function RoboticPaintingSystem() {
   return (
     <>
       <Helmet>
-        <title>Robotic Painting System Integrator | Robotic Spray Painting Cells &amp; Paint Booth Automation | TD</title>
-        <meta name="description" content="End-to-end robotic painting system integration for automotive components and industrial finishing. Robot selection (ABB etc.), electrostatic/HVLP/air spray process setup, paint booth automation (new or retrofit), controls integration, commissioning, and fast deployment." />
+        <title>Robotic Paint Automation System | Industrial Finishing Integration | TD</title>
+        <meta name="description" content="Robotic paint automation system integration for industrial finishing, including robot selection, spray process setup, paint booth automation, controls, and commissioning." />
         <link rel="canonical" href={`${DOMAIN}/solutions/robotic-painting-system`} />
         {jsonLdSchemas.map((schema, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -143,7 +143,7 @@ export default function RoboticPaintingSystem() {
               Pillar Solution
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight max-w-3xl">
-              Robotic Painting System Integration (Automotive Components &amp; Industrial Finishing)
+              Robotic Paint Automation System for Industrial Finishing
             </h1>
           </div>
         </section>
@@ -151,12 +151,12 @@ export default function RoboticPaintingSystem() {
         {/* Definition Block */}
         <section className="border-b border-border ">
           <div className="container-narrow py-12 md:py-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Definition</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">System Overview</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              A robotic painting system is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, paint booth environment control, and process coordination to deliver repeatable finish quality and stable production throughput.
+              A robotic paint automation system is an integrated automation solution combining industrial robots, spray technologies, paint supply systems, paint booth environment control, and process coordination to deliver repeatable finish quality and stable production throughput.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              TD Robotic Painting Systems engineers and integrates robotic painting cells and automated painting workstations for automotive component manufacturers and industrial finishing applications worldwide, including ATEX-ready configurations where required based on site classification and paint process requirements.
+              TD engineers and integrates robotic painting cells and automated painting workstations for automotive component manufacturers and industrial finishing applications worldwide, including ATEX-ready configurations where required based on site classification and paint process requirements.
             </p>
           </div>
         </section>
@@ -401,6 +401,21 @@ export default function RoboticPaintingSystem() {
                 Scope: Robotic painting system integration, robotic spray painting cells, and paint booth automation, including ATEX-ready integration where required. Specifications and timelines depend on application and site classification.
               </span>
             </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border">
+          <div className="container-narrow py-12 md:py-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Decision Support</h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              Buyers evaluating this solution usually also need to compare automation levels, judge whether robot scope is commercially justified,
+              and confirm which part families really fit robotic application.
+            </p>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><Link to="/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems" className="text-accent hover:text-accent/80 underline">Manual vs Semi-Automatic vs Robotic Painting Systems</Link></li>
+              <li><Link to="/resources/knowledge/when-robotic-paint-automation-makes-sense" className="text-accent hover:text-accent/80 underline">When Does a Robotic Paint Automation System Make Sense?</Link></li>
+              <li><Link to="/resources/faq/what-parts-are-suitable-for-robotic-painting" className="text-accent hover:text-accent/80 underline">What Parts Are Suitable for Robotic Painting?</Link></li>
+            </ul>
           </div>
         </section>
 

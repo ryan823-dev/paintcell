@@ -3,13 +3,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { I18nProvider } from "@/i18n";
 import { Layout } from "@/components/layout/Layout";
 import { LocaleLayout, RootRedirect } from "@/i18n/LocaleLayout";
 import { Hreflang } from "@/components/seo/Hreflang";
 import { Loader2 } from "lucide-react";
+import { defaultLocale } from "@/i18n/types";
 
 // Eager load critical pages
 import Index from "./pages/Index";
@@ -38,6 +39,13 @@ const FAQs = lazy(() => import("./pages/resources/FAQs"));
 const PaintCellFeasibilityChecks = lazy(() => import("./pages/resources/PaintCellFeasibilityChecks"));
 const AutomationBoundary = lazy(() => import("./pages/resources/AutomationBoundary"));
 const DynamicArticle = lazy(() => import("./pages/resources/DynamicArticle"));
+const TopicClusters = lazy(() => import("./pages/resources/TopicClusters"));
+const TopicClusterHub = lazy(() => import("./pages/resources/TopicClusterHub"));
+const TopicClusterFAQ = lazy(() => import("./pages/resources/TopicClusterFAQ"));
+const TopicClusterGlossary = lazy(() => import("./pages/resources/TopicClusterGlossary"));
+const TopicClusterScenario = lazy(() => import("./pages/resources/TopicClusterScenario"));
+const WhatPartsAreSuitableForRoboticPainting = lazy(() => import("./pages/resources/faq/WhatPartsAreSuitableForRoboticPainting"));
+const HowMuchFloorSpaceDoesAnAutomatedPaintLineNeed = lazy(() => import("./pages/resources/faq/HowMuchFloorSpaceDoesAnAutomatedPaintLineNeed"));
 
 // Lazy load Standards & Compliance pages
 const StandardsCompliance = lazy(() => import("./pages/resources/StandardsCompliance"));
@@ -82,6 +90,13 @@ const RoboticPaintingCostGuide = lazy(() => import("./pages/resources/knowledge/
 const PaintBoothDesignBasics = lazy(() => import("./pages/resources/knowledge/PaintBoothDesignBasics"));
 const PaintTechnologyGuide = lazy(() => import("./pages/resources/knowledge/PaintTechnologyGuide"));
 const FlameTreatment = lazy(() => import("./pages/resources/knowledge/FlameTreatment"));
+const ATEXSprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/ATEXSprayPaintingBooth"));
+const ManualVsSemiAutoVsRoboticPaintingSystems = lazy(() => import("./pages/resources/knowledge/ManualVsSemiAutoVsRoboticPaintingSystems"));
+const WhenRoboticPaintAutomationMakesSense = lazy(() => import("./pages/resources/knowledge/WhenRoboticPaintAutomationMakesSense"));
+const Zone1VsZone2SprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/Zone1VsZone2SprayPaintingBooth"));
+const HowToDesignATEXCompliantSprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/HowToDesignATEXCompliantSprayPaintingBooth"));
+const MetalPartsFinishingGuide = lazy(() => import("./pages/resources/knowledge/MetalPartsFinishingGuide"));
+const FurnitureCoatingSystemsComparison = lazy(() => import("./pages/resources/knowledge/FurnitureCoatingSystemsComparison"));
 const SnowflakeCleaning = lazy(() => import("./pages/resources/knowledge/SnowflakeCleaning"));
 const RobotPathOptimization = lazy(() => import("./pages/resources/knowledge/RobotPathOptimization"));
 const PaintDefectsGuide = lazy(() => import("./pages/resources/knowledge/PaintDefectsGuide"));
@@ -107,6 +122,7 @@ const PaintBoothFiltration = lazy(() => import("./pages/resources/PaintBoothFilt
 const RobotBrandComparison = lazy(() => import("./pages/resources/RobotBrandComparison"));
 const BoothControlSystems = lazy(() => import("./pages/resources/BoothControlSystems"));
 const EnvironmentalCompliance = lazy(() => import("./pages/resources/EnvironmentalCompliance"));
+const CommonATEXClassificationMistakes = lazy(() => import("./pages/resources/CommonATEXClassificationMistakes"));
 const HVLPvsRotaryBell = lazy(() => import("./pages/resources/technology/HVLPvsRotaryBell"));
 const RobotvsManualSpray = lazy(() => import("./pages/resources/technology/RobotvsManualSpray"));
 
@@ -140,11 +156,14 @@ const PaintProcessFlow = lazy(() => import("./pages/solutions/PaintProcessFlow")
 
 // Lazy load Products pages
 const ProductsIndex = lazy(() => import("./pages/products/ProductsIndex"));
+const ProductsCatalog = lazy(() => import("./pages/products/ProductsCatalog"));
 const ProductCategory = lazy(() => import("./pages/products/ProductCategory"));
 const ControlSystems = lazy(() => import("./pages/products/ControlSystems"));
 const BellCleaningSystem = lazy(() => import("./pages/products/BellCleaningSystem"));
 const PiggingColorChangeSystem = lazy(() => import("./pages/products/PiggingColorChangeSystem"));
 const DynamicProduct = lazy(() => import("./pages/products/DynamicProduct"));
+const VideosIndex = lazy(() => import("./pages/videos/VideosIndex"));
+const DynamicVideo = lazy(() => import("./pages/videos/DynamicVideo"));
 
 // Lazy load Services pages
 const ServicesIndex = lazy(() => import("./pages/services/ServicesIndex"));
@@ -169,10 +188,10 @@ const LeadsManagement = lazy(() => import("./pages/console/LeadsManagement"));
 const MediaLibrary = lazy(() => import("./pages/console/MediaLibrary"));
 const UserManagement = lazy(() => import("./pages/console/UserManagement"));
 const IndustryPagesList = lazy(() => import("./pages/console/IndustryPagesList"));
-const IndustryPageEditor = lazy(() => import("./pages/console/IndustryPageEditor"));
+const IndustryPageEditor = lazy(() => import("./pages/console/IndustryPageEditor.tsx"));
 const SolutionPagesList = lazy(() => import("./pages/console/SolutionPagesList"));
-const SolutionPageEditor = lazy(() => import("./pages/console/SolutionPageEditor"));
-const WhyCardsEditor = lazy(() => import("./pages/console/WhyCardsEditor"));
+const SolutionPageEditor = lazy(() => import("./pages/console/SolutionPageEditor.tsx"));
+const WhyCardsEditor = lazy(() => import("./pages/console/WhyCardsEditor.tsx"));
 const HomeBannersEditor = lazy(() => import("./pages/console/HomeBannersEditor"));
 const ProductsList = lazy(() => import("./pages/console/ProductsList"));
 const ProductEditor = lazy(() => import("./pages/console/ProductEditor"));
@@ -187,6 +206,16 @@ const PageLoader = () => (
     <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
   </div>
 );
+
+function LegacyProductRedirect() {
+  const { lang, slug } = useParams<{ lang: string; slug: string }>();
+
+  if (!slug) {
+    return <Navigate to={`/${lang || defaultLocale}/products`} replace />;
+  }
+
+  return <Navigate to={`/${lang || defaultLocale}/products/${slug}`} replace />;
+}
 
 /**
  * All public page routes rendered inside the locale-prefixed Layout.
@@ -214,6 +243,13 @@ function PublicRoutes() {
       <Route path="resources/engineering-library/guides-checklists" element={<GuidesChecklists />} />
       <Route path="resources/engineering-library/insights" element={<Insights />} />
       <Route path="resources/engineering-library/faqs" element={<FAQs />} />
+      <Route path="resources/topics" element={<TopicClusters />} />
+      <Route path="resources/topics/:slug" element={<TopicClusterHub />} />
+      <Route path="resources/topics/:slug/faq" element={<TopicClusterFAQ />} />
+      <Route path="resources/topics/:slug/glossary" element={<TopicClusterGlossary />} />
+      <Route path="resources/topics/:slug/scenario" element={<TopicClusterScenario />} />
+      <Route path="resources/faq/what-parts-are-suitable-for-robotic-painting" element={<WhatPartsAreSuitableForRoboticPainting />} />
+      <Route path="resources/faq/how-much-floor-space-does-an-automated-paint-line-need" element={<HowMuchFloorSpaceDoesAnAutomatedPaintLineNeed />} />
       <Route path="resources/guides/paint-cell-feasibility-checks" element={<PaintCellFeasibilityChecks />} />
       <Route path="resources/insights/automation-boundary-spray-painting" element={<AutomationBoundary />} />
 
@@ -257,13 +293,21 @@ function PublicRoutes() {
 
       {/* Knowledge articles */}
       <Route path="resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
+      <Route path="resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems" element={<ManualVsSemiAutoVsRoboticPaintingSystems />} />
+      <Route path="resources/knowledge/when-robotic-paint-automation-makes-sense" element={<WhenRoboticPaintAutomationMakesSense />} />
 
       {/* Dynamic database-driven article (Vertax CMS push pipeline) */}
       <Route path="resources/articles/:slug" element={<DynamicArticle />} />
+      <Route path="resources/articles/common-atex-classification-mistakes-spray-booth-projects" element={<CommonATEXClassificationMistakes />} />
       <Route path="resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
       <Route path="resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
       <Route path="resources/knowledge/paint-technology-guide" element={<PaintTechnologyGuide />} />
+      <Route path="resources/knowledge/atex-spray-painting-booth" element={<ATEXSprayPaintingBooth />} />
+      <Route path="resources/knowledge/zone-1-vs-zone-2-spray-painting-booth" element={<Zone1VsZone2SprayPaintingBooth />} />
+      <Route path="resources/knowledge/how-to-design-atex-compliant-spray-painting-booth" element={<HowToDesignATEXCompliantSprayPaintingBooth />} />
       <Route path="resources/knowledge/flame-treatment" element={<FlameTreatment />} />
+      <Route path="resources/knowledge/metal-parts-finishing-guide" element={<MetalPartsFinishingGuide />} />
+      <Route path="resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic" element={<FurnitureCoatingSystemsComparison />} />
       <Route path="resources/knowledge/snowflake-cleaning" element={<SnowflakeCleaning />} />
       <Route path="resources/knowledge/robot-path-optimization" element={<RobotPathOptimization />} />
       <Route path="resources/knowledge/paint-defects-guide" element={<PaintDefectsGuide />} />
@@ -309,11 +353,21 @@ function PublicRoutes() {
 
       {/* Products pages */}
       <Route path="products" element={<ProductsIndex />} />
+      <Route path="products/catalog" element={<ProductsCatalog />} />
+      <Route path="products/rotary-bells" element={<ProductCategory categoryKey="rotary-bells" />} />
+      <Route path="products/spray-guns" element={<ProductCategory categoryKey="spray-guns" />} />
+      <Route path="products/paint-pumps" element={<ProductCategory categoryKey="paint-pumps" />} />
       <Route path="products/control-systems" element={<ControlSystems />} />
+      <Route path="products/color-change" element={<ProductCategory categoryKey="color-change" />} />
+      <Route path="products/spare-parts" element={<ProductCategory categoryKey="spare-parts" />} />
       <Route path="products/bell-cleaning-system" element={<BellCleaningSystem />} />
       <Route path="products/pigging-color-change-system" element={<PiggingColorChangeSystem />} />
-      <Route path="products/item/:slug" element={<DynamicProduct />} />
-      <Route path="products/:category" element={<ProductCategory />} />
+      <Route path="products/item/:slug" element={<LegacyProductRedirect />} />
+      <Route path="products/:slug" element={<DynamicProduct />} />
+
+      {/* Videos pages */}
+      <Route path="videos" element={<VideosIndex />} />
+      <Route path="videos/:slug" element={<DynamicVideo />} />
 
       {/* Services pages */}
       <Route path="services" element={<ServicesIndex />} />

@@ -1,28 +1,20 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { BilingualField, ContentCard, ImageUpload, SaveButton } from "@/components/console";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PaintCellsContentData {
   id: string;
   hero_title_en: string | null;
-  hero_title_zh: string | null;
   hero_subtitle_en: string | null;
-  hero_subtitle_zh: string | null;
   hero_image_url: string | null;
   overview_title_en: string | null;
-  overview_title_zh: string | null;
   overview_body_en: string | null;
-  overview_body_zh: string | null;
   cta_title_en: string | null;
-  cta_title_zh: string | null;
   cta_button_text_en: string | null;
-  cta_button_text_zh: string | null;
   meta_title_en: string | null;
-  meta_title_zh: string | null;
   meta_description_en: string | null;
-  meta_description_zh: string | null;
 }
 
 export default function PaintCellsContent() {
@@ -43,21 +35,23 @@ export default function PaintCellsContent() {
 
     if (error && error.code !== "PGRST116") {
       toast({
-        title: "加载失败 / Load Error",
-        description: "无法加载内容 / Failed to load content",
+        title: "Load error",
+        description: "Failed to load Paint Cells content.",
         variant: "destructive",
       });
     } else if (data) {
       setContent(data as PaintCellsContentData);
     }
+
     setLoading(false);
   };
 
   const handleSave = async () => {
     if (!content) return;
-    setSaving(true);
 
+    setSaving(true);
     const { id, ...updateData } = content;
+
     const { error } = await supabase
       .from("paint_cells_content")
       .update(updateData)
@@ -65,23 +59,23 @@ export default function PaintCellsContent() {
 
     if (error) {
       toast({
-        title: "保存失败 / Save Failed",
-        description: "请重试 / Please try again",
+        title: "Save failed",
+        description: "Please try again.",
         variant: "destructive",
       });
     } else {
       toast({
-        title: "保存成功 / Saved",
-        description: "喷涂单元页面内容已更新 / Paint Cells content updated",
+        title: "Saved",
+        description: "Paint Cells content updated.",
       });
     }
+
     setSaving(false);
   };
 
   const update = (field: keyof PaintCellsContentData, value: string | null) => {
-    if (content) {
-      setContent({ ...content, [field]: value });
-    }
+    if (!content) return;
+    setContent({ ...content, [field]: value });
   };
 
   if (loading) {
@@ -93,106 +87,86 @@ export default function PaintCellsContent() {
   }
 
   if (!content) {
-    return (
-      <div className="text-center py-12 text-muted-foreground">
-        未找到内容 / No content found
-      </div>
-    );
+    return <div className="py-12 text-center text-muted-foreground">No content found.</div>;
   }
 
   return (
     <div className="max-w-4xl space-y-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">喷涂单元 / Paint Cells Page</h1>
-        <p className="text-muted-foreground">编辑产品页面内容 / Edit paint cells page content</p>
+        <h1 className="text-2xl font-bold">Paint Cells Page</h1>
+        <p className="text-muted-foreground">Edit the content used on the Paint Cells page.</p>
       </div>
 
-      <ContentCard title="Hero Section" titleZh="顶部区域">
+      <ContentCard title="Hero Section">
         <ImageUpload
-          label="顶部背景图 / Hero Image"
-          hint="建议尺寸: 1920x600px / Recommended: 1920x600px"
+          label="Hero image"
+          hint="Recommended size: 1920 x 600 px"
           value={content.hero_image_url}
           onChange={(url) => update("hero_image_url", url)}
         />
-        
+
         <BilingualField
-          label="页面标题 / Page Title"
+          label="Page title"
           valueEn={content.hero_title_en}
-          valueZh={content.hero_title_zh}
-          onChangeEn={(v) => update("hero_title_en", v)}
-          onChangeZh={(v) => update("hero_title_zh", v)}
+          onChangeEn={(value) => update("hero_title_en", value)}
         />
 
         <BilingualField
-          label="副标题 / Subtitle"
+          label="Subtitle"
           valueEn={content.hero_subtitle_en}
-          valueZh={content.hero_subtitle_zh}
-          onChangeEn={(v) => update("hero_subtitle_en", v)}
-          onChangeZh={(v) => update("hero_subtitle_zh", v)}
+          onChangeEn={(value) => update("hero_subtitle_en", value)}
           multiline
           rows={2}
         />
       </ContentCard>
 
-      <ContentCard title="Overview Section" titleZh="概述区域">
+      <ContentCard title="Overview Section">
         <BilingualField
-          label="概述标题 / Overview Title"
+          label="Overview title"
           valueEn={content.overview_title_en}
-          valueZh={content.overview_title_zh}
-          onChangeEn={(v) => update("overview_title_en", v)}
-          onChangeZh={(v) => update("overview_title_zh", v)}
+          onChangeEn={(value) => update("overview_title_en", value)}
         />
 
         <BilingualField
-          label="概述内容 / Overview Body"
+          label="Overview body"
           valueEn={content.overview_body_en}
-          valueZh={content.overview_body_zh}
-          onChangeEn={(v) => update("overview_body_en", v)}
-          onChangeZh={(v) => update("overview_body_zh", v)}
+          onChangeEn={(value) => update("overview_body_en", value)}
           multiline
           rows={4}
         />
       </ContentCard>
 
-      <ContentCard title="CTA Section" titleZh="行动号召">
+      <ContentCard title="CTA Section">
         <BilingualField
-          label="CTA标题 / CTA Title"
+          label="CTA title"
           valueEn={content.cta_title_en}
-          valueZh={content.cta_title_zh}
-          onChangeEn={(v) => update("cta_title_en", v)}
-          onChangeZh={(v) => update("cta_title_zh", v)}
+          onChangeEn={(value) => update("cta_title_en", value)}
         />
 
         <BilingualField
-          label="按钮文本 / Button Text"
+          label="Button text"
           valueEn={content.cta_button_text_en}
-          valueZh={content.cta_button_text_zh}
-          onChangeEn={(v) => update("cta_button_text_en", v)}
-          onChangeZh={(v) => update("cta_button_text_zh", v)}
+          onChangeEn={(value) => update("cta_button_text_en", value)}
         />
       </ContentCard>
 
-      <ContentCard title="SEO Settings" titleZh="搜索引擎优化">
+      <ContentCard title="SEO Settings">
         <BilingualField
-          label="页面标题 / Meta Title"
+          label="Meta title"
           valueEn={content.meta_title_en}
-          valueZh={content.meta_title_zh}
-          onChangeEn={(v) => update("meta_title_en", v)}
-          onChangeZh={(v) => update("meta_title_zh", v)}
+          onChangeEn={(value) => update("meta_title_en", value)}
         />
 
         <BilingualField
-          label="页面描述 / Meta Description"
+          label="Meta description"
           valueEn={content.meta_description_en}
-          valueZh={content.meta_description_zh}
-          onChangeEn={(v) => update("meta_description_en", v)}
-          onChangeZh={(v) => update("meta_description_zh", v)}
+          onChangeEn={(value) => update("meta_description_en", value)}
           multiline
           rows={2}
         />
       </ContentCard>
 
-      <div className="flex justify-end sticky bottom-4 bg-background/95 backdrop-blur py-4 border-t">
+      <div className="sticky bottom-4 flex justify-end border-t bg-background/95 py-4 backdrop-blur">
         <SaveButton saving={saving} onClick={handleSave} />
       </div>
     </div>

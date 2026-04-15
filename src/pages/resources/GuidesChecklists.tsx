@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 
 export default function GuidesChecklists() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const res = t.resources?.guidesChecklists || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   const sections = t.resources?.sections || {};
@@ -16,7 +16,7 @@ export default function GuidesChecklists() {
     "@type": "WebPage",
     "name": res.metaTitle || "Guides & Checklists | Engineering Library",
     "description": res.metaDesc || "Practical guides and checklists for evaluating and preparing paint cell projects.",
-    "inLanguage": locale,
+    "inLanguage": "en",
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [

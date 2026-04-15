@@ -115,7 +115,7 @@ const articleSchema = {
 };
 
 export default function PaintDefectsGuide() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const article = t.knowledge?.paintDefectsGuide || {};
   
   const faqs = useMemo(() => [

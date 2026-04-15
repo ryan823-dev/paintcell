@@ -7,1270 +7,1151 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
       about_content: {
-        Row: {
-          created_at: string
-          hero_image_url: string | null
-          hero_subtitle_en: string | null
-          hero_subtitle_zh: string | null
-          hero_title_en: string | null
-          hero_title_zh: string | null
-          id: string
-          meta_description_en: string | null
-          meta_description_zh: string | null
-          meta_title_en: string | null
-          meta_title_zh: string | null
-          mission_body_en: string | null
-          mission_body_zh: string | null
-          mission_title_en: string | null
-          mission_title_zh: string | null
-          story_body_en: string | null
-          story_body_zh: string | null
-          story_image_url: string | null
-          story_title_en: string | null
-          story_title_zh: string | null
-          updated_at: string
-          values_title_en: string | null
-          values_title_zh: string | null
-        }
-        Insert: {
-          created_at?: string
-          hero_image_url?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          mission_body_en?: string | null
-          mission_body_zh?: string | null
-          mission_title_en?: string | null
-          mission_title_zh?: string | null
-          story_body_en?: string | null
-          story_body_zh?: string | null
-          story_image_url?: string | null
-          story_title_en?: string | null
-          story_title_zh?: string | null
-          updated_at?: string
-          values_title_en?: string | null
-          values_title_zh?: string | null
-        }
-        Update: {
-          created_at?: string
-          hero_image_url?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          mission_body_en?: string | null
-          mission_body_zh?: string | null
-          mission_title_en?: string | null
-          mission_title_zh?: string | null
-          story_body_en?: string | null
-          story_body_zh?: string | null
-          story_image_url?: string | null
-          story_title_en?: string | null
-          story_title_zh?: string | null
-          updated_at?: string
-          values_title_en?: string | null
-          values_title_zh?: string | null
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              hero_title_en: string | null
+              hero_subtitle_en: string | null
+              hero_image_url: string | null
+              mission_title_en: string | null
+              mission_body_en: string | null
+              story_title_en: string | null
+              story_body_en: string | null
+              story_image_url: string | null
+              values_title_en: string | null
+              meta_title_en: string | null
+              meta_description_en: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              hero_image_url?: string | null
+              mission_title_en?: string | null
+              mission_body_en?: string | null
+              story_title_en?: string | null
+              story_body_en?: string | null
+              story_image_url?: string | null
+              values_title_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              hero_image_url?: string | null
+              mission_title_en?: string | null
+              mission_body_en?: string | null
+              story_title_en?: string | null
+              story_body_en?: string | null
+              story_image_url?: string | null
+              values_title_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       about_values: {
-        Row: {
-          created_at: string
-          description_en: string | null
-          description_zh: string | null
-          icon: string | null
-          id: string
-          is_visible: boolean
-          sort_order: number
-          title_en: string
-          title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description_en?: string | null
-          description_zh?: string | null
-          icon?: string | null
-          id?: string
-          is_visible?: boolean
-          sort_order?: number
-          title_en: string
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description_en?: string | null
-          description_zh?: string | null
-          icon?: string | null
-          id?: string
-          is_visible?: boolean
-          sort_order?: number
-          title_en?: string
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              title_en: string
+              description_en: string | null
+              icon: string | null
+              sort_order: number
+              is_visible: boolean
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              title_en: string
+              description_en?: string | null
+              icon?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              title_en?: string
+              description_en?: string | null
+              icon?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       application_industries: {
-        Row: {
-          created_at: string
-          description_en: string | null
-          description_zh: string | null
-          icon: string | null
-          id: string
-          image_url: string | null
-          is_visible: boolean
-          name_en: string
-          name_zh: string | null
-          sort_order: number
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description_en?: string | null
-          description_zh?: string | null
-          icon?: string | null
-          id?: string
-          image_url?: string | null
-          is_visible?: boolean
-          name_en: string
-          name_zh?: string | null
-          sort_order?: number
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description_en?: string | null
-          description_zh?: string | null
-          icon?: string | null
-          id?: string
-          image_url?: string | null
-          is_visible?: boolean
-          name_en?: string
-          name_zh?: string | null
-          sort_order?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              name_en: string
+              description_en: string | null
+              image_url: string | null
+              icon: string | null
+              sort_order: number
+              is_visible: boolean
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              name_en: string
+              description_en?: string | null
+              image_url?: string | null
+              icon?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              name_en?: string
+              description_en?: string | null
+              image_url?: string | null
+              icon?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       applications_content: {
-        Row: {
-          created_at: string
-          hero_image_url: string | null
-          hero_subtitle_en: string | null
-          hero_subtitle_zh: string | null
-          hero_title_en: string | null
-          hero_title_zh: string | null
-          id: string
-          intro_body_en: string | null
-          intro_body_zh: string | null
-          intro_title_en: string | null
-          intro_title_zh: string | null
-          meta_description_en: string | null
-          meta_description_zh: string | null
-          meta_title_en: string | null
-          meta_title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          hero_image_url?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          intro_body_en?: string | null
-          intro_body_zh?: string | null
-          intro_title_en?: string | null
-          intro_title_zh?: string | null
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          hero_image_url?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          intro_body_en?: string | null
-          intro_body_zh?: string | null
-          intro_title_en?: string | null
-          intro_title_zh?: string | null
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              hero_title_en: string | null
+              hero_subtitle_en: string | null
+              hero_image_url: string | null
+              intro_title_en: string | null
+              intro_body_en: string | null
+              meta_title_en: string | null
+              meta_description_en: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              hero_image_url?: string | null
+              intro_title_en?: string | null
+              intro_body_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              hero_image_url?: string | null
+              intro_title_en?: string | null
+              intro_body_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       case_studies: {
-        Row: {
-          answer_box: string | null
-          answer_box_zh: string | null
-          constraints: string[] | null
-          created_at: string
-          goals: string | null
-          goals_zh: string | null
-          id: string
-          images: string[] | null
-          industry: string | null
-          last_ai_generation_at: string | null
-          meta_description: string | null
-          meta_description_zh: string | null
-          meta_title: string | null
-          meta_title_zh: string | null
-          paint_type: string | null
-          part_type: string | null
-          published_at: string | null
-          slug: string
-          solution_scope: string[] | null
-          status: Database["public"]["Enums"]["content_status"]
-          summary: string | null
-          summary_zh: string | null
-          title: string
-          title_zh: string | null
-          updated_at: string
-          validation_acceptance: string[] | null
-        }
-        Insert: {
-          answer_box?: string | null
-          answer_box_zh?: string | null
-          constraints?: string[] | null
-          created_at?: string
-          goals?: string | null
-          goals_zh?: string | null
-          id?: string
-          images?: string[] | null
-          industry?: string | null
-          last_ai_generation_at?: string | null
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          paint_type?: string | null
-          part_type?: string | null
-          published_at?: string | null
-          slug: string
-          solution_scope?: string[] | null
-          status?: Database["public"]["Enums"]["content_status"]
-          summary?: string | null
-          summary_zh?: string | null
-          title: string
-          title_zh?: string | null
-          updated_at?: string
-          validation_acceptance?: string[] | null
-        }
-        Update: {
-          answer_box?: string | null
-          answer_box_zh?: string | null
-          constraints?: string[] | null
-          created_at?: string
-          goals?: string | null
-          goals_zh?: string | null
-          id?: string
-          images?: string[] | null
-          industry?: string | null
-          last_ai_generation_at?: string | null
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          paint_type?: string | null
-          part_type?: string | null
-          published_at?: string | null
-          slug?: string
-          solution_scope?: string[] | null
-          status?: Database["public"]["Enums"]["content_status"]
-          summary?: string | null
-          summary_zh?: string | null
-          title?: string
-          title_zh?: string | null
-          updated_at?: string
-          validation_acceptance?: string[] | null
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              slug: string
+              title: string
+              summary: string | null
+              industry: string | null
+              part_type: string | null
+              paint_type: string | null
+              goals: string | null
+              constraints: string[] | null
+              solution_scope: string[] | null
+              validation_acceptance: string[] | null
+              images: string[] | null
+              answer_box: string | null
+              meta_title: string | null
+              meta_description: string | null
+              status: Database["public"]["Enums"]["content_status"]
+              published_at: string | null
+              last_ai_generation_at: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              slug: string
+              title: string
+              summary?: string | null
+              industry?: string | null
+              part_type?: string | null
+              paint_type?: string | null
+              goals?: string | null
+              constraints?: string[] | null
+              solution_scope?: string[] | null
+              validation_acceptance?: string[] | null
+              images?: string[] | null
+              answer_box?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              status?: Database["public"]["Enums"]["content_status"]
+              published_at?: string | null
+              last_ai_generation_at?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              slug?: string
+              title?: string
+              summary?: string | null
+              industry?: string | null
+              part_type?: string | null
+              paint_type?: string | null
+              goals?: string | null
+              constraints?: string[] | null
+              solution_scope?: string[] | null
+              validation_acceptance?: string[] | null
+              images?: string[] | null
+              answer_box?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              status?: Database["public"]["Enums"]["content_status"]
+              published_at?: string | null
+              last_ai_generation_at?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       chat_messages: {
-        Row: {
-          content: string
-          conversation_id: string
-          created_at: string
-          id: string
-          role: string
-        }
-        Insert: {
-          content: string
-          conversation_id: string
-          created_at?: string
-          id?: string
-          role: string
-        }
-        Update: {
-          content?: string
-          conversation_id?: string
-          created_at?: string
-          id?: string
-          role?: string
-        }
-        Relationships: [
-          {
+            Row: {
+              id: string
+              conversation_id: string
+              role: string
+              content: string
+              created_at: string
+            }
+            Insert: {
+              id?: string
+              conversation_id: string
+              role: string
+              content: string
+              created_at?: string
+            }
+            Update: {
+              id?: string
+              conversation_id?: string
+              role?: string
+              content?: string
+              created_at?: string
+            }
+      Relationships: [
+            {
             foreignKeyName: "chat_messages_conversation_id_fkey"
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "chat_sessions"
             referencedColumns: ["id"]
-          },
+            }
         ]
-      }
+      },
       chat_sessions: {
-        Row: {
-          created_at: string
-          id: string
-          last_seen_at: string
-          source_page: string | null
-          updated_at: string
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          last_seen_at?: string
-          source_page?: string | null
-          updated_at?: string
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          last_seen_at?: string
-          source_page?: string | null
-          updated_at?: string
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              source_page: string | null
+              utm_source: string | null
+              utm_medium: string | null
+              utm_campaign: string | null
+              last_seen_at: string
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              source_page?: string | null
+              utm_source?: string | null
+              utm_medium?: string | null
+              utm_campaign?: string | null
+              last_seen_at?: string
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              source_page?: string | null
+              utm_source?: string | null
+              utm_medium?: string | null
+              utm_campaign?: string | null
+              last_seen_at?: string
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
+      faq_pages: {
+            Row: {
+              id: string
+              slug: string
+              title: string
+              summary: string | null
+              faqs: Json | null
+              meta_title: string | null
+              meta_description: string | null
+              status: Database["public"]["Enums"]["content_status"]
+              published_at: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              slug: string
+              title: string
+              summary?: string | null
+              faqs?: Json | null
+              meta_title?: string | null
+              meta_description?: string | null
+              status?: Database["public"]["Enums"]["content_status"]
+              published_at?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              slug?: string
+              title?: string
+              summary?: string | null
+              faqs?: Json | null
+              meta_title?: string | null
+              meta_description?: string | null
+              status?: Database["public"]["Enums"]["content_status"]
+              published_at?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       home_banners: {
-        Row: {
-          created_at: string
-          id: string
-          image_url: string
-          is_visible: boolean
-          link_text_en: string | null
-          link_text_zh: string | null
-          link_url: string | null
-          sort_order: number
-          subtitle_en: string | null
-          subtitle_zh: string | null
-          title_en: string | null
-          title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          image_url: string
-          is_visible?: boolean
-          link_text_en?: string | null
-          link_text_zh?: string | null
-          link_url?: string | null
-          sort_order?: number
-          subtitle_en?: string | null
-          subtitle_zh?: string | null
-          title_en?: string | null
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          image_url?: string
-          is_visible?: boolean
-          link_text_en?: string | null
-          link_text_zh?: string | null
-          link_url?: string | null
-          sort_order?: number
-          subtitle_en?: string | null
-          subtitle_zh?: string | null
-          title_en?: string | null
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              title_en: string | null
+              subtitle_en: string | null
+              image_url: string
+              link_url: string | null
+              link_text_en: string | null
+              sort_order: number
+              is_visible: boolean
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              title_en?: string | null
+              subtitle_en?: string | null
+              image_url: string
+              link_url?: string | null
+              link_text_en?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              title_en?: string | null
+              subtitle_en?: string | null
+              image_url?: string
+              link_url?: string | null
+              link_text_en?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       home_content: {
-        Row: {
-          created_at: string
-          cta_configure_hint: string
-          cta_configure_hint_zh: string | null
-          cta_consult_hint: string
-          cta_consult_hint_zh: string | null
-          hero_audience_line: string
-          hero_audience_line_zh: string | null
-          hero_cta_primary_text_en: string | null
-          hero_cta_primary_text_zh: string | null
-          hero_cta_secondary_text_en: string | null
-          hero_cta_secondary_text_zh: string | null
-          hero_image_url: string | null
-          hero_subtitle: string
-          hero_subtitle_zh: string | null
-          hero_title: string
-          hero_title_zh: string | null
-          id: string
-          meta_description_en: string | null
-          meta_description_zh: string | null
-          meta_title_en: string | null
-          meta_title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          cta_configure_hint?: string
-          cta_configure_hint_zh?: string | null
-          cta_consult_hint?: string
-          cta_consult_hint_zh?: string | null
-          hero_audience_line?: string
-          hero_audience_line_zh?: string | null
-          hero_cta_primary_text_en?: string | null
-          hero_cta_primary_text_zh?: string | null
-          hero_cta_secondary_text_en?: string | null
-          hero_cta_secondary_text_zh?: string | null
-          hero_image_url?: string | null
-          hero_subtitle?: string
-          hero_subtitle_zh?: string | null
-          hero_title?: string
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          cta_configure_hint?: string
-          cta_configure_hint_zh?: string | null
-          cta_consult_hint?: string
-          cta_consult_hint_zh?: string | null
-          hero_audience_line?: string
-          hero_audience_line_zh?: string | null
-          hero_cta_primary_text_en?: string | null
-          hero_cta_primary_text_zh?: string | null
-          hero_cta_secondary_text_en?: string | null
-          hero_cta_secondary_text_zh?: string | null
-          hero_image_url?: string | null
-          hero_subtitle?: string
-          hero_subtitle_zh?: string | null
-          hero_title?: string
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              hero_title: string
+              hero_subtitle: string
+              hero_audience_line: string
+              hero_image_url: string | null
+              cta_configure_hint: string
+              cta_consult_hint: string
+              hero_cta_primary_text_en: string | null
+              hero_cta_secondary_text_en: string | null
+              meta_title_en: string | null
+              meta_description_en: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              hero_title?: string
+              hero_subtitle?: string
+              hero_audience_line?: string
+              hero_image_url?: string | null
+              cta_configure_hint?: string
+              cta_consult_hint?: string
+              hero_cta_primary_text_en?: string | null
+              hero_cta_secondary_text_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              hero_title?: string
+              hero_subtitle?: string
+              hero_audience_line?: string
+              hero_image_url?: string | null
+              cta_configure_hint?: string
+              cta_consult_hint?: string
+              hero_cta_primary_text_en?: string | null
+              hero_cta_secondary_text_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       industry_pages: {
-        Row: {
-          ai_context: Json | null
-          case_references: Json | null
-          case_references_zh: Json | null
-          coming_soon: boolean
-          created_at: string
-          cta_text: string | null
-          cta_text_zh: string | null
-          example_prompt: string | null
-          faqs: Json | null
-          faqs_zh: Json | null
-          hero_image: string | null
-          hero_subtitle: string | null
-          hero_subtitle_zh: string | null
-          hero_title: string | null
-          hero_title_zh: string | null
-          id: string
-          industry_label: string
-          industry_label_zh: string | null
-          meta_description: string | null
-          meta_description_zh: string | null
-          meta_title: string | null
-          meta_title_zh: string | null
-          pain_points: Json | null
-          pain_points_zh: Json | null
-          production_config: Json | null
-          production_config_zh: Json | null
-          roi_metrics: Json | null
-          roi_metrics_zh: Json | null
-          slug: string
-          sort_order: number
-          status: Database["public"]["Enums"]["content_status"]
-          system_modules: Json | null
-          system_modules_zh: Json | null
-          updated_at: string
-        }
-        Insert: {
-          ai_context?: Json | null
-          case_references?: Json | null
-          case_references_zh?: Json | null
-          coming_soon?: boolean
-          created_at?: string
-          cta_text?: string | null
-          cta_text_zh?: string | null
-          example_prompt?: string | null
-          faqs?: Json | null
-          faqs_zh?: Json | null
-          hero_image?: string | null
-          hero_subtitle?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          industry_label: string
-          industry_label_zh?: string | null
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          pain_points?: Json | null
-          pain_points_zh?: Json | null
-          production_config?: Json | null
-          production_config_zh?: Json | null
-          roi_metrics?: Json | null
-          roi_metrics_zh?: Json | null
-          slug: string
-          sort_order?: number
-          status?: Database["public"]["Enums"]["content_status"]
-          system_modules?: Json | null
-          system_modules_zh?: Json | null
-          updated_at?: string
-        }
-        Update: {
-          ai_context?: Json | null
-          case_references?: Json | null
-          case_references_zh?: Json | null
-          coming_soon?: boolean
-          created_at?: string
-          cta_text?: string | null
-          cta_text_zh?: string | null
-          example_prompt?: string | null
-          faqs?: Json | null
-          faqs_zh?: Json | null
-          hero_image?: string | null
-          hero_subtitle?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          industry_label?: string
-          industry_label_zh?: string | null
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          pain_points?: Json | null
-          pain_points_zh?: Json | null
-          production_config?: Json | null
-          production_config_zh?: Json | null
-          roi_metrics?: Json | null
-          roi_metrics_zh?: Json | null
-          slug?: string
-          sort_order?: number
-          status?: Database["public"]["Enums"]["content_status"]
-          system_modules?: Json | null
-          system_modules_zh?: Json | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              slug: string
+              status: Database["public"]["Enums"]["content_status"]
+              sort_order: number
+              coming_soon: boolean
+              industry_label: string
+              meta_title: string | null
+              meta_description: string | null
+              hero_title: string | null
+              hero_subtitle: string | null
+              hero_image: string | null
+              cta_text: string | null
+              example_prompt: string | null
+              ai_context: Json | null
+              pain_points: Json | null
+              system_modules: Json | null
+              production_config: Json | null
+              roi_metrics: Json | null
+              case_references: Json | null
+              faqs: Json | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              slug: string
+              status?: Database["public"]["Enums"]["content_status"]
+              sort_order?: number
+              coming_soon?: boolean
+              industry_label: string
+              meta_title?: string | null
+              meta_description?: string | null
+              hero_title?: string | null
+              hero_subtitle?: string | null
+              hero_image?: string | null
+              cta_text?: string | null
+              example_prompt?: string | null
+              ai_context?: Json | null
+              pain_points?: Json | null
+              system_modules?: Json | null
+              production_config?: Json | null
+              roi_metrics?: Json | null
+              case_references?: Json | null
+              faqs?: Json | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              slug?: string
+              status?: Database["public"]["Enums"]["content_status"]
+              sort_order?: number
+              coming_soon?: boolean
+              industry_label?: string
+              meta_title?: string | null
+              meta_description?: string | null
+              hero_title?: string | null
+              hero_subtitle?: string | null
+              hero_image?: string | null
+              cta_text?: string | null
+              example_prompt?: string | null
+              ai_context?: Json | null
+              pain_points?: Json | null
+              system_modules?: Json | null
+              production_config?: Json | null
+              roi_metrics?: Json | null
+              case_references?: Json | null
+              faqs?: Json | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       leads: {
-        Row: {
-          company: string | null
-          conversation_id: string | null
-          created_at: string
-          email: string | null
-          id: string
-          last_emailed_at: string | null
-          name: string | null
-          phone: string | null
-          raw_payload: Json | null
-          requirements_summary: string | null
-          source: string
-          status: string
-        }
-        Insert: {
-          company?: string | null
-          conversation_id?: string | null
-          created_at?: string
-          email?: string | null
-          id?: string
-          last_emailed_at?: string | null
-          name?: string | null
-          phone?: string | null
-          raw_payload?: Json | null
-          requirements_summary?: string | null
-          source: string
-          status?: string
-        }
-        Update: {
-          company?: string | null
-          conversation_id?: string | null
-          created_at?: string
-          email?: string | null
-          id?: string
-          last_emailed_at?: string | null
-          name?: string | null
-          phone?: string | null
-          raw_payload?: Json | null
-          requirements_summary?: string | null
-          source?: string
-          status?: string
-        }
-        Relationships: [
-          {
+            Row: {
+              id: string
+              name: string | null
+              email: string | null
+              phone: string | null
+              company: string | null
+              source: string
+              status: string
+              requirements_summary: string | null
+              raw_payload: Json | null
+              conversation_id: string | null
+              last_emailed_at: string | null
+              created_at: string
+            }
+            Insert: {
+              id?: string
+              name?: string | null
+              email?: string | null
+              phone?: string | null
+              company?: string | null
+              source: string
+              status?: string
+              requirements_summary?: string | null
+              raw_payload?: Json | null
+              conversation_id?: string | null
+              last_emailed_at?: string | null
+              created_at?: string
+            }
+            Update: {
+              id?: string
+              name?: string | null
+              email?: string | null
+              phone?: string | null
+              company?: string | null
+              source?: string
+              status?: string
+              requirements_summary?: string | null
+              raw_payload?: Json | null
+              conversation_id?: string | null
+              last_emailed_at?: string | null
+              created_at?: string
+            }
+      Relationships: [
+            {
             foreignKeyName: "leads_conversation_id_fkey"
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "chat_sessions"
             referencedColumns: ["id"]
-          },
+            }
         ]
-      }
+      },
       legal_pages: {
-        Row: {
-          cookie_policy: string | null
-          id: string
-          privacy_policy: string | null
-          terms_of_use: string | null
-          updated_at: string
-        }
-        Insert: {
-          cookie_policy?: string | null
-          id?: string
-          privacy_policy?: string | null
-          terms_of_use?: string | null
-          updated_at?: string
-        }
-        Update: {
-          cookie_policy?: string | null
-          id?: string
-          privacy_policy?: string | null
-          terms_of_use?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              privacy_policy: string | null
+              terms_of_use: string | null
+              cookie_policy: string | null
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              privacy_policy?: string | null
+              terms_of_use?: string | null
+              cookie_policy?: string | null
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              privacy_policy?: string | null
+              terms_of_use?: string | null
+              cookie_policy?: string | null
+              updated_at?: string
+            }
+      Relationships: []
+      },
       paint_cells_content: {
-        Row: {
-          created_at: string
-          cta_button_text_en: string | null
-          cta_button_text_zh: string | null
-          cta_title_en: string | null
-          cta_title_zh: string | null
-          hero_image_url: string | null
-          hero_subtitle_en: string | null
-          hero_subtitle_zh: string | null
-          hero_title_en: string | null
-          hero_title_zh: string | null
-          id: string
-          meta_description_en: string | null
-          meta_description_zh: string | null
-          meta_title_en: string | null
-          meta_title_zh: string | null
-          overview_body_en: string | null
-          overview_body_zh: string | null
-          overview_title_en: string | null
-          overview_title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          cta_button_text_en?: string | null
-          cta_button_text_zh?: string | null
-          cta_title_en?: string | null
-          cta_title_zh?: string | null
-          hero_image_url?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          overview_body_en?: string | null
-          overview_body_zh?: string | null
-          overview_title_en?: string | null
-          overview_title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          cta_button_text_en?: string | null
-          cta_button_text_zh?: string | null
-          cta_title_en?: string | null
-          cta_title_zh?: string | null
-          hero_image_url?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          overview_body_en?: string | null
-          overview_body_zh?: string | null
-          overview_title_en?: string | null
-          overview_title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              hero_title_en: string | null
+              hero_subtitle_en: string | null
+              hero_image_url: string | null
+              overview_title_en: string | null
+              overview_body_en: string | null
+              cta_title_en: string | null
+              cta_button_text_en: string | null
+              meta_title_en: string | null
+              meta_description_en: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              hero_image_url?: string | null
+              overview_title_en?: string | null
+              overview_body_en?: string | null
+              cta_title_en?: string | null
+              cta_button_text_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              hero_image_url?: string | null
+              overview_title_en?: string | null
+              overview_body_en?: string | null
+              cta_title_en?: string | null
+              cta_button_text_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       paint_cells_features: {
-        Row: {
-          created_at: string
-          description_en: string | null
-          description_zh: string | null
-          icon: string | null
-          id: string
-          image_url: string | null
-          is_visible: boolean
-          sort_order: number
-          title_en: string
-          title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description_en?: string | null
-          description_zh?: string | null
-          icon?: string | null
-          id?: string
-          image_url?: string | null
-          is_visible?: boolean
-          sort_order?: number
-          title_en: string
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description_en?: string | null
-          description_zh?: string | null
-          icon?: string | null
-          id?: string
-          image_url?: string | null
-          is_visible?: boolean
-          sort_order?: number
-          title_en?: string
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              title_en: string
+              description_en: string | null
+              icon: string | null
+              image_url: string | null
+              sort_order: number
+              is_visible: boolean
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              title_en: string
+              description_en?: string | null
+              icon?: string | null
+              image_url?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              title_en?: string
+              description_en?: string | null
+              icon?: string | null
+              image_url?: string | null
+              sort_order?: number
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
+      products_posts: {
+            Row: {
+              id: string
+              title: string
+              slug: string
+              summary: string | null
+              body: string | null
+              category: Database["public"]["Enums"]["product_category"] | null
+              subcategory: string | null
+              featured_image_url: string | null
+              gallery_images: string[] | null
+              brands: string[] | null
+              specifications: Json | null
+              status: Database["public"]["Enums"]["content_status"] | null
+              published_at: string | null
+              meta_title: string | null
+              meta_description: string | null
+              sort_order: number | null
+              is_visible: boolean | null
+              created_at: string | null
+              updated_at: string | null
+            }
+            Insert: {
+              id?: string
+              title: string
+              slug: string
+              summary?: string | null
+              body?: string | null
+              category?: Database["public"]["Enums"]["product_category"] | null
+              subcategory?: string | null
+              featured_image_url?: string | null
+              gallery_images?: string[] | null
+              brands?: string[] | null
+              specifications?: Json | null
+              status?: Database["public"]["Enums"]["content_status"] | null
+              published_at?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              sort_order?: number | null
+              is_visible?: boolean | null
+              created_at?: string | null
+              updated_at?: string | null
+            }
+            Update: {
+              id?: string
+              title?: string
+              slug?: string
+              summary?: string | null
+              body?: string | null
+              category?: Database["public"]["Enums"]["product_category"] | null
+              subcategory?: string | null
+              featured_image_url?: string | null
+              gallery_images?: string[] | null
+              brands?: string[] | null
+              specifications?: Json | null
+              status?: Database["public"]["Enums"]["content_status"] | null
+              published_at?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              sort_order?: number | null
+              is_visible?: boolean | null
+              created_at?: string | null
+              updated_at?: string | null
+            }
+      Relationships: []
+      },
       quote_content: {
-        Row: {
-          created_at: string
-          form_intro_en: string | null
-          form_intro_zh: string | null
-          hero_subtitle_en: string | null
-          hero_subtitle_zh: string | null
-          hero_title_en: string | null
-          hero_title_zh: string | null
-          id: string
-          meta_description_en: string | null
-          meta_description_zh: string | null
-          meta_title_en: string | null
-          meta_title_zh: string | null
-          submit_button_text_en: string | null
-          submit_button_text_zh: string | null
-          success_message_en: string | null
-          success_message_zh: string | null
-          success_title_en: string | null
-          success_title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          form_intro_en?: string | null
-          form_intro_zh?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          submit_button_text_en?: string | null
-          submit_button_text_zh?: string | null
-          success_message_en?: string | null
-          success_message_zh?: string | null
-          success_title_en?: string | null
-          success_title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          form_intro_en?: string | null
-          form_intro_zh?: string | null
-          hero_subtitle_en?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title_en?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description_en?: string | null
-          meta_description_zh?: string | null
-          meta_title_en?: string | null
-          meta_title_zh?: string | null
-          submit_button_text_en?: string | null
-          submit_button_text_zh?: string | null
-          success_message_en?: string | null
-          success_message_zh?: string | null
-          success_title_en?: string | null
-          success_title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              hero_title_en: string | null
+              hero_subtitle_en: string | null
+              form_intro_en: string | null
+              submit_button_text_en: string | null
+              success_title_en: string | null
+              success_message_en: string | null
+              meta_title_en: string | null
+              meta_description_en: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              form_intro_en?: string | null
+              submit_button_text_en?: string | null
+              success_title_en?: string | null
+              success_message_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              hero_title_en?: string | null
+              hero_subtitle_en?: string | null
+              form_intro_en?: string | null
+              submit_button_text_en?: string | null
+              success_title_en?: string | null
+              success_message_en?: string | null
+              meta_title_en?: string | null
+              meta_description_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       rate_limit_tracking: {
-        Row: {
-          created_at: string
-          endpoint: string
-          id: string
-          identifier: string
-          request_count: number
-          updated_at: string
-          window_start: string
-        }
-        Insert: {
-          created_at?: string
-          endpoint: string
-          id?: string
-          identifier: string
-          request_count?: number
-          updated_at?: string
-          window_start?: string
-        }
-        Update: {
-          created_at?: string
-          endpoint?: string
-          id?: string
-          identifier?: string
-          request_count?: number
-          updated_at?: string
-          window_start?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              identifier: string
+              endpoint: string
+              request_count: number
+              window_start: string
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              identifier: string
+              endpoint: string
+              request_count?: number
+              window_start?: string
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              identifier?: string
+              endpoint?: string
+              request_count?: number
+              window_start?: string
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       resources_posts: {
-        Row: {
-          answer_box: string | null
-          answer_box_zh: string | null
-          body: string | null
-          body_zh: string | null
-          category: Database["public"]["Enums"]["resource_category"] | null
-          created_at: string
-          featured_image_url: string | null
-          id: string
-          last_ai_generation_at: string | null
-          meta_description: string | null
-          meta_description_zh: string | null
-          meta_title: string | null
-          meta_title_zh: string | null
-          published_at: string | null
-          slug: string
-          status: Database["public"]["Enums"]["content_status"]
-          subcategory: string | null
-          summary: string | null
-          summary_zh: string | null
-          title: string
-          title_zh: string | null
-          updated_at: string
-          vertax_asset_id: string | null
-        }
-        Insert: {
-          answer_box?: string | null
-          answer_box_zh?: string | null
-          body?: string | null
-          body_zh?: string | null
-          category?: Database["public"]["Enums"]["resource_category"] | null
-          created_at?: string
-          featured_image_url?: string | null
-          id?: string
-          last_ai_generation_at?: string | null
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          published_at?: string | null
-          slug: string
-          status?: Database["public"]["Enums"]["content_status"]
-          subcategory?: string | null
-          summary?: string | null
-          summary_zh?: string | null
-          title: string
-          title_zh?: string | null
-          updated_at?: string
-          vertax_asset_id?: string | null
-        }
-        Update: {
-          answer_box?: string | null
-          answer_box_zh?: string | null
-          body?: string | null
-          body_zh?: string | null
-          category?: Database["public"]["Enums"]["resource_category"] | null
-          created_at?: string
-          featured_image_url?: string | null
-          id?: string
-          last_ai_generation_at?: string | null
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          published_at?: string | null
-          slug?: string
-          status?: Database["public"]["Enums"]["content_status"]
-          subcategory?: string | null
-          summary?: string | null
-          summary_zh?: string | null
-          title?: string
-          title_zh?: string | null
-          updated_at?: string
-          vertax_asset_id?: string | null
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              slug: string
+              title: string
+              summary: string | null
+              body: string | null
+              answer_box: string | null
+              category: Database["public"]["Enums"]["resource_category"] | null
+              featured_image_url: string | null
+              meta_title: string | null
+              meta_description: string | null
+              status: Database["public"]["Enums"]["content_status"]
+              published_at: string | null
+              last_ai_generation_at: string | null
+              vertax_asset_id: string | null
+              created_at: string
+              updated_at: string
+              subcategory: string | null
+            }
+            Insert: {
+              id?: string
+              slug: string
+              title: string
+              summary?: string | null
+              body?: string | null
+              answer_box?: string | null
+              category?: Database["public"]["Enums"]["resource_category"] | null
+              featured_image_url?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              status?: Database["public"]["Enums"]["content_status"]
+              published_at?: string | null
+              last_ai_generation_at?: string | null
+              vertax_asset_id?: string | null
+              created_at?: string
+              updated_at?: string
+              subcategory?: string | null
+            }
+            Update: {
+              id?: string
+              slug?: string
+              title?: string
+              summary?: string | null
+              body?: string | null
+              answer_box?: string | null
+              category?: Database["public"]["Enums"]["resource_category"] | null
+              featured_image_url?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              status?: Database["public"]["Enums"]["content_status"]
+              published_at?: string | null
+              last_ai_generation_at?: string | null
+              vertax_asset_id?: string | null
+              created_at?: string
+              updated_at?: string
+              subcategory?: string | null
+            }
+      Relationships: []
+      },
       site_settings: {
-        Row: {
-          contact_address_en: string | null
-          contact_address_zh: string | null
-          contact_email: string | null
-          contact_phone: string | null
-          copyright_text_en: string | null
-          copyright_text_zh: string | null
-          created_at: string
-          footer_tagline_en: string | null
-          footer_tagline_zh: string | null
-          id: string
-          linkedin_url: string | null
-          updated_at: string
-          wechat_id: string | null
-        }
-        Insert: {
-          contact_address_en?: string | null
-          contact_address_zh?: string | null
-          contact_email?: string | null
-          contact_phone?: string | null
-          copyright_text_en?: string | null
-          copyright_text_zh?: string | null
-          created_at?: string
-          footer_tagline_en?: string | null
-          footer_tagline_zh?: string | null
-          id?: string
-          linkedin_url?: string | null
-          updated_at?: string
-          wechat_id?: string | null
-        }
-        Update: {
-          contact_address_en?: string | null
-          contact_address_zh?: string | null
-          contact_email?: string | null
-          contact_phone?: string | null
-          copyright_text_en?: string | null
-          copyright_text_zh?: string | null
-          created_at?: string
-          footer_tagline_en?: string | null
-          footer_tagline_zh?: string | null
-          id?: string
-          linkedin_url?: string | null
-          updated_at?: string
-          wechat_id?: string | null
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              contact_email: string | null
+              contact_phone: string | null
+              contact_address_en: string | null
+              linkedin_url: string | null
+              wechat_id: string | null
+              footer_tagline_en: string | null
+              copyright_text_en: string | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              contact_email?: string | null
+              contact_phone?: string | null
+              contact_address_en?: string | null
+              linkedin_url?: string | null
+              wechat_id?: string | null
+              footer_tagline_en?: string | null
+              copyright_text_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              contact_email?: string | null
+              contact_phone?: string | null
+              contact_address_en?: string | null
+              linkedin_url?: string | null
+              wechat_id?: string | null
+              footer_tagline_en?: string | null
+              copyright_text_en?: string | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       solution_pages: {
-        Row: {
-          application_scope: Json | null
-          application_scope_intro: string | null
-          atex_intro: string | null
-          atex_items: Json | null
-          component_items: Json | null
-          components_intro: string | null
-          config_options: Json | null
-          constraints: Json | null
-          created_at: string
-          definition: string | null
-          definition_secondary: string | null
-          definition_secondary_zh: string | null
-          definition_zh: string | null
-          deployment_note: string | null
-          deployment_note_zh: string | null
-          eeat: Json | null
-          faqs: Json | null
-          faqs_zh: Json | null
-          hero_subtitle: string | null
-          hero_subtitle_zh: string | null
-          hero_title: string | null
-          hero_title_zh: string | null
-          id: string
-          meta_description: string | null
-          meta_description_zh: string | null
-          meta_title: string | null
-          meta_title_zh: string | null
-          process_steps: Json | null
-          process_steps_zh: Json | null
-          related_industries: Json | null
-          related_knowledge: Json | null
-          roi_methodology: string | null
-          roi_methodology_zh: string | null
-          roi_metrics: Json | null
-          scope_intro: string | null
-          scope_intro_zh: string | null
-          scope_items: Json | null
-          scope_items_zh: Json | null
-          scope_sub_sections: Json | null
-          slug: string
-          sort_order: number
-          status: Database["public"]["Enums"]["content_status"]
-          technical_parameters: Json | null
-          technical_parameters_intro: string | null
-          timeline: Json | null
-          updated_at: string
-          why_intro: string | null
-          why_intro_zh: string | null
-          why_items: Json | null
-          why_items_zh: Json | null
-          why_title: string | null
-          why_title_zh: string | null
-        }
-        Insert: {
-          application_scope?: Json | null
-          application_scope_intro?: string | null
-          atex_intro?: string | null
-          atex_items?: Json | null
-          component_items?: Json | null
-          components_intro?: string | null
-          config_options?: Json | null
-          constraints?: Json | null
-          created_at?: string
-          definition?: string | null
-          definition_secondary?: string | null
-          definition_secondary_zh?: string | null
-          definition_zh?: string | null
-          deployment_note?: string | null
-          deployment_note_zh?: string | null
-          eeat?: Json | null
-          faqs?: Json | null
-          faqs_zh?: Json | null
-          hero_subtitle?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          process_steps?: Json | null
-          process_steps_zh?: Json | null
-          related_industries?: Json | null
-          related_knowledge?: Json | null
-          roi_methodology?: string | null
-          roi_methodology_zh?: string | null
-          roi_metrics?: Json | null
-          scope_intro?: string | null
-          scope_intro_zh?: string | null
-          scope_items?: Json | null
-          scope_items_zh?: Json | null
-          scope_sub_sections?: Json | null
-          slug: string
-          sort_order?: number
-          status?: Database["public"]["Enums"]["content_status"]
-          technical_parameters?: Json | null
-          technical_parameters_intro?: string | null
-          timeline?: Json | null
-          updated_at?: string
-          why_intro?: string | null
-          why_intro_zh?: string | null
-          why_items?: Json | null
-          why_items_zh?: Json | null
-          why_title?: string | null
-          why_title_zh?: string | null
-        }
-        Update: {
-          application_scope?: Json | null
-          application_scope_intro?: string | null
-          atex_intro?: string | null
-          atex_items?: Json | null
-          component_items?: Json | null
-          components_intro?: string | null
-          config_options?: Json | null
-          constraints?: Json | null
-          created_at?: string
-          definition?: string | null
-          definition_secondary?: string | null
-          definition_secondary_zh?: string | null
-          definition_zh?: string | null
-          deployment_note?: string | null
-          deployment_note_zh?: string | null
-          eeat?: Json | null
-          faqs?: Json | null
-          faqs_zh?: Json | null
-          hero_subtitle?: string | null
-          hero_subtitle_zh?: string | null
-          hero_title?: string | null
-          hero_title_zh?: string | null
-          id?: string
-          meta_description?: string | null
-          meta_description_zh?: string | null
-          meta_title?: string | null
-          meta_title_zh?: string | null
-          process_steps?: Json | null
-          process_steps_zh?: Json | null
-          related_industries?: Json | null
-          related_knowledge?: Json | null
-          roi_methodology?: string | null
-          roi_methodology_zh?: string | null
-          roi_metrics?: Json | null
-          scope_intro?: string | null
-          scope_intro_zh?: string | null
-          scope_items?: Json | null
-          scope_items_zh?: Json | null
-          scope_sub_sections?: Json | null
-          slug?: string
-          sort_order?: number
-          status?: Database["public"]["Enums"]["content_status"]
-          technical_parameters?: Json | null
-          technical_parameters_intro?: string | null
-          timeline?: Json | null
-          updated_at?: string
-          why_intro?: string | null
-          why_intro_zh?: string | null
-          why_items?: Json | null
-          why_items_zh?: Json | null
-          why_title?: string | null
-          why_title_zh?: string | null
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              slug: string
+              status: Database["public"]["Enums"]["content_status"]
+              sort_order: number
+              meta_title: string | null
+              meta_description: string | null
+              hero_title: string | null
+              hero_subtitle: string | null
+              definition: string | null
+              definition_secondary: string | null
+              why_title: string | null
+              why_intro: string | null
+              why_items: Json | null
+              scope_intro: string | null
+              scope_items: Json | null
+              scope_sub_sections: Json | null
+              components_intro: string | null
+              component_items: Json | null
+              process_steps: Json | null
+              application_scope_intro: string | null
+              application_scope: Json | null
+              config_options: Json | null
+              technical_parameters_intro: string | null
+              technical_parameters: Json | null
+              constraints: Json | null
+              atex_intro: string | null
+              atex_items: Json | null
+              roi_methodology: string | null
+              roi_metrics: Json | null
+              deployment_note: string | null
+              timeline: Json | null
+              faqs: Json | null
+              related_industries: Json | null
+              related_knowledge: Json | null
+              eeat: Json | null
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              slug: string
+              status?: Database["public"]["Enums"]["content_status"]
+              sort_order?: number
+              meta_title?: string | null
+              meta_description?: string | null
+              hero_title?: string | null
+              hero_subtitle?: string | null
+              definition?: string | null
+              definition_secondary?: string | null
+              why_title?: string | null
+              why_intro?: string | null
+              why_items?: Json | null
+              scope_intro?: string | null
+              scope_items?: Json | null
+              scope_sub_sections?: Json | null
+              components_intro?: string | null
+              component_items?: Json | null
+              process_steps?: Json | null
+              application_scope_intro?: string | null
+              application_scope?: Json | null
+              config_options?: Json | null
+              technical_parameters_intro?: string | null
+              technical_parameters?: Json | null
+              constraints?: Json | null
+              atex_intro?: string | null
+              atex_items?: Json | null
+              roi_methodology?: string | null
+              roi_metrics?: Json | null
+              deployment_note?: string | null
+              timeline?: Json | null
+              faqs?: Json | null
+              related_industries?: Json | null
+              related_knowledge?: Json | null
+              eeat?: Json | null
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              slug?: string
+              status?: Database["public"]["Enums"]["content_status"]
+              sort_order?: number
+              meta_title?: string | null
+              meta_description?: string | null
+              hero_title?: string | null
+              hero_subtitle?: string | null
+              definition?: string | null
+              definition_secondary?: string | null
+              why_title?: string | null
+              why_intro?: string | null
+              why_items?: Json | null
+              scope_intro?: string | null
+              scope_items?: Json | null
+              scope_sub_sections?: Json | null
+              components_intro?: string | null
+              component_items?: Json | null
+              process_steps?: Json | null
+              application_scope_intro?: string | null
+              application_scope?: Json | null
+              config_options?: Json | null
+              technical_parameters_intro?: string | null
+              technical_parameters?: Json | null
+              constraints?: Json | null
+              atex_intro?: string | null
+              atex_items?: Json | null
+              roi_methodology?: string | null
+              roi_metrics?: Json | null
+              deployment_note?: string | null
+              timeline?: Json | null
+              faqs?: Json | null
+              related_industries?: Json | null
+              related_knowledge?: Json | null
+              eeat?: Json | null
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
+      },
       user_roles: {
-        Row: {
-          created_at: string
-          id: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-        Relationships: []
-      }
+            Row: {
+              id: string
+              user_id: string
+              role: Database["public"]["Enums"]["app_role"]
+              created_at: string
+            }
+            Insert: {
+              id?: string
+              user_id: string
+              role: Database["public"]["Enums"]["app_role"]
+              created_at?: string
+            }
+            Update: {
+              id?: string
+              user_id?: string
+              role?: Database["public"]["Enums"]["app_role"]
+              created_at?: string
+            }
+      Relationships: []
+      },
+      videos: {
+            Row: {
+              id: string
+              video_id: string
+              title: string
+              slug: string
+              description: string | null
+              category: Database["public"]["Enums"]["video_category"] | null
+              video_url: string
+              thumbnail_url: string | null
+              duration_seconds: number | null
+              keywords: string[] | null
+              status: Database["public"]["Enums"]["content_status"] | null
+              published_at: string | null
+              meta_title: string | null
+              meta_description: string | null
+              transcript: string | null
+              sort_order: number | null
+              is_visible: boolean | null
+              created_at: string | null
+              updated_at: string | null
+            }
+            Insert: {
+              id?: string
+              video_id: string
+              title: string
+              slug: string
+              description?: string | null
+              category?: Database["public"]["Enums"]["video_category"] | null
+              video_url: string
+              thumbnail_url?: string | null
+              duration_seconds?: number | null
+              keywords?: string[] | null
+              status?: Database["public"]["Enums"]["content_status"] | null
+              published_at?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              transcript?: string | null
+              sort_order?: number | null
+              is_visible?: boolean | null
+              created_at?: string | null
+              updated_at?: string | null
+            }
+            Update: {
+              id?: string
+              video_id?: string
+              title?: string
+              slug?: string
+              description?: string | null
+              category?: Database["public"]["Enums"]["video_category"] | null
+              video_url?: string
+              thumbnail_url?: string | null
+              duration_seconds?: number | null
+              keywords?: string[] | null
+              status?: Database["public"]["Enums"]["content_status"] | null
+              published_at?: string | null
+              meta_title?: string | null
+              meta_description?: string | null
+              transcript?: string | null
+              sort_order?: number | null
+              is_visible?: boolean | null
+              created_at?: string | null
+              updated_at?: string | null
+            }
+      Relationships: []
+      },
       why_cards: {
-        Row: {
-          card_gray_line: string
-          card_gray_line_zh: string | null
-          created_at: string
-          id: string
-          is_visible: boolean
-          modal_engineering_anchor: string | null
-          modal_engineering_anchor_zh: string | null
-          modal_key_constraints: string[] | null
-          modal_key_constraints_zh: string[] | null
-          modal_typical_use_case: string | null
-          modal_typical_use_case_zh: string | null
-          modal_what_we_need_to_assess: string[] | null
-          modal_what_we_need_to_assess_zh: string[] | null
-          sort_order: number
-          title: string
-          title_zh: string | null
-          updated_at: string
-        }
-        Insert: {
-          card_gray_line: string
-          card_gray_line_zh?: string | null
-          created_at?: string
-          id?: string
-          is_visible?: boolean
-          modal_engineering_anchor?: string | null
-          modal_engineering_anchor_zh?: string | null
-          modal_key_constraints?: string[] | null
-          modal_key_constraints_zh?: string[] | null
-          modal_typical_use_case?: string | null
-          modal_typical_use_case_zh?: string | null
-          modal_what_we_need_to_assess?: string[] | null
-          modal_what_we_need_to_assess_zh?: string[] | null
-          sort_order?: number
-          title: string
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Update: {
-          card_gray_line?: string
-          card_gray_line_zh?: string | null
-          created_at?: string
-          id?: string
-          is_visible?: boolean
-          modal_engineering_anchor?: string | null
-          modal_engineering_anchor_zh?: string | null
-          modal_key_constraints?: string[] | null
-          modal_key_constraints_zh?: string[] | null
-          modal_typical_use_case?: string | null
-          modal_typical_use_case_zh?: string | null
-          modal_what_we_need_to_assess?: string[] | null
-          modal_what_we_need_to_assess_zh?: string[] | null
-          sort_order?: number
-          title?: string
-          title_zh?: string | null
-          updated_at?: string
-        }
-        Relationships: []
+            Row: {
+              id: string
+              sort_order: number
+              title: string
+              card_gray_line: string
+              modal_engineering_anchor: string | null
+              modal_typical_use_case: string | null
+              modal_key_constraints: string[] | null
+              modal_what_we_need_to_assess: string[] | null
+              is_visible: boolean
+              created_at: string
+              updated_at: string
+            }
+            Insert: {
+              id?: string
+              sort_order?: number
+              title: string
+              card_gray_line: string
+              modal_engineering_anchor?: string | null
+              modal_typical_use_case?: string | null
+              modal_key_constraints?: string[] | null
+              modal_what_we_need_to_assess?: string[] | null
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+            Update: {
+              id?: string
+              sort_order?: number
+              title?: string
+              card_gray_line?: string
+              modal_engineering_anchor?: string | null
+              modal_typical_use_case?: string | null
+              modal_key_constraints?: string[] | null
+              modal_what_we_need_to_assess?: string[] | null
+              is_visible?: boolean
+              created_at?: string
+              updated_at?: string
+            }
+      Relationships: []
       }
     }
     Views: {
@@ -1284,12 +1165,19 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_admin_or_editor: { Args: { _user_id: string }; Returns: boolean }
+      is_admin_or_editor: {
+        Args: {
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "editor"
       content_status: "draft" | "review" | "published"
+      product_category: "rotary-bells" | "spray-guns" | "paint-pumps" | "control-systems" | "color-change" | "cleaning-systems"
       resource_category: "engineering-library" | "standards-compliance" | "glossary" | "tools-templates"
+      video_category: "cleaning" | "process" | "equipment" | "case-study" | "knowledge"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1419,7 +1307,9 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "editor"],
       content_status: ["draft", "review", "published"],
+      product_category: ["rotary-bells", "spray-guns", "paint-pumps", "control-systems", "color-change", "cleaning-systems"],
       resource_category: ["engineering-library", "standards-compliance", "glossary", "tools-templates"],
+      video_category: ["cleaning", "process", "equipment", "case-study", "knowledge"]
     },
   },
 } as const

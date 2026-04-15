@@ -279,7 +279,7 @@ export default function AutomotiveExteriorParts() {
                 <h3 className="font-semibold text-sm mb-3">Primer Systems</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside">
                   <li>Adhesion primers for PP, PE, TPO</li>
-                  <li>Conductive primers for electrostatic spraying</li>
+                  <li>Conductive primers for electrostatic painting</li>
                   <li>Flexible primers for TPU/TPE substrates</li>
                   <li>Primer-surfacers for defect hiding</li>
                   <li>One-component and 2K primer systems</li>
@@ -464,7 +464,7 @@ export default function AutomotiveExteriorParts() {
               Further reading:{" "}
               <Link to="/resources/knowledge/paint-technology-guide" className="text-accent underline underline-offset-2 hover:text-accent/80">Paint Technology Guide</Link>
               {" · "}
-              <Link to="/resources/glossary/electrostatic-spraying" className="text-accent underline underline-offset-2 hover:text-accent/80">Electrostatic Spraying</Link>
+              <Link to="/resources/glossary/electrostatic-spraying" className="text-accent underline underline-offset-2 hover:text-accent/80">Electrostatic Painting</Link>
             </p>
           </div>
         </section>

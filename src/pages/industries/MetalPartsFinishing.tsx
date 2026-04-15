@@ -102,8 +102,8 @@ export default function MetalPartsFinishing() {
   return (
     <>
       <Helmet>
-        <title>Metal Parts Finishing Automation | Robotic Painting Systems for Industrial Fabrications | TD</title>
-        <meta name="description" content="Robotic painting systems and paint booth automation for general industrial metal parts. Engineering integration for steel furniture, enclosures, machine components, agricultural equipment, and fabricated metal assemblies. Start a project assessment." />
+        <title>Surface Finishing Systems for Metal Parts | Industrial Coating Solutions | TD</title>
+        <meta name="description" content="Surface finishing systems for metal parts, fabricated assemblies, and industrial components. Explore robotic painting, booth automation, and process planning for stable finish quality." />
         <link rel="canonical" href={`${DOMAIN}/industries/metal-parts-finishing`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -135,11 +135,11 @@ export default function MetalPartsFinishing() {
         <section className="border-b border-border">
           <div className="container-wide py-12 md:py-20">
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-6 leading-tight">
-              Metal Parts Finishing Automation
+              Surface Finishing Systems for Metal Parts
             </h1>
             <div className="max-w-3xl space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
               <p>
-                Metal parts finishing automation is the engineering and integration of robotic spray painting systems, paint booth airflow/ventilation, paint supply control, and process coordination to deliver repeatable finish quality and stable production throughput for general industrial metal components and fabrications.
+                Metal parts finishing automation is the engineering and integration of robotic spray painting systems, paint booth airflow and ventilation, paint supply control, and process coordination to deliver repeatable finish quality and stable production throughput for general industrial metal components and fabrications.
               </p>
               <p>
                 TD Robotic Painting Systems integrates robotic painting cells and paint booth automation for metal fabricators, contract coaters, and industrial manufacturers worldwide, supporting a wide range of part types from steel furniture to heavy equipment components.
@@ -406,6 +406,22 @@ export default function MetalPartsFinishing() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border">
+          <div className="container-wide py-12 md:py-16">
+            <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <FileText className="h-3.5 w-3.5" />
+              Related Planning Guides
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Move from industry interest to line scope</h2>
+            <div className="max-w-3xl space-y-3 text-sm text-muted-foreground">
+              <p>The best next step after this industry page is usually to compare automation levels, then narrow the right robotic scope for your part families.</p>
+              <p><Link to="/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems" className="text-accent underline underline-offset-2 hover:text-accent/80">Manual vs Semi-Automatic vs Robotic Painting Systems</Link></p>
+              <p><Link to="/resources/knowledge/when-robotic-paint-automation-makes-sense" className="text-accent underline underline-offset-2 hover:text-accent/80">When Does a Robotic Paint Automation System Make Sense?</Link></p>
+              <p><Link to="/solutions/robotic-painting-system" className="text-accent underline underline-offset-2 hover:text-accent/80">Robotic Paint Automation System</Link></p>
             </div>
           </div>
         </section>

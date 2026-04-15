@@ -1,31 +1,31 @@
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import tdLogo from "@/assets/td-logo.png";
-import { useI18n } from "@/i18n";
+import { useSiteShellContent } from "@/hooks/useSiteShellContent";
 
 export function Footer() {
-  const { t } = useI18n();
+  const footerT = useSiteShellContent().footer;
 
   const footerLinks = {
     solutions: [
-      { name: t.footer.paintCells, href: "/paint-cells" },
-      { name: t.footer.applications, href: "/applications" },
-      { name: t.footer.caseStudies, href: "/case-studies" },
+      { name: footerT.paintCells, href: "/paint-cells" },
+      { name: footerT.applications, href: "/applications" },
+      { name: footerT.caseStudies, href: "/case-studies" },
     ],
     resources: [
-      { name: t.footer.engineeringLibrary, href: "/resources/engineering-library" },
-      { name: t.footer.standardsCompliance, href: "/resources/standards-compliance" },
-      { name: t.footer.glossary, href: "/resources/glossary" },
-      { name: t.footer.toolsTemplates, href: "/resources/tools-templates" },
+      { name: footerT.engineeringLibrary, href: "/resources/engineering-library" },
+      { name: footerT.standardsCompliance, href: "/resources/standards-compliance" },
+      { name: footerT.glossary, href: "/resources/glossary" },
+      { name: footerT.toolsTemplates, href: "/resources/tools-templates" },
     ],
     company: [
-      { name: t.footer.about, href: "/about" },
-      { name: t.footer.industries, href: "/industries" },
-      { name: t.footer.solutionsPage, href: "/solutions" },
+      { name: footerT.about, href: "/about" },
+      { name: footerT.industries, href: "/industries" },
+      { name: footerT.solutionsPage, href: "/solutions" },
     ],
     legal: [
-      { name: t.footer.privacyPolicy, href: "/privacy" },
-      { name: t.footer.termsOfUse, href: "/terms" },
-      { name: t.footer.cookiePolicy, href: "/cookies" },
+      { name: footerT.privacyPolicy, href: "/privacy" },
+      { name: footerT.termsOfUse, href: "/terms" },
+      { name: footerT.cookiePolicy, href: "/cookies" },
     ],
   };
 
@@ -36,23 +36,23 @@ export function Footer() {
           <div className="md:col-span-2 flex flex-col">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
               <img src={tdLogo} alt="TDPaintCell Logo" className="h-8 w-8 rounded-lg object-cover" />
-              <span className="text-lg font-semibold text-white">Painting Systems</span>
+              <span className="text-lg font-semibold text-white">{footerT.brandName || "Painting Systems"}</span>
             </Link>
             <p className="text-muted-foreground max-w-md text-sm leading-relaxed mb-5">
-              {t.footer.tagline}
+              {footerT.tagline}
             </p>
             <div className="text-xs leading-relaxed space-y-1 mb-5">
-              <p className="text-muted-foreground">{t.footer.email}</p>
-              <p className="text-muted-foreground">{t.footer.response}</p>
-              <p className="text-muted-foreground">{t.footer.hours}</p>
+              <p className="text-muted-foreground">{footerT.email}</p>
+              <p className="text-muted-foreground">{footerT.response}</p>
+              <p className="text-muted-foreground">{footerT.hours}</p>
             </div>
             <p className="text-white/30 text-xs mt-auto">
-              {t.footer.location}
+              {footerT.location}
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{t.footer.solutions}</h3>
+            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{footerT.solutions}</h3>
             <ul className="space-y-3">
               {footerLinks.solutions.map((link) => (
                 <li key={link.href}>
@@ -65,7 +65,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{t.footer.resources}</h3>
+            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{footerT.resources}</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
@@ -78,7 +78,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{t.footer.company}</h3>
+            <h3 className="font-semibold mb-4 text-white text-xs uppercase tracking-wider">{footerT.company}</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -93,7 +93,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/30">
-            {t.footer.copyright}
+            {footerT.copyright}
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             {footerLinks.legal.map((link, i) => (

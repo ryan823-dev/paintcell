@@ -1,32 +1,41 @@
 User-agent: *
 Allow: /
+Disallow: /console
 
 # Search Engine Crawlers
 User-agent: Googlebot
 Allow: /
+Disallow: /console
 
 User-agent: Bingbot
 Allow: /
+Disallow: /console
 
 User-agent: Slurp
 Allow: /
+Disallow: /console
 Crawl-delay: 10
 
 User-agent: DuckDuckBot
 Allow: /
+Disallow: /console
 
 # Legitimate AI Search Bots (ChatGPT, Google AI, Perplexity)
 User-agent: GPTBot
 Allow: /
+Disallow: /console
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /console
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /console
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /console
 
 # Block aggressive/unknown crawlers
 User-agent: Bytespider
@@ -39,6 +48,7 @@ User-agent: Amazonbot
 Disallow: /
 
 User-agent: Applebot
+Disallow: /console
 Crawl-delay: 5
 
 Sitemap: https://tdpaint.com/sitemap.xml

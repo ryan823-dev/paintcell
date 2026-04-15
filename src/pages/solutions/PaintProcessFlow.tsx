@@ -101,7 +101,7 @@ const processStages = [
 ];
 
 export default function PaintProcessFlow() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const ppf = t.paintProcessFlow || {};
 
   useEffect(() => {
@@ -137,8 +137,8 @@ export default function PaintProcessFlow() {
   return (
     <>
       <Helmet>
-        <title>{ppf.metaTitle || "Paint Process Flow | Complete Coating Line Stages | TD"}</title>
-        <meta name="description" content={ppf.metaDescription || "Complete paint process flow from pretreatment to overspray separation. Understanding the 8 stages of industrial coating lines for automotive and general industry applications."} />
+        <title>{ppf.metaTitle || "Paint Process Flow | Complete Paint Line Stages | TD"}</title>
+        <meta name="description" content={ppf.metaDescription || "Complete paint process flow from pretreatment to overspray separation. Understanding the 8 stages of industrial paint lines for automotive and general industry applications."} />
         <link rel="canonical" href={`${DOMAIN}/solutions/paint-process-flow`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -183,7 +183,7 @@ export default function PaintProcessFlow() {
               </h1>
               <div className="max-w-3xl space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
                 <p>
-                  {ppf.heroSubtitle || "A complete industrial coating line consists of multiple integrated stages, from surface preparation through final quality inspection. Understanding each stage is essential for designing systems that deliver consistent finish quality and production efficiency."}
+                  {ppf.heroSubtitle || "A complete industrial paint line consists of multiple integrated stages, from surface preparation through final quality inspection. Understanding each stage is essential for designing systems that deliver consistent finish quality and production efficiency."}
                 </p>
               </div>
             </FadeIn>
@@ -338,7 +338,7 @@ export default function PaintProcessFlow() {
             <FadeIn>
               <div className="rounded-2xl border border-border bg-muted/30 p-8 md:p-12 text-center">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                  {ppf.ctaTitle || "Plan Your Coating Line"}
+                  {ppf.ctaTitle || "Plan Your Paint Line"}
                 </h2>
                 <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
                   {ppf.ctaSubtitle || "Our engineering team can help design the optimal process flow for your production requirements."}

@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
 export default function HowToChoosePaintRobot() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const article = t.knowledge?.howToChoosePaintRobot || {};
 
   const articleSchema = {
@@ -21,7 +21,7 @@ export default function HowToChoosePaintRobot() {
     "datePublished": "2026-01-15",
     "dateModified": "2026-02-12",
     "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
   
   const faqs = useMemo(() => [
@@ -145,7 +145,7 @@ export default function HowToChoosePaintRobot() {
       {/* Related */}
       <div className="flex flex-wrap gap-2 mb-8 text-sm">
         <span className="text-muted-foreground font-medium">Related:</span>
-        <Link to="/solutions/spray-robot-integration" className="text-accent hover:text-accent/80 inline-flex items-center gap-1">Spray Robot Integration <ArrowRight className="h-3 w-3" /></Link>
+        <Link to="/solutions/paint-robot-integration" className="text-accent hover:text-accent/80 inline-flex items-center gap-1">Paint Robot Integration <ArrowRight className="h-3 w-3" /></Link>
         <Link to="/solutions/robotic-painting-system" className="text-accent hover:text-accent/80 inline-flex items-center gap-1">Robotic Painting System <ArrowRight className="h-3 w-3" /></Link>
         <Link to="/industries/automotive-painting" className="text-accent hover:text-accent/80 inline-flex items-center gap-1">Automotive Solutions <ArrowRight className="h-3 w-3" /></Link>
       </div>

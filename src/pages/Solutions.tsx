@@ -8,7 +8,8 @@ import { useI18n } from "@/i18n";
 const solutionOrder = [
   "robotic-painting-system",
   "paint-booth-automation",
-  "spray-robot-integration",
+  "paint-robot-integration",
+  "panel-coating-finishing-systems",
 ];
 
 const techFeatures = [
@@ -99,17 +100,17 @@ export default function Solutions() {
   return (
     <>
       <Helmet>
-        <title>Robotic Painting Automation Solutions — System Integration | TD</title>
-        <meta name="description" content="Turnkey robotic painting system integration, paint booth automation, and paint robot deployment. Multi-brand robot support (ABB, Yaskawa, FANUC), electrostatic rotary bells, and Industry 4.0 controls." />
+        <title>Industrial Painting Systems for Manufacturing | Automation Solutions | TD</title>
+        <meta name="description" content="Industrial painting systems for manufacturing, including robotic paint automation systems, paint booth automation, paint robot integration, and panel coating line planning." />
         <link rel="canonical" href="https://tdpaint.com/solutions" />
-        <meta property="og:title" content="Robotic Painting Automation Solutions | TD" />
-        <meta property="og:description" content="Turnkey robotic painting system integration with multi-brand robot support, electrostatic rotary bells, and Industry 4.0 controls." />
+        <meta property="og:title" content="Industrial Painting Systems for Manufacturing | TD" />
+        <meta property="og:description" content="Industrial painting systems covering robotic paint automation, booth automation, robot integration, and panel finishing solutions." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tdpaint.com/solutions" />
         <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Robotic Painting Automation Solutions | TD" />
-        <meta name="twitter:description" content="Turnkey robotic painting system integration with multi-brand robot support and Industry 4.0 controls." />
+        <meta name="twitter:title" content="Industrial Painting Systems for Manufacturing | TD" />
+        <meta name="twitter:description" content="Industrial painting systems covering robotic paint automation, booth automation, robot integration, and panel finishing solutions." />
         <meta name="twitter:image" content="https://tdpaint.com/images/og-social-share.png" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -164,20 +165,20 @@ export default function Solutions() {
           <div className="container-wide py-12 md:py-20">
             <div className="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full border border-accent/40 bg-accent/20 text-accent text-[11px] font-semibold tracking-wider uppercase">
               <Sparkles className="h-3 w-3" />
-              {t.solutions?.badge || "Solutions"}
+              {t.solutions?.badge || "Industrial Painting Systems"}
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight text-white">
-              {t.solutions?.title || "Robotic painting automation solutions"}
+              {t.solutions?.title || "Industrial painting systems for manufacturing"}
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl">
-              {t.solutions?.subtitle || ""}
+              {t.solutions?.subtitle || "Use this hub to compare robotic paint automation systems, paint booth automation, paint robot integration, and panel coating line concepts before narrowing the right scope for your plant."}
             </p>
           </div>
         </section>
 
         <section>
           <div className="container-wide py-12 md:py-16">
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
               {solutionOrder.map((slug) => {
                 const data = solutions[slug];
                 if (!data) return null;

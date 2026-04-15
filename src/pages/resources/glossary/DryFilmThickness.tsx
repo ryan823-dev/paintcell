@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function DryFilmThickness() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.dryFilmThickness || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function DryFilmThickness() {
     "@type": "WebPage",
     "name": term.metaTitle || "Dry Film Thickness | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of dry film thickness and its measurement in industrial coating applications.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

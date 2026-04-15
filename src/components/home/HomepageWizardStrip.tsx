@@ -1,14 +1,26 @@
-import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
+import type { HomeProjectInterfaceContent } from "@/content/home";
 import { wizardSteps } from "@/data/wizardSteps";
+import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { cn } from "@/lib/utils";
 
-const stepTitles = wizardSteps.map((s) => s.title);
+const stepTitles = wizardSteps.map((step) => step.title);
 
 interface HomepageWizardStripProps {
   variant?: "light" | "dark";
+  content?: HomeProjectInterfaceContent["wizard"];
 }
 
-export function HomepageWizardStrip({ variant = "light" }: HomepageWizardStripProps) {
+const defaultWizardContent: HomeProjectInterfaceContent["wizard"] = {
+  label: "Pre-Engineering Assessment - 6 Steps",
+  ctaLabel: "Start assessment ->",
+  mobileStepsLabel: "6 assessment steps",
+  mobileDurationLabel: "~4 min",
+};
+
+export function HomepageWizardStrip({
+  variant = "light",
+  content = defaultWizardContent,
+}: HomepageWizardStripProps) {
   const navigate = useNavigate();
   const isDark = variant === "dark";
 
@@ -18,81 +30,88 @@ export function HomepageWizardStrip({ variant = "light" }: HomepageWizardStripPr
       onClick={() => navigate("/quote")}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
           navigate("/quote");
         }
       }}
     >
-      {/* Label row */}
       <div className="flex items-center justify-between mb-4">
-        <p className={cn(
-          "text-[10px] font-semibold uppercase tracking-[0.2em]",
-          isDark ? "text-primary-foreground/40" : "text-muted-foreground"
-        )}>
-          Pre-Engineering Assessment — 6 Steps
+        <p
+          className={cn(
+            "text-[10px] font-semibold uppercase tracking-[0.2em]",
+            isDark ? "text-primary-foreground/40" : "text-muted-foreground",
+          )}
+        >
+          {content.label}
         </p>
-        <span className={cn(
-          "text-xs font-medium",
-          isDark ? "text-accent/80 hover:text-accent" : "text-primary hover:text-primary/80"
-        )}>
-          Start assessment →
+        <span
+          className={cn(
+            "text-xs font-medium",
+            isDark ? "text-accent/80 hover:text-accent" : "text-primary hover:text-primary/80",
+          )}
+        >
+          {content.ctaLabel}
         </span>
       </div>
 
-      {/* 6 block tiles — desktop */}
       <div className="hidden md:grid grid-cols-6 gap-2">
         {stepTitles.map((title, index) => (
           <div
-            key={index}
+            key={title}
             className={cn(
               "rounded-md px-3 py-3 text-center transition-colors border",
               index === 0
-                ? isDark
-                  ? "bg-accent text-accent-foreground border-accent"
-                  : "bg-accent text-accent-foreground border-accent"
+                ? "bg-accent text-accent-foreground border-accent"
                 : isDark
                   ? "bg-primary-foreground/5 border-primary-foreground/10 text-primary-foreground/40"
-                  : "bg-white border-border/80 text-muted-foreground"
+                  : "bg-white border-border/80 text-muted-foreground",
             )}
           >
-            <span className={cn(
-              "block text-lg font-bold mb-1",
-              index === 0
-                ? isDark ? "text-accent-foreground" : "text-accent-foreground"
-                : isDark ? "text-primary-foreground/30" : "text-muted-foreground/70"
-            )}>
+            <span
+              className={cn(
+                "block text-lg font-bold mb-1",
+                index === 0
+                  ? "text-accent-foreground"
+                  : isDark
+                    ? "text-primary-foreground/30"
+                    : "text-muted-foreground/70",
+              )}
+            >
               {index + 1}
             </span>
-            <span className="block text-[10px] font-medium leading-tight">
-              {title}
-            </span>
+            <span className="block text-[10px] font-medium leading-tight">{title}</span>
           </div>
         ))}
       </div>
 
-      {/* Mobile: compact bar */}
       <div className="md:hidden">
         <div className="flex items-center justify-between text-sm mb-2">
-          <span className={cn(
-            "font-medium",
-            isDark ? "text-primary-foreground/70" : "text-foreground"
-          )}>6 assessment steps</span>
-          <span className={cn(
-            "text-xs",
-            isDark ? "text-primary-foreground/40" : "text-muted-foreground"
-          )}>~4 min</span>
+          <span
+            className={cn(
+              "font-medium",
+              isDark ? "text-primary-foreground/70" : "text-foreground",
+            )}
+          >
+            {content.mobileStepsLabel}
+          </span>
+          <span
+            className={cn(
+              "text-xs",
+              isDark ? "text-primary-foreground/40" : "text-muted-foreground",
+            )}
+          >
+            {content.mobileDurationLabel}
+          </span>
         </div>
         <div className="flex gap-1">
-          {stepTitles.map((_, index) => (
+          {stepTitles.map((title, index) => (
             <div
-              key={index}
+              key={title}
               className={cn(
                 "flex-1 h-1.5 rounded-full",
-                index === 0
-                  ? "bg-accent"
-                  : isDark ? "bg-primary-foreground/10" : "bg-border"
+                index === 0 ? "bg-accent" : isDark ? "bg-primary-foreground/10" : "bg-border",
               )}
             />
           ))}

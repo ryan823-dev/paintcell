@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useI18n } from "@/i18n";
+import type { QuoteWizardContent } from "@/content/quote";
 import { QuoteFormData, initialFormData } from "@/types/quote";
-import { wizardSteps } from "@/data/wizardSteps";
 import { WizardProgress } from "./WizardProgress";
 import { WizardStep } from "./WizardStep";
 import { WizardSummary } from "./WizardSummary";
@@ -11,23 +10,27 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useRouteLocale } from "@/hooks/useRouteLocale";
 
-const TOTAL_STEPS = 8;
+interface QuoteWizardProps {
+  content: QuoteWizardContent;
+}
 
-export function QuoteWizard() {
+export function QuoteWizard({ content }: QuoteWizardProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<QuoteFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { locale } = useI18n();
+  const locale = useRouteLocale();
+  const totalSteps = content.steps.length + 2;
 
   const updateFormData = (field: keyof QuoteFormData, value: string | string[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const validateCurrentStep = (): boolean => {
-    if (currentStep >= wizardSteps.length) return true;
-    const step = wizardSteps[currentStep];
+    if (currentStep >= content.steps.length) return true;
+    const step = content.steps[currentStep];
     return step.questions.every((question) => {
       const value = formData[question.id];
       if (question.type === "checkbox") {
@@ -40,7 +43,7 @@ export function QuoteWizard() {
 
   const handleNext = () => {
     if (validateCurrentStep()) {
-      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_STEPS - 1));
+      setCurrentStep((prev) => Math.min(prev + 1, totalSteps - 1));
     }
   };
 
@@ -56,39 +59,56 @@ export function QuoteWizard() {
       });
       if (error) {
         if (import.meta.env.DEV) console.error("Error sending notification:", error);
-        toast.error("Failed to send quote request. Please try again.");
+        toast.error(content.messages.submitError);
         return;
       }
-      toast.success("Quote request submitted successfully!");
+      toast.success(content.messages.submitSuccess);
       navigate(`/${locale}/thank-you`);
     } catch (error) {
       if (import.meta.env.DEV) console.error("Error submitting quote:", error);
-      toast.error("An error occurred. Please try again.");
+      toast.error(content.messages.submitUnknownError);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const isQuestionStep = currentStep < wizardSteps.length;
-  const isSummaryStep = currentStep === wizardSteps.length;
-  const isContactStep = currentStep === wizardSteps.length + 1;
+  const isQuestionStep = currentStep < content.steps.length;
+  const isSummaryStep = currentStep === content.steps.length;
+  const isContactStep = currentStep === content.steps.length + 1;
 
   const stepTitles = [
-    ...wizardSteps.map((s) => s.title),
-    "Engineering Review",
-    "Contact",
+    ...content.steps.map((step) => step.title),
+    content.stages.review,
+    content.stages.contact,
   ];
 
   return (
     <div className="max-w-4xl mx-auto">
-      <WizardProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} stepTitles={stepTitles} />
+      <WizardProgress
+        currentStep={currentStep}
+        totalSteps={totalSteps}
+        stepTitles={stepTitles}
+        progress={content.progress}
+      />
 
       <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 md:p-8 min-h-[400px]">
         {isQuestionStep && (
-          <WizardStep step={wizardSteps[currentStep]} formData={formData} updateFormData={updateFormData} />
+          <WizardStep step={content.steps[currentStep]} formData={formData} updateFormData={updateFormData} />
         )}
-        {isSummaryStep && <WizardSummary formData={formData} />}
-        {isContactStep && <ContactForm formData={formData} updateFormData={updateFormData} />}
+        {isSummaryStep && (
+          <WizardSummary
+            formData={formData}
+            steps={content.steps}
+            summary={content.summary}
+          />
+        )}
+        {isContactStep && (
+          <ContactForm
+            content={content.contactForm}
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        )}
       </div>
 
       <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between mt-6">
@@ -99,7 +119,7 @@ export function QuoteWizard() {
           className="gap-2 w-full sm:w-auto"
         >
           <ChevronLeft className="h-4 w-4" />
-          Previous
+          {content.actions.previous}
         </Button>
 
         {isContactStep ? (
@@ -111,10 +131,10 @@ export function QuoteWizard() {
             {isSubmitting ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Submitting...
+                {content.actions.submitting}
               </>
             ) : (
-              "Submit Request"
+              content.actions.submitRequest
             )}
           </Button>
         ) : (
@@ -123,7 +143,7 @@ export function QuoteWizard() {
             disabled={!validateCurrentStep()}
             className="gap-2 bg-accent hover:bg-accent/90 text-accent-foreground w-full sm:w-auto"
           >
-            {isSummaryStep ? "Continue to Contact" : "Next"}
+            {isSummaryStep ? content.actions.continueToContact : content.actions.next}
             <ChevronRight className="h-4 w-4" />
           </Button>
         )}

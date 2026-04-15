@@ -126,8 +126,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     application: 'Multi-color production lines, high-volume coating operations'
   },
   {
-    id: 'spray-robot',
-    term: 'Spray Robot',
+    id: 'paint-robot',
+    term: 'Paint Robot',
     chinese: '喷涂机器人',
     german: 'Lackierroboter',
     french: 'Robot de peinture',

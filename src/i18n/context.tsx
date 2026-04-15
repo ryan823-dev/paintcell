@@ -1,6 +1,15 @@
-import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from "react";
-import { Locale, defaultLocale, isValidLocale } from "./types";
-import { getTranslation, TranslationKeys } from "./translations";
+import {
+  createContext,
+  startTransition,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { Locale, defaultLocale, isValidLocale, localeHtmlLangs } from "./types";
+import { getFallbackTranslation, loadTranslation, TranslationKeys } from "./translations";
 
 interface I18nContextValue {
   locale: Locale;
@@ -10,20 +19,17 @@ interface I18nContextValue {
 
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
-/**
- * Detect initial locale from URL path, then localStorage, then browser language.
- * URL is the primary source of truth for SEO.
- */
 function detectInitialLocale(): Locale {
-  // 1. URL path: /:lang/...
   const pathSegment = window.location.pathname.split("/")[1];
   if (isValidLocale(pathSegment)) return pathSegment;
 
-  // 2. localStorage (returning visitor preference)
-  const saved = localStorage.getItem("locale");
-  if (saved && isValidLocale(saved)) return saved;
+  try {
+    const saved = localStorage.getItem("locale");
+    if (saved && isValidLocale(saved)) return saved;
+  } catch (error) {
+    console.warn("Failed to read saved locale, falling back to browser language.", error);
+  }
 
-  // 3. Browser language
   const browserLang = navigator.language.split("-")[0];
   if (isValidLocale(browserLang)) return browserLang;
 
@@ -32,24 +38,53 @@ function detectInitialLocale(): Locale {
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(detectInitialLocale);
+  const [translation, setTranslation] = useState<TranslationKeys>(() => getFallbackTranslation());
 
-  const setLocale = useCallback((l: Locale) => {
-    setLocaleState(l);
-    localStorage.setItem("locale", l);
-    document.documentElement.lang = l;
+  const setLocale = useCallback((nextLocale: Locale) => {
+    try {
+      localStorage.setItem("locale", nextLocale);
+    } catch (error) {
+      console.warn("Failed to persist selected locale.", error);
+    }
+    setLocaleState(nextLocale);
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = locale;
+    let cancelled = false;
+    document.documentElement.lang = localeHtmlLangs[locale];
+
+    loadTranslation(locale)
+      .then((nextTranslation) => {
+        if (cancelled) return;
+
+        startTransition(() => {
+          setTranslation(nextTranslation);
+        });
+      })
+      .catch((error) => {
+        console.error(`Failed to resolve translations for locale "${locale}".`, error);
+        if (cancelled) return;
+
+        startTransition(() => {
+          setTranslation(getFallbackTranslation());
+        });
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [locale]);
 
-  const t = getTranslation(locale);
-
-  return (
-    <I18nContext.Provider value={{ locale, setLocale, t }}>
-      {children}
-    </I18nContext.Provider>
+  const value = useMemo(
+    () => ({
+      locale,
+      setLocale,
+      t: translation,
+    }),
+    [locale, setLocale, translation],
   );
+
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n() {

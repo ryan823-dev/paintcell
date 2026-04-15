@@ -11,7 +11,7 @@ import { useI18n } from "@/i18n";
 const DOMAIN = "https://tdpaint.com";
 
 export default function PaintSupplySystems() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -21,13 +21,13 @@ export default function PaintSupplySystems() {
     "datePublished": "2026-03-19",
     "dateModified": "2026-03-19",
     "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   const faqs = [
     {
       q: "What is a centralized paint circulation system?",
-      a: "A centralized paint circulation system maintains paint at optimal viscosity and temperature while continuously circulating it from a central kitchen to multiple spray stations. This ensures consistent paint quality, reduces waste, and enables automated color changes across 10-50+ spray robots."
+      a: "A centralized paint circulation system maintains paint at optimal viscosity and temperature while continuously circulating it from a central kitchen to multiple paint stations. This ensures consistent paint quality, reduces waste, and enables automated color changes across 10-50+ paint robots."
     },
     {
       q: "How fast is an automatic color change?",

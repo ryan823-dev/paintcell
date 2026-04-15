@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { SolutionData } from "@/data/solutionData";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { buildLocalizedUrl } from "@/lib/seo";
+import { useCanonicalLocaleForPath, useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 interface SolutionPageTemplateProps {
   data: SolutionData;
@@ -27,7 +29,11 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
   }, [data.slug]);
 
   const domain = data.canonicalDomain || "https://tdpaint.com";
-  const pageUrl = `${domain}/solutions/${data.slug}`;
+  const pagePath = `/solutions/${data.slug}`;
+  const canonicalLocale = useCanonicalLocaleForPath(pagePath);
+  const pageUrl = useCanonicalUrl(pagePath);
+  const homeUrl = buildLocalizedUrl(canonicalLocale, "/");
+  const solutionsUrl = buildLocalizedUrl(canonicalLocale, "/solutions");
 
   // Build standardized JSON-LD schemas with @id linking
   const schemas: Record<string, unknown>[] = [
@@ -71,8 +77,8 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
       "@type": "BreadcrumbList",
       "@id": `${pageUrl}#breadcrumb`,
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${domain}/` },
-        { "@type": "ListItem", "position": 2, "name": "Solutions", "item": `${domain}/solutions` },
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": homeUrl },
+        { "@type": "ListItem", "position": 2, "name": "Solutions", "item": solutionsUrl },
         { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": pageUrl },
       ],
     },

@@ -5,18 +5,17 @@ import { ContentSection } from "@/components/resources";
 import { ArrowRight, BookOpen, FileText, HelpCircle } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 import { supabase } from "@/integrations/supabase/client";
+import { TopicClusterDirectory } from "@/components/seo/TopicClusterDirectory";
 
 interface DynamicPost {
   id: string;
   title: string;
-  title_zh: string | null;
   slug: string;
   subcategory: string | null;
 }
 
 export default function EngineeringLibrary() {
-  const { t, locale } = useI18n();
-  const isZh = locale === "zh-CN";
+  const { t } = useI18n();
   const res = t.resources?.engineeringLibrary || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   const sections = t.resources?.sections || {};
@@ -31,7 +30,7 @@ export default function EngineeringLibrary() {
     const fetchPosts = async () => {
       const { data, error } = await supabase
         .from("resources_posts")
-        .select("id, title, title_zh, slug, subcategory")
+        .select("id, title, slug, subcategory")
         .eq("status", "published")
         .eq("category", "engineering-library")
         .order("published_at", { ascending: false });
@@ -56,7 +55,7 @@ export default function EngineeringLibrary() {
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
           >
             <ArrowRight className="h-4 w-4" />
-            {(isZh && post.title_zh) ? post.title_zh : post.title}
+            {post.title}
           </Link>
         </li>
       ))}
@@ -68,7 +67,7 @@ export default function EngineeringLibrary() {
     "@type": "WebPage",
     "name": res.metaTitle || "Engineering Library | Paint Cell Engineering Notes",
     "description": res.metaDesc || "Engineering-first notes on feasibility, constraints, and readiness for robotic spray painting paint cells.",
-    "inLanguage": locale,
+    "inLanguage": "en",
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -143,6 +142,13 @@ export default function EngineeringLibrary() {
             )}
           </Link>
         </div>
+      </ContentSection>
+
+      <ContentSection title="Topic clusters">
+        <p className="text-muted-foreground mb-6">
+          These clusters group already-emerging themes into connected guide, FAQ, glossary, scenario, industry, and solution pages.
+        </p>
+        <TopicClusterDirectory />
       </ContentSection>
 
       {/* Dynamic content by subcategory */}

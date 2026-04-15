@@ -95,7 +95,7 @@ const articleSchema = {
 };
 
 export default function ColorChangeSystems() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const article = t.knowledge?.colorChangeSystems || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   

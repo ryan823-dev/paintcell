@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
 export default function RobotPathOptimization() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const article = t.knowledge?.robotPathOptimization || {};
 
   const articleSchema = {
@@ -21,7 +21,7 @@ export default function RobotPathOptimization() {
     "datePublished": "2026-02-22",
     "dateModified": "2026-02-27",
     "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
   
   const faqs = useMemo(() => [

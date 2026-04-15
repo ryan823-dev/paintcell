@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function HollowWrist() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.hollowWrist || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function HollowWrist() {
     "@type": "WebPage",
     "name": term.metaTitle || "Hollow Wrist Robot | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of hollow wrist robot design and why it's essential for paint applications.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

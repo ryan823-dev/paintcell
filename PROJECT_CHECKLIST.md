@@ -71,6 +71,17 @@
 | 粉末涂装 | Powder coating | Powder lacquering |
 | 往复机 | Reciprocator | Oscillator |
 
+### 2026-04-14 新增术语规范
+
+| ❌ 错误用法 | ✅ 正确用法 | 说明 |
+|-----------|-----------|------|
+| Spray Guns | ✅ 保留 | 约定俗成，行业标准术语 |
+| spray robot | **paint robot** | 统一表述 |
+| coating line (生产线) | **paint line** | 统一表述 |
+| electrostatic spraying | **electrostatic painting** | 统一表述 |
+| powder coating | ✅ 保留 | 粉末涂料是标准术语 |
+| electrostatic spray gun | ✅ 保留 | 产品名称，spray gun 约定俗成 |
+
 ---
 
 ## 历史问题记录

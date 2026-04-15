@@ -4,7 +4,7 @@ import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigat
 import { Helmet } from "react-helmet-async";
 import {
   ChevronRight, Send, AlertTriangle, Layers, Settings2,
-  Clock, HelpCircle, Bot, MessageSquare, Upload,
+  Clock, HelpCircle, Bot, MessageSquare, Upload, CheckCircle2,
   User, CalendarDays, FileText, Target, Wrench, BarChart3, HardHat
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -271,7 +271,7 @@ export default function ConstructionMachinery() {
             <div className="grid md:grid-cols-3 gap-4">
               {[
                 { client: "Major Excavator OEM (Zhuhai)", config: "4 Kawasaki robots on 7th-axis tracks", highlight: "Boom arms, frames — 12min cycle" },
-                { client: "Weichai / Lovol Heavy Equipment", config: "Multi-robot protective coating line", highlight: "High-build 2K corrosion protection" },
+                { client: "Weichai / Lovol Heavy Equipment", config: "Multi-robot protective paint line", highlight: "High-build 2K corrosion protection" },
                 { client: "Baosteel Wheel (Chongqing)", config: "Robotic wheel painting system", highlight: "Aluminum wheel finishing line" },
               ].map((project, idx) => (
                 <Card key={idx} className="border-border bg-card hover:border-accent/30 transition-colors">

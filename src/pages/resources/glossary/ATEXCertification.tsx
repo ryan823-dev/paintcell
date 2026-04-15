@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function ATEXCertification() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.atexCertification || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function ATEXCertification() {
     "@type": "WebPage",
     "name": term.metaTitle || "ATEX Certification | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of ATEX certification requirements for paint booths and robotic spray painting equipment.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

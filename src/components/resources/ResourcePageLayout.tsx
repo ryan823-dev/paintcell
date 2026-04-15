@@ -3,6 +3,9 @@ import { Helmet } from "react-helmet-async";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/i18n";
+import { buildLocalizedUrl, getCanonicalLocaleForPath, normalizePublicPath } from "@/lib/seo";
+import { TopicClusterNavigator } from "@/components/seo/TopicClusterNavigator";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -38,10 +41,14 @@ export function ResourcePageLayout({
   structuredData,
   canonicalPath,
 }: ResourcePageLayoutProps) {
-  // Generate canonical URL
-  const canonicalUrl = canonicalPath
-    ? `https://tdpaint.com${canonicalPath}`
-    : `https://tdpaint.com${breadcrumbs[breadcrumbs.length - 1]?.href || ""}`;
+  const { locale, t } = useI18n();
+  const resourceLayoutT = t.resourceLayout || {};
+  const resolvedPath = normalizePublicPath(
+    canonicalPath || breadcrumbs[breadcrumbs.length - 1]?.href || "/",
+  );
+  const canonicalLocale = getCanonicalLocaleForPath(resolvedPath, locale);
+  const canonicalUrl = buildLocalizedUrl(canonicalLocale, resolvedPath);
+  const schemaLanguage = resolvedPath.startsWith("/resources") ? "en" : locale;
 
   // Organization Schema
   const organizationSchema = {
@@ -54,7 +61,8 @@ export function ResourcePageLayout({
       "@type": "ContactPoint",
       "email": "engineering@tdpaint.com",
       "contactType": "Customer Service"
-    }
+    },
+    "inLanguage": schemaLanguage,
   };
 
   // Generate BreadcrumbList schema for SEO/AEO
@@ -65,14 +73,14 @@ export function ResourcePageLayout({
       {
         "@type": "ListItem",
         "position": 1,
-        "name": "Home",
-        "item": "https://tdpaint.com/"
+        "name": resourceLayoutT.home || t.common.home,
+        "item": buildLocalizedUrl(canonicalLocale, "/")
       },
       ...breadcrumbs.map((item, index) => ({
         "@type": "ListItem",
         "position": index + 2,
         "name": item.label,
-        ...(item.href ? { "item": `https://tdpaint.com${item.href}` } : {})
+        ...(item.href ? { "item": buildLocalizedUrl(canonicalLocale, item.href) } : {})
       }))
     ]
   };
@@ -81,7 +89,8 @@ export function ResourcePageLayout({
   const speakableSchema = {
     "@context": "https://schema.org",
     "@type": "SpeakableSpecification",
-    "cssSelector": [".prose", "h1"]
+    "cssSelector": [".prose", "h1"],
+    "inLanguage": schemaLanguage,
   };
 
   useEffect(() => {
@@ -138,7 +147,7 @@ export function ResourcePageLayout({
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link to="/">Home</Link>
+                  <Link to="/">{resourceLayoutT.home || t.common.home}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {breadcrumbs.map((item, index) => (
@@ -168,6 +177,10 @@ export function ResourcePageLayout({
           {children}
         </div>
 
+        <div className="mt-12">
+          <TopicClusterNavigator currentPath={resolvedPath} />
+        </div>
+
         {/* CTA Block */}
         {showCTA && (
           <div className="mt-16 pt-8 border-t border-border">
@@ -176,11 +189,11 @@ export function ResourcePageLayout({
                 onClick={handleConsultationClick}
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
               >
-                Start a project consultation
+                {resourceLayoutT.startConsultation || "Start a project consultation"}
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
               <Button asChild variant="outline">
-                <Link to="/quote">Configure your paint cell</Link>
+                <Link to="/quote">{resourceLayoutT.configurePaintCell || "Configure your paint cell"}</Link>
               </Button>
             </div>
           </div>

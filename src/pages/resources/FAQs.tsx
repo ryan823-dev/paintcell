@@ -10,19 +10,14 @@ import ReactMarkdown from "react-markdown";
 interface FAQPost {
   id: string;
   title: string;
-  title_zh: string | null;
   slug: string;
   body: string | null;
-  body_zh: string | null;
   answer_box: string | null;
-  answer_box_zh: string | null;
   summary: string | null;
-  summary_zh: string | null;
 }
 
 export default function FAQs() {
-  const { t, locale } = useI18n();
-  const isZh = locale === "zh-CN";
+  const { t } = useI18n();
   const res = t.resources?.faqs || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   const sections = t.resources?.sections || {};
@@ -34,7 +29,7 @@ export default function FAQs() {
   useEffect(() => {
     supabase
       .from("resources_posts")
-      .select("id, title, title_zh, slug, body, body_zh, answer_box, answer_box_zh, summary, summary_zh")
+      .select("id, title, slug, body, answer_box, summary")
       .eq("status", "published")
       .eq("category", "engineering-library")
       .eq("subcategory", "faqs")
@@ -52,14 +47,14 @@ export default function FAQs() {
     "@type": "FAQPage",
     "name": res.metaTitle || "Paint Cell FAQs | Engineering Library",
     "description": res.metaDesc || "Concise answers to common questions about paint cell feasibility, site readiness, and what inputs are needed.",
-    "inLanguage": locale,
+    "inLanguage": "en",
     "mainEntity": [
       ...dynamicFAQs.slice(0, 5).map((item) => ({
         "@type": "Question",
-        "name": (isZh && item.title_zh) ? item.title_zh : item.title,
+        "name": item.title,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": (isZh && item.answer_box_zh) ? item.answer_box_zh : (item.answer_box || item.summary || "")
+          "text": item.answer_box || item.summary || ""
         }
       })),
       ...faqItems.slice(0, 2).map((item: { q: string; a: string }) => ({
@@ -97,9 +92,9 @@ export default function FAQs() {
           <div className="space-y-8">
             {/* Dynamic FAQs from database */}
             {dynamicFAQs.map((item) => {
-              const title = (isZh && item.title_zh) ? item.title_zh : item.title;
-              const body = (isZh && item.body_zh) ? item.body_zh : item.body;
-              const answerBox = (isZh && item.answer_box_zh) ? item.answer_box_zh : item.answer_box;
+              const title = item.title;
+              const body = item.body;
+              const answerBox = item.answer_box;
 
               return (
                 <div key={item.id} className="border-b border-border pb-6 last:border-0">

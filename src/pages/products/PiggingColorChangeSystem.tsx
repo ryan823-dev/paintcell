@@ -20,7 +20,7 @@ const piggingSystems = [
   {
     brand: "LACTEC",
     model: "Lactec Pigging System",
-    description: "German-engineered pigging technology for automotive and industrial coating lines",
+    description: "German-engineered pigging technology for automotive and industrial paint lines",
     changeTime: "15-45 sec",
     paintRecovery: "95-98%",
     solventUsage: "50-150 ml",

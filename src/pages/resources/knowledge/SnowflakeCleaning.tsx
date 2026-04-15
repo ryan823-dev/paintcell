@@ -11,7 +11,7 @@ import { useI18n } from "@/i18n";
 const DOMAIN = "https://tdpaint.com";
 
 export default function SnowflakeCleaning() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -21,7 +21,7 @@ export default function SnowflakeCleaning() {
     "datePublished": "2026-03-19",
     "dateModified": "2026-03-19",
     "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   const faqs = [

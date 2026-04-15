@@ -1,6 +1,7 @@
 import { useNavigate, NavigateOptions, To } from "react-router-dom";
-import { useI18n } from "@/i18n";
 import { useCallback } from "react";
+import { useRouteLocale } from "./useRouteLocale";
+import { localizeHref } from "@/components/LocalizedLink";
 
 /**
  * Drop-in replacement for react-router-dom's useNavigate().
@@ -9,7 +10,7 @@ import { useCallback } from "react";
  */
 export function useLocalizedNavigate() {
   const navigate = useNavigate();
-  const { locale } = useI18n();
+  const locale = useRouteLocale();
 
   return useCallback(
     (to: To | number, options?: NavigateOptions) => {
@@ -18,16 +19,7 @@ export function useLocalizedNavigate() {
       }
 
       if (typeof to === "string") {
-        if (!to.startsWith("/") || to.startsWith("/console")) {
-          return navigate(to, options);
-        }
-
-        const prefix = `/${locale}`;
-        if (to === prefix || to.startsWith(prefix + "/")) {
-          return navigate(to, options);
-        }
-
-        return navigate(`/${locale}${to}`, options);
+        return navigate(localizeHref(to, locale), options);
       }
 
       // NavigateOptions object form — pass through

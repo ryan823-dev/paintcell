@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import ReactMarkdown from "react-markdown";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ResourcePageLayout } from "@/components/resources";
-import { useI18n } from "@/i18n/context";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import NotFound from "@/pages/NotFound";
 import { Badge } from "@/components/ui/badge";
+import { publicCmsAvailability } from "@/lib/publicCms";
 
 interface ProductData {
   id: string;
@@ -42,14 +42,14 @@ const categoryLabels: Record<string, string> = {
  */
 export default function DynamicProduct() {
   const { slug } = useParams<{ slug: string }>();
-  const { locale } = useI18n();
+  const publicProductCmsEnabled = publicCmsAvailability.products;
 
   const [product, setProduct] = useState<ProductData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!slug) {
+    if (!slug || !publicProductCmsEnabled) {
       setNotFound(true);
       setLoading(false);
       return;
@@ -74,7 +74,7 @@ export default function DynamicProduct() {
     };
 
     fetchProduct();
-  }, [slug]);
+  }, [publicProductCmsEnabled, slug]);
 
   if (loading) {
     return (
@@ -93,6 +93,16 @@ export default function DynamicProduct() {
   const metaTitle = product.meta_title || `${product.title} | TD Painting Systems`;
   const metaDescription = product.meta_description || product.summary || "";
   const catLabel = categoryLabels[product.category || ""] || "Products";
+  const categoryHref = [
+    "rotary-bells",
+    "spray-guns",
+    "paint-pumps",
+    "control-systems",
+    "color-change",
+    "spare-parts",
+  ].includes(product.category || "")
+    ? `/products/${product.category}`
+    : "/products/catalog";
 
   // Product structured data for SEO
   const structuredData = {
@@ -117,24 +127,17 @@ export default function DynamicProduct() {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>{metaTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <link rel="canonical" href={`https://www.tdpaint.com/${locale}/products/${product.slug}`} />
-        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-      </Helmet>
-
       <ResourcePageLayout
         title={title}
         metaTitle={metaTitle}
         metaDescription={metaDescription}
         breadcrumbs={[
           { label: "Products", href: "/products" },
-          { label: catLabel, href: `/products/${product.category}` },
+          { label: catLabel, href: categoryHref },
           { label: title },
         ]}
         structuredData={structuredData}
+        canonicalPath={`/products/${product.slug}`}
       >
         {/* Product Header */}
         <div className="mb-8">
@@ -213,14 +216,13 @@ export default function DynamicProduct() {
           <p className="text-muted-foreground mb-4">
             Contact our team for pricing, technical specifications, and availability.
           </p>
-          <a
-            href="/quote"
+          <Link
+            to="/quote"
             className="inline-flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
           >
             Request a Quote
-          </a>
+          </Link>
         </div>
       </ResourcePageLayout>
-    </>
   );
 }

@@ -8,37 +8,35 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface GlossaryTerm {
   title: string;
-  title_zh: string | null;
   slug: string;
 }
 
 // Static glossary terms (existing hardcoded entries)
 const staticGlossaryTerms: GlossaryTerm[] = [
-  { term: "ATEX Certification", slug: "atex-certification", title: "ATEX Certification", title_zh: null },
-  { term: "Atomization", slug: "atomization", title: "Atomization", title_zh: null },
-  { term: "Booth Airflow", slug: "booth-airflow", title: "Booth Airflow", title_zh: null },
-  { term: "Color Changeover", slug: "color-changeover", title: "Color Changeover", title_zh: null },
-  { term: "Cure Time", slug: "cure-time", title: "Cure Time", title_zh: null },
-  { term: "Dry Film Thickness (DFT)", slug: "dry-film-thickness", title: "Dry Film Thickness (DFT)", title_zh: null },
-  { term: "Electrostatic Spraying", slug: "electrostatic-spraying", title: "Electrostatic Spraying", title_zh: null },
-  { term: "Film Build", slug: "film-build", title: "Film Build", title_zh: null },
-  { term: "Flash-off Time", slug: "flash-off-time", title: "Flash-off Time", title_zh: null },
-  { term: "Gun Distance", slug: "gun-distance", title: "Gun Distance", title_zh: null },
-  { term: "Hollow Wrist Robot", slug: "hollow-wrist", title: "Hollow Wrist Robot", title_zh: null },
-  { term: "HVLP (High Volume Low Pressure)", slug: "hvlp", title: "HVLP (High Volume Low Pressure)", title_zh: null },
-  { term: "Orange Peel", slug: "orange-peel", title: "Orange Peel", title_zh: null },
-  { term: "Overspray", slug: "overspray", title: "Overspray", title_zh: null },
-  { term: "Paint Recipe", slug: "paint-recipe", title: "Paint Recipe", title_zh: null },
-  { term: "Spray Pattern", slug: "spray-pattern", title: "Spray Pattern", title_zh: null },
-  { term: "Takt Time", slug: "takt-time", title: "Takt Time", title_zh: null },
-  { term: "Teach Pendant", slug: "teach-pendant", title: "Teach Pendant", title_zh: null },
-  { term: "Transfer Efficiency", slug: "transfer-efficiency", title: "Transfer Efficiency", title_zh: null },
-  { term: "2K Paint", slug: "2k-paint", title: "2K Paint", title_zh: null },
+  { slug: "atex-certification", title: "ATEX Certification" },
+  { slug: "atomization", title: "Atomization" },
+  { slug: "booth-airflow", title: "Booth Airflow" },
+  { slug: "color-changeover", title: "Color Changeover" },
+  { slug: "cure-time", title: "Cure Time" },
+  { slug: "dry-film-thickness", title: "Dry Film Thickness (DFT)" },
+  { slug: "electrostatic-spraying", title: "Electrostatic Painting" },
+  { slug: "film-build", title: "Film Build" },
+  { slug: "flash-off-time", title: "Flash-off Time" },
+  { slug: "gun-distance", title: "Gun Distance" },
+  { slug: "hollow-wrist", title: "Hollow Wrist Robot" },
+  { slug: "hvlp", title: "HVLP (High Volume Low Pressure)" },
+  { slug: "orange-peel", title: "Orange Peel" },
+  { slug: "overspray", title: "Overspray" },
+  { slug: "paint-recipe", title: "Paint Recipe" },
+  { slug: "spray-pattern", title: "Spray Pattern" },
+  { slug: "takt-time", title: "Takt Time" },
+  { slug: "teach-pendant", title: "Teach Pendant" },
+  { slug: "transfer-efficiency", title: "Transfer Efficiency" },
+  { slug: "2k-paint", title: "2K Paint" },
 ];
 
 export default function Glossary() {
-  const { t, locale } = useI18n();
-  const isZh = locale === "zh-CN";
+  const { t } = useI18n();
   const res = t.resources?.glossary || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   const sections = t.resources?.sections || {};
@@ -50,7 +48,7 @@ export default function Glossary() {
     const fetchTerms = async () => {
       const { data, error } = await supabase
         .from("resources_posts")
-        .select("title, title_zh, slug")
+        .select("title, slug")
         .eq("category", "glossary")
         .eq("status", "published")
         .order("title", { ascending: true });
@@ -80,7 +78,7 @@ export default function Glossary() {
     "@type": "WebPage",
     "name": res.metaTitle || "Glossary | Paint Cell Terms",
     "description": res.metaDesc || "Short definitions for common paint cell engineering terms and why they matter.",
-    "inLanguage": locale,
+    "inLanguage": "en",
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -121,7 +119,7 @@ export default function Glossary() {
               >
                 <BookOpen className="h-5 w-5 text-primary shrink-0" />
                 <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-                  {(isZh && item.title_zh) ? item.title_zh : item.title}
+                  {item.title}
                 </span>
                 <ArrowRight className="h-4 w-4 text-muted-foreground ml-auto group-hover:text-primary transition-colors" />
               </Link>

@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function CureTime() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.cureTime || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function CureTime() {
     "@type": "WebPage",
     "name": term.metaTitle || "Cure Time | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of cure time and its role in paint system design and throughput planning.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

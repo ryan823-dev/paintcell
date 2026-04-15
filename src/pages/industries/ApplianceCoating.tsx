@@ -75,7 +75,7 @@ export default function ApplianceCoating() {
     <>
       <Helmet>
         <title>Appliance Coating Automation | Robotic Painting Systems for Appliance Parts | TD</title>
-        <meta name="description" content="Robotic painting systems and paint booth automation for appliance parts and housings. Engineering integration for stable finish quality, throughput, electrostatic/HVLP options, and fast deployment. Start a project assessment for your appliance coating line." />
+        <meta name="description" content="Robotic painting systems and paint booth automation for appliance parts and housings. Engineering integration for stable finish quality, throughput, electrostatic/HVLP options, and fast deployment. Start a project assessment for your appliance paint line." />
         <link rel="canonical" href={`${DOMAIN}/industries/appliance-coating`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>

@@ -1,6 +1,7 @@
 import { Target, Box, FolderOpen, BookOpen, FileText, MessageSquare, Factory, Layers, CheckCircle2, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n";
+import { useLocalizedNavigate } from "@/hooks/useLocalizedNavigate";
 
 interface SidebarItem {
   id: string;
@@ -31,6 +32,7 @@ interface HomeSidebarProps {
 
 export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: HomeSidebarProps) {
   const { t } = useI18n();
+  const navigate = useLocalizedNavigate();
 
   const handleClick = (item: SidebarItem) => {
     if (onItemClick) {
@@ -45,7 +47,7 @@ export function HomeSidebar({ activeItem = "ai-consultation", onItemClick }: Hom
       return;
     }
     if (item.href) {
-      window.location.href = item.href;
+      navigate(item.href);
     }
   };
 

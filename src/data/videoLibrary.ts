@@ -9,7 +9,7 @@ export interface VideoMetadata {
   title: string;
   description: string;
   keywords: string[];
-  category: 'cleaning' | 'process' | 'equipment' | 'case-study';
+  category: 'cleaning' | 'process' | 'equipment' | 'case-study' | 'knowledge';
   duration?: string;
   ossPath: string;
   thumbnailPath?: string;

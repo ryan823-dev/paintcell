@@ -15,6 +15,8 @@ import {
 import { cn } from "@/lib/utils";
 import { IndustryData, deliverySteps } from "@/data/industryData";
 import { useI18n } from "@/i18n";
+import { buildLocalizedUrl } from "@/lib/seo";
+import { useCanonicalLocaleForPath, useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 interface IndustryPageTemplateProps {
   data: IndustryData;
@@ -38,7 +40,11 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
   };
 
   const domain = "https://tdpaint.com";
-  const pageUrl = `${domain}/industries/${data.slug}`;
+  const pagePath = `/industries/${data.slug}`;
+  const canonicalLocale = useCanonicalLocaleForPath(pagePath);
+  const pageUrl = useCanonicalUrl(pagePath);
+  const industriesUrl = buildLocalizedUrl(canonicalLocale, "/industries");
+  const homeUrl = buildLocalizedUrl(canonicalLocale, "/");
 
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -80,15 +86,15 @@ export function IndustryPageTemplate({ data }: IndustryPageTemplateProps) {
   };
 
   const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${pageUrl}#breadcrumb`,
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": `${domain}/` },
-      { "@type": "ListItem", "position": 2, "name": "Industries", "item": `${domain}/industries` },
-      { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": pageUrl },
-    ],
-  };
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": homeUrl },
+        { "@type": "ListItem", "position": 2, "name": "Industries", "item": industriesUrl },
+        { "@type": "ListItem", "position": 3, "name": data.heroTitle, "item": pageUrl },
+      ],
+    };
 
   const webPageSchema = {
     "@context": "https://schema.org",

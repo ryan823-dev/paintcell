@@ -31,7 +31,7 @@ export const faqs: FAQItem[] = [
     question: 'What is robotic spray painting automation?',
     answer: 'Robotic spray painting automation uses computer-controlled robotic arms equipped with spray guns or atomizers to apply coatings to products with precision and consistency. Unlike manual spraying, robotic systems can maintain exact spray parameters including gun distance, speed, pattern width, and flow rate throughout thousands of cycles. Modern painting robots feature 6 or more axes of motion, allowing them to reach complex geometries and maintain optimal spray angles on 3D surfaces. The robots are programmed using offline software or teach pendants, with spray parameters stored as recipes for different products. This technology combines industrial robotics with precision spray equipment to achieve consistent quality, higher transfer efficiency, and improved throughput compared to manual operations.',
     category: 'basics',
-    keywords: ['robotic painting', 'automation', 'spray robot', 'industrial robot'],
+    keywords: ['robotic painting', 'automation', 'paint robot', 'industrial robot'],
     relatedTerms: ['spray-robot', 'articulated-robot', 'offline-programming', 'transfer-efficiency'],
     difficulty: 'beginner'
   },

@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function ElectrostaticSpraying() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.electrostaticSpraying || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -11,24 +11,24 @@ export default function ElectrostaticSpraying() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": term.metaTitle || "Electrostatic Spraying | Paint Cell Glossary",
-    "description": term.metaDesc || "Definition of electrostatic spraying and why it matters in robotic paint cell applications.",
-    "inLanguage": locale,
+    "name": term.metaTitle || "Electrostatic Painting | Paint Cell Glossary",
+    "description": term.metaDesc || "Definition of electrostatic painting and why it matters in robotic paint cell applications.",
+    "inLanguage": "en",
   };
 
   return (
     <ResourcePageLayout
-      title={term.title || "Electrostatic Spraying"}
-      metaTitle={term.metaTitle || "Electrostatic Spraying | Paint Cell Glossary"}
-      metaDescription={term.metaDesc || "Definition of electrostatic spraying and why it matters in robotic paint cell applications."}
+      title={term.title || "Electrostatic Painting"}
+      metaTitle={term.metaTitle || "Electrostatic Painting | Paint Cell Glossary"}
+      metaDescription={term.metaDesc || "Definition of electrostatic painting and why it matters in robotic paint cell applications."}
       breadcrumbs={[
         { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
-        { label: term.title || "Electrostatic Spraying" },
+        { label: term.title || "Electrostatic Painting" },
       ]}
       structuredData={structuredData}
     >
       <AnswerBox>
-        {term.answerBox || "Electrostatic spraying applies a high-voltage charge (typically 40-100 kV) to atomized paint particles, causing them to be attracted to the grounded workpiece. This significantly improves transfer efficiency (often 65-85% vs 30-40% for conventional air spray) and provides superior wrap-around coverage on complex geometries."}
+        {term.answerBox || "Electrostatic painting applies a high-voltage charge (typically 40-100 kV) to atomized paint particles, causing them to be attracted to the grounded workpiece. This significantly improves transfer efficiency (often 65-85% vs 30-40% for conventional air spray) and provides superior wrap-around coverage on complex geometries."}
       </AnswerBox>
 
       <ContentSection title={sections.whyMatters || "Why it matters in paint cells"}>

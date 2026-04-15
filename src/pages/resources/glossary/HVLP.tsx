@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function HVLP() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.hvlp || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function HVLP() {
     "@type": "WebPage",
     "name": term.metaTitle || "HVLP (High Volume Low Pressure) | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of HVLP spray technology and its applications in robotic painting systems.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

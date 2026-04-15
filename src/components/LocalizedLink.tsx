@@ -5,7 +5,7 @@ import {
   NavLink as RouterNavLink,
   NavLinkProps,
 } from "react-router-dom";
-import { useI18n } from "@/i18n";
+import { useRouteLocale } from "@/hooks/useRouteLocale";
 
 /**
  * Prepend the current locale to an absolute path.
@@ -35,7 +35,7 @@ function localizeHref(to: string, locale: string): string {
  */
 export const LocalizedLink = forwardRef<HTMLAnchorElement, LinkProps>(
   ({ to, ...props }, ref) => {
-    const { locale } = useI18n();
+    const locale = useRouteLocale();
 
     const localizedTo =
       typeof to === "string" ? localizeHref(to, locale) : to;
@@ -51,7 +51,7 @@ LocalizedLink.displayName = "LocalizedLink";
  */
 export const LocalizedNavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
   ({ to, ...props }, ref) => {
-    const { locale } = useI18n();
+    const locale = useRouteLocale();
 
     const localizedTo =
       typeof to === "string" ? localizeHref(to, locale) : to;

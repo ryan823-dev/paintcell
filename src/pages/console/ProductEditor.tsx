@@ -7,10 +7,17 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { ImageUpload } from "@/components/console";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Save, ArrowLeft, Trash2 } from "lucide-react";
+import type { Enums, Tables } from "@/integrations/supabase/types";
 
-const categoryOptions = [
+type Product = Tables<"products_posts">;
+type ProductCategory = Enums<"product_category">;
+type ContentStatus = Enums<"content_status">;
+
+const categoryOptions: Array<{ value: ProductCategory; label: string }> = [
   { value: "rotary-bells", label: "Rotary Bells" },
   { value: "spray-guns", label: "Spray Guns" },
   { value: "paint-pumps", label: "Paint Pumps" },
@@ -19,27 +26,17 @@ const categoryOptions = [
   { value: "cleaning-systems", label: "Cleaning Systems" },
 ];
 
-interface Product {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string | null;
-  body: string | null;
-  category: string | null;
-  subcategory: string | null;
-  featured_image_url: string | null;
-  gallery_images: string[] | null;
-  brands: string[] | null;
-  specifications: Record<string, string> | null;
-  status: "draft" | "review" | "published";
-  published_at: string | null;
-  meta_title: string | null;
-  meta_description: string | null;
-  sort_order: number;
-  is_visible: boolean;
-  created_at: string;
-  updated_at: string;
-}
+const reservedProductSlugs = new Set([
+  "catalog",
+  "rotary-bells",
+  "spray-guns",
+  "paint-pumps",
+  "control-systems",
+  "color-change",
+  "spare-parts",
+  "bell-cleaning-system",
+  "pigging-color-change-system",
+]);
 
 const defaultProduct: Partial<Product> = {
   title: "",
@@ -70,7 +67,10 @@ export default function ProductEditor() {
   const [deleting, setDeleting] = useState(false);
   const [product, setProduct] = useState<Partial<Product>>(() => {
     if (isNew) {
-      const category = searchParams.get("category");
+      const categoryParam = searchParams.get("category");
+      const category = categoryOptions.some((option) => option.value === categoryParam)
+        ? (categoryParam as ProductCategory)
+        : null;
       return {
         ...defaultProduct,
         category,
@@ -81,6 +81,8 @@ export default function ProductEditor() {
 
   // For managing brands as comma-separated input
   const [brandsInput, setBrandsInput] = useState("");
+  // For managing specifications as JSON input
+  const [specificationsText, setSpecificationsText] = useState("{}");
 
   useEffect(() => {
     if (!isNew && id) {
@@ -113,6 +115,7 @@ export default function ProductEditor() {
     } else {
       setProduct(data);
       setBrandsInput((data.brands || []).join(", "));
+      setSpecificationsText(JSON.stringify(data.specifications || {}, null, 2));
     }
     setLoading(false);
   };
@@ -150,18 +153,100 @@ export default function ProductEditor() {
 
     setSaving(true);
 
+    // Normalize/validate slug format
+    const normalizedSlug = product.slug
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    if (!normalizedSlug) {
+      toast({
+        title: "Validation Error",
+        description: "Slug must contain letters or numbers",
+        variant: "destructive",
+      });
+      setSaving(false);
+      return;
+    }
+
+    if (reservedProductSlugs.has(normalizedSlug)) {
+      toast({
+        title: "Validation Error",
+        description: "This slug is reserved by an existing product section or page.",
+        variant: "destructive",
+      });
+      setSaving(false);
+      return;
+    }
+
+    if (normalizedSlug !== product.slug) {
+      setProduct((prev) => ({ ...prev, slug: normalizedSlug }));
+    }
+
+    if (isNew) {
+      const { data: existing, error: existingError } = await supabase
+        .from("products_posts")
+        .select("id")
+        .eq("slug", normalizedSlug)
+        .limit(1);
+
+      if (existingError) {
+        toast({
+          title: "Error",
+          description: existingError.message,
+          variant: "destructive",
+        });
+        setSaving(false);
+        return;
+      }
+
+      if (existing && existing.length > 0) {
+        toast({
+          title: "Validation Error",
+          description: "Slug already exists. Please choose a different slug.",
+          variant: "destructive",
+        });
+        setSaving(false);
+        return;
+      }
+    }
+
+    let parsedSpecifications: Record<string, string> = {};
+    try {
+      const maybe = JSON.parse(specificationsText || "{}");
+      if (typeof maybe !== "object" || maybe === null || Array.isArray(maybe)) {
+        throw new Error("Specifications must be a JSON object");
+      }
+      parsedSpecifications = maybe as Record<string, string>;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Invalid JSON";
+      toast({
+        title: "Validation Error",
+        description: `Specifications JSON is invalid: ${message}`,
+        variant: "destructive",
+      });
+      setSaving(false);
+      return;
+    }
+
+    const publishedAt =
+      (product.status || "draft") === "published"
+        ? product.published_at || new Date().toISOString()
+        : null;
+
     const productData = {
       title: product.title,
-      slug: product.slug,
+      slug: normalizedSlug,
       summary: product.summary || null,
       body: product.body || null,
-      category: product.category || null,
+      category: (product.category as ProductCategory | null) || null,
       subcategory: product.subcategory || null,
       featured_image_url: product.featured_image_url || null,
       gallery_images: product.gallery_images || [],
       brands: product.brands || [],
-      specifications: product.specifications || {},
-      status: product.status || "draft",
+      specifications: parsedSpecifications,
+      status: (product.status as ContentStatus | null) || "draft",
+      published_at: publishedAt,
       meta_title: product.meta_title || null,
       meta_description: product.meta_description || null,
       sort_order: product.sort_order || 0,
@@ -288,7 +373,9 @@ export default function ProductEditor() {
                 <Label htmlFor="category">Category</Label>
                 <Select
                   value={product.category || ""}
-                  onValueChange={(value) => setProduct({ ...product, category: value })}
+                  onValueChange={(value) =>
+                    setProduct({ ...product, category: value as ProductCategory })
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -306,7 +393,7 @@ export default function ProductEditor() {
                 <Label htmlFor="status">Status</Label>
                 <Select
                   value={product.status || "draft"}
-                  onValueChange={(value: "draft" | "review" | "published") =>
+                  onValueChange={(value: ContentStatus) =>
                     setProduct({ ...product, status: value })
                   }
                 >
@@ -320,6 +407,41 @@ export default function ProductEditor() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="subcategory">Subcategory</Label>
+                <Input
+                  id="subcategory"
+                  value={product.subcategory || ""}
+                  onChange={(e) => setProduct({ ...product, subcategory: e.target.value })}
+                  placeholder="Optional subcategory"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="sort_order">Sort Order</Label>
+                <Input
+                  id="sort_order"
+                  type="number"
+                  value={product.sort_order ?? 0}
+                  onChange={(e) =>
+                    setProduct({ ...product, sort_order: parseInt(e.target.value) || 0 })
+                  }
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between rounded-lg border p-3">
+              <div className="space-y-0.5">
+                <Label>Visible</Label>
+                <p className="text-xs text-muted-foreground">
+                  Controls whether the product is visible on the public site
+                </p>
+              </div>
+              <Switch
+                checked={product.is_visible ?? true}
+                onCheckedChange={(checked) => setProduct({ ...product, is_visible: checked })}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="brands">Brands (comma-separated)</Label>
@@ -366,9 +488,15 @@ export default function ProductEditor() {
           <CardHeader>
             <CardTitle>Media</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
+            <ImageUpload
+              label="Featured Image"
+              hint="Main product image displayed in listings and header"
+              value={product.featured_image_url || null}
+              onChange={(url) => setProduct({ ...product, featured_image_url: url })}
+            />
             <div className="space-y-2">
-              <Label htmlFor="featured_image_url">Featured Image URL</Label>
+              <Label htmlFor="featured_image_url">Featured Image URL (optional)</Label>
               <Input
                 id="featured_image_url"
                 value={product.featured_image_url || ""}
@@ -376,6 +504,46 @@ export default function ProductEditor() {
                 placeholder="https://..."
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="gallery_images">Gallery Images (one URL per line)</Label>
+              <Textarea
+                id="gallery_images"
+                value={(product.gallery_images || []).join("\n")}
+                onChange={(e) => {
+                  const urls = e.target.value
+                    .split("\n")
+                    .map((u) => u.trim())
+                    .filter(Boolean);
+                  setProduct({ ...product, gallery_images: urls });
+                }}
+                placeholder="https://...\nhttps://..."
+                rows={5}
+                className="font-mono text-sm"
+              />
+              <p className="text-xs text-muted-foreground">
+                Optional additional images for product gallery
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Specifications</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Label htmlFor="specifications">Specifications JSON</Label>
+            <Textarea
+              id="specifications"
+              value={specificationsText}
+              onChange={(e) => setSpecificationsText(e.target.value)}
+              placeholder='{\n  "Flow rate": "1.2 L/min",\n  "Voltage": "60 kV"\n}'
+              rows={10}
+              className="font-mono text-sm"
+            />
+            <p className="text-xs text-muted-foreground">
+              Stored as key/value pairs and rendered as a specs table on the public page
+            </p>
           </CardContent>
         </Card>
 

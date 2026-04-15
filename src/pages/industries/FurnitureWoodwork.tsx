@@ -102,8 +102,8 @@ export default function FurnitureWoodwork() {
   return (
     <>
       <Helmet>
-        <title>Furniture & Woodwork Finishing Automation | Robotic Spray Systems for Wood | TD</title>
-        <meta name="description" content="Robotic spray finishing systems for furniture and wood products. Automated lacquering, staining, and coating for cabinets, furniture, and architectural millwork. Consistent quality, high throughput, reduced labor dependency." />
+        <title>Furniture Coating Systems | Automated Finishing for Wood and Panels | TD</title>
+        <meta name="description" content="Furniture coating systems for cabinets, furniture panels, and wood components. Compare robotic, spray, and panel-oriented finishing layouts for consistent quality and throughput." />
         <link rel="canonical" href={`${DOMAIN}/industries/furniture-woodwork`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -135,14 +135,14 @@ export default function FurnitureWoodwork() {
         <section className="border-b border-border">
           <div className="container-wide py-12 md:py-20">
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-6 leading-tight">
-              Furniture & Woodwork Finishing Automation
+              Furniture Coating Systems
             </h1>
             <div className="max-w-3xl space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
               <p>
-                Furniture finishing automation is the engineering and integration of robotic spray systems, controlled-environment booths, and coating supply systems to deliver consistent, high-quality finishes on wood and wood-composite products with repeatable quality and stable production throughput.
+                Furniture coating systems combine robotic spray, controlled-environment booths, panel handling logic, and coating supply systems to deliver consistent finishes on wood and wood-composite products with repeatable quality and stable production throughput.
               </p>
               <p>
-                TD Robotic Painting Systems integrates robotic finishing cells for furniture manufacturers, cabinet makers, and architectural millwork producers worldwide, supporting a wide range of coatings from traditional lacquers to modern UV-curable finishes.
+                TD integrates robotic finishing cells for furniture manufacturers, cabinet makers, and architectural millwork producers worldwide, supporting a wide range of coatings from traditional lacquers to modern UV-curable finishes.
               </p>
             </div>
           </div>
@@ -435,6 +435,24 @@ export default function FurnitureWoodwork() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-border">
+          <div className="container-wide py-12 md:py-16">
+            <div className="flex items-center gap-2 mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <FileText className="h-3.5 w-3.5" />
+              Related Planning Guides
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Choose the right furniture finishing path</h2>
+            <div className="max-w-3xl space-y-3 text-sm text-muted-foreground">
+              <p>
+                Furniture projects usually need one more step after the industry overview: compare application methods, then decide whether the line is really a furniture spray line, a panel line, or a hybrid.
+              </p>
+              <p><Link to="/resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic" className="text-accent underline underline-offset-2 hover:text-accent/80">Furniture Coating Systems: Roller, Spray, or Robotic Line?</Link></p>
+              <p><Link to="/solutions/panel-coating-finishing-systems" className="text-accent underline underline-offset-2 hover:text-accent/80">Automated Coating and Finishing Systems for Panels</Link></p>
+              <p><Link to="/resources/faq/how-much-floor-space-does-an-automated-paint-line-need" className="text-accent underline underline-offset-2 hover:text-accent/80">How Much Floor Space Does an Automated Paint Line Need?</Link></p>
             </div>
           </div>
         </section>

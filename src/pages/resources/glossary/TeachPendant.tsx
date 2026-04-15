@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function TeachPendant() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.teachPendant || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function TeachPendant() {
     "@type": "WebPage",
     "name": term.metaTitle || "Robot Teach Pendant | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of robot teach pendant and its use in programming robotic painting systems.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

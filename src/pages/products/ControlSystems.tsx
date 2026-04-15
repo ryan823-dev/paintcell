@@ -76,7 +76,7 @@ const industry40Features = [
 ];
 
 export default function ControlSystems() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const cs = t.controlSystems || {};
 
   useEffect(() => {

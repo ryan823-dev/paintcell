@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function SprayPattern() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.sprayPattern || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function SprayPattern() {
     "@type": "WebPage",
     "name": term.metaTitle || "Spray Pattern | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of spray pattern characteristics and optimization in robotic painting.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

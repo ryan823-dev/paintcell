@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { useI18n } from "@/i18n";
 
 export default function RoboticPaintingCostGuide() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const article = t.knowledge?.roboticPaintingCostGuide || {};
 
   const articleSchema = {
@@ -21,7 +21,7 @@ export default function RoboticPaintingCostGuide() {
     "datePublished": "2026-01-20",
     "dateModified": "2026-02-12",
     "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
   
   const faqs = useMemo(() => [

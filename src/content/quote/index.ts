@@ -1,0 +1,541 @@
+import type { SiteShellContent } from "@/content/site-shell";
+import { shellContent as enShellContent } from "@/content/site-shell/en";
+import { shellContent as esShellContent } from "@/content/site-shell/es";
+import { shellContent as idShellContent } from "@/content/site-shell/id";
+import { shellContent as jaShellContent } from "@/content/site-shell/ja";
+import { shellContent as ptShellContent } from "@/content/site-shell/pt";
+import { shellContent as ruShellContent } from "@/content/site-shell/ru";
+import { shellContent as thShellContent } from "@/content/site-shell/th";
+import { shellContent as trShellContent } from "@/content/site-shell/tr";
+import { shellContent as viShellContent } from "@/content/site-shell/vi";
+import type { Locale } from "@/i18n/types";
+import type { WizardStep } from "@/types/quote";
+
+export type QuotePageContent = SiteShellContent["quote"] & {
+  homeLabel: string;
+};
+
+export interface QuoteWizardContent {
+  progress: {
+    stepLabel: string;
+    pipelineLabel: string;
+  };
+  stages: {
+    review: string;
+    contact: string;
+  };
+  actions: {
+    previous: string;
+    next: string;
+    continueToContact: string;
+    submitRequest: string;
+    submitting: string;
+  };
+  messages: {
+    submitSuccess: string;
+    submitError: string;
+    submitUnknownError: string;
+  };
+  summary: {
+    title: string;
+    description: string;
+    stepPrefix: string;
+    notSpecified: string;
+  };
+  contactForm: {
+    title: string;
+    description: string;
+    fields: {
+      nameLabel: string;
+      namePlaceholder: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      phoneLabel: string;
+      phonePlaceholder: string;
+      companyLabel: string;
+      companyPlaceholder: string;
+      roleLabel: string;
+      rolePlaceholder: string;
+      messageLabel: string;
+      messagePlaceholder: string;
+    };
+    nextStepsTitle: string;
+    nextSteps: string[];
+  };
+  steps: WizardStep[];
+}
+
+export interface QuoteContent {
+  page: QuotePageContent;
+  wizard: QuoteWizardContent;
+}
+
+const baseWizardSteps: WizardStep[] = [
+  {
+    title: "Application Context",
+    description: "Defines the scope and objectives for your paint automation project.",
+    helperText: "Helps determine robot reach, booth sizing, and automation complexity.",
+    questions: [
+      {
+        id: "project_scale",
+        label: "What is the scale of your painting project?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "paint_cell", label: "Paint Cell (Single Workstation)" },
+          { value: "paint_booth", label: "Paint Booth (Multiple Stations)" },
+          { value: "paint_shop", label: "Paint Shop (Full Facility)" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "application_material",
+        label: "What type of material will be painted?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "metal_parts", label: "Metal Parts" },
+          { value: "plastic_components", label: "Plastic Components" },
+          { value: "mixed_materials", label: "Mixed Materials" },
+          { value: "wood_composite", label: "Wood / Composite" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "project_primary_goal",
+        label: "What are your primary goals for this project? (Select all that apply)",
+        type: "checkbox",
+        required: true,
+        minSelections: 1,
+        options: [
+          { value: "quality_consistency", label: "Quality Consistency" },
+          { value: "increase_throughput", label: "Increase Throughput" },
+          { value: "reduce_labor", label: "Reduce Labor Dependency" },
+          { value: "safety_compliance", label: "Safety & Compliance" },
+          { value: "replace_manual", label: "Replace Manual Process" },
+        ],
+      },
+      {
+        id: "project_stage",
+        label: "What stage is your project in?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "early_concept", label: "Early Concept / Exploration" },
+          { value: "upgrade_existing", label: "Upgrade Existing System" },
+          { value: "capacity_expansion", label: "Capacity Expansion" },
+          { value: "new_line", label: "New Production Line" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Part Characteristics",
+    description: "Defines physical constraints for fixturing and robot motion planning.",
+    helperText: "Part geometry and presentation affect paint path complexity and cycle time.",
+    questions: [
+      {
+        id: "part_size",
+        label: "What is the typical part size?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "small_lt_300mm", label: "Small (< 300mm)" },
+          { value: "medium_300_800mm", label: "Medium (300-800mm)" },
+          { value: "large_gt_800mm", label: "Large (> 800mm)" },
+          { value: "varies", label: "Varies Significantly" },
+        ],
+      },
+      {
+        id: "part_weight",
+        label: "What is the typical part weight?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "lt_2kg", label: "< 2 kg" },
+          { value: "2_10kg", label: "2-10 kg" },
+          { value: "10_30kg", label: "10-30 kg" },
+          { value: "gt_30kg", label: "> 30 kg" },
+          { value: "varies", label: "Varies Significantly" },
+        ],
+      },
+      {
+        id: "part_geometry",
+        label: "How would you describe the part geometry?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "simple", label: "Simple (flat or basic shapes)" },
+          { value: "moderate", label: "Moderate (some contours)" },
+          { value: "complex", label: "Complex (multiple surfaces)" },
+          { value: "highly_irregular", label: "Highly Irregular" },
+        ],
+      },
+      {
+        id: "part_presentation",
+        label: "How are parts presented for painting?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "single_part", label: "Single Part Fixture" },
+          { value: "batch_rack", label: "Batch Rack" },
+          { value: "conveyor_hanger", label: "Conveyor / Hanger" },
+          { value: "not_standardized", label: "Not Standardized" },
+        ],
+      },
+      {
+        id: "surface_quality",
+        label: "What surface quality is required?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "functional_only", label: "Functional Only" },
+          { value: "standard_industrial", label: "Standard Industrial" },
+          { value: "high_cosmetic", label: "High Cosmetic / Class A" },
+          { value: "precision_critical", label: "Precision Critical" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Production & Throughput",
+    description: "Establishes takt time targets and cell capacity requirements.",
+    helperText: "Volume and schedule drive booth sizing, robot speed, and color change strategy.",
+    questions: [
+      {
+        id: "production_volume",
+        label: "What is your production volume profile?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "small_batch_high_mix", label: "Small Batch / High Mix" },
+          { value: "medium_volume", label: "Medium Volume" },
+          { value: "high_volume_takt", label: "High Volume / Takt-Based" },
+          { value: "varies", label: "Varies" },
+        ],
+      },
+      {
+        id: "operating_schedule",
+        label: "What is your operating schedule?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "one_shift", label: "One Shift" },
+          { value: "two_shifts", label: "Two Shifts" },
+          { value: "three_shifts_24_7", label: "Three Shifts / 24/7" },
+          { value: "variable", label: "Variable" },
+        ],
+      },
+      {
+        id: "changeover_frequency",
+        label: "How often do you change products or colors?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "multiple_daily", label: "Multiple Times Daily" },
+          { value: "daily", label: "Daily" },
+          { value: "weekly", label: "Weekly" },
+          { value: "rarely", label: "Rarely" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "production_priority",
+        label: "What is your top production priority?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "flexibility", label: "Flexibility" },
+          { value: "throughput", label: "Maximum Throughput" },
+          { value: "quality_consistency", label: "Quality Consistency" },
+          { value: "balanced", label: "Balanced Approach" },
+        ],
+      },
+      {
+        id: "production_flow",
+        label: "How will this paint cell fit into your production flow?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "standalone_cell", label: "Standalone Cell" },
+          { value: "integrated_existing", label: "Integrated with Existing Line" },
+          { value: "new_line", label: "Part of New Line" },
+          { value: "not_defined", label: "Not Yet Defined" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Automation Boundary",
+    description: "Defines integration scope between manual and automated operations.",
+    helperText: "Loading method and operator role affect cell layout and safety design.",
+    questions: [
+      {
+        id: "automation_level",
+        label: "What level of automation are you targeting?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "semi_automatic", label: "Semi-Automatic" },
+          { value: "fully_automatic", label: "Fully Automatic" },
+          { value: "phased_automation", label: "Phased Automation" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "part_loading_method",
+        label: "How will parts be loaded?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "manual", label: "Manual Loading" },
+          { value: "conveyor", label: "Conveyor System" },
+          { value: "robot", label: "Robot Loading" },
+          { value: "to_be_evaluated", label: "To Be Evaluated" },
+        ],
+      },
+      {
+        id: "operator_involvement",
+        label: "What level of operator involvement is expected?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "continuous", label: "Continuous" },
+          { value: "periodic", label: "Periodic Supervision" },
+          { value: "minimal", label: "Minimal" },
+          { value: "unattended", label: "Unattended Operation" },
+        ],
+      },
+      {
+        id: "process_control_level",
+        label: "What level of process control do you need?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "basic_repeatability", label: "Basic Repeatability" },
+          { value: "parameter_based", label: "Parameter-Based Control" },
+          { value: "recipe_based", label: "Recipe-Based Control" },
+          { value: "high_precision", label: "High Precision / Closed-Loop" },
+        ],
+      },
+      {
+        id: "future_expansion",
+        label: "Do you anticipate future expansion?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "no_expansion", label: "No Expansion Planned" },
+          { value: "capacity_increase", label: "Capacity Increase" },
+          { value: "more_part_types", label: "More Part Types" },
+          { value: "modular_required", label: "Modular Design Required" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Compliance & Site Conditions",
+    description: "Identifies regulatory requirements and site integration constraints.",
+    helperText:
+      "Hazardous area classification (ATEX/IECEx zones), ventilation, and paint chemistry drive explosion-proof equipment selection.",
+    questions: [
+      {
+        id: "compliance_requirements",
+        label: "What compliance / certification standards apply? (Select all that apply)",
+        type: "checkbox",
+        required: true,
+        minSelections: 1,
+        options: [
+          { value: "ce", label: "CE Marking (EU)" },
+          { value: "atex", label: "ATEX (EU Explosive Atmospheres)" },
+          { value: "iecex", label: "IECEx (International)" },
+          { value: "ul_nfpa", label: "UL / NFPA (North America)" },
+          { value: "tiis", label: "TIIS (Japan)" },
+          { value: "ccc_ex", label: "CCC Ex (China)" },
+          { value: "local_only", label: "Local Requirements Only" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "installation_environment",
+        label: "What is your installation environment?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "existing_booth", label: "Existing Paint Booth" },
+          { value: "standalone_cell", label: "Standalone Paint Cell (New)" },
+          { value: "integrated_line", label: "Integrated Production Line" },
+          { value: "brownfield_retrofit", label: "Brownfield Retrofit" },
+        ],
+      },
+      {
+        id: "available_floor_space",
+        label: "How much floor space is available?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "compact", label: "Compact (Limited Space)" },
+          { value: "standard", label: "Standard" },
+          { value: "flexible", label: "Flexible (No Constraints)" },
+          { value: "not_defined", label: "Not Yet Defined" },
+        ],
+      },
+      {
+        id: "utilities_availability",
+        label: "What utilities are available? (Select all that apply)",
+        type: "checkbox",
+        required: true,
+        minSelections: 1,
+        options: [
+          { value: "power", label: "Power Supply" },
+          { value: "compressed_air", label: "Compressed Air" },
+          { value: "exhaust_ventilation", label: "Exhaust / Ventilation" },
+          { value: "to_be_provided", label: "To Be Provided" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "paint_type",
+        label: "What type of paint / coating will be applied? (Select all that apply)",
+        type: "checkbox",
+        required: true,
+        minSelections: 1,
+        options: [
+          { value: "solvent_based", label: "Solvent-Based Paint" },
+          { value: "water_based", label: "Water-Based Paint" },
+          { value: "powder_coating", label: "Powder Coating" },
+          { value: "uv_curable", label: "UV Curable Coating" },
+          { value: "high_solids", label: "High-Solids Paint" },
+          { value: "multiple_types", label: "Multiple Types" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Project Readiness",
+    description: "Helps us align engineering resources with your timeline and stakeholders.",
+    helperText: "Timeline and decision structure guide the proposal and review process.",
+    questions: [
+      {
+        id: "project_timeline",
+        label: "What is your target project timeline?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "lt_6_months", label: "< 6 Months" },
+          { value: "6_12_months", label: "6-12 Months" },
+          { value: "gt_12_months", label: "> 12 Months" },
+          { value: "not_defined", label: "Not Yet Defined" },
+        ],
+      },
+      {
+        id: "decision_structure",
+        label: "What is your decision-making structure?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "single_decision_maker", label: "Single Decision Maker" },
+          { value: "small_technical_team", label: "Small Technical Team" },
+          { value: "cross_functional_team", label: "Cross-Functional Team" },
+          { value: "not_sure", label: "Not Sure" },
+        ],
+      },
+      {
+        id: "current_need",
+        label: "What type of support do you need right now?",
+        type: "radio",
+        required: true,
+        options: [
+          { value: "concept_layout", label: "Concept & Layout Discussion" },
+          { value: "feasibility_review", label: "Feasibility Review" },
+          { value: "budgetary_estimate", label: "Budgetary Estimate" },
+          { value: "compliance_risk_review", label: "Compliance / Risk Review" },
+          { value: "general_discussion", label: "General Discussion" },
+        ],
+      },
+    ],
+  },
+];
+
+const baseWizardContent: QuoteWizardContent = {
+  progress: {
+    stepLabel: "STEP",
+    pipelineLabel: "ASSESSMENT PIPELINE",
+  },
+  stages: {
+    review: "Engineering Review",
+    contact: "Contact",
+  },
+  actions: {
+    previous: "Previous",
+    next: "Next",
+    continueToContact: "Continue to Contact",
+    submitRequest: "Submit Request",
+    submitting: "Submitting...",
+  },
+  messages: {
+    submitSuccess: "Quote request submitted successfully!",
+    submitError: "Failed to send quote request. Please try again.",
+    submitUnknownError: "An error occurred. Please try again.",
+  },
+  summary: {
+    title: "Preliminary Engineering Review",
+    description:
+      "Review your Paint Cell configuration below. This summary will be evaluated by our engineering team. You can go back to make changes if needed.",
+    stepPrefix: "Step",
+    notSpecified: "Not specified",
+  },
+  contactForm: {
+    title: "Contact Information",
+    description:
+      "Complete your assessment by providing your contact details. We'll reach out to discuss your paint automation project.",
+    fields: {
+      nameLabel: "Full Name",
+      namePlaceholder: "John Smith",
+      emailLabel: "Email",
+      emailPlaceholder: "john@company.com",
+      phoneLabel: "Phone Number",
+      phonePlaceholder: "+1 (555) 000-0000",
+      companyLabel: "Company",
+      companyPlaceholder: "Company Name",
+      roleLabel: "Job Title / Role",
+      rolePlaceholder: "Engineering Manager",
+      messageLabel: "Additional Comments (Optional)",
+      messagePlaceholder: "Any additional information about your project...",
+    },
+    nextStepsTitle: "What happens next",
+    nextSteps: [
+      "Reviewed by human automation engineers",
+      "We follow up with clarification questions if needed",
+    ],
+  },
+  steps: baseWizardSteps,
+};
+
+function createQuoteContent(page: SiteShellContent["quote"]): QuoteContent {
+  return {
+    page: {
+      ...page,
+      homeLabel: "Home",
+    },
+    wizard: baseWizardContent,
+  };
+}
+
+const quoteContentByLocale: Record<Locale, QuoteContent> = {
+  en: createQuoteContent(enShellContent.quote),
+  es: createQuoteContent(esShellContent.quote),
+  id: createQuoteContent(idShellContent.quote),
+  ja: createQuoteContent(jaShellContent.quote),
+  pt: createQuoteContent(ptShellContent.quote),
+  ru: createQuoteContent(ruShellContent.quote),
+  th: createQuoteContent(thShellContent.quote),
+  tr: createQuoteContent(trShellContent.quote),
+  vi: createQuoteContent(viShellContent.quote),
+};
+
+export function getQuoteContent(locale: Locale): QuoteContent {
+  return quoteContentByLocale[locale] ?? quoteContentByLocale.en;
+}

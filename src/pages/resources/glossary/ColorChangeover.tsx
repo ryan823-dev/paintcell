@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function ColorChangeover() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.colorChangeover || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function ColorChangeover() {
     "@type": "WebPage",
     "name": term.metaTitle || "Color Changeover | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of color changeover and why it matters in paint cell feasibility assessment.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

@@ -4,8 +4,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/animations";
 import { ChevronRight, FileText, ArrowLeft } from "lucide-react";
-
-const DOMAIN = "https://tdpaint.com";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 // Category data - in production this would come from database
 const categoryData: Record<string, {
@@ -183,8 +182,15 @@ const categoryData: Record<string, {
   },
 };
 
-export default function ProductCategory() {
-  const { category } = useParams<{ category: string }>();
+interface ProductCategoryProps {
+  categoryKey?: string;
+}
+
+export default function ProductCategory({ categoryKey }: ProductCategoryProps) {
+  const { category: routeCategory } = useParams<{ category: string }>();
+  const category = categoryKey || routeCategory;
+  const canonicalPath = category ? `/products/${category}` : "/products";
+  const canonicalUrl = useCanonicalUrl(canonicalPath);
   const data = category ? categoryData[category] : null;
 
   if (!data) {
@@ -209,7 +215,7 @@ export default function ProductCategory() {
       <Helmet>
         <title>{data.title} | TD Painting Systems</title>
         <meta name="description" content={data.description || "Industrial coating equipment for automotive and industrial applications."} />
-        <link rel="canonical" href={`${DOMAIN}/products/${category}`} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="bg-background">

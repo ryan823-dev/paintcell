@@ -11,7 +11,7 @@ import { useI18n } from "@/i18n";
 const DOMAIN = "https://tdpaint.com";
 
 export default function FlameTreatment() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -21,7 +21,7 @@ export default function FlameTreatment() {
     "datePublished": "2026-03-18",
     "dateModified": "2026-03-18",
     "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   const faqs = [

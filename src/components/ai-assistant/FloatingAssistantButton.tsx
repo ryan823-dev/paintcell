@@ -1,10 +1,17 @@
-import { useState, useEffect } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AIChatDrawer } from "./AIChatDrawer";
+import { stripLocalePrefix } from "@/lib/seo";
+import { useSiteShellContent } from "@/hooks/useSiteShellContent";
+
+const AIChatDrawer = lazy(() =>
+  import("./AIChatDrawer").then((module) => ({
+    default: module.AIChatDrawer,
+  })),
+);
 
 export interface PageContext {
   currentPath: string;
@@ -16,13 +23,41 @@ export interface PageContext {
 }
 
 export function FloatingAssistantButton() {
+  const location = useLocation();
+  const currentPublicPath = stripLocalePrefix(location.pathname);
   const [isOpen, setIsOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [projectMessage, setProjectMessage] = useState<string | null>(null);
-  const [pageContext, setPageContext] = useState<PageContext>({ currentPath: "/" });
-  const location = useLocation();
+  const [pageContext, setPageContext] = useState<PageContext>({ currentPath: currentPublicPath });
+  const shell = useSiteShellContent();
 
-  const isHomepage = location.pathname === "/";
+  const isHomepage = currentPublicPath === "/";
+  const assistantCta = shell.assistant.cta;
+
+  const openAssistant = () => {
+    const msg = sessionStorage.getItem("project-init-message");
+    if (msg) {
+      setProjectMessage(msg);
+      sessionStorage.removeItem("project-init-message");
+    }
+
+    let nextIndustryContext = pageContext.industryContext;
+    const ctxRaw = sessionStorage.getItem("industry-context");
+    if (ctxRaw) {
+      try {
+        nextIndustryContext = JSON.parse(ctxRaw);
+      } catch {
+        nextIndustryContext = pageContext.industryContext;
+      }
+    }
+
+    setPageContext((prev) => ({
+      ...prev,
+      currentPath: currentPublicPath,
+      ...(nextIndustryContext ? { industryContext: nextIndustryContext } : {}),
+    }));
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     const animated = sessionStorage.getItem("assistant-animated");
@@ -35,53 +70,13 @@ export function FloatingAssistantButton() {
 
   // Keep pageContext.currentPath in sync with route changes
   useEffect(() => {
-    setPageContext(prev => ({ ...prev, currentPath: location.pathname }));
-  }, [location.pathname]);
-
-  // Listen for programmatic trigger from homepage panel
-  useEffect(() => {
-    const handleTrigger = () => {
-      const msg = sessionStorage.getItem("project-init-message");
-      if (msg) {
-        setProjectMessage(msg);
-        sessionStorage.removeItem("project-init-message");
-      }
-      // Read industry-context set by industry/solution pages
-      const ctxRaw = sessionStorage.getItem("industry-context");
-      if (ctxRaw) {
-        try {
-          const ctx = JSON.parse(ctxRaw);
-          setPageContext(prev => ({ ...prev, industryContext: ctx }));
-        } catch { /* ignore malformed */ }
-      }
-      setIsOpen(true);
-    };
-
-    const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
-    if (btn) {
-      btn.addEventListener('click', handleTrigger);
-      return () => btn.removeEventListener('click', handleTrigger);
-    }
-  }, []);
+    setPageContext((prev) => ({ ...prev, currentPath: currentPublicPath }));
+  }, [currentPublicPath]);
 
   return (
     <>
       {/* Hidden trigger element for programmatic opening */}
-      <button data-assistant-trigger className="hidden" onClick={() => {
-        const msg = sessionStorage.getItem("project-init-message");
-        if (msg) {
-          setProjectMessage(msg);
-          sessionStorage.removeItem("project-init-message");
-        }
-        const ctxRaw = sessionStorage.getItem("industry-context");
-        if (ctxRaw) {
-          try {
-            const ctx = JSON.parse(ctxRaw);
-            setPageContext(prev => ({ ...prev, industryContext: ctx }));
-          } catch { /* ignore malformed */ }
-        }
-        setIsOpen(true);
-      }} />
+      <button data-assistant-trigger className="hidden" onClick={openAssistant} />
 
       {/* Floating CTA — hidden on homepage since the panel IS the entry */}
       <AnimatePresence>
@@ -100,17 +95,7 @@ export function FloatingAssistantButton() {
               onAnimationComplete={() => setHasAnimated(true)}
             >
               <Button
-                onClick={() => {
-                  // Read industry-context when opening from floating button
-                  const ctxRaw = sessionStorage.getItem("industry-context");
-                  if (ctxRaw) {
-                    try {
-                      const ctx = JSON.parse(ctxRaw);
-                      setPageContext(prev => ({ ...prev, industryContext: ctx }));
-                    } catch { /* ignore malformed */ }
-                  }
-                  setIsOpen(true);
-                }}
+                onClick={openAssistant}
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
                   "bg-accent hover:bg-accent/90",
@@ -119,8 +104,8 @@ export function FloatingAssistantButton() {
                   "transition-all duration-200"
                 )}
               >
-                <span className="sm:hidden">Consult</span>
-                <span className="hidden sm:inline">Start a project consultation</span>
+                <span className="sm:hidden">{shell.assistant.mobileLabel}</span>
+                <span className="hidden sm:inline">{assistantCta}</span>
               </Button>
             </motion.div>
           </motion.div>
@@ -149,15 +134,17 @@ export function FloatingAssistantButton() {
       </AnimatePresence>
 
       {/* Chat Drawer */}
-      <AIChatDrawer
-        open={isOpen}
-        onOpenChange={(open) => {
-          setIsOpen(open);
-          if (!open) setProjectMessage(null);
-        }}
-        initialProjectMessage={projectMessage}
-        pageContext={pageContext}
-      />
+      <Suspense fallback={null}>
+        <AIChatDrawer
+          open={isOpen}
+          onOpenChange={(open) => {
+            setIsOpen(open);
+            if (!open) setProjectMessage(null);
+          }}
+          initialProjectMessage={projectMessage}
+          pageContext={pageContext}
+        />
+      </Suspense>
     </>
   );
 }

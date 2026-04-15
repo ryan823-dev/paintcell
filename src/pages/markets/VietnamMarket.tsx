@@ -1,42 +1,29 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
 import { Badge } from "@/components/ui/badge";
-import { useI18n } from "@/i18n/context";
 import { Factory, Users, Zap, Globe, CheckCircle, TrendingUp } from "lucide-react";
-
 export default function VietnamMarketPage() {
-  const { t, locale } = useI18n();
-  const isZh = locale === "zh-CN";
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Robotic Paint Booth Automation for Vietnam Manufacturing | TD Painting Systems",
-    "description": "Industrial robotic spray painting systems designed for Vietnam's growing automotive and electronics manufacturing sector. Turnkey solutions with local support.",
-    "inLanguage": "en",
-    "about": {
-      "@type": "Thing",
-      "name": "Industrial Paint Automation for Vietnam",
-      "description": "Robotic painting solutions for Vietnam manufacturing"
-    }
-  };
-
-  return (
-    <ResourcePageLayout
-      title="Robotic Paint Booth Automation for Vietnam Manufacturing"
-      metaTitle="Industrial Paint Automation Vietnam | Robotic Spray Painting Systems"
-      metaDescription="Industrial robotic spray painting systems for Vietnam's automotive, electronics, and appliance manufacturing. Complete turnkey solutions with local engineering support and competitive pricing."
-      breadcrumbs={[
-        { label: "Solutions", href: "/solutions" },
-        { label: "Global Markets" },
-        { label: "Vietnam" },
-      ]}
-      structuredData={structuredData}
-    >
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Robotic Paint Booth Automation for Vietnam Manufacturing | TD Painting Systems",
+        "description": "Industrial robotic spray painting systems designed for Vietnam's growing automotive and electronics manufacturing sector. Turnkey solutions with local support.",
+        "inLanguage": "en",
+        "about": {
+            "@type": "Thing",
+            "name": "Industrial Paint Automation for Vietnam",
+            "description": "Robotic painting solutions for Vietnam manufacturing"
+        }
+    };
+    return (<ResourcePageLayout title="Robotic Paint Booth Automation for Vietnam Manufacturing" metaTitle="Industrial Paint Automation Vietnam | Robotic Spray Painting Systems" metaDescription="Industrial robotic spray painting systems for Vietnam's automotive, electronics, and appliance manufacturing. Complete turnkey solutions with local engineering support and competitive pricing." breadcrumbs={[
+            { label: "Solutions", href: "/solutions" },
+            { label: "Global Markets" },
+            { label: "Vietnam" }
+        ]} structuredData={structuredData}>
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <Globe className="h-8 w-8 text-primary" />
+          <Globe className="h-8 w-8 text-primary"/>
           <Badge variant="outline">Southeast Asia Market</Badge>
         </div>
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -54,31 +41,31 @@ export default function VietnamMarketPage() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-green-600" />
+              <TrendingUp className="h-5 w-5 text-green-600"/>
               Market Drivers
             </h3>
             <ul className="space-y-3 text-muted-foreground">
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Vietnam FDI inflows exceeded $18B in 2023, with major investments in automotive and electronics sectors</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Japanese and Korean automotive suppliers (Toyota, Hyundai, VinFast) expanding local production</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Electronics manufacturing cluster in Bac Ninh, Vinh Phuc, and Hai Phong growing rapidly</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Labor costs rising 8-12% annually, driving automation investment</span>
               </li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
-              <Factory className="h-5 w-5 text-primary" />
+              <Factory className="h-5 w-5 text-primary"/>
               Target Industries
             </h3>
             <div className="grid grid-cols-2 gap-3">
@@ -108,7 +95,7 @@ export default function VietnamMarketPage() {
         <div className="grid md:grid-cols-3 gap-6">
           <div className="border rounded-lg p-6">
             <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-              <Users className="h-6 w-6 text-amber-600" />
+              <Users className="h-6 w-6 text-amber-600"/>
             </div>
             <h3 className="font-semibold mb-2">Skilled Labor Shortage</h3>
             <p className="text-sm text-muted-foreground">
@@ -117,7 +104,7 @@ export default function VietnamMarketPage() {
           </div>
           <div className="border rounded-lg p-6">
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-              <Zap className="h-6 w-6 text-blue-600" />
+              <Zap className="h-6 w-6 text-blue-600"/>
             </div>
             <h3 className="font-semibold mb-2">Production Efficiency</h3>
             <p className="text-sm text-muted-foreground">
@@ -126,7 +113,7 @@ export default function VietnamMarketPage() {
           </div>
           <div className="border rounded-lg p-6">
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-              <CheckCircle className="h-6 w-6 text-green-600" />
+              <CheckCircle className="h-6 w-6 text-green-600"/>
             </div>
             <h3 className="font-semibold mb-2">Global Quality Standards</h3>
             <p className="text-sm text-muted-foreground">
@@ -188,7 +175,7 @@ export default function VietnamMarketPage() {
         <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 rounded-lg p-6 border border-blue-200">
           <div className="flex items-start gap-4">
             <div className="w-16 h-16 bg-blue-200 rounded-lg flex items-center justify-center shrink-0">
-              <Factory className="h-8 w-8 text-blue-600" />
+              <Factory className="h-8 w-8 text-blue-600"/>
             </div>
             <div>
               <h3 className="font-semibold text-lg mb-2">Asia-Pacific Paint Automation Track Record</h3>
@@ -224,6 +211,5 @@ export default function VietnamMarketPage() {
           </a>
         </div>
       </div>
-    </ResourcePageLayout>
-  );
+    </ResourcePageLayout>);
 }

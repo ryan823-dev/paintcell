@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function FilmBuild() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.filmBuild || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function FilmBuild() {
     "@type": "WebPage",
     "name": term.metaTitle || "Film Build | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of film build and why it matters in paint cell feasibility assessment.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

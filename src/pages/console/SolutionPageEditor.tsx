@@ -1,63 +1,117 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft, Loader2, Trash2 } from "lucide-react";
+import { SaveButton } from "@/components/console";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SaveButton } from "@/components/console";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, ArrowLeft, Trash2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const jsonFields = [
-  "why_items", "scope_items", "scope_sub_sections", "component_items",
-  "process_steps", "application_scope", "config_options",
-  "technical_parameters", "constraints", "atex_items",
-  "roi_metrics", "timeline", "faqs", "related_industries", "related_knowledge", "eeat",
-];
+  "why_items",
+  "scope_items",
+  "scope_sub_sections",
+  "component_items",
+  "process_steps",
+  "application_scope",
+  "config_options",
+  "technical_parameters",
+  "constraints",
+  "atex_items",
+  "roi_metrics",
+  "timeline",
+  "faqs",
+  "related_industries",
+  "related_knowledge",
+  "eeat",
+] as const;
 
-const jsonFieldsZh = [
-  "why_items_zh", "scope_items_zh", "process_steps_zh", "faqs_zh",
-];
+interface SolutionPageForm {
+  slug: string;
+  meta_title: string;
+  meta_description: string;
+  hero_title: string;
+  hero_subtitle: string;
+  definition: string;
+  definition_secondary: string;
+  why_title: string;
+  why_intro: string;
+  why_items: string;
+  scope_intro: string;
+  scope_items: string;
+  scope_sub_sections: string;
+  components_intro: string;
+  component_items: string;
+  process_steps: string;
+  application_scope_intro: string;
+  application_scope: string;
+  config_options: string;
+  technical_parameters_intro: string;
+  technical_parameters: string;
+  constraints: string;
+  atex_intro: string;
+  atex_items: string;
+  roi_methodology: string;
+  roi_metrics: string;
+  deployment_note: string;
+  timeline: string;
+  faqs: string;
+  related_industries: string;
+  related_knowledge: string;
+  eeat: string;
+}
+
+const defaultForm: SolutionPageForm = {
+  slug: "",
+  meta_title: "",
+  meta_description: "",
+  hero_title: "",
+  hero_subtitle: "",
+  definition: "",
+  definition_secondary: "",
+  why_title: "",
+  why_intro: "",
+  why_items: "[]",
+  scope_intro: "",
+  scope_items: "[]",
+  scope_sub_sections: "[]",
+  components_intro: "",
+  component_items: "[]",
+  process_steps: "[]",
+  application_scope_intro: "",
+  application_scope: "[]",
+  config_options: "[]",
+  technical_parameters_intro: "",
+  technical_parameters: "[]",
+  constraints: "[]",
+  atex_intro: "",
+  atex_items: "[]",
+  roi_methodology: "",
+  roi_metrics: "[]",
+  deployment_note: "",
+  timeline: "[]",
+  faqs: "[]",
+  related_industries: "[]",
+  related_knowledge: "[]",
+  eeat: "{}",
+};
 
 export default function SolutionPageEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isNew = id === "new";
+
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState<Record<string, string>>({
-    slug: "",
-    meta_title: "", meta_title_zh: "",
-    meta_description: "", meta_description_zh: "",
-    hero_title: "", hero_title_zh: "",
-    hero_subtitle: "", hero_subtitle_zh: "",
-    definition: "", definition_zh: "",
-    definition_secondary: "", definition_secondary_zh: "",
-    why_title: "", why_title_zh: "",
-    why_intro: "", why_intro_zh: "",
-    scope_intro: "", scope_intro_zh: "",
-    components_intro: "",
-    application_scope_intro: "",
-    technical_parameters_intro: "",
-    atex_intro: "",
-    roi_methodology: "", roi_methodology_zh: "",
-    deployment_note: "", deployment_note_zh: "",
-    // JSON fields
-    why_items: "[]", scope_items: "[]", scope_sub_sections: "[]",
-    component_items: "[]", process_steps: "[]", application_scope: "[]",
-    config_options: "[]", technical_parameters: "[]", constraints: "[]",
-    atex_items: "[]", roi_metrics: "[]", timeline: "[]",
-    faqs: "[]", related_industries: "[]", related_knowledge: "[]",
-    eeat: "{}",
-    // ZH JSON
-    why_items_zh: "[]", scope_items_zh: "[]",
-    process_steps_zh: "[]", faqs_zh: "[]",
-  });
+  const [form, setForm] = useState<SolutionPageForm>(defaultForm);
 
   useEffect(() => {
-    if (!isNew && id) fetchPage();
+    if (!isNew && id) {
+      void fetchPage();
+    }
   }, [id, isNew]);
 
   const fetchPage = async () => {
@@ -68,71 +122,171 @@ export default function SolutionPageEditor() {
       .single();
 
     if (error || !data) {
-      toast({ title: "Error", description: "Page not found", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Page not found.",
+        variant: "destructive",
+      });
       navigate("/console/solution-pages");
       return;
     }
 
-    const newForm: Record<string, string> = {};
-    for (const key of Object.keys(form)) {
-      const val = (data as Record<string, unknown>)[key];
-      if (jsonFields.includes(key) || jsonFieldsZh.includes(key)) {
-        newForm[key] = JSON.stringify(val || (key === "eeat" ? {} : []), null, 2);
-      } else {
-        newForm[key] = (val as string) || "";
-      }
+    const nextForm = { ...defaultForm };
+
+    for (const key of Object.keys(nextForm) as Array<keyof SolutionPageForm>) {
+      const value = data[key];
+      nextForm[key] = (jsonFields as readonly string[]).includes(key)
+        ? JSON.stringify(value || (key === "eeat" ? {} : []), null, 2)
+        : typeof value === "string"
+          ? value
+          : "";
     }
-    setForm(newForm);
+
+    setForm(nextForm);
     setLoading(false);
   };
 
   const handleSave = async () => {
     if (!form.slug) {
-      toast({ title: "必填 / Required", description: "Slug is required", variant: "destructive" });
+      toast({
+        title: "Required",
+        description: "Slug is required.",
+        variant: "destructive",
+      });
       return;
     }
 
     setSaving(true);
-    try {
-      const payload: Record<string, unknown> = { updated_at: new Date().toISOString() };
-      for (const key of Object.keys(form)) {
-        if (jsonFields.includes(key) || jsonFieldsZh.includes(key)) {
-          payload[key] = JSON.parse(form[key]);
-        } else {
-          payload[key] = form[key] || null;
-        }
-      }
 
+    try {
+      const payload = {
+        slug: form.slug,
+        meta_title: form.meta_title || null,
+        meta_description: form.meta_description || null,
+        hero_title: form.hero_title || null,
+        hero_subtitle: form.hero_subtitle || null,
+        definition: form.definition || null,
+        definition_secondary: form.definition_secondary || null,
+        why_title: form.why_title || null,
+        why_intro: form.why_intro || null,
+        why_items: JSON.parse(form.why_items),
+        scope_intro: form.scope_intro || null,
+        scope_items: JSON.parse(form.scope_items),
+        scope_sub_sections: JSON.parse(form.scope_sub_sections),
+        components_intro: form.components_intro || null,
+        component_items: JSON.parse(form.component_items),
+        process_steps: JSON.parse(form.process_steps),
+        application_scope_intro: form.application_scope_intro || null,
+        application_scope: JSON.parse(form.application_scope),
+        config_options: JSON.parse(form.config_options),
+        technical_parameters_intro: form.technical_parameters_intro || null,
+        technical_parameters: JSON.parse(form.technical_parameters),
+        constraints: JSON.parse(form.constraints),
+        atex_intro: form.atex_intro || null,
+        atex_items: JSON.parse(form.atex_items),
+        roi_methodology: form.roi_methodology || null,
+        roi_metrics: JSON.parse(form.roi_metrics),
+        deployment_note: form.deployment_note || null,
+        timeline: JSON.parse(form.timeline),
+        faqs: JSON.parse(form.faqs),
+        related_industries: JSON.parse(form.related_industries),
+        related_knowledge: JSON.parse(form.related_knowledge),
+        eeat: JSON.parse(form.eeat),
+        updated_at: new Date().toISOString(),
+      };
+
+      const result = isNew
+        ? await supabase.from("solution_pages").insert(payload)
+        : await supabase.from("solution_pages").update(payload).eq("id", id);
+
+      if (result.error) throw result.error;
+
+      toast({ title: isNew ? "Created" : "Saved" });
       if (isNew) {
-        const { error } = await supabase.from("solution_pages").insert(payload as any);
-        if (error) throw error;
-        toast({ title: "已创建 / Created" });
         navigate("/console/solution-pages");
-      } else {
-        const { error } = await supabase.from("solution_pages").update(payload).eq("id", id!);
-        if (error) throw error;
-        toast({ title: "已保存 / Saved" });
       }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Unknown error";
-      toast({ title: "保存失败 / Failed", description: message, variant: "destructive" });
+    } catch (error: unknown) {
+      toast({
+        title: "Save Failed",
+        description: error instanceof Error ? error.message : "Unknown error",
+        variant: "destructive",
+      });
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!confirm("确认删除？/ Confirm delete?")) return;
-    const { error } = await supabase.from("solution_pages").delete().eq("id", id);
+    if (!confirm("Delete this solution page?")) return;
+
+    const { error } = await supabase
+      .from("solution_pages")
+      .delete()
+      .eq("id", id);
+
     if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    } else {
-      toast({ title: "已删除 / Deleted" });
-      navigate("/console/solution-pages");
+      toast({
+        title: "Delete Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
     }
+
+    toast({ title: "Deleted" });
+    navigate("/console/solution-pages");
   };
 
-  const update = (key: string, value: string) => setForm(prev => ({ ...prev, [key]: value }));
+  const update = (key: keyof SolutionPageForm, value: string) => {
+    setForm((previous) => ({ ...previous, [key]: value }));
+  };
+
+  const textSection = (
+    title: string,
+    fields: Array<{ label: string; key: keyof SolutionPageForm; textarea?: boolean }>,
+  ) => (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {fields.map((field) => (
+          <div key={field.key} className="space-y-2">
+            <Label>{field.label}</Label>
+            {field.textarea ? (
+              <Textarea
+                value={form[field.key]}
+                onChange={(event) => update(field.key, event.target.value)}
+                rows={3}
+              />
+            ) : (
+              <Input
+                value={form[field.key]}
+                onChange={(event) => update(field.key, event.target.value)}
+              />
+            )}
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+
+  const jsonSection = (title: string, key: keyof SolutionPageForm) => (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <Label>JSON</Label>
+        <Textarea
+          value={form[key]}
+          onChange={(event) => update(key, event.target.value)}
+          rows={6}
+          className="font-mono text-xs"
+        />
+      </CardContent>
+    </Card>
+  );
 
   if (loading) {
     return (
@@ -142,135 +296,80 @@ export default function SolutionPageEditor() {
     );
   }
 
-  const textSection = (title: string, fields: { label: string; key: string; textarea?: boolean }[]) => (
-    <Card>
-      <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
-      <CardContent className="space-y-4">
-        {fields.map(f => (
-          <div key={f.key} className="space-y-2">
-            <Label>{f.label}</Label>
-            {f.textarea ? (
-              <Textarea value={form[f.key]} onChange={e => update(f.key, e.target.value)} rows={3} />
-            ) : (
-              <Input value={form[f.key]} onChange={e => update(f.key, e.target.value)} />
-            )}
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  );
-
-  const jsonSection = (title: string, key: string, zhKey?: string) => (
-    <Card>
-      <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
-      <CardContent className="space-y-4">
-        <div className={zhKey ? "grid grid-cols-2 gap-4" : ""}>
-          <div className="space-y-2">
-            <Label>EN (JSON)</Label>
-            <Textarea value={form[key]} onChange={e => update(key, e.target.value)} rows={6} className="font-mono text-xs" />
-          </div>
-          {zhKey && (
-            <div className="space-y-2">
-              <Label>ZH (JSON)</Label>
-              <Textarea value={form[zhKey]} onChange={e => update(zhKey, e.target.value)} rows={6} className="font-mono text-xs" />
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate("/console/solution-pages")}>
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <h1 className="text-2xl font-bold">{isNew ? "新建方案页 / New" : "编辑方案页 / Edit"}</h1>
+          <h1 className="text-2xl font-bold">{isNew ? "New Solution Page" : "Edit Solution Page"}</h1>
         </div>
+
         <div className="flex gap-2">
-          {!isNew && (
-            <Button variant="destructive" size="sm" onClick={handleDelete}>
-              <Trash2 className="mr-2 h-4 w-4" /> 删除
+          {!isNew ? (
+            <Button variant="destructive" size="sm" onClick={() => void handleDelete()}>
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
             </Button>
-          )}
+          ) : null}
           <SaveButton saving={saving} onClick={handleSave} />
         </div>
       </div>
 
       <div className="space-y-6">
-        {textSection("基本信息 / Basic", [
-          { label: "Slug (URL路径)", key: "slug" },
-        ])}
+        {textSection("Basic", [{ label: "Slug", key: "slug" }])}
 
         {textSection("SEO", [
-          { label: "Meta Title EN", key: "meta_title" },
-          { label: "Meta Title ZH", key: "meta_title_zh" },
-          { label: "Meta Description EN", key: "meta_description", textarea: true },
-          { label: "Meta Description ZH", key: "meta_description_zh", textarea: true },
+          { label: "Meta Title", key: "meta_title" },
+          { label: "Meta Description", key: "meta_description", textarea: true },
         ])}
 
-        {textSection("Hero 区块", [
-          { label: "Hero Title EN", key: "hero_title" },
-          { label: "Hero Title ZH", key: "hero_title_zh" },
-          { label: "Hero Subtitle EN", key: "hero_subtitle", textarea: true },
-          { label: "Hero Subtitle ZH", key: "hero_subtitle_zh", textarea: true },
+        {textSection("Hero", [
+          { label: "Hero Title", key: "hero_title" },
+          { label: "Hero Subtitle", key: "hero_subtitle", textarea: true },
         ])}
 
-        {textSection("技术定义 / Definition", [
-          { label: "Definition EN", key: "definition", textarea: true },
-          { label: "Definition ZH", key: "definition_zh", textarea: true },
-          { label: "Secondary EN", key: "definition_secondary", textarea: true },
-          { label: "Secondary ZH", key: "definition_secondary_zh", textarea: true },
+        {textSection("Definition", [
+          { label: "Definition", key: "definition", textarea: true },
+          { label: "Definition Secondary", key: "definition_secondary", textarea: true },
         ])}
 
-        {textSection("Why 区块", [
-          { label: "Why Title EN", key: "why_title" },
-          { label: "Why Title ZH", key: "why_title_zh" },
-          { label: "Why Intro EN", key: "why_intro", textarea: true },
-          { label: "Why Intro ZH", key: "why_intro_zh", textarea: true },
+        {textSection("Why", [
+          { label: "Why Title", key: "why_title" },
+          { label: "Why Intro", key: "why_intro", textarea: true },
         ])}
-        {jsonSection("Why Items", "why_items", "why_items_zh")}
+        {jsonSection("Why Items", "why_items")}
 
-        {textSection("Scope 区块", [
-          { label: "Scope Intro EN", key: "scope_intro", textarea: true },
-          { label: "Scope Intro ZH", key: "scope_intro_zh", textarea: true },
-        ])}
-        {jsonSection("Scope Items", "scope_items", "scope_items_zh")}
+        {textSection("Scope", [{ label: "Scope Intro", key: "scope_intro", textarea: true }])}
+        {jsonSection("Scope Items", "scope_items")}
         {jsonSection("Scope Sub-Sections", "scope_sub_sections")}
-        {jsonSection("Components", "component_items")}
-        {jsonSection("Process Steps", "process_steps", "process_steps_zh")}
 
-        {textSection("应用范围 / Application", [
-          { label: "Intro", key: "application_scope_intro", textarea: true },
+        {textSection("Components", [{ label: "Components Intro", key: "components_intro", textarea: true }])}
+        {jsonSection("Component Items", "component_items")}
+        {jsonSection("Process Steps", "process_steps")}
+
+        {textSection("Application", [
+          { label: "Application Scope Intro", key: "application_scope_intro", textarea: true },
         ])}
         {jsonSection("Application Scope", "application_scope")}
         {jsonSection("Config Options", "config_options")}
 
-        {textSection("技术参数 / Technical", [
-          { label: "Intro", key: "technical_parameters_intro", textarea: true },
+        {textSection("Technical Parameters", [
+          { label: "Technical Parameters Intro", key: "technical_parameters_intro", textarea: true },
         ])}
         {jsonSection("Technical Parameters", "technical_parameters")}
         {jsonSection("Constraints", "constraints")}
 
-        {textSection("ATEX", [
-          { label: "ATEX Intro", key: "atex_intro", textarea: true },
-        ])}
+        {textSection("ATEX", [{ label: "ATEX Intro", key: "atex_intro", textarea: true }])}
         {jsonSection("ATEX Items", "atex_items")}
 
-        {textSection("ROI", [
-          { label: "ROI Methodology EN", key: "roi_methodology", textarea: true },
-          { label: "ROI Methodology ZH", key: "roi_methodology_zh", textarea: true },
-        ])}
+        {textSection("ROI", [{ label: "ROI Methodology", key: "roi_methodology", textarea: true }])}
         {jsonSection("ROI Metrics", "roi_metrics")}
 
-        {textSection("部署 / Deployment", [
-          { label: "Deployment Note EN", key: "deployment_note", textarea: true },
-          { label: "Deployment Note ZH", key: "deployment_note_zh", textarea: true },
-        ])}
+        {textSection("Deployment", [{ label: "Deployment Note", key: "deployment_note", textarea: true }])}
         {jsonSection("Timeline", "timeline")}
-        {jsonSection("FAQs", "faqs", "faqs_zh")}
+        {jsonSection("FAQs", "faqs")}
         {jsonSection("Related Industries", "related_industries")}
         {jsonSection("Related Knowledge", "related_knowledge")}
         {jsonSection("E-E-A-T", "eeat")}

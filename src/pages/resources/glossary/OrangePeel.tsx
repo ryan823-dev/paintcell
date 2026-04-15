@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function OrangePeel() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.orangePeel || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function OrangePeel() {
     "@type": "WebPage",
     "name": term.metaTitle || "Orange Peel Defect | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of orange peel defect in paint finishing and how to prevent it in robotic painting.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (

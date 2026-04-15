@@ -5,7 +5,7 @@ import { ArrowRight, FileText, ClipboardCheck, CheckSquare } from "lucide-react"
 import { useI18n } from "@/i18n/context";
 
 export default function ToolsTemplates() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const res = t.resources?.toolsTemplates || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
   const sections = t.resources?.sections || {};
@@ -16,7 +16,7 @@ export default function ToolsTemplates() {
     "@type": "WebPage",
     "name": res.metaTitle || "Tools & Templates | Paint Cell Resources",
     "description": res.metaDesc || "Practical RFQ templates and checklists for paint cell feasibility and site readiness.",
-    "inLanguage": locale,
+    "inLanguage": "en",
     "breadcrumb": {
       "@type": "BreadcrumbList",
       "itemListElement": [

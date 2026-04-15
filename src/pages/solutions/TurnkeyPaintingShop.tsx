@@ -38,7 +38,7 @@ export default function TurnkeyPaintingShop() {
   return (
     <>
       <Helmet>
-        <title>Turnkey Painting Shops | Complete Automotive & Industrial Coating Lines | TD Painting Systems</title>
+        <title>Turnkey Painting Shops | Complete Automotive & Industrial Paint Lines | TD Painting Systems</title>
         <meta name="description" content="Complete turnkey painting shop solutions for automotive body coating, parts painting, and industrial finishing. From concept design to production commissioning - full project delivery." />
         <link rel="canonical" href={`${DOMAIN}/solutions/turnkey-painting-shop`} />
       </Helmet>

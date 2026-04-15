@@ -8,7 +8,7 @@ interface BilingualFieldProps {
   valueEn?: string | null;
   valueZh?: string | null;
   onChangeEn: (value: string) => void;
-  onChangeZh: (value: string) => void;
+  onChangeZh?: (value: string) => void;
   multiline?: boolean;
   rows?: number;
   hint?: string;
@@ -27,15 +27,16 @@ export function BilingualField({
   className,
 }: BilingualFieldProps) {
   const InputComponent = multiline ? Textarea : Input;
+  const showSecondaryField = typeof onChangeZh === "function";
 
   return (
     <div className={cn("space-y-3", className)}>
       <div>
         <Label className="text-sm font-medium">{label}</Label>
-        {hint && <p className="text-xs text-muted-foreground mt-0.5">{hint}</p>}
+        {hint ? <p className="text-xs text-muted-foreground mt-0.5">{hint}</p> : null}
       </div>
-      
-      <div className="grid md:grid-cols-2 gap-3">
+
+      <div className={cn("grid gap-3", showSecondaryField ? "md:grid-cols-2" : null)}>
         <div className="space-y-1.5">
           <Label className="text-xs text-muted-foreground font-normal">
             English (EN)
@@ -47,17 +48,20 @@ export function BilingualField({
             {...(multiline ? { rows } : {})}
           />
         </div>
-        <div className="space-y-1.5">
-          <Label className="text-xs text-muted-foreground font-normal">
-            中文 (ZH)
-          </Label>
-          <InputComponent
-            value={valueZh || ""}
-            onChange={(e) => onChangeZh(e.target.value)}
-            placeholder="输入中文..."
-            {...(multiline ? { rows } : {})}
-          />
-        </div>
+
+        {showSecondaryField ? (
+          <div className="space-y-1.5">
+            <Label className="text-xs text-muted-foreground font-normal">
+              涓枃 (ZH)
+            </Label>
+            <InputComponent
+              value={valueZh || ""}
+              onChange={(e) => onChangeZh(e.target.value)}
+              placeholder="杈撳叆涓枃..."
+              {...(multiline ? { rows } : {})}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );

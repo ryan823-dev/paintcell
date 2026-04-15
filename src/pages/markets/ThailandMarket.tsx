@@ -1,42 +1,29 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
 import { Badge } from "@/components/ui/badge";
-import { useI18n } from "@/i18n/context";
 import { Factory, Users, Zap, Globe, CheckCircle, TrendingUp, Shield } from "lucide-react";
-
 export default function ThailandMarketPage() {
-  const { t, locale } = useI18n();
-  const isZh = locale === "zh-CN";
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Robotic Paint Booth Automation for Thailand Industry 4.0 | TD Painting Systems",
-    "description": "Industrial robotic spray painting systems supporting Thailand's automotive and electronics manufacturing growth under Industry 4.0 initiative.",
-    "inLanguage": "en",
-    "about": {
-      "@type": "Thing",
-      "name": "Industrial Paint Automation for Thailand",
-      "description": "Robotic painting solutions for Thailand manufacturing"
-    }
-  };
-
-  return (
-    <ResourcePageLayout
-      title="Robotic Paint Booth Automation for Thailand Manufacturing"
-      metaTitle="Industrial Paint Automation Thailand | Robotic Spray Painting Systems"
-      metaDescription="Industrial robotic spray painting systems for Thailand's automotive, electronics, and industrial manufacturing. Complete turnkey solutions supporting Thailand 4.0 initiative with local engineering support."
-      breadcrumbs={[
-        { label: "Solutions", href: "/solutions" },
-        { label: "Global Markets" },
-        {label: "Thailand" },
-      ]}
-      structuredData={structuredData}
-    >
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Robotic Paint Booth Automation for Thailand Industry 4.0 | TD Painting Systems",
+        "description": "Industrial robotic spray painting systems supporting Thailand's automotive and electronics manufacturing growth under Industry 4.0 initiative.",
+        "inLanguage": "en",
+        "about": {
+            "@type": "Thing",
+            "name": "Industrial Paint Automation for Thailand",
+            "description": "Robotic painting solutions for Thailand manufacturing"
+        }
+    };
+    return (<ResourcePageLayout title="Robotic Paint Booth Automation for Thailand Manufacturing" metaTitle="Industrial Paint Automation Thailand | Robotic Spray Painting Systems" metaDescription="Industrial robotic spray painting systems for Thailand's automotive, electronics, and industrial manufacturing. Complete turnkey solutions supporting Thailand 4.0 initiative with local engineering support." breadcrumbs={[
+            { label: "Solutions", href: "/solutions" },
+            { label: "Global Markets" },
+            { label: "Thailand" }
+        ]} structuredData={structuredData}>
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-8 mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <Globe className="h-8 w-8 text-primary" />
+          <Globe className="h-8 w-8 text-primary"/>
           <Badge variant="outline">Southeast Asia Market</Badge>
         </div>
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -54,31 +41,31 @@ export default function ThailandMarketPage() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-green-600" />
+              <TrendingUp className="h-5 w-5 text-green-600"/>
               Thailand 4.0 Opportunity
             </h3>
             <ul className="space-y-3 text-muted-foreground">
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Thailand is Southeast Asia's largest automotive manufacturer, producing over 1.8 million vehicles annually</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Government Thailand 4.0 initiative promotes automation and high-value manufacturing</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Eastern Economic Corridor (EEC) attracting significant FDI in advanced manufacturing</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <CheckCircle className="h-5 w-5 text-green-600 shrink-0 mt-0.5"/>
                 <span>Strong automotive supply chain with Japanese, Chinese, and Thai OEMs</span>
               </li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
-              <Factory className="h-5 w-5 text-primary" />
+              <Factory className="h-5 w-5 text-primary"/>
               Key Industry Sectors
             </h3>
             <div className="space-y-3">
@@ -104,7 +91,7 @@ export default function ThailandMarketPage() {
         <div className="grid md:grid-cols-3 gap-6">
           <div className="border rounded-lg p-6">
             <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-              <Users className="h-6 w-6 text-amber-600" />
+              <Users className="h-6 w-6 text-amber-600"/>
             </div>
             <h3 className="font-semibold mb-2">Skilled Workforce</h3>
             <p className="text-sm text-muted-foreground">
@@ -113,7 +100,7 @@ export default function ThailandMarketPage() {
           </div>
           <div className="border rounded-lg p-6">
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-              <Shield className="h-6 w-6 text-blue-600" />
+              <Shield className="h-6 w-6 text-blue-600"/>
             </div>
             <h3 className="font-semibold mb-2">Quality Compliance</h3>
             <p className="text-sm text-muted-foreground">
@@ -122,7 +109,7 @@ export default function ThailandMarketPage() {
           </div>
           <div className="border rounded-lg p-6">
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-              <Zap className="h-6 w-6 text-green-600" />
+              <Zap className="h-6 w-6 text-green-600"/>
             </div>
             <h3 className="font-semibold mb-2">Export Competitiveness</h3>
             <p className="text-sm text-muted-foreground">
@@ -186,7 +173,7 @@ export default function ThailandMarketPage() {
         <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 rounded-lg p-6 border border-blue-200">
           <div className="flex items-start gap-4">
             <div className="w-16 h-16 bg-blue-200 rounded-lg flex items-center justify-center shrink-0">
-              <Factory className="h-8 w-8 text-blue-600" />
+              <Factory className="h-8 w-8 text-blue-600"/>
             </div>
             <div>
               <h3 className="font-semibold text-lg mb-2">Thailand & ASEAN Paint Automation Track Record</h3>
@@ -223,6 +210,5 @@ export default function ThailandMarketPage() {
           </a>
         </div>
       </div>
-    </ResourcePageLayout>
-  );
+    </ResourcePageLayout>);
 }

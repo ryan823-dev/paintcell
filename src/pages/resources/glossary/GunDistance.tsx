@@ -3,7 +3,7 @@ import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
 export default function GunDistance() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const term = t.glossaryTerms?.gunDistance || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
@@ -13,7 +13,7 @@ export default function GunDistance() {
     "@type": "WebPage",
     "name": term.metaTitle || "Gun Distance | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of gun-to-part distance and its impact on spray painting quality.",
-    "inLanguage": locale,
+    "inLanguage": "en",
   };
 
   return (
