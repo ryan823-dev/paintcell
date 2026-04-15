@@ -39,8 +39,8 @@ export function InlineChatPanel({ initialMessage, onClose }: InlineChatPanelProp
         <AIChatPanel
           onClose={onClose}
           initialMessage={initialMessage}
-          customStreamChat={async (messages, onChunk) => {
-            await streamHomepageConsultationReply(messages, onChunk);
+          customStreamChat={async (messages, handlers) => {
+            await streamHomepageConsultationReply(messages, handlers);
           }}
         />
       </div>

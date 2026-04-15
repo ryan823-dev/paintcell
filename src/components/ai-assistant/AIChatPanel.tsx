@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, FileText, Settings2, GripHorizontal } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
@@ -19,7 +20,10 @@ interface AIChatPanelProps {
   pageContext?: PageContext;
   customStreamChat?: (
     messages: ChatMessageType[],
-    onChunk: (chunk: string) => void,
+    handlers: {
+      onReasoningChunk?: (chunk: string) => void;
+      onContentChunk: (chunk: string) => void;
+    },
   ) => Promise<void>;
 }
 
@@ -42,14 +46,81 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
   const [summary, setSummary] = useState("");
   const [extractedRequirements, setExtractedRequirements] = useState<Partial<QuoteFormData>>({});
   const [showContactForm, setShowContactForm] = useState(false);
+  const [chatError, setChatError] = useState<string | null>(null);
+  const [pendingReasoningOpen, setPendingReasoningOpen] = useState(false);
+  const [pendingAssistant, setPendingAssistant] = useState<{
+    content: string;
+    reasoningContent: string;
+    reasoningStartedAt: number | null;
+    reasoningEndedAt: number | null;
+  } | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScrollRef = useRef(true);
+  const shouldShowStatusIndicator =
+    currentStatus !== 'idle' &&
+    (!customStreamChat || !pendingAssistant || (!pendingAssistant.reasoningContent && !pendingAssistant.content));
+
+  const getReadableChatError = (error: unknown) => {
+    if (!(error instanceof Error)) {
+      return "Something went wrong while contacting PaintCell AI. Please try again.";
+    }
+
+    const message = error.message || "";
+
+    if (message.includes("401") || message.toLowerCase().includes("unauthorized")) {
+      return "PaintCell AI could not authenticate the request. Please check the API configuration and try again.";
+    }
+
+    if (message.includes("403") || message.toLowerCase().includes("forbidden")) {
+      return "PaintCell AI rejected the request. Please verify the API access settings and try again.";
+    }
+
+    if (message.includes("429") || message.toLowerCase().includes("rate")) {
+      return "PaintCell AI is temporarily rate-limited. Please wait a moment and try again.";
+    }
+
+    return "PaintCell AI could not generate a response right now. Please try again.";
+  };
+
+  const getScrollViewport = useCallback(() => {
+    return scrollRef.current?.querySelector("[data-radix-scroll-area-viewport]") as HTMLDivElement | null;
+  }, []);
+
+  const scrollToBottom = useCallback((force = false) => {
+    if (!force && !shouldAutoScrollRef.current) {
+      return;
+    }
+
+    const viewport = getScrollViewport();
+    if (!viewport) {
+      return;
+    }
+
+    viewport.scrollTop = viewport.scrollHeight;
+  }, [getScrollViewport]);
 
   // Auto-scroll to bottom
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    requestAnimationFrame(() => {
+      scrollToBottom();
+    });
+  }, [messages, pendingAssistant, showSummary, chatError, currentStatus, scrollToBottom]);
+
+  useEffect(() => {
+    const viewport = getScrollViewport();
+    if (!viewport) {
+      return;
     }
-  }, [messages, showSummary]);
+
+    const handleScroll = () => {
+      const distanceFromBottom = viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight;
+      shouldAutoScrollRef.current = distanceFromBottom <= 32;
+    };
+
+    handleScroll();
+    viewport.addEventListener("scroll", handleScroll, { passive: true });
+    return () => viewport.removeEventListener("scroll", handleScroll);
+  }, [getScrollViewport]);
 
   // Send initial message if provided
   useEffect(() => {
@@ -85,30 +156,88 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
     
     setMessages(prev => [...prev, userMsg]);
     setIsLoading(true);
+    setChatError(null);
+    setPendingAssistant(null);
+    setPendingReasoningOpen(false);
+    shouldAutoScrollRef.current = true;
     updateStatus('processing', "Sending your message to PaintCell AI...");
+    requestAnimationFrame(() => {
+      scrollToBottom(true);
+    });
 
     let assistantContent = "";
     
     try {
-      updateStatus('thinking', "PaintCell AI is analyzing your question...");
-      
-      // Add assistant message placeholder
-      setMessages(prev => [...prev, { role: "assistant", content: "", timestamp: new Date() }]);
-      updateStatus('typing', "PaintCell AI is preparing a response...");
-
       if (customStreamChat) {
-        await customStreamChat([...messages, userMsg], (content) => {
-          assistantContent += content;
-          setMessages(prev => {
-            const updated = [...prev];
-            updated[updated.length - 1] = {
-              ...updated[updated.length - 1],
+        let reasoningContent = "";
+        let reasoningStartedAt: number | null = null;
+        let reasoningEndedAt: number | null = null;
+        let hasClearedProcessingStatus = false;
+
+        await customStreamChat([...messages, userMsg], {
+          onReasoningChunk: (chunk) => {
+            if (!hasClearedProcessingStatus) {
+              hasClearedProcessingStatus = true;
+              updateStatus('idle');
+            }
+            if (reasoningStartedAt === null) {
+              reasoningStartedAt = Date.now();
+            }
+            reasoningContent += chunk;
+            setPendingAssistant({
               content: assistantContent,
-            };
-            return updated;
-          });
+              reasoningContent,
+              reasoningStartedAt,
+              reasoningEndedAt,
+            });
+          },
+          onContentChunk: (content) => {
+            if (!hasClearedProcessingStatus) {
+              hasClearedProcessingStatus = true;
+              updateStatus('idle');
+            }
+            if (reasoningStartedAt !== null && reasoningEndedAt === null) {
+              reasoningEndedAt = Date.now();
+            }
+
+            assistantContent += content;
+            setPendingAssistant({
+              content: assistantContent,
+              reasoningContent,
+              reasoningStartedAt,
+              reasoningEndedAt,
+            });
+          },
         });
+
+        if (reasoningStartedAt !== null && reasoningEndedAt === null) {
+          reasoningEndedAt = Date.now();
+        }
+
+        if (assistantContent.trim() || reasoningContent.trim()) {
+          setMessages(prev => [
+            ...prev,
+            {
+              role: "assistant",
+              content: assistantContent,
+              reasoningContent: reasoningContent || undefined,
+              reasoningDurationMs:
+                reasoningStartedAt !== null && reasoningEndedAt !== null
+                  ? reasoningEndedAt - reasoningStartedAt
+                  : undefined,
+              reasoningExpanded: pendingReasoningOpen,
+              timestamp: new Date(),
+            },
+          ]);
+        }
+        setPendingAssistant(null);
       } else {
+        updateStatus('thinking', "PaintCell AI is analyzing your question...");
+        
+        // Add assistant message placeholder
+        setMessages(prev => [...prev, { role: "assistant", content: "", timestamp: new Date() }]);
+        updateStatus('typing', "PaintCell AI is preparing a response...");
+
         const response = await fetch(CHAT_URL, {
           method: "POST",
           headers: {
@@ -172,16 +301,20 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
           }
         }
       }
-      
-      updateStatus('completed', "Response received");
+
+      if (!customStreamChat) {
+        updateStatus('completed', "Response received");
+      }
     } catch (error) {
       // Log error without exposing details to console in production
       if (import.meta.env.DEV) {
         console.error("Chat error:", error);
       }
+      setChatError(getReadableChatError(error));
       toast.error("Failed to send message. Please try again.");
-      // Remove the empty assistant message if error
-      setMessages(prev => prev.filter(m => m.content !== ""));
+      // Remove any empty assistant placeholder if error
+      setMessages(prev => prev.filter(m => !(m.role === "assistant" && m.content === "")));
+      setPendingAssistant(null);
       updateStatus('idle');
     } finally {
       setTimeout(() => {
@@ -208,6 +341,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
   // Generate summary
   const handleGenerateSummary = async () => {
     setIsLoading(true);
+    setChatError(null);
     updateStatus('generating-summary', "Compiling project requirements and generating summary...");
     try {
       // Get both summary and extracted requirements
@@ -299,12 +433,36 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
           {messages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
+
+          {pendingAssistant && (pendingAssistant.reasoningContent.trim() || pendingAssistant.content.trim()) && (
+            <ChatMessage
+              key="pending-assistant"
+              message={{
+                role: "assistant",
+                content: pendingAssistant.content,
+                reasoningContent: pendingAssistant.reasoningContent || undefined,
+                reasoningDurationMs:
+                  pendingAssistant.reasoningStartedAt !== null
+                    ? (pendingAssistant.reasoningEndedAt ?? Date.now()) - pendingAssistant.reasoningStartedAt
+                    : undefined,
+                timestamp: new Date(),
+              }}
+              reasoningOpen={pendingReasoningOpen}
+              onReasoningOpenChange={setPendingReasoningOpen}
+            />
+          )}
           
-          {(isLoading || currentStatus !== 'idle') && messages[messages.length - 1]?.role !== "assistant" && (
+          {shouldShowStatusIndicator && (
             <ChatStatusIndicator 
               status={currentStatus} 
               message={statusMessage} 
             />
+          )}
+
+          {chatError && (
+            <Alert variant="destructive" className="border-destructive/40 bg-destructive/5">
+              <AlertDescription>{chatError}</AlertDescription>
+            </Alert>
           )}
 
           {/* Summary Section */}
@@ -408,15 +566,6 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
               <Send className="h-4 w-4" />
             </Button>
           </div>
-          {/* Display current status message below the input */}
-          {currentStatus !== 'idle' && (
-            <div className="mt-2">
-              <ChatStatusIndicator 
-                status={currentStatus} 
-                message={statusMessage} 
-              />
-            </div>
-          )}
         </div>
       )}
 

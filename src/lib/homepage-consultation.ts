@@ -31,7 +31,10 @@ function getHomepageConsultationConfig() {
 
 export async function streamHomepageConsultationReply(
   messages: ChatMessageType[],
-  onChunk: (chunk: string) => void,
+  handlers: {
+    onReasoningChunk?: (chunk: string) => void;
+    onContentChunk: (chunk: string) => void;
+  },
 ): Promise<string> {
   const { apiKey, model, baseUrl } = getHomepageConsultationConfig();
 
@@ -46,7 +49,6 @@ export async function streamHomepageConsultationReply(
       stream: true,
       temperature: 0.5,
       thinking: {
-        type: "disabled",
       },
       messages: [
         {
@@ -102,14 +104,22 @@ export async function streamHomepageConsultationReply(
 
       try {
         const parsed = JSON.parse(payload);
-        const chunk =
+        const reasoningChunk =
+          parsed.choices?.[0]?.delta?.reasoning_content ??
+          parsed.choices?.[0]?.delta?.reasoning ??
+          "";
+        const contentChunk =
           parsed.choices?.[0]?.delta?.content ??
           parsed.choices?.[0]?.message?.content ??
           "";
 
-        if (chunk) {
-          fullText += chunk;
-          onChunk(chunk);
+        if (reasoningChunk) {
+          handlers.onReasoningChunk?.(reasoningChunk);
+        }
+
+        if (contentChunk) {
+          fullText += contentChunk;
+          handlers.onContentChunk(contentChunk);
         }
       } catch {
         // Skip malformed partial lines and continue parsing the next events.
@@ -123,14 +133,22 @@ export async function streamHomepageConsultationReply(
   if (trailingPayload.startsWith("data: ") && trailingPayload !== "data: [DONE]") {
     try {
       const parsed = JSON.parse(trailingPayload.slice(6).trim());
-      const chunk =
+      const reasoningChunk =
+        parsed.choices?.[0]?.delta?.reasoning_content ??
+        parsed.choices?.[0]?.delta?.reasoning ??
+        "";
+      const contentChunk =
         parsed.choices?.[0]?.delta?.content ??
         parsed.choices?.[0]?.message?.content ??
         "";
 
-      if (chunk) {
-        fullText += chunk;
-        onChunk(chunk);
+      if (reasoningChunk) {
+        handlers.onReasoningChunk?.(reasoningChunk);
+      }
+
+      if (contentChunk) {
+        fullText += contentChunk;
+        handlers.onContentChunk(contentChunk);
       }
     } catch {
       // Ignore trailing partial payload.
