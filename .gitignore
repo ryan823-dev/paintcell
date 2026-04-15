@@ -29,3 +29,6 @@ dist-ssr
 
 # Supabase temp files
 supabase/.temp/
+
+pnpm-lock.yaml
+package-lock.json

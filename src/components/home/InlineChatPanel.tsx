@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { AIChatPanel } from "@/components/ai-assistant/AIChatPanel";
 import { HomepageWizardStrip } from "./HomepageWizardStrip";
+import { streamHomepageConsultationReply } from "@/lib/homepage-consultation";
 
 interface InlineChatPanelProps {
   initialMessage?: string | null;
@@ -35,7 +36,13 @@ export function InlineChatPanel({ initialMessage, onClose }: InlineChatPanelProp
 
       {/* Chat area */}
       <div className="flex-1 min-h-0 flex flex-col">
-        <AIChatPanel onClose={onClose} initialMessage={initialMessage} />
+        <AIChatPanel
+          onClose={onClose}
+          initialMessage={initialMessage}
+          customStreamChat={async (messages, onChunk) => {
+            await streamHomepageConsultationReply(messages, onChunk);
+          }}
+        />
       </div>
 
       {/* Wizard Strip — bottom */}

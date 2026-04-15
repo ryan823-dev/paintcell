@@ -17,11 +17,15 @@ interface AIChatPanelProps {
   onClose: () => void;
   initialMessage?: string | null;
   pageContext?: PageContext;
+  customStreamChat?: (
+    messages: ChatMessageType[],
+    onChunk: (chunk: string) => void,
+  ) => Promise<void>;
 }
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-presales-chat`;
 
-export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPanelProps) {
+export function AIChatPanel({ onClose, initialMessage, pageContext, customStreamChat }: AIChatPanelProps) {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessageType[]>([
     {
@@ -88,69 +92,83 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
     try {
       updateStatus('thinking', "PaintCell AI is analyzing your question...");
       
-      const response = await fetch(CHAT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({
-          messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
-          pageContext,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || "Failed to get response");
-      }
-
-      if (!response.body) throw new Error("No response body");
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let textBuffer = "";
-
       // Add assistant message placeholder
       setMessages(prev => [...prev, { role: "assistant", content: "", timestamp: new Date() }]);
       updateStatus('typing', "PaintCell AI is preparing a response...");
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        textBuffer += decoder.decode(value, { stream: true });
-        
-        let newlineIndex: number;
-        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-          let line = textBuffer.slice(0, newlineIndex);
-          textBuffer = textBuffer.slice(newlineIndex + 1);
+      if (customStreamChat) {
+        await customStreamChat([...messages, userMsg], (content) => {
+          assistantContent += content;
+          setMessages(prev => {
+            const updated = [...prev];
+            updated[updated.length - 1] = {
+              ...updated[updated.length - 1],
+              content: assistantContent,
+            };
+            return updated;
+          });
+        });
+      } else {
+        const response = await fetch(CHAT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({
+            messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
+            pageContext,
+          }),
+        });
 
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (line.startsWith(":") || line.trim() === "") continue;
-          if (!line.startsWith("data: ")) continue;
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || "Failed to get response");
+        }
 
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
+        if (!response.body) throw new Error("No response body");
 
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) {
-              assistantContent += content;
-              setMessages(prev => {
-                const updated = [...prev];
-                updated[updated.length - 1] = {
-                  ...updated[updated.length - 1],
-                  content: assistantContent,
-                };
-                return updated;
-              });
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let textBuffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          textBuffer += decoder.decode(value, { stream: true });
+          
+          let newlineIndex: number;
+          while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+            let line = textBuffer.slice(0, newlineIndex);
+            textBuffer = textBuffer.slice(newlineIndex + 1);
+
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (line.startsWith(":") || line.trim() === "") continue;
+            if (!line.startsWith("data: ")) continue;
+
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === "[DONE]") break;
+
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content;
+              if (content) {
+                assistantContent += content;
+                setMessages(prev => {
+                  const updated = [...prev];
+                  updated[updated.length - 1] = {
+                    ...updated[updated.length - 1],
+                    content: assistantContent,
+                  };
+                  return updated;
+                });
+              }
+            } catch {
+              // Incomplete JSON, put back
+              textBuffer = line + "\n" + textBuffer;
+              break;
             }
-          } catch {
-            // Incomplete JSON, put back
-            textBuffer = line + "\n" + textBuffer;
-            break;
           }
         }
       }
@@ -171,7 +189,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext }: AIChatPane
         updateStatus('idle');
       }, 500); // Brief delay to show completion state
     }
-  }, [messages, updateStatus]);
+  }, [customStreamChat, messages, pageContext, updateStatus]);
 
   const handleSend = useCallback(() => {
     const trimmed = input.trim();
