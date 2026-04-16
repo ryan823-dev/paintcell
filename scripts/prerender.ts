@@ -175,7 +175,12 @@ async function installChromiumBrowser() {
   if (!playwrightInstallPromise) {
     playwrightInstallPromise = (async () => {
       logInfo("Playwright Chromium not found. Installing browser for prerender...");
-      await runProcess(process.execPath, [PLAYWRIGHT_CLI_PATH, "install", "chromium"]);
+      const installArgs =
+        process.platform === "linux"
+          ? [PLAYWRIGHT_CLI_PATH, "install", "--with-deps", "chromium"]
+          : [PLAYWRIGHT_CLI_PATH, "install", "chromium"];
+
+      await runProcess(process.execPath, installArgs);
       logInfo("Playwright Chromium installation complete.");
     })();
   }
@@ -206,11 +211,16 @@ async function launchChromiumBrowser() {
   } catch (error) {
     const message = formatLogMessage(error);
 
-    if (!message.includes("Executable doesn't exist")) {
+    const needsBrowserRepair =
+      message.includes("Executable doesn't exist") ||
+      message.includes("error while loading shared libraries") ||
+      message.includes("libnspr4.so");
+
+    if (!needsBrowserRepair) {
       throw error;
     }
 
-    logError("Chromium launch failed because the browser executable is still missing. Retrying after install.");
+    logError("Chromium launch failed because the browser or its system dependencies are missing. Retrying after install.");
     await installChromiumBrowser();
     return chromium.launch({ headless: true });
   }
