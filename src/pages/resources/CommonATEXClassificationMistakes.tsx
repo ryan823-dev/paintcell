@@ -42,7 +42,7 @@ export default function CommonATEXClassificationMistakes() {
         <h2 className="text-2xl font-semibold text-foreground mb-4">Mistake 1: Treating zoning as a fixed label from the start</h2>
         <p className="text-muted-foreground mb-8">
           Zone decisions should come from real operating behavior, not from habit or copied project notes. A better starting point is the
-          <Link to="/resources/knowledge/atex-spray-painting-booth" className="ml-1 text-primary underline underline-offset-4">ATEX zone classification page</Link>,
+          <Link to="/resources/standards-compliance/atex-zone-classification-spray-painting-booth" className="ml-1 text-primary underline underline-offset-4">ATEX zone classification page</Link>,
           where the logic begins with chemistry, airflow, and classified volume.
         </p>
 

@@ -40,7 +40,7 @@ export default function Zone1VsZone2SprayPaintingBooth() {
       <p className="text-muted-foreground mb-8">
         For the main reference page, start with
         {" "}
-        <Link to="/resources/knowledge/atex-spray-painting-booth" className="text-primary underline underline-offset-4">
+        <Link to="/resources/standards-compliance/atex-zone-classification-spray-painting-booth" className="text-primary underline underline-offset-4">
           ATEX spray booth zone classification
         </Link>
         .
@@ -72,7 +72,7 @@ export default function Zone1VsZone2SprayPaintingBooth() {
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Pages to read next</h2>
       <ul className="space-y-3 text-muted-foreground">
-        <li><Link to="/resources/knowledge/atex-spray-painting-booth" className="text-primary underline underline-offset-4">ATEX Zone Classification for Spray Painting Booths</Link></li>
+        <li><Link to="/resources/standards-compliance/atex-zone-classification-spray-painting-booth" className="text-primary underline underline-offset-4">ATEX Directive Zone Classification for Spray Painting Booths</Link></li>
         <li><Link to="/resources/knowledge/how-to-design-atex-compliant-spray-painting-booth" className="text-primary underline underline-offset-4">How to Design an ATEX-Compliant Spray Painting Booth</Link></li>
         <li><Link to="/quote" className="text-primary underline underline-offset-4">Discuss a classified-booth project with TD</Link></li>
       </ul>

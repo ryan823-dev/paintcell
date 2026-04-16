@@ -1,13 +1,13 @@
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
-import { ArrowRight, Wind, Droplets, Zap } from "lucide-react";
+import { Droplets, ShieldAlert, Wind, Zap } from "lucide-react";
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Standards & Compliance | Paint Cell Resources",
-  "description": "Safety and site constraints that shape paint cell design: ventilation, VOC/solvent handling, grounding and static control.",
+  "description": "Safety and site constraints that shape paint cell design: ATEX zoning, ventilation, VOC/solvent handling, grounding, and static control.",
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
@@ -23,7 +23,7 @@ export default function StandardsCompliance() {
     <ResourcePageLayout
       title="Standards & Compliance"
       metaTitle="Standards & Compliance | Paint Cell Resources"
-      metaDescription="Safety and site constraints that shape paint cell design: ventilation, VOC/solvent handling, grounding and static control."
+      metaDescription="Safety and site constraints that shape paint cell design: ATEX zoning, ventilation, VOC/solvent handling, grounding, and static control."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Standards & Compliance" },
@@ -31,11 +31,23 @@ export default function StandardsCompliance() {
       structuredData={structuredData}
     >
       <p className="text-lg text-muted-foreground mb-10">
-        Safety and site constraints shape paint cell design and schedule. Requirements vary by jurisdiction and facility policy. Use these pages to identify constraints early and define what must be validated with your local EHS team.
+        Safety and site constraints shape paint cell design and schedule. Requirements vary by jurisdiction and facility policy. Use these pages to identify ATEX, ventilation, solvent-handling, and grounding constraints early so the engineering scope stays realistic.
       </p>
 
       <ContentSection title="Topics">
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <Link
+            to="/resources/standards-compliance/atex-zone-classification-spray-painting-booth"
+            className="group p-6 border border-border rounded-lg hover:border-primary/50 hover:bg-muted/30 transition-all"
+          >
+            <ShieldAlert className="h-8 w-8 text-primary mb-3" />
+            <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+              ATEX Zone Classification
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Directive-focused guide to spray booth zoning, classified-space logic, and retrofit risk.
+            </p>
+          </Link>
           <Link
             to="/resources/standards-compliance/ventilation-airflow"
             className="group p-6 border border-border rounded-lg hover:border-primary/50 hover:bg-muted/30 transition-all"

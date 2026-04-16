@@ -267,6 +267,12 @@ export default function PaintBoothDesignBasics() {
           {" "}to validate the facility side of booth scope.
         </li>
         <li>
+          <Link to="/resources/knowledge/paint-booth-sizing-measurements" className="text-primary underline underline-offset-4">
+            Paint booth sizing and measurements
+          </Link>
+          {" "}for footprint, clearance, and dimension planning before layout is frozen.
+        </li>
+        <li>
           <Link to="/resources/equipment/paint-booth-filtration" className="text-primary underline underline-offset-4">
             Paint booth filtration
           </Link>

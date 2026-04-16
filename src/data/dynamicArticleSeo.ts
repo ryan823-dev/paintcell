@@ -11,7 +11,7 @@ export interface DynamicArticleOverride {
 }
 
 export const dynamicArticleRedirects = {
-  "atex-spray-painting-booth-guide": "/resources/knowledge/atex-spray-painting-booth",
+  "atex-spray-painting-booth-guide": "/resources/standards-compliance/atex-zone-classification-spray-painting-booth",
   "robot-paint-booth": "/solutions/paint-booth-automation",
   "robotic-painting-systems-guide": "/solutions/robotic-painting-system",
 } as const;

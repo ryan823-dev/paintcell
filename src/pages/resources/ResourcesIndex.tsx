@@ -45,12 +45,16 @@ const featuredLinks = [
     href: "/resources/insights/automation-boundary-spray-painting",
   },
   {
-    title: "ATEX Zone Classification for Spray Painting Booths",
-    href: "/resources/knowledge/atex-spray-painting-booth",
+    title: "ATEX Directive Zone Classification for Spray Painting Booths",
+    href: "/resources/standards-compliance/atex-zone-classification-spray-painting-booth",
   },
   {
     title: "Paint Booth Design Basics",
     href: "/resources/knowledge/paint-booth-design-basics",
+  },
+  {
+    title: "Paint Booth Sizing and Measurements Guide",
+    href: "/resources/knowledge/paint-booth-sizing-measurements",
   },
 ];
 

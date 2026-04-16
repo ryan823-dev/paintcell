@@ -103,7 +103,7 @@ export default function FurnitureWoodwork() {
     <>
       <Helmet>
         <title>Furniture Coating Systems | Automated Finishing for Wood Products | TD</title>
-        <meta name="description" content="Furniture coating systems for cabinets, furniture panels, and wood components. Compare robotic, spray, and panel-oriented finishing layouts for consistent quality and throughput." />
+        <meta name="description" content="Furniture coating systems for cabinets, furniture panels, and wood components. Compare robotic, spray, and automated coating and finishing systems for panels to improve finish consistency and throughput." />
         <link rel="canonical" href={`${DOMAIN}/industries/furniture-woodwork`} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
@@ -145,7 +145,8 @@ export default function FurnitureWoodwork() {
                 TD integrates robotic finishing cells for furniture manufacturers, cabinet makers, and architectural millwork producers worldwide, supporting a wide range of coatings from traditional lacquers to modern UV-curable finishes.
               </p>
               <p>
-                For repeated flat products such as cabinet doors and boards, the next planning step is often
+                For repeated flat products such as cabinet doors and boards, the next planning step is often automated
+                coating and finishing systems for panels rather than a purely flexible spray cell. Start with
                 {" "}
                 <Link to="/solutions/panel-coating-finishing-systems" className="text-accent underline underline-offset-2 hover:text-accent/80">
                   panel coating and finishing systems

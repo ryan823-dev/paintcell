@@ -100,7 +100,7 @@ export const topicClusters: Record<string, TopicCluster> = {
     searchIntent: "Users exploring this topic usually need to understand whether a booth must be ATEX-rated, what that changes in design, and how it impacts retrofit scope, robot choice, and safety controls.",
     guide: {
       label: "ATEX Spray Painting Booth Guide",
-      href: "/resources/knowledge/atex-spray-painting-booth",
+      href: "/resources/standards-compliance/atex-zone-classification-spray-painting-booth",
       description: "Core engineering guide covering zoning, airflow, ignition control, and retrofit logic.",
     },
     faq: {
@@ -223,6 +223,7 @@ export const topicClusters: Record<string, TopicCluster> = {
       },
     ],
     extraPaths: [
+      "/resources/standards-compliance/atex-zone-classification-spray-painting-booth",
       "/resources/standards-compliance/ventilation-airflow",
       "/resources/standards-compliance/voc-solvent-handling",
       "/resources/standards-compliance/grounding-static-control",
@@ -464,6 +465,11 @@ export const topicClusters: Record<string, TopicCluster> = {
     },
     relatedLinks: [
       {
+        label: "Paint Booth Sizing and Measurements",
+        href: "/resources/knowledge/paint-booth-sizing-measurements",
+        description: "Sizing-focused support page for booth footprint, dimensions, and clearance logic.",
+      },
+      {
         label: "Downdraft vs Crossdraft vs Side-draft",
         href: "/resources/knowledge/downdraft-vs-crossdraft-vs-side-draft",
         description: "Comparison page for choosing the booth airflow pattern that fits the project.",
@@ -490,6 +496,7 @@ export const topicClusters: Record<string, TopicCluster> = {
       },
     ],
     extraPaths: [
+      "/resources/knowledge/paint-booth-sizing-measurements",
       "/resources/knowledge/downdraft-vs-crossdraft-vs-side-draft",
       "/resources/knowledge/new-paint-booth-vs-retrofit",
       "/resources/standards-compliance/ventilation-airflow",
@@ -1049,6 +1056,8 @@ const preferredTopicClusterByPath: Record<string, keyof typeof topicClusters> = 
   "/resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic": "furniture-coating",
   "/resources/faq/how-much-floor-space-does-an-automated-paint-line-need": "furniture-coating",
   "/resources/knowledge/paint-defects-guide": "metal-parts-finishing",
+  "/resources/knowledge/paint-booth-sizing-measurements": "paint-booth-design",
+  "/resources/standards-compliance/atex-zone-classification-spray-painting-booth": "atex-spray-painting-booth",
 };
 
 export function getTopicClusterByPath(pathname: string) {

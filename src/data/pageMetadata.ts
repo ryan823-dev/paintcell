@@ -41,6 +41,30 @@ const pageMetadata: Record<string, PageMetadata> = {
     sourceBasis:
       "Resource navigation reviewed against the current topic structure, FAQ paths, glossary coverage, and solution/industry links.",
   },
+  "/resources/knowledge/flame-treatment": {
+    updatedAt: "2026-04-16",
+    authorName: defaultAuthorName,
+    sourceBasis:
+      "Flame-treatment guidance reviewed against low-surface-energy plastics workflows, adhesion-risk patterns, and integrated pretreatment-plus-painting cell scope.",
+  },
+  "/resources/standards-compliance/ventilation-airflow": {
+    updatedAt: "2026-04-16",
+    authorName: defaultAuthorName,
+    sourceBasis:
+      "Ventilation guidance reviewed against booth airflow constraints, makeup-air behavior, overspray capture requirements, and facility-side validation needs.",
+  },
+  "/resources/standards-compliance/atex-zone-classification-spray-painting-booth": {
+    updatedAt: "2026-04-16",
+    authorName: defaultAuthorName,
+    sourceBasis:
+      "ATEX zoning guidance reviewed against classified-booth project scoping, ventilation assumptions, ignition-control boundaries, and retrofit-risk patterns.",
+  },
+  "/resources/knowledge/paint-booth-sizing-measurements": {
+    updatedAt: "2026-04-16",
+    authorName: defaultAuthorName,
+    sourceBasis:
+      "Booth-sizing guidance reviewed against part-envelope planning, robot-access clearances, airflow-path requirements, and line-footprint assumptions.",
+  },
   "/resources/faq/what-parts-are-suitable-for-robotic-painting": {
     updatedAt: "2026-04-16",
     authorName: defaultAuthorName,

@@ -20,6 +20,7 @@ const EXCLUDED_STATIC_PATHS = new Set<string>([
   "/solutions/auto-body-painting",
   "/solutions/parts-painting",
   "/solutions/industrial-coating",
+  "/resources/knowledge/atex-spray-painting-booth",
 ]);
 
 const SERVICE_SLUGS = [

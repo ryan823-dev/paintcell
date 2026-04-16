@@ -116,8 +116,8 @@ export default function RoboticPaintingSystem() {
   return (
     <>
       <Helmet>
-        <title>Robotic Paint Automation System | Industrial Finishing Integration | TD</title>
-        <meta name="description" content="Robotic paint automation system integration for industrial finishing, including robot selection, spray process setup, paint booth automation, controls, and commissioning." />
+        <title>Robotic Paint Automation System | Automated Paint Systems Integration | TD</title>
+        <meta name="description" content="Robotic paint automation system and automated paint systems integration for industrial finishing, including robot selection, spray process setup, paint booth automation, controls, and commissioning." />
         <link rel="canonical" href={`${DOMAIN}/solutions/robotic-painting-system`} />
         {jsonLdSchemas.map((schema, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -151,8 +151,8 @@ export default function RoboticPaintingSystem() {
             <div className="max-w-4xl space-y-4 text-base leading-relaxed text-muted-foreground">
               <p>
                 This solution is best for manufacturers that already know the line needs a robotic spray-painting cell
-                and now need to define the real project boundary: robot platform, spray technology, booth integration,
-                paint supply, controls, and commissioning scope.
+                or other automated paint system and now need to define the real project boundary: robot platform, spray
+                technology, booth integration, paint supply, controls, and commissioning scope.
               </p>
               <p>
                 It is not the right starting page if the real question is whether the process should stay manual, move

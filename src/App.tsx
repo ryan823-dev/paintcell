@@ -49,6 +49,7 @@ const StandardsCompliance = lazy(() => import("./pages/resources/StandardsCompli
 const VentilationAirflow = lazy(() => import("./pages/resources/VentilationAirflow"));
 const VOCSolventHandling = lazy(() => import("./pages/resources/VOCSolventHandling"));
 const GroundingStaticControl = lazy(() => import("./pages/resources/GroundingStaticControl"));
+const ATEXZoneClassificationSprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/ATEXSprayPaintingBooth"));
 
 // Lazy load Glossary pages
 const Glossary = lazy(() => import("./pages/resources/Glossary"));
@@ -85,13 +86,13 @@ const FeasibilityChecklist = lazy(() => import("./pages/resources/tools/Feasibil
 const HowToChoosePaintRobot = lazy(() => import("./pages/resources/knowledge/HowToChoosePaintRobot"));
 const RoboticPaintingCostGuide = lazy(() => import("./pages/resources/knowledge/RoboticPaintingCostGuide"));
 const PaintBoothDesignBasics = lazy(() => import("./pages/resources/knowledge/PaintBoothDesignBasics"));
+const PaintBoothSizingMeasurements = lazy(() => import("./pages/resources/knowledge/PaintBoothSizingMeasurements"));
 const DowndraftVsCrossdraftVsSideDraft = lazy(() => import("./pages/resources/knowledge/DowndraftVsCrossdraftVsSideDraft"));
 const NewPaintBoothVsRetrofit = lazy(() => import("./pages/resources/knowledge/NewPaintBoothVsRetrofit"));
 const PaintTechnologyGuide = lazy(() => import("./pages/resources/knowledge/PaintTechnologyGuide"));
 const FlameTreatment = lazy(() => import("./pages/resources/knowledge/FlameTreatment"));
 const FlameTreatmentVsPlasmaTreatment = lazy(() => import("./pages/resources/knowledge/FlameTreatmentVsPlasmaTreatment"));
 const IntegratedFlameTreatmentCellVsPretreatmentLine = lazy(() => import("./pages/resources/knowledge/IntegratedFlameTreatmentCellVsPretreatmentLine"));
-const ATEXSprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/ATEXSprayPaintingBooth"));
 const ManualVsSemiAutoVsRoboticPaintingSystems = lazy(() => import("./pages/resources/knowledge/ManualVsSemiAutoVsRoboticPaintingSystems"));
 const WhenRoboticPaintAutomationMakesSense = lazy(() => import("./pages/resources/knowledge/WhenRoboticPaintAutomationMakesSense"));
 const Zone1VsZone2SprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/Zone1VsZone2SprayPaintingBooth"));
@@ -226,6 +227,12 @@ function LegacySolutionRedirect({ target }: { target: string }) {
   return <Navigate to={`/${lang || defaultLocale}${target}`} replace />;
 }
 
+function LegacyResourceRedirect({ target }: { target: string }) {
+  const { lang } = useParams<{ lang: string }>();
+
+  return <Navigate to={`/${lang || defaultLocale}${target}`} replace />;
+}
+
 function DynamicArticleRoute() {
   const { lang, slug } = useParams<{ lang: string; slug: string }>();
   const redirectTarget = getDynamicArticleRedirectTarget(slug);
@@ -276,6 +283,10 @@ function PublicRoutes() {
 
       {/* Standards & Compliance routes */}
       <Route path="resources/standards-compliance" element={<StandardsCompliance />} />
+      <Route
+        path="resources/standards-compliance/atex-zone-classification-spray-painting-booth"
+        element={<ATEXZoneClassificationSprayPaintingBooth />}
+      />
       <Route path="resources/standards-compliance/ventilation-airflow" element={<VentilationAirflow />} />
       <Route path="resources/standards-compliance/voc-solvent-handling" element={<VOCSolventHandling />} />
       <Route path="resources/standards-compliance/grounding-static-control" element={<GroundingStaticControl />} />
@@ -316,6 +327,7 @@ function PublicRoutes() {
       <Route path="resources/knowledge/how-to-choose-paint-robot" element={<HowToChoosePaintRobot />} />
       <Route path="resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems" element={<ManualVsSemiAutoVsRoboticPaintingSystems />} />
       <Route path="resources/knowledge/when-robotic-paint-automation-makes-sense" element={<WhenRoboticPaintAutomationMakesSense />} />
+      <Route path="resources/knowledge/paint-booth-sizing-measurements" element={<PaintBoothSizingMeasurements />} />
 
       {/* Dynamic database-driven article (Vertax CMS push pipeline) */}
       <Route path="resources/articles/:slug" element={<DynamicArticleRoute />} />
@@ -325,7 +337,12 @@ function PublicRoutes() {
       <Route path="resources/knowledge/downdraft-vs-crossdraft-vs-side-draft" element={<DowndraftVsCrossdraftVsSideDraft />} />
       <Route path="resources/knowledge/new-paint-booth-vs-retrofit" element={<NewPaintBoothVsRetrofit />} />
       <Route path="resources/knowledge/paint-technology-guide" element={<PaintTechnologyGuide />} />
-      <Route path="resources/knowledge/atex-spray-painting-booth" element={<ATEXSprayPaintingBooth />} />
+      <Route
+        path="resources/knowledge/atex-spray-painting-booth"
+        element={
+          <LegacyResourceRedirect target="/resources/standards-compliance/atex-zone-classification-spray-painting-booth" />
+        }
+      />
       <Route path="resources/knowledge/zone-1-vs-zone-2-spray-painting-booth" element={<Zone1VsZone2SprayPaintingBooth />} />
       <Route path="resources/knowledge/how-to-design-atex-compliant-spray-painting-booth" element={<HowToDesignATEXCompliantSprayPaintingBooth />} />
       <Route path="resources/knowledge/flame-treatment" element={<FlameTreatment />} />

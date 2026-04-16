@@ -34,7 +34,7 @@ export default function HowToDesignATEXCompliantSprayPaintingBooth() {
       </p>
       <p className="text-muted-foreground mb-8">
         This is why the core reference page for most buyers should be
-        <Link to="/resources/knowledge/atex-spray-painting-booth" className="ml-1 text-primary underline underline-offset-4">ATEX spray booth zone classification</Link>,
+        <Link to="/resources/standards-compliance/atex-zone-classification-spray-painting-booth" className="ml-1 text-primary underline underline-offset-4">ATEX spray booth zone classification</Link>,
         not a hardware catalog.
       </p>
 
@@ -71,7 +71,7 @@ export default function HowToDesignATEXCompliantSprayPaintingBooth() {
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Pages to read next</h2>
       <ul className="space-y-3 text-muted-foreground">
-        <li><Link to="/resources/knowledge/atex-spray-painting-booth" className="text-primary underline underline-offset-4">ATEX spray booth zone classification</Link></li>
+        <li><Link to="/resources/standards-compliance/atex-zone-classification-spray-painting-booth" className="text-primary underline underline-offset-4">ATEX spray booth zone classification</Link></li>
         <li><Link to="/resources/knowledge/zone-1-vs-zone-2-spray-painting-booth" className="text-primary underline underline-offset-4">Zone 1 vs Zone 2 for Spray Booths</Link></li>
         <li><Link to="/resources/articles/common-atex-classification-mistakes-spray-booth-projects" className="text-primary underline underline-offset-4">Common ATEX Classification Mistakes in Industrial Spray Booth Projects</Link></li>
         <li><Link to="/solutions/paint-booth-automation" className="text-primary underline underline-offset-4">Paint Booth Automation</Link></li>

@@ -13,7 +13,7 @@ export default function ManualVsSemiAutoVsRoboticPaintingSystems() {
     <ResourcePageLayout
       title="Manual vs Semi-Automatic vs Robotic Painting"
       metaTitle="Manual vs Semi-Automatic vs Robotic Painting | Selection Framework"
-      metaDescription="Compare manual, semi-automatic, and robotic painting systems by throughput, flexibility, finish consistency, and project fit."
+      metaDescription="Compare manual, semi-automatic, and automated paint systems by throughput, flexibility, finish consistency, labor pressure, and project fit."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Knowledge" },
@@ -25,6 +25,11 @@ export default function ManualVsSemiAutoVsRoboticPaintingSystems() {
       <p className="text-lg text-muted-foreground mb-8">
         The best painting system is not the most automated one. It is the one that matches part-family stability,
         finish expectations, labor reality, and the level of changeover your line can handle without losing control.
+      </p>
+      <p className="text-muted-foreground mb-8">
+        Buyers searching automated paint systems or robotic paint systems are usually trying to answer a broader
+        question first: how much automation can the process support without making fixtures, booth discipline, and
+        recipe control collapse under mixed-model reality?
       </p>
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Start with the process, not the equipment label</h2>
