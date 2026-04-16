@@ -24,7 +24,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "react-helmet-async": ["./src/lib/react-helmet-async.tsx"]
     }
   },
   "include": ["src"]

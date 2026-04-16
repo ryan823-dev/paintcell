@@ -112,6 +112,7 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "react-helmet-async": path.resolve(__dirname, "./src/lib/react-helmet-async.tsx"),
     },
   },
   build: {
