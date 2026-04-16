@@ -1,11 +1,16 @@
+import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { chromium, type Page } from "playwright";
 
 const SITE_URL = "https://tdpaint.com";
 const DIST_DIR = path.resolve("dist");
 const FALLBACK_HTML_PATH = path.join(DIST_DIR, "index.html");
+const require = createRequire(import.meta.url);
+const PLAYWRIGHT_PACKAGE_JSON_PATH = require.resolve("playwright/package.json");
+const PLAYWRIGHT_CLI_PATH = path.join(path.dirname(PLAYWRIGHT_PACKAGE_JSON_PATH), "cli.js");
 
 const MIME_TYPES: Record<string, string> = {
   ".css": "text/css; charset=utf-8",
@@ -28,6 +33,7 @@ const MIME_TYPES: Record<string, string> = {
 
 let stdoutAvailable = true;
 let stderrAvailable = true;
+let playwrightInstallPromise: Promise<void> | null = null;
 
 function markStreamClosed(error: unknown, streamType: "stdout" | "stderr") {
   const code = (error as NodeJS.ErrnoException | undefined)?.code;
@@ -140,6 +146,74 @@ async function readAssetWithRetry(filePath: string, attempts = 5, delayMs = 150)
   }
 
   return null;
+}
+
+async function runProcess(command: string, args: string[]) {
+  await new Promise<void>((resolve, reject) => {
+    const child = spawn(command, args, {
+      stdio: "inherit",
+      env: process.env,
+    });
+
+    child.once("error", reject);
+    child.once("close", (code, signal) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      reject(
+        new Error(
+          `Command failed: ${command} ${args.join(" ")} (code: ${code ?? "unknown"}, signal: ${signal ?? "none"})`,
+        ),
+      );
+    });
+  });
+}
+
+async function installChromiumBrowser() {
+  if (!playwrightInstallPromise) {
+    playwrightInstallPromise = (async () => {
+      logInfo("Playwright Chromium not found. Installing browser for prerender...");
+      await runProcess(process.execPath, [PLAYWRIGHT_CLI_PATH, "install", "chromium"]);
+      logInfo("Playwright Chromium installation complete.");
+    })();
+  }
+
+  try {
+    await playwrightInstallPromise;
+  } finally {
+    playwrightInstallPromise = null;
+  }
+}
+
+async function ensureChromiumBrowser() {
+  const executablePath = chromium.executablePath();
+
+  if (await fileExists(executablePath)) {
+    return;
+  }
+
+  logInfo(`Playwright Chromium executable is missing at ${executablePath}.`);
+  await installChromiumBrowser();
+}
+
+async function launchChromiumBrowser() {
+  await ensureChromiumBrowser();
+
+  try {
+    return await chromium.launch({ headless: true });
+  } catch (error) {
+    const message = formatLogMessage(error);
+
+    if (!message.includes("Executable doesn't exist")) {
+      throw error;
+    }
+
+    logError("Chromium launch failed because the browser executable is still missing. Retrying after install.");
+    await installChromiumBrowser();
+    return chromium.launch({ headless: true });
+  }
 }
 
 async function parseRoutesFromSitemap(): Promise<string[]> {
@@ -359,7 +433,7 @@ async function main() {
     routeFilter ? routePath === routeFilter : true,
   );
   const fallbackServer = await createFallbackServer();
-  const browser = await chromium.launch({ headless: true });
+  const browser = await launchChromiumBrowser();
   const page = await browser.newPage();
   const pageErrors: string[] = [];
 
