@@ -21,8 +21,10 @@ import {
 import { cn } from "@/lib/utils";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
+import { getPageMetadata } from "@/data/pageMetadata";
 
 const DOMAIN = "https://tdpaint.com";
+const automotivePaintingPageMeta = getPageMetadata("/industries/automotive-painting");
 
 const workflowSteps = [
   { title: "Assessment", desc: "New booth vs existing booth, site constraints, ATEX needs" },
@@ -85,6 +87,15 @@ export default function AutomotivePainting() {
       provider: { "@id": `${DOMAIN}/#organization` },
       serviceType: "Robotic Painting System Integration",
       areaServed: "Worldwide",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${DOMAIN}/industries/automotive-painting#webpage`,
+      name: "Automotive Component Painting Automation | Robotic Painting Systems | TD",
+      url: `${DOMAIN}/industries/automotive-painting`,
+      inLanguage: "en",
+      ...(automotivePaintingPageMeta?.updatedAt ? { dateModified: automotivePaintingPageMeta.updatedAt } : {}),
     },
     {
       "@context": "https://schema.org",
@@ -159,10 +170,55 @@ export default function AutomotivePainting() {
             </h1>
             <div className="max-w-3xl space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
               <p>
-                Automotive component painting automation is the engineering and integration of robotic spray painting systems, paint booth airflow/ventilation, paint supply control, and process coordination to deliver repeatable finish quality and stable production throughput for automotive parts.
+                Automotive component painting automation is the right fit when the project already has a defined part family,
+                repeatable presentation logic, and a real need for finish consistency or takt stability. In that case the job is
+                not to buy a robot alone, but to integrate robot motion, spray process, booth conditions, and paint supply as one system.
               </p>
               <p>
-                TD Robotic Painting Systems integrates robotic painting cells and paint booth automation for automotive component manufacturers worldwide, including support for ATEX-ready configurations where required.
+                It is not ideal for programs where the product mix is still unstable, touch-up expectations are unclear,
+                or booth airflow, changeover rules, and handling logic are not yet controlled enough to support repeatable automation.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {[
+                {
+                  label: "Best for",
+                  icon: Target,
+                  title: "Automotive component lines with repeatability and quality pressure",
+                  body: "Strong fits include bumpers, trim, brackets, housings, and similar families where appearance, takt, or labor stability matter enough to justify system engineering.",
+                },
+                {
+                  label: "Not ideal for",
+                  icon: AlertTriangle,
+                  title: "Programs still relying on operator flexibility to absorb variation",
+                  body: "If the line changes geometry, masking, or presentation rules too often, automation scope usually needs to be narrowed or staged first.",
+                },
+                {
+                  label: "Decision changes when",
+                  icon: Layers,
+                  title: "Finish class, color strategy, or booth condition changes",
+                  body: "The recommended stack changes when the project moves from decorative to functional coating, from long runs to frequent color change, or from greenfield to retrofit.",
+                },
+              ].map((item) => (
+                <Card key={item.label} className="border-border bg-card">
+                  <CardContent className="p-6">
+                    <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      {item.label}
+                    </p>
+                    <h2 className="mb-3 text-lg font-semibold">{item.title}</h2>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-6 max-w-4xl rounded-2xl border border-border bg-muted/30 p-5 text-sm text-muted-foreground">
+              <p>
+                <strong className="text-foreground">Decision note:</strong> the most common automotive misread is treating
+                robot count as the main sizing variable. In practice, the bigger decision drivers are finish class, part presentation,
+                color-change strategy, and how much manual masking or touch-up remains outside the automation boundary.
               </p>
             </div>
           </div>
@@ -482,7 +538,7 @@ export default function AutomotivePainting() {
                   <CalendarDays className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
                   <div>
                     <div className="font-semibold text-foreground">Last updated</div>
-                    <div className="text-muted-foreground">2026-02-12</div>
+                    <div className="text-muted-foreground">{automotivePaintingPageMeta?.updatedAt || "2026-04-16"}</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

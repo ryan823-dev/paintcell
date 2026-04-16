@@ -2,110 +2,172 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { ChevronRight, Award, Users, Globe, Wrench, Building2, Rocket, Calendar, MapPin, ShieldCheck, Car, Factory, Zap, CheckCircle2 } from "lucide-react";
+import {
+  Award,
+  Building2,
+  Calendar,
+  Car,
+  CheckCircle2,
+  ChevronRight,
+  Clock3,
+  Factory,
+  Globe,
+  Mail,
+  MapPin,
+  Rocket,
+  ShieldCheck,
+  Users,
+  Wrench,
+  Zap,
+} from "lucide-react";
 import { useI18n } from "@/i18n";
 import { useCanonicalUrl } from "@/hooks/useRouteLocale";
+import { companyProfile } from "@/lib/siteTrust";
 
 const DOMAIN = "https://tdpaint.com";
 
-const getSchemas = (canonicalUrl: string, homeUrl: string) => [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${DOMAIN}/#organization`,
-    name: "TD Robotic Painting Systems",
-    alternateName: ["PaintCell", "Shanghai Tudou Technology Co., Ltd.", "上海涂豆科技有限公司"],
-    url: DOMAIN,
-    logo: `${DOMAIN}/images/og-social-share.png`,
-    description: "Engineering and integration of robotic painting systems and paint booth automation for automotive, industrial, appliance, and aerospace manufacturing.",
-    foundingDate: "2010",
-    numberOfEmployees: {
-      "@type": "QuantitativeValue",
-      value: 38,
-    },
-    areaServed: "Worldwide",
-    knowsAbout: [
-      "Robotic painting",
-      "Paint booth automation",
-      "Industrial coating systems",
-      "Electrostatic painting",
-      "HVLP technology",
-    ],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "4th Floor, Building 7, No. 3888 Beiqing Road",
-      addressLocality: "Qingpu District",
-      addressRegion: "Shanghai",
-      addressCountry: "CN",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "sales",
-      email: "info@tdpaint.com",
-      availableLanguage: ["English", "Chinese", "Japanese"],
-    },
-    sameAs: [],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "@id": `${canonicalUrl}#webpage`,
-    name: "About TD Robotic Painting Systems",
-    description: "Learn about TD's 15+ years of experience engineering robotic painting systems. 500+ systems deployed across 30+ countries serving automotive OEMs and industrial manufacturers.",
-    url: canonicalUrl,
-    isPartOf: { "@id": `${homeUrl}#website` },
-    about: { "@id": `${DOMAIN}/#organization` },
-    mainEntity: { "@id": `${DOMAIN}/#organization` },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "@id": `${canonicalUrl}#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
-      { "@type": "ListItem", position: 2, name: "About", item: canonicalUrl },
-    ],
-  },
-];
+const aboutDescription = `${companyProfile.brandName} is the industrial coating brand of ${companyProfile.legalName}, bringing ${companyProfile.yearsExperience}+ years of experience, ${companyProfile.systemsDeployed}+ deployed systems, and delivery references across ${companyProfile.countriesServed}+ countries.`;
 
 const milestones = [
-  { year: "2010", title: "Company Founded", description: "Shanghai Tudou Technology established in Zhangjiang Hi-Tech Park, Pudong, Shanghai, with RMB 20 million registered capital." },
-  { year: "2013", title: "First Major Automotive Project", description: "Delivered first large-scale automotive painting system for FAW-Toyota with ABB IRB5500 robots in 2-3-2 configuration." },
-  { year: "2015", title: "Strategic Investment & ABB Partnership", description: "Received strategic investment from A-share listed company. Became authorized ABB system integrator for painting robots." },
-  { year: "2018", title: "EV Market Entry", description: "Secured EV OEM contracts with leading Chinese EV manufacturers. Expanded to FANUC and Yaskawa robot platforms." },
-  { year: "2019", title: "Multi-Brand Expansion", description: "Expanded robot integration capabilities to include FANUC MPX series, Kawasaki, and CMA platforms for diverse application scenarios." },
-  { year: "2021", title: "Shenzhen Aerospace Center", description: "Established Shenzhen Technical Center in partnership with CASC Aerospace Long-Hit for aerospace-grade coating solutions." },
-  { year: "2024", title: "International Expansion", description: "Expanded to international markets with VINFAST project in Thailand. Completed 17+ major automotive painting line projects." },
-  { year: "2026", title: "Company Relocation", description: "Relocated headquarters to new facility in Qingpu District, Shanghai with expanded R&D and technical center." },
+  {
+    year: String(companyProfile.foundedYear),
+    title: "Company founded",
+    description: `${companyProfile.legalName} was established in Shanghai and began building industrial automation capabilities for coating-system projects.`,
+  },
+  {
+    year: "2013",
+    title: "Automotive project delivery",
+    description:
+      "Early automotive painting projects established the company's delivery model around robot integration, booth interfaces, and commissioning support.",
+  },
+  {
+    year: "2015",
+    title: "Integration capability expanded",
+    description:
+      "The team deepened multi-brand robot integration and paint-process engineering capability for larger turnkey scopes.",
+  },
+  {
+    year: "2018",
+    title: "EV and component programs",
+    description:
+      "Program experience expanded across EV parts, automotive components, and production lines with tighter takt and finish requirements.",
+  },
+  {
+    year: "2021",
+    title: "Shenzhen technical center",
+    description:
+      "A Shenzhen technical center supported deeper engineering collaboration for higher-spec finishing applications.",
+  },
+  {
+    year: "2024",
+    title: "International expansion",
+    description: `International delivery activity increased while the company accumulated ${companyProfile.majorAutomotiveProjects}+ major automotive painting line references.`,
+  },
+  {
+    year: "2026",
+    title: "Qingpu headquarters",
+    description: `Operations were consolidated around the current ${companyProfile.headquarters.display} headquarters and engineering base.`,
+  },
 ];
 
 const certifications = [
-  "ISO 9001 Quality Management System",
-  "High-Tech Enterprise Certification",
-  "Safety Production License",
-  "Multiple Software Copyrights & Patents",
-  "ABB Authorized System Integrator",
-  "ATEX-Compliant System Design Capability",
+  "ISO 9001 quality management system",
+  "High-tech enterprise certification",
+  "Safety production licensing",
+  "Multiple software copyrights and patents",
+  "ABB system-integration experience",
+  "ATEX-oriented system design capability",
+];
+
+const robotBrands = [
+  "ABB (IRB5500, IRB6700)",
+  "FANUC (MPX2600, MPX3500)",
+  "Yaskawa",
+  "Kawasaki",
+  "KUKA",
+  "CMA",
+];
+
+const paintEquipmentBrands = [
+  "SAMES KREMLIN",
+  "Graco",
+  "Ransburg",
+  "Binks-Maple",
+  "Carlisle",
+  "Timmer",
 ];
 
 const keyClients = [
   { name: "FAW-Toyota", sector: "Automotive OEM" },
   { name: "Zhengzhou Nissan", sector: "Automotive OEM" },
-  { name: "Chengdu FAW-Toyota", sector: "Automotive OEM" },
-  { name: "Guangdong FAW-Toyota", sector: "Automotive OEM" },
   { name: "VINFAST (Thailand)", sector: "Automotive OEM" },
   { name: "NorDAO Auto Systems", sector: "Tier 1 Supplier" },
-  { name: "Changzhou Nanebot", sector: "Tier 1 Supplier" },
-  { name: "Minth Group (Minshi)", sector: "Tier 1 Supplier" },
-  { name: "Jitai Vehicle Technology", sector: "Tier 1 Supplier" },
+  { name: "Minth Group", sector: "Tier 1 Supplier" },
   { name: "Wuhan Minhui Molding", sector: "Tier 1 Supplier" },
-  { name: "Zhejiang Jinfeiji Group", sector: "Auto Parts" },
-  { name: "Ningbo Xingtong Auto Parts", sector: "Auto Parts" },
-  { name: "Qingdao Deshengtai Auto Parts", sector: "Auto Parts" },
-  { name: "Changzhou Feichi Auto Tech", sector: "Auto Parts" },
   { name: "CASC Aerospace Long-Hit", sector: "Aerospace" },
   { name: "Siyang SECO Technology", sector: "Industrial" },
 ];
+
+function getSchemas(canonicalUrl: string, homeUrl: string) {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${DOMAIN}/#organization`,
+      name: companyProfile.brandName,
+      alternateName: [companyProfile.productName, companyProfile.legalName],
+      url: DOMAIN,
+      logo: `${DOMAIN}/images/og-social-share.png`,
+      description: aboutDescription,
+      foundingDate: String(companyProfile.foundedYear),
+      numberOfEmployees: {
+        "@type": "QuantitativeValue",
+        value: companyProfile.engineeringTeamSize,
+      },
+      areaServed: "Worldwide",
+      knowsAbout: [
+        "Robotic painting systems",
+        "Paint booth automation",
+        "Paint supply systems",
+        "Industrial coating engineering",
+        "Production-line integration",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: `${companyProfile.headquarters.streetAddress}, ${companyProfile.headquarters.district}`,
+        addressLocality: companyProfile.headquarters.city,
+        addressCountry: companyProfile.headquarters.countryCode,
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        email: companyProfile.primaryEmail,
+        availableLanguage: ["English"],
+      },
+      sameAs: [],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "@id": `${canonicalUrl}#webpage`,
+      name: `About ${companyProfile.brandName}`,
+      description: aboutDescription,
+      url: canonicalUrl,
+      isPartOf: { "@id": `${homeUrl}#website` },
+      about: { "@id": `${DOMAIN}/#organization` },
+      mainEntity: { "@id": `${DOMAIN}/#organization` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: "About", item: canonicalUrl },
+      ],
+    },
+  ];
+}
 
 export default function About() {
   const { t } = useI18n();
@@ -114,44 +176,95 @@ export default function About() {
   const schemas = getSchemas(canonicalUrl, homeUrl);
 
   const stats = [
-    { value: "500+", label: t.about?.systemsDeployed || "Systems Deployed" },
-    { value: "15+", label: t.about?.yearsExperience || "Years Experience" },
-    { value: "30+", label: t.about?.countriesServed || "Countries Served" },
-    { value: "38", label: "Engineering Team" },
+    { value: `${companyProfile.systemsDeployed}+`, label: t.about?.systemsDeployed || "Systems Deployed" },
+    { value: `${companyProfile.yearsExperience}+`, label: t.about?.yearsExperience || "Years Experience" },
+    { value: `${companyProfile.countriesServed}+`, label: t.about?.countriesServed || "Countries Served" },
+    { value: `${companyProfile.engineeringTeamSize}`, label: "Engineering Team" },
   ];
 
   const values = [
-    { icon: Award, title: t.about?.engineeringExcellence || "Engineering Excellence", description: t.about?.engineeringExcellenceDesc || "Top technical talents from leading robot companies and automotive enterprises with 15+ years industry experience." },
-    { icon: Users, title: t.about?.customerPartnership || "Customer Partnership", description: t.about?.customerPartnershipDesc || "Serving automotive OEMs, Tier 1 suppliers, and industrial manufacturers with turnkey solutions." },
-    { icon: Globe, title: t.about?.globalCapability || "Global Capability", description: t.about?.globalCapabilityDesc || "Projects across China and expanding internationally with VINFAST Thailand deployment." },
-    { icon: Wrench, title: t.about?.lifecycleSupport || "Lifecycle Support", description: t.about?.lifecycleSupportDesc || "Complete supplier ecosystem with ABB, FANUC, Yaskawa, Graco, SAMES partnerships." },
+    {
+      icon: Award,
+      title: t.about?.engineeringExcellence || "Engineering Excellence",
+      description:
+        t.about?.engineeringExcellenceDesc ||
+        `Engineering work is grounded in delivery experience across robotic painting, booth integration, and process commissioning built over ${companyProfile.yearsExperience}+ years.`,
+    },
+    {
+      icon: Users,
+      title: t.about?.customerPartnership || "Customer Partnership",
+      description:
+        t.about?.customerPartnershipDesc ||
+        "Projects are scoped around actual production constraints, not generic automation claims, so teams can make decisions with realistic boundaries and tradeoffs.",
+    },
+    {
+      icon: Globe,
+      title: t.about?.globalCapability || "Global Capability",
+      description:
+        t.about?.globalCapabilityDesc ||
+        `Reference programs span ${companyProfile.countriesServed}+ countries across automotive, industrial, appliance, and specialty finishing applications.`,
+    },
+    {
+      icon: Wrench,
+      title: t.about?.lifecycleSupport || "Lifecycle Support",
+      description:
+        t.about?.lifecycleSupportDesc ||
+        "Support covers concept definition, equipment integration, commissioning, ramp-up, and ongoing engineering communication after handover.",
+    },
   ];
 
   return (
     <>
       <Helmet>
-        <title>About TD Robotic Painting Systems — 15+ Years of Automation Excellence</title>
-        <meta name="description" content="TD Robotic Painting Systems (Shanghai Tudou Technology): 15+ years engineering robotic painting and paint booth automation. Serving Chery, Geely, NIO, Leapmotor and 500+ systems deployed." />
+        <title>{`About ${companyProfile.brandName} | ${companyProfile.yearsExperience}+ Years of Industrial Coating Engineering`}</title>
+        <meta name="description" content={aboutDescription} />
         <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="About TD Robotic Painting Systems — 15+ Years of Automation Excellence" />
-        <meta property="og:description" content="15+ years engineering robotic painting and paint booth automation. Serving automotive OEMs and industrial manufacturers with 500+ systems deployed." />
+        <meta property="og:title" content={`About ${companyProfile.brandName}`} />
+        <meta property="og:description" content={aboutDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={`${DOMAIN}/images/og-social-share.png`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About TD Robotic Painting Systems" />
-        <meta name="twitter:description" content="15+ years engineering robotic painting and paint booth automation. 500+ systems deployed across 30+ countries." />
+        <meta name="twitter:title" content={`About ${companyProfile.brandName}`} />
+        <meta name="twitter:description" content={aboutDescription} />
         <meta name="twitter:image" content={`${DOMAIN}/images/og-social-share.png`} />
-        {schemas.map((s, i) => (
-          <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+        {schemas.map((schema, index) => (
+          <script key={index} type="application/ld+json">
+            {JSON.stringify(schema)}
+          </script>
         ))}
       </Helmet>
 
       <section className="section-dark border-b border-white/10">
         <div className="container-wide py-12 md:py-16">
-          <div className="max-w-2xl">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">{t.about?.title || "About TD Painting Systems"}</h1>
-            <p className="text-lg text-white/70">International industrial coating system expert providing turnkey painting solutions for automotive OEMs, Tier 1 suppliers, and industrial manufacturers worldwide.</p>
+          <div className="max-w-3xl">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              {t.about?.title || `About ${companyProfile.brandName}`}
+            </h1>
+            <p className="text-lg text-white/70 mb-6">
+              {companyProfile.brandName} is the industrial coating brand of {companyProfile.legalName},
+              headquartered in {companyProfile.headquarters.display}. We focus on robotic painting systems,
+              paint booth automation, paint supply systems, and engineering support for production-scale
+              finishing lines.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
+                <div className="mb-1 flex items-center gap-2 text-white">
+                  <Mail className="h-4 w-4 text-accent" />
+                  Contact
+                </div>
+                <a href={`mailto:${companyProfile.primaryEmail}`} className="hover:text-white transition-colors">
+                  {companyProfile.primaryEmail}
+                </a>
+              </div>
+              <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
+                <div className="mb-1 flex items-center gap-2 text-white">
+                  <Clock3 className="h-4 w-4 text-accent" />
+                  Response time
+                </div>
+                <span>{companyProfile.responseTime}</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -172,30 +285,48 @@ export default function About() {
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Our Story</h2>
           <div className="prose prose-lg text-muted-foreground space-y-4">
             <p>
-              <strong className="text-foreground">Shanghai Tudou Technology Co., Ltd.</strong> (formerly Shanghai Angshan Intelligent Machinery Co., Ltd.) was established in September 2010 in Zhangjiang Hi-Tech Park, Pudong New District, Shanghai. With a paid-in capital of RMB 20 million, we are an innovative automation company integrating system design, R&D, manufacturing, installation, commissioning, and lifecycle service.
+              <strong className="text-foreground">{companyProfile.legalName}</strong> was founded in{" "}
+              {companyProfile.foundedYear} and today operates publicly as{" "}
+              <strong className="text-foreground">{companyProfile.brandName}</strong>. The company is
+              based in {companyProfile.headquarters.display} and focuses on industrial coating-system
+              delivery rather than general automation marketing.
             </p>
             <p>
-              Since our founding, we have specialized in robotic painting automation and intelligent boundary products for industrial coating applications. Our team comprises senior technical talents recruited from leading international robot companies (ABB, FANUC, Yaskawa) and well-known automotive enterprises, each bringing 15+ years of industry experience in painting process engineering, robot integration, and system commissioning.
+              Our engineering and delivery team covers robot integration, booth interfaces, paint supply,
+              controls, commissioning, and startup support. That structure matters because coating projects
+              succeed or fail on how well process, equipment, and site constraints are handled together.
             </p>
             <p>
-              TD serves high-end clients across <strong className="text-foreground">automotive OEM body shops, automotive plastic components (bumpers, mirrors, trim), rail transit, construction machinery, 3C electronics, and furniture & sanitary ware industries</strong>. We deliver complete turnkey solutions — from initial feasibility assessment and system design through equipment supply, installation, robot programming, spray parameter optimization, and production validation.
+              We support automotive OEMs, Tier 1 suppliers, appliance manufacturers, and general industrial
+              finishing teams that need clearer project scoping, stronger engineering alignment, and more
+              predictable production outcomes.
             </p>
             <p>
-              With 17+ completed major automotive painting line projects and deployment experience across 30+ cities in China plus international markets, TD has established itself as a trusted partner for manufacturers requiring high-quality, high-efficiency robotic coating systems.
+              Publicly shared track record today centers on {companyProfile.systemsDeployed}+ deployed
+              systems, {companyProfile.majorAutomotiveProjects}+ major automotive painting line references,
+              and delivery coverage across {companyProfile.countriesServed}+ countries.
             </p>
           </div>
         </div>
       </Section>
 
-      {/* Company Timeline */}
       <Section variant="default">
-        <SectionHeader title="Company Milestones" description="Key moments in our growth journey" />
+        <SectionHeader title="Company milestones" description="Selected moments that shaped our delivery capability" />
         <div className="max-w-3xl mx-auto">
           <div className="relative">
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px" />
-            {milestones.map((milestone, i) => (
-              <div key={milestone.year} className={`relative flex items-start gap-6 mb-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} pl-12 md:pl-0`}>
+            {milestones.map((milestone, index) => (
+              <div
+                key={milestone.year}
+                className={`relative flex items-start gap-6 mb-8 ${
+                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                }`}
+              >
+                <div
+                  className={`flex-1 ${
+                    index % 2 === 0 ? "md:text-right md:pr-8" : "md:text-left md:pl-8"
+                  } pl-12 md:pl-0`}
+                >
                   <div className="inline-flex items-center gap-2 text-accent font-bold text-lg mb-1">
                     <Calendar className="h-4 w-4 md:hidden" />
                     {milestone.year}
@@ -211,101 +342,112 @@ export default function About() {
         </div>
       </Section>
 
-      {/* Aerospace Partnership Highlight */}
       <Section variant="muted">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
             <div className="inline-flex items-center gap-2 text-accent text-sm font-semibold mb-4">
               <Rocket className="h-4 w-4" />
-              Strategic Partnership
+              Strategic partnership
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">CASC Aerospace Collaboration</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">CASC aerospace collaboration</h2>
             <p className="text-muted-foreground mb-4">
-              Our Shenzhen Technical Center is established in partnership with <strong className="text-foreground">China Aerospace Science and Technology Corporation (CASC)</strong> subsidiary — Aerospace Long-Hit Intelligent Equipment.
+              Our Shenzhen technical center has worked alongside China Aerospace Science and Technology
+              Corporation (CASC) partner teams on higher-spec coating and equipment-engineering programs.
             </p>
             <p className="text-muted-foreground mb-6">
-              This collaboration brings aerospace-grade precision and quality standards to our industrial coating solutions, ensuring the highest levels of engineering excellence.
+              That collaboration reinforces the same principle used throughout our commercial projects:
+              engineering credibility comes from disciplined process definition, not inflated marketing claims.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 text-accent" />
-                Shenzhen Technical Center
+                Shenzhen technical center
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Building2 className="h-4 w-4 text-accent" />
-                Joint R&D Facility
+                Joint engineering collaboration
               </div>
             </div>
           </div>
           <div className="relative">
-            <img 
-              src="/images/office/shenzhen-office-sign.jpg" 
-              alt="TD Painting Systems Shenzhen Office with CASC Aerospace Partnership" 
+            <img
+              src="/images/office/shenzhen-office-sign.jpg"
+              alt="TD Painting Systems Shenzhen office"
               className="rounded-xl shadow-lg w-full"
             />
             <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-sm rounded-lg p-3">
-              <p className="text-white text-sm font-medium">Shenzhen Technical Center — CASC Aerospace Long-Hit</p>
+              <p className="text-white text-sm font-medium">Shenzhen technical center</p>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Team Photo */}
       <Section variant="default">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="order-2 md:order-1">
-            <img 
-              src="/images/team/team-shenzhen.jpg" 
-              alt="TD Painting Systems Engineering Team at Shenzhen Office" 
+            <img
+              src="/images/team/team-shenzhen.jpg"
+              alt="TD Painting Systems engineering team"
               className="rounded-xl shadow-lg w-full"
             />
           </div>
           <div className="order-1 md:order-2">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Engineering Team</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Engineering and delivery team</h2>
             <p className="text-muted-foreground mb-4">
-              Our 38-member team includes 17 engineers, 7 technical specialists, and experienced project managers. All team members have 5+ years of industry experience in automotive painting, industrial automation, and system integration.
+              The current public fact base centers on a {companyProfile.engineeringTeamSize}-person
+              engineering and delivery team spanning system design, controls, robot programming,
+              commissioning, and project management.
             </p>
             <p className="text-muted-foreground mb-6">
-              We have successfully executed robotic automation painting projects for entire vehicles, automotive parts, rail transit, aerospace, construction machinery, 3C electronics, and furniture industries.
+              We keep this section deliberately tight on claims: the point is to show the scope we can
+              support, while avoiding internal headcount breakdowns or proof-light metrics that are hard to
+              maintain consistently across the site.
             </p>
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-muted">
-                <div className="text-2xl font-bold text-accent mb-1">17</div>
-                <div className="text-sm text-muted-foreground">Engineering Staff</div>
+                <div className="text-2xl font-bold text-accent mb-1">{companyProfile.engineeringTeamSize}</div>
+                <div className="text-sm text-muted-foreground">Engineering and delivery team</div>
               </div>
               <div className="p-4 rounded-lg bg-muted">
-                <div className="text-2xl font-bold text-accent mb-1">7</div>
-                <div className="text-sm text-muted-foreground">Technical Specialists</div>
+                <div className="text-2xl font-bold text-accent mb-1">{companyProfile.majorAutomotiveProjects}+</div>
+                <div className="text-sm text-muted-foreground">Major automotive line references</div>
               </div>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Certifications & Qualifications */}
       <Section variant="muted">
-        <SectionHeader title="Certifications & Qualifications" description="Industry-recognized standards ensuring quality, safety, and engineering excellence" />
+        <SectionHeader
+          title="Certifications and qualifications"
+          description="Signals that support quality, safety, and engineering discipline"
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-          {certifications.map((cert) => (
-            <div key={cert} className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border">
+          {certifications.map((certification) => (
+            <div
+              key={certification}
+              className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border"
+            >
               <ShieldCheck className="h-5 w-5 text-accent shrink-0" />
-              <span className="text-sm font-medium">{cert}</span>
+              <span className="text-sm font-medium">{certification}</span>
             </div>
           ))}
         </div>
       </Section>
 
-      {/* Robot Brand Partnerships */}
       <Section variant="default">
-        <SectionHeader title="Technology Partnerships" description="Multi-brand robot and spray equipment integration capability" />
+        <SectionHeader
+          title="Technology partnerships"
+          description="Multi-brand robot and spray-equipment integration capability"
+        />
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
               <Zap className="h-5 w-5 text-accent" />
-              Robot Brands
+              Robot platforms
             </h3>
             <div className="grid grid-cols-2 gap-3">
-              {["ABB (IRB5500, IRB6700)", "FANUC (MPX2600, MPX3500)", "Yaskawa", "Kawasaki", "KUKA", "CMA"].map((brand) => (
+              {robotBrands.map((brand) => (
                 <div key={brand} className="flex items-center gap-2 p-3 rounded-lg bg-muted text-sm">
                   <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
                   {brand}
@@ -316,10 +458,10 @@ export default function About() {
           <div>
             <h3 className="font-semibold mb-4 flex items-center gap-2">
               <Wrench className="h-5 w-5 text-accent" />
-              Paint Equipment Brands
+              Paint equipment brands
             </h3>
             <div className="grid grid-cols-2 gap-3">
-              {["SAMES KREMLIN", "Graco", "Ransburg", "Binks-Maple", "Carlisle", "Timmer"].map((brand) => (
+              {paintEquipmentBrands.map((brand) => (
                 <div key={brand} className="flex items-center gap-2 p-3 rounded-lg bg-muted text-sm">
                   <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
                   {brand}
@@ -330,16 +472,25 @@ export default function About() {
         </div>
       </Section>
 
-      {/* Key Clients */}
       <Section variant="muted">
-        <SectionHeader title="Trusted by Industry Leaders" description="Selected clients across automotive, aerospace, and industrial sectors" />
+        <SectionHeader
+          title="Selected client references"
+          description="Examples across automotive, aerospace, and industrial sectors"
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {keyClients.map((client) => (
-            <div key={client.name} className="p-4 rounded-lg bg-card border border-border hover:border-accent/30 transition-colors">
+            <div
+              key={client.name}
+              className="p-4 rounded-lg bg-card border border-border hover:border-accent/30 transition-colors"
+            >
               <div className="flex items-center gap-2 mb-1">
-                {client.sector === "Automotive OEM" ? <Car className="h-4 w-4 text-accent" /> :
-                 client.sector === "Aerospace" ? <Rocket className="h-4 w-4 text-accent" /> :
-                 <Factory className="h-4 w-4 text-accent" />}
+                {client.sector === "Automotive OEM" ? (
+                  <Car className="h-4 w-4 text-accent" />
+                ) : client.sector === "Aerospace" ? (
+                  <Rocket className="h-4 w-4 text-accent" />
+                ) : (
+                  <Factory className="h-4 w-4 text-accent" />
+                )}
                 <span className="text-xs text-accent font-medium">{client.sector}</span>
               </div>
               <div className="font-medium text-sm">{client.name}</div>
@@ -347,12 +498,16 @@ export default function About() {
           ))}
         </div>
         <p className="text-center text-sm text-muted-foreground mt-6">
-          Project footprint spanning 30+ cities across China, with international deployments in Thailand and expanding.
+          Public project footprint currently rolls up to {companyProfile.countriesServed}+ countries,
+          including automotive, industrial, and international deployment references.
         </p>
       </Section>
 
       <Section variant="muted">
-        <SectionHeader title={t.about?.whatWeStandFor || "What We Stand For"} description="Our core values and commitments" />
+        <SectionHeader
+          title={t.about?.whatWeStandFor || "What We Stand For"}
+          description="The principles behind how we present capability and scope"
+        />
         <div className="grid md:grid-cols-2 gap-6">
           {values.map((value) => (
             <div key={value.title} className="flex gap-4">
@@ -371,8 +526,12 @@ export default function About() {
       <section className="section-dark border-t border-white/10">
         <div className="container-wide py-16 md:py-24">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{t.about?.discussProject || "Let's Discuss Your Project"}</h2>
-            <p className="text-white/60 mb-6">Tell us about your painting automation requirements. Our engineering team will provide a detailed assessment.</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
+              {t.about?.discussProject || "Let's Discuss Your Project"}
+            </h2>
+            <p className="text-white/60 mb-6">
+              Send your project brief to {companyProfile.primaryEmail}. {companyProfile.responseTime}.
+            </p>
             <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
               <Link to="/quote" className="flex items-center gap-2">
                 {t.about?.configurePaintCell || "Start Project Assessment"}

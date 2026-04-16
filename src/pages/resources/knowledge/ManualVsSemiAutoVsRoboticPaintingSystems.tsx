@@ -5,19 +5,19 @@ export default function ManualVsSemiAutoVsRoboticPaintingSystems() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: "Manual vs Semi-Automatic vs Robotic Painting Systems",
+    headline: "Manual vs Semi-Automatic vs Robotic Painting",
     description: "How to choose between manual, semi-automatic, and robotic painting systems for industrial manufacturing.",
   };
 
   return (
     <ResourcePageLayout
-      title="Manual vs Semi-Automatic vs Robotic Painting Systems"
-      metaTitle="Manual vs Semi-Automatic vs Robotic Painting Systems | How to Choose"
+      title="Manual vs Semi-Automatic vs Robotic Painting"
+      metaTitle="Manual vs Semi-Automatic vs Robotic Painting | Selection Framework"
       metaDescription="Compare manual, semi-automatic, and robotic painting systems by throughput, flexibility, finish consistency, and project fit."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Knowledge" },
-        { label: "Manual vs Semi-Automatic vs Robotic Painting Systems" },
+        { label: "Manual vs Semi-Automatic vs Robotic Painting" },
       ]}
       structuredData={structuredData}
       canonicalPath="/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems"
@@ -76,8 +76,8 @@ export default function ManualVsSemiAutoVsRoboticPaintingSystems() {
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Pages to read next</h2>
       <ul className="space-y-3 text-muted-foreground">
-        <li><Link to="/resources/knowledge/when-robotic-paint-automation-makes-sense" className="text-primary underline underline-offset-4">When Does a Robotic Paint Automation System Make Sense?</Link></li>
         <li><Link to="/solutions/robotic-painting-system" className="text-primary underline underline-offset-4">Robotic Paint Automation System</Link></li>
+        <li><Link to="/resources/knowledge/when-robotic-paint-automation-makes-sense" className="text-primary underline underline-offset-4">When Does Robotic Painting Make Sense?</Link></li>
         <li><Link to="/quote" className="text-primary underline underline-offset-4">Discuss your production mix with an engineer</Link></li>
       </ul>
     </ResourcePageLayout>

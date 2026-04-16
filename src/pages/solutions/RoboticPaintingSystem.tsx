@@ -17,8 +17,10 @@ import {
 import { AIChatDrawer } from "@/components/ai-assistant/AIChatDrawer";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import { useI18n } from "@/i18n";
+import { getPageMetadata } from "@/data/pageMetadata";
 
 const DOMAIN = "https://tdpaint.com";
+const roboticPaintingPageMeta = getPageMetadata("/solutions/robotic-painting-system");
 
 const jsonLdSchemas_static = [
   {
@@ -71,6 +73,7 @@ const jsonLdSchemas_static = [
     "isPartOf": { "@id": `${DOMAIN}/#website` },
     "mainEntity": { "@id": `${DOMAIN}/solutions/robotic-painting-system#service` },
     "inLanguage": "en",
+    ...(roboticPaintingPageMeta?.updatedAt ? { "dateModified": roboticPaintingPageMeta.updatedAt } : {}),
   },
 ];
 
@@ -145,6 +148,59 @@ export default function RoboticPaintingSystem() {
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold mb-4 leading-tight max-w-3xl">
               Robotic Paint Automation System for Industrial Finishing
             </h1>
+            <div className="max-w-4xl space-y-4 text-base leading-relaxed text-muted-foreground">
+              <p>
+                This solution is best for manufacturers that already know the line needs a robotic spray-painting cell
+                and now need to define the real project boundary: robot platform, spray technology, booth integration,
+                paint supply, controls, and commissioning scope.
+              </p>
+              <p>
+                It is not the right starting page if the real question is whether the process should stay manual, move
+                to semi-automatic handling, or wait until part presentation and booth conditions are more stable.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {[
+                {
+                  label: "Best for",
+                  icon: Target,
+                  title: "Repeat or semi-repeat part families with real finish-risk or takt pressure",
+                  body: "The strongest fit is a line where quality stability, labor pressure, or throughput justify fixtures, recipes, and system integration.",
+                },
+                {
+                  label: "Not ideal for",
+                  icon: AlertTriangle,
+                  title: "Projects still trying to fix unstable product definition with a robot",
+                  body: "If masking logic, part presentation, changeover rules, or booth stability are still unresolved, a robot usually adds complexity faster than it removes it.",
+                },
+                {
+                  label: "Decision changes when",
+                  icon: Settings2,
+                  title: "Booth condition, color-change logic, or coating chemistry shifts",
+                  body: "The right scope changes quickly when the line moves from solvent to water-based paint, from long runs to mixed models, or from greenfield to retrofit.",
+                },
+              ].map((item) => (
+                <Card key={item.label} className="border-border bg-card">
+                  <CardContent className="p-6">
+                    <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      {item.label}
+                    </p>
+                    <h2 className="mb-3 text-lg font-semibold">{item.title}</h2>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-6 rounded-2xl border border-border bg-muted/30 p-5 text-sm text-muted-foreground">
+              <p>
+                <strong className="text-foreground">Common mistake:</strong> asking for robot brand or spray-equipment pricing
+                before confirming part family, coating chemistry, color-change frequency, and whether the booth is new or retrofit.
+                That usually produces an equipment list, not a project scope.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -394,7 +450,7 @@ export default function RoboticPaintingSystem() {
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <CalendarDays className="h-3.5 w-3.5" />
-                Last updated: 2026-02-12
+                Last updated: {roboticPaintingPageMeta?.updatedAt || "2026-04-16"}
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <FileText className="h-3.5 w-3.5" />

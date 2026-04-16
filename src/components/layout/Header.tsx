@@ -212,7 +212,7 @@ export function Header() {
     { name: shell.nav.industries, href: "/industries" },
     { name: shell.nav.caseStudies, href: "/case-studies" },
     { name: shell.nav.videos, href: "/videos" },
-    { name: shell.nav.knowledge, href: "/resources/engineering-library" },
+    { name: shell.nav.knowledge, href: "/resources" },
   ];
 
   const isActive = (href: string) => {

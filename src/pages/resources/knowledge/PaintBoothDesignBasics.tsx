@@ -70,11 +70,11 @@ export default function PaintBoothDesignBasics() {
     "@graph": [
       {
         "@type": "TechArticle",
-        headline: "Paint Booth Design Basics for Robotic Painting Projects",
+        headline: "Paint Booth Design Basics for Layout and Retrofit Planning",
         description:
           "Decision-oriented guide to paint booth design covering booth type selection, sizing inputs, retrofit checks, ventilation, and filtration dependencies.",
         author: { "@type": "Organization", name: "TD Engineering Team" },
-        publisher: { "@type": "Organization", name: "TD Painting System" },
+        publisher: { "@type": "Organization", name: "TD Painting Systems" },
         inLanguage: "en",
       },
       {
@@ -93,8 +93,8 @@ export default function PaintBoothDesignBasics() {
 
   return (
     <ResourcePageLayout
-      title="Paint Booth Design Basics for Robotic Painting Projects"
-      metaTitle="Paint Booth Design Basics | Booth Type, Sizing, Retrofit Decisions"
+      title="Paint Booth Design Basics for Layout and Retrofit Planning"
+      metaTitle="Paint Booth Design Basics | Layout, Airflow and Retrofit Planning"
       metaDescription="Learn the paint booth design basics that actually change project scope: downdraft vs crossdraft vs side-draft, sizing inputs, retrofit limits, ventilation, and filtration."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
@@ -108,6 +108,14 @@ export default function PaintBoothDesignBasics() {
         Good booth design starts with process risk, finish target, and part handling logic. If the team jumps
         straight to steel dimensions or robot placement, the project usually looks cheaper on paper than it is
         in production.
+      </p>
+      <p className="text-muted-foreground mb-8">
+        This page supports layout-stage decisions before the project commits to
+        {" "}
+        <Link to="/solutions/paint-booth-automation" className="text-primary underline underline-offset-4">
+          paint booth automation
+        </Link>
+        .
       </p>
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Use booth design to answer the real project questions</h2>
@@ -235,6 +243,12 @@ export default function PaintBoothDesignBasics() {
       <h2 className="text-2xl font-semibold text-foreground mb-4">Read next</h2>
       <ul className="space-y-3 text-muted-foreground">
         <li>
+          <Link to="/solutions/paint-booth-automation" className="text-primary underline underline-offset-4">
+            Paint booth automation
+          </Link>
+          {" "}when the project is ready to move from layout questions into implementation scope.
+        </li>
+        <li>
           <Link to="/resources/knowledge/downdraft-vs-crossdraft-vs-side-draft" className="text-primary underline underline-offset-4">
             Downdraft vs crossdraft vs side-draft
           </Link>
@@ -263,12 +277,6 @@ export default function PaintBoothDesignBasics() {
             How much floor space does an automated paint line need?
           </Link>
           {" "}for footprint planning.
-        </li>
-        <li>
-          <Link to="/solutions/paint-booth-automation" className="text-primary underline underline-offset-4">
-            Paint booth automation
-          </Link>
-          {" "}when the project is ready to move from layout questions into implementation scope.
         </li>
       </ul>
     </ResourcePageLayout>

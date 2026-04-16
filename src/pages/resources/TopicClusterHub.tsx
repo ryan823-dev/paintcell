@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { ResourcePageLayout } from "@/components/resources";
-import { TopicClusterNavigator } from "@/components/seo/TopicClusterNavigator";
 import { topicClusters } from "@/data/topicClusters";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import NotFound from "@/pages/NotFound";
@@ -53,8 +52,6 @@ export default function TopicClusterHub() {
     >
       <p className="text-lg text-muted-foreground mb-8">{cluster.summary}</p>
       <p className="text-muted-foreground mb-10">{cluster.searchIntent}</p>
-
-      <TopicClusterNavigator cluster={cluster} currentPath={`/resources/topics/${cluster.slug}`} />
 
       <div className="mt-10">
         <h2 className="text-2xl font-semibold text-foreground mb-4">Why this cluster is worth expanding</h2>

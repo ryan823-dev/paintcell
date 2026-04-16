@@ -7,6 +7,7 @@ export default function DryFilmThickness() {
   const term = t.glossaryTerms?.dryFilmThickness || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
+  const pageTitle = term.title || "Dry Film Thickness (DFT)";
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -18,12 +19,12 @@ export default function DryFilmThickness() {
 
   return (
     <ResourcePageLayout
-      title={term.title || "Dry Film Thickness (DFT)"}
+      title={pageTitle}
       metaTitle={term.metaTitle || "Dry Film Thickness | Paint Cell Glossary"}
       metaDescription={term.metaDesc || "Definition of dry film thickness and its measurement in industrial coating applications."}
       breadcrumbs={[
         { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
-        { label: term.title || "Dry Film Thickness" },
+        { label: pageTitle },
       ]}
       structuredData={structuredData}
     >

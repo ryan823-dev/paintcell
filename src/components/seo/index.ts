@@ -14,6 +14,7 @@
 
 export { BreadcrumbSchema, createBreadcrumbSchema } from "./BreadcrumbSchema";
 export { Hreflang } from "./Hreflang";
+export { OrganizationSchema } from "./OrganizationSchema";
 export { SeoLocaleEnforcer } from "./SeoLocaleEnforcer";
 export { SpeakableSchema, ArticleWithSpeakable } from "./SpeakableSchema";
 export { ServiceSchema, services } from "./ServiceSchema";

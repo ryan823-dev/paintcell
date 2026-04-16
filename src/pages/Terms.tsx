@@ -1,9 +1,11 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
+import { companyProfile } from "@/lib/siteTrust";
 
 export default function Terms() {
   const { t } = useI18n();
   const page = t.legalPages?.terms || {};
+  const lastUpdated = companyProfile.legalLastUpdated;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -11,12 +13,17 @@ export default function Terms() {
     "name": page.title || "Terms of Use",
     "description": page.metaDesc || "Terms of Use for TDPaintCell website and services.",
     "inLanguage": "en",
+    "publisher": {
+      "@type": "Organization",
+      "name": companyProfile.legalName,
+      "email": companyProfile.primaryEmail,
+    },
   };
 
   return (
     <ResourcePageLayout
       title={page.title || "Terms of Use"}
-      metaTitle={`${page.title || "Terms of Use"} | TDPaintCell`}
+      metaTitle={`${page.title || "Terms of Use"} | ${companyProfile.productName}`}
       metaDescription={page.metaDesc || "Terms of Use for TDPaintCell website and services."}
       breadcrumbs={[
         { label: page.title || "Terms of Use" },
@@ -25,7 +32,11 @@ export default function Terms() {
       canonicalPath="/terms"
       showCTA={false}
     >
-      <p className="text-muted-foreground mb-8">{page.lastUpdated || "Last updated"}: 2026-01-01</p>
+      <p className="text-muted-foreground mb-3">{page.lastUpdated || "Last updated"}: {lastUpdated}</p>
+      <p className="text-muted-foreground mb-8">
+        These terms govern public website use and inquiry submissions handled by {companyProfile.legalName},
+        operating publicly as {companyProfile.brandName}.
+      </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.acceptance?.title || "Acceptance of terms"}</h2>
       <p className="text-muted-foreground">{page.acceptance?.content || ""}</p>
@@ -62,7 +73,7 @@ export default function Terms() {
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.contact?.title || "Contact"}</h2>
       <p className="text-muted-foreground">
-        {page.contact?.content || "Questions about these Terms:"} <a href="mailto:engineering@tdpaint.com" className="text-primary hover:underline">engineering@tdpaint.com</a>.
+        {page.contact?.content || "Questions about these Terms:"} <a href={`mailto:${companyProfile.primaryEmail}`} className="text-primary hover:underline">{companyProfile.primaryEmail}</a>.
       </p>
     </ResourcePageLayout>
   );

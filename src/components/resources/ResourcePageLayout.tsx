@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight } from "lucide-react";
@@ -8,6 +8,7 @@ import {
   buildLocalizedUrl,
   getCanonicalLocaleForPath,
   normalizePublicPath,
+  SITE_URL,
   stripLocalePrefix,
 } from "@/lib/seo";
 import { TopicClusterNavigator } from "@/components/seo/TopicClusterNavigator";
@@ -20,6 +21,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { ResourceTrustPanel } from "./ResourceTrustPanel";
+import { companyProfile, getResourceTrustDefaults, type ResourceTrustMeta } from "@/lib/siteTrust";
+import { getPageMetadata } from "@/data/pageMetadata";
 
 interface BreadcrumbItem {
   label: string;
@@ -35,6 +39,7 @@ interface ResourcePageLayoutProps {
   showCTA?: boolean;
   structuredData?: object;
   canonicalPath?: string;
+  trustMeta?: ResourceTrustMeta;
 }
 
 export function ResourcePageLayout({
@@ -46,6 +51,7 @@ export function ResourcePageLayout({
   showCTA = true,
   structuredData,
   canonicalPath,
+  trustMeta,
 }: ResourcePageLayoutProps) {
   const { locale, t } = useI18n();
   const location = useLocation();
@@ -56,18 +62,161 @@ export function ResourcePageLayout({
   const canonicalLocale = getCanonicalLocaleForPath(resolvedPath, locale);
   const canonicalUrl = buildLocalizedUrl(canonicalLocale, resolvedPath);
   const schemaLanguage = resolvedPath.startsWith("/resources") ? "en" : locale;
+  const resourcesLabel = resourceLayoutT.resources || t.common.resources || "Resources";
+  const normalizedBreadcrumbs = (() => {
+    if (!resolvedPath.startsWith("/resources") || resolvedPath === "/resources") {
+      return breadcrumbs;
+    }
+
+    const rewrittenBreadcrumbs = breadcrumbs.map((item, index) => {
+      const normalizedHref = item.href ? normalizePublicPath(item.href) : undefined;
+
+      if (index === 0 && item.label === resourcesLabel) {
+        return {
+          ...item,
+          href: "/resources",
+        };
+      }
+
+      return normalizedHref ? { ...item, href: normalizedHref } : item;
+    });
+
+    const hasResourcesBreadcrumb = rewrittenBreadcrumbs.some((item) => {
+      if ((item.href && normalizePublicPath(item.href) === "/resources") || item.label === resourcesLabel) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (hasResourcesBreadcrumb) {
+      return rewrittenBreadcrumbs;
+    }
+
+    return [{ label: resourcesLabel, href: "/resources" }, ...rewrittenBreadcrumbs];
+  })();
+  const showTrustPanel = resolvedPath.startsWith("/resources") || resolvedPath.startsWith("/case-studies");
+  const pageMeta = getPageMetadata(resolvedPath);
+
+  const effectiveTrustMeta = useMemo(() => {
+    if (!showTrustPanel) {
+      return null;
+    }
+
+    const defaultTrustMeta = getResourceTrustDefaults(resolvedPath);
+    const structuredRecords = (() => {
+      if (!structuredData || typeof structuredData !== "object") {
+        return [] as Array<Record<string, unknown>>;
+      }
+
+      const isRecord = (value: unknown): value is Record<string, unknown> =>
+        typeof value === "object" && value !== null && !Array.isArray(value);
+
+      const pushRecord = (value: unknown, list: Array<Record<string, unknown>>) => {
+        if (isRecord(value)) {
+          list.push(value);
+        }
+      };
+
+      const records: Array<Record<string, unknown>> = [];
+      pushRecord(structuredData, records);
+
+      if (isRecord(structuredData) && Array.isArray(structuredData["@graph"])) {
+        structuredData["@graph"].forEach((item) => pushRecord(item, records));
+      }
+
+      return records;
+    })();
+
+    const extractAuthorName = () => {
+      const isRecord = (value: unknown): value is Record<string, unknown> =>
+        typeof value === "object" && value !== null && !Array.isArray(value);
+
+      for (const record of structuredRecords) {
+        const author = record.author;
+
+        if (typeof author === "string" && author.trim()) {
+          return author;
+        }
+
+        if (Array.isArray(author)) {
+          for (const item of author) {
+            if (typeof item === "string" && item.trim()) {
+              return item;
+            }
+
+            if (isRecord(item) && typeof item.name === "string" && item.name.trim()) {
+              return item.name;
+            }
+          }
+        }
+
+        if (isRecord(author) && typeof author.name === "string" && author.name.trim()) {
+          return author.name;
+        }
+      }
+
+      return undefined;
+    };
+
+    const extractUpdatedAt = () => {
+      for (const record of structuredRecords) {
+        if (typeof record.dateModified === "string" && record.dateModified.trim()) {
+          return record.dateModified;
+        }
+      }
+
+      for (const record of structuredRecords) {
+        if (typeof record.datePublished === "string" && record.datePublished.trim()) {
+          return record.datePublished;
+        }
+      }
+
+      return undefined;
+    };
+
+    return {
+      ...defaultTrustMeta,
+      authorName:
+        trustMeta?.authorName ||
+        extractAuthorName() ||
+        pageMeta?.authorName ||
+        defaultTrustMeta.authorName ||
+        companyProfile.authorTeamName,
+      updatedAt: trustMeta?.updatedAt || extractUpdatedAt() || pageMeta?.updatedAt,
+      reviewedBy: trustMeta?.reviewedBy,
+      reviewedAt: trustMeta?.reviewedAt,
+      scope: trustMeta?.scope || defaultTrustMeta.scope,
+      useWith: trustMeta?.useWith || defaultTrustMeta.useWith,
+      limitations: trustMeta?.limitations || defaultTrustMeta.limitations,
+      sourceBasis: trustMeta?.sourceBasis || pageMeta?.sourceBasis || defaultTrustMeta.sourceBasis,
+      publisherName: trustMeta?.publisherName || defaultTrustMeta.publisherName,
+      publisherLocation: trustMeta?.publisherLocation || defaultTrustMeta.publisherLocation,
+      contactEmail: trustMeta?.contactEmail || defaultTrustMeta.contactEmail || companyProfile.primaryEmail,
+      sourceLinks: trustMeta?.sourceLinks || defaultTrustMeta.sourceLinks,
+    } satisfies ResourceTrustMeta;
+  }, [pageMeta, resolvedPath, showTrustPanel, structuredData, trustMeta]);
 
   // Organization Schema
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "TD Painting Systems",
-    "url": "https://tdpaint.com",
-    "logo": "https://tdpaint.com/td-logo.png",
+    "@id": `${SITE_URL}/#organization`,
+    "name": companyProfile.brandName,
+    "legalName": companyProfile.legalName,
+    "url": SITE_URL,
+    "logo": `${SITE_URL}/images/td-logo.png`,
+    "image": `${SITE_URL}/images/og-social-share.png`,
     "contactPoint": {
       "@type": "ContactPoint",
-      "email": "engineering@tdpaint.com",
+      "email": companyProfile.primaryEmail,
       "contactType": "Customer Service"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": `${companyProfile.headquarters.streetAddress}, ${companyProfile.headquarters.district}`,
+      "addressLocality": companyProfile.headquarters.city,
+      "addressCountry": companyProfile.headquarters.countryCode,
     },
     "inLanguage": schemaLanguage,
   };
@@ -79,11 +228,11 @@ export function ResourcePageLayout({
     "itemListElement": [
       {
         "@type": "ListItem",
-        "position": 1,
+      "position": 1,
         "name": resourceLayoutT.home || t.common.home,
         "item": buildLocalizedUrl(canonicalLocale, "/")
       },
-      ...breadcrumbs.map((item, index) => ({
+      ...normalizedBreadcrumbs.map((item, index) => ({
         "@type": "ListItem",
         "position": index + 2,
         "name": item.label,
@@ -157,7 +306,7 @@ export function ResourcePageLayout({
                   <Link to="/">{resourceLayoutT.home || t.common.home}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              {breadcrumbs.map((item, index) => (
+              {normalizedBreadcrumbs.map((item, index) => (
                 <BreadcrumbItem key={index}>
                   <BreadcrumbSeparator />
                   {item.href ? (
@@ -179,6 +328,23 @@ export function ResourcePageLayout({
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
           {title}
         </h1>
+
+        {effectiveTrustMeta ? (
+          <ResourceTrustPanel
+            labels={{
+              title: resourceLayoutT.trustTitle || "Content trust and applicability",
+              author: resourceLayoutT.authorLabel || "Author",
+              updated: resourceLayoutT.updatedLabel || "Last updated",
+              publisher: resourceLayoutT.publisherLabel || "Publisher",
+              contact: resourceLayoutT.contactLabel || "Contact",
+              scope: resourceLayoutT.scopeLabel || "Scope",
+              useWith: resourceLayoutT.useWithLabel || "Best used for",
+              limitations: resourceLayoutT.limitationsLabel || "Use with caution",
+              sourceBasis: resourceLayoutT.sourceBasisLabel || "Evidence basis",
+            }}
+            trust={effectiveTrustMeta}
+          />
+        ) : null}
         
         <div className="prose prose-slate max-w-none">
           {children}

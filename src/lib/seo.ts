@@ -61,6 +61,11 @@ export function getIndexableLocalesForPath(pathname: string): Locale[] {
   return getSeoPathPolicy(pathname).indexableLocales;
 }
 
+export function getPrerenderLocalesForPath(pathname: string): Locale[] {
+  const normalized = normalizePublicPath(pathname);
+  return multiLocaleIndexablePathSet.has(normalized) ? locales : [defaultLocale];
+}
+
 export function isLocaleIndexableForPath(pathname: string, locale: Locale): boolean {
   return getIndexableLocalesForPath(pathname).includes(locale);
 }

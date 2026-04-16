@@ -623,21 +623,6 @@ export const topicClusters: Record<string, TopicCluster> = {
         href: "/resources/knowledge/industrial-robot-brands",
         description: "Brand-comparison support page for deeper vendor evaluation.",
       },
-      {
-        label: "Manual vs Semi-Automatic vs Robotic Painting Systems",
-        href: "/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems",
-        description: "Comparison page for deciding how much automation the line really needs.",
-      },
-      {
-        label: "When Does a Robotic Paint Automation System Make Sense?",
-        href: "/resources/knowledge/when-robotic-paint-automation-makes-sense",
-        description: "Decision page for judging when robotic automation has a real business case.",
-      },
-      {
-        label: "What Parts Are Suitable for Robotic Painting?",
-        href: "/resources/faq/what-parts-are-suitable-for-robotic-painting",
-        description: "FAQ page for qualifying part families before robot selection starts.",
-      },
     ],
     extraPaths: [
       "/resources/knowledge/paint-robot-reach-vs-payload",
@@ -646,9 +631,281 @@ export const topicClusters: Record<string, TopicCluster> = {
       "/resources/knowledge/industrial-robot-brands",
       "/resources/glossary/hollow-wrist",
       "/resources/glossary/teach-pendant",
-      "/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems",
+    ],
+  },
+  "robotic-painting": {
+    slug: "robotic-painting",
+    keyword: "robotic painting",
+    title: "Robotic Painting Topic Cluster",
+    metaTitle: "Robotic Painting Topic Cluster | Guide, FAQ, Glossary, Scenario",
+    metaDescription: "Explore the robotic painting topic cluster with a guide, FAQ, glossary, scenario, and linked industry and solution pages built for commercial evaluation.",
+    summary: "This cluster organizes broad robotic painting research into a clearer path from automation fit and ROI questions to system scope, robot planning, and deployment decisions.",
+    searchIntent: "Users searching robotic painting are usually trying to decide whether automation fits their part families, what system boundary they actually need, and how robot, booth, and integration choices connect to a real project.",
+    guide: {
+      label: "Robotic Painting Guide",
+      href: "/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems",
+      description: "Core guide comparing manual, semi-automatic, and robotic painting paths.",
+    },
+    faq: {
+      label: "Robotic Painting FAQ",
+      href: getTopicClusterFaqPath("robotic-painting"),
+      description: "Questions about fit, payback, part families, and deployment scope.",
+    },
+    glossary: {
+      label: "Robotic Painting Glossary",
+      href: getTopicClusterGlossaryPath("robotic-painting"),
+      description: "Core terms covering transfer efficiency, hollow wrist design, spray pattern, and paint recipes.",
+    },
+    scenario: {
+      label: "Robotic Painting Scenario",
+      href: getTopicClusterScenarioPath("robotic-painting"),
+      description: "Scenario page for a manufacturer deciding where robotic painting should start and what the first cell should cover.",
+    },
+    industry: {
+      label: "Metal Parts Finishing Industry Page",
+      href: "/industries/metal-parts-finishing",
+      description: "A strong commercial entry point for turning broad automation interest into part-family evaluation.",
+    },
+    solution: {
+      label: "Robotic Painting System",
+      href: "/solutions/robotic-painting-system",
+      description: "Main commercial solution page covering robot, booth, paint supply, controls, and commissioning scope.",
+    },
+    whyThisClusterWorks: [
+      "It gives the site a true commercial hub for broad robotic painting searches instead of forcing that intent through narrower selection content.",
+      "It connects early-stage fit questions with the solution and industry pages most likely to convert project-stage traffic.",
+      "It creates cleaner topical separation between broad automation evaluation and the narrower paint robot selection cluster.",
+    ],
+    faqItems: [
+      {
+        question: "When does robotic painting usually make sense?",
+        answer: "It usually makes sense when part families are repeatable enough to justify fixtures and recipes, finish quality matters, and labor or throughput instability is already constraining production.",
+      },
+      {
+        question: "Is robotic painting only for high-volume lines?",
+        answer: "No. High volume helps, but medium-volume programs can also justify automation when quality, labor availability, or material efficiency create enough operational pressure.",
+      },
+      {
+        question: "What usually defines the project boundary first?",
+        answer: "The boundary is usually defined by part family, finish requirement, and the current booth or handling constraints before robot brand or atomizer model becomes the main decision.",
+      },
+      {
+        question: "Should buyers start with a robot model or a full system concept?",
+        answer: "A full system concept comes first. Robot choice matters, but it only makes sense after the spray method, booth environment, part presentation, and integration scope are clear.",
+      },
+    ],
+    glossaryTerms: [
+      {
+        term: "Transfer Efficiency",
+        href: "/resources/glossary/transfer-efficiency",
+        definition: "The percentage of sprayed paint that lands on the part instead of becoming waste.",
+        whyItMatters: "This is one of the most practical ways buyers compare manual and robotic painting economics.",
+      },
+      {
+        term: "Hollow Wrist Robot",
+        href: "/resources/glossary/hollow-wrist",
+        definition: "A robot wrist design that routes paint hoses and cables internally.",
+        whyItMatters: "It improves hose management and is one of the first painting-specific features buyers evaluate.",
+      },
+      {
+        term: "Spray Pattern",
+        href: "/resources/glossary/spray-pattern",
+        definition: "The shape and distribution of paint leaving the applicator.",
+        whyItMatters: "Robotic painting only performs well when the robot path and spray pattern stay aligned to the part geometry.",
+      },
+      {
+        term: "Paint Recipe",
+        href: "/resources/glossary/paint-recipe",
+        definition: "A stored set of process parameters for a specific part or finish condition.",
+        whyItMatters: "Recipes are a core reason robotic systems can scale across repeated part families without losing consistency.",
+      },
+    ],
+    scenarioDetails: {
+      title: "Qualifying robotic painting for a mixed metal and plastics program",
+      summary: "A manufacturer paints metal enclosures, plastic covers, and a smaller family of decorative parts. Management wants automation, but the team has not yet decided whether the first project should be one flexible cell or a narrower application-specific line.",
+      challengePoints: [
+        "The current discussion mixes ROI, robot brand choice, and booth limits before the automation boundary is defined.",
+        "Part families have different finish priorities and do not all justify the same spray technology or handling logic.",
+        "The plant wants a business case quickly, but the current estimates do not separate what belongs in phase one versus a later rollout.",
+      ],
+      evaluationSteps: [
+        "Group the parts by geometry, finish requirement, and presentation stability before estimating one shared cell.",
+        "Define which constraints come from the booth, paint process, or part handling before choosing robot hardware.",
+        "Compare the value of one broader system against a narrower first cell that proves throughput and quality gains sooner.",
+      ],
+      outcomeSignals: [
+        "A healthy outcome shows a clear first automation boundary, a realistic solution scope, and part families that match the selected cell concept.",
+        "If the project still cannot separate broad interest from a real first deployment scope, the line is not ready for final equipment decisions.",
+      ],
+    },
+    relatedLinks: [
+      {
+        label: "When Does a Robotic Paint Automation System Make Sense?",
+        href: "/resources/knowledge/when-robotic-paint-automation-makes-sense",
+        description: "Decision page for judging when robotic automation has a real business case.",
+      },
+      {
+        label: "How to Choose a Paint Robot",
+        href: "/resources/knowledge/how-to-choose-paint-robot",
+        description: "Planning guide for turning broad automation interest into robot requirements.",
+      },
+      {
+        label: "What Parts Are Suitable for Robotic Painting?",
+        href: "/resources/faq/what-parts-are-suitable-for-robotic-painting",
+        description: "FAQ page for checking whether the part family is automation-ready.",
+      },
+      {
+        label: "Robotic Painting Cost Guide",
+        href: "/resources/knowledge/robotic-painting-cost-guide",
+        description: "Commercial support page for comparing investment and payback logic.",
+      },
+      {
+        label: "Paint Robot Integration",
+        href: "/solutions/paint-robot-integration",
+        description: "Narrower solution page for teams already moving from system scope into robot deployment work.",
+      },
+    ],
+    extraPaths: [
       "/resources/knowledge/when-robotic-paint-automation-makes-sense",
       "/resources/faq/what-parts-are-suitable-for-robotic-painting",
+      "/resources/knowledge/robotic-painting-cost-guide",
+      "/solutions/paint-robot-integration",
+      "/industries/automotive-exterior-parts",
+      "/industries/furniture-woodwork",
+    ],
+  },
+  "furniture-coating": {
+    slug: "furniture-coating",
+    keyword: "furniture coating",
+    title: "Furniture Coating Topic Cluster",
+    metaTitle: "Furniture Coating Topic Cluster | Guide, FAQ, Glossary, Scenario",
+    metaDescription: "Explore the furniture coating topic cluster with a guide, FAQ, glossary, scenario, and linked industry and solution pages for commercial furniture-finishing intent.",
+    summary: "This cluster connects furniture finishing research to the real choices behind panel lines, robotic spray cells, visible-surface quality, and mixed-product flow.",
+    searchIntent: "Furniture coating searches usually sit between process research and line planning: users want to compare roller, spray, and robotic approaches, understand product-family fit, and connect finish targets to a real equipment scope.",
+    guide: {
+      label: "Furniture Coating Guide",
+      href: "/resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic",
+      description: "Core guide comparing roller, spray, and robotic paths for furniture finishing.",
+    },
+    faq: {
+      label: "Furniture Coating FAQ",
+      href: getTopicClusterFaqPath("furniture-coating"),
+      description: "Questions about visible-surface quality, panel flow, changeover, and automation fit.",
+    },
+    glossary: {
+      label: "Furniture Coating Glossary",
+      href: getTopicClusterGlossaryPath("furniture-coating"),
+      description: "Key finish and process terms for cabinet, furniture, and panel programs.",
+    },
+    scenario: {
+      label: "Furniture Coating Scenario",
+      href: getTopicClusterScenarioPath("furniture-coating"),
+      description: "Scenario page for a cabinet and door manufacturer deciding between panel-oriented and robotic finishing flow.",
+    },
+    industry: {
+      label: "Furniture Coating Systems",
+      href: "/industries/furniture-woodwork",
+      description: "Industry page covering cabinets, furniture parts, and architectural millwork finishing.",
+    },
+    solution: {
+      label: "Panel Coating and Finishing Systems",
+      href: "/solutions/panel-coating-finishing-systems",
+      description: "Commercial solution page for flat-part and panel-oriented finishing layouts.",
+    },
+    whyThisClusterWorks: [
+      "It adds the missing furniture hub the site needed without inventing a new content model.",
+      "It connects furniture-industry intent to the commercial panel-coating page instead of leaving the line concept split across isolated articles.",
+      "It broadens anchor diversity by routing furniture traffic through method-comparison, planning, and visible-surface quality pages rather than repeating one exact-match phrase.",
+    ],
+    faqItems: [
+      {
+        question: "When is a furniture program better suited to a panel line than a robotic spray cell?",
+        answer: "Panel lines usually fit repeated flat or semi-profiled products with stable presentation and high throughput, while robotic spray cells make more sense when geometry, edge coverage, or recipe flexibility become more important.",
+      },
+      {
+        question: "Do furniture coating projects always need robotic spray?",
+        answer: "No. Many furniture programs are better served by a roller, reciprocator, or hybrid layout. The right answer depends on product mix, visible-surface quality, and changeover behavior.",
+      },
+      {
+        question: "What usually constrains furniture finishing automation first?",
+        answer: "The real constraint is often product-family behavior, footprint, and curing balance rather than the spray device alone.",
+      },
+      {
+        question: "How should buyers think about finish quality on furniture lines?",
+        answer: "They should look at visible-surface consistency, edge behavior, defect sensitivity, and whether the chosen line concept can keep those results stable across repeated products.",
+      },
+    ],
+    glossaryTerms: [
+      {
+        term: "HVLP",
+        href: "/resources/glossary/hvlp",
+        definition: "High Volume Low Pressure spray technology used for softer atomization and improved transfer efficiency.",
+        whyItMatters: "It is common in visible-surface furniture work where finish quality and overspray control both matter.",
+      },
+      {
+        term: "Flash-off Time",
+        href: "/resources/glossary/flash-off-time",
+        definition: "The time allowed for volatiles to leave the coating before the next process step.",
+        whyItMatters: "Furniture lines often depend on steady flash-off behavior to protect appearance and downstream cure balance.",
+      },
+      {
+        term: "Orange Peel",
+        href: "/resources/glossary/orange-peel",
+        definition: "A textured finish defect caused by poor flow or atomization behavior.",
+        whyItMatters: "Visible furniture surfaces expose this defect quickly, so line choice and process stability both matter.",
+      },
+      {
+        term: "Paint Recipe",
+        href: "/resources/glossary/paint-recipe",
+        definition: "A stored set of process parameters for a defined part family or finish requirement.",
+        whyItMatters: "Recipe discipline is essential when furniture programs mix doors, boards, and decorative parts with different finish targets.",
+      },
+    ],
+    scenarioDetails: {
+      title: "Choosing the right finishing architecture for a cabinet door and panel program",
+      summary: "A cabinet manufacturer runs repeated doors and side panels, but also a smaller range of decorative furniture components. The team needs better finish consistency and throughput, yet it is unclear whether the first investment should be a panel line, a robotic spray cell, or a staged hybrid.",
+      challengePoints: [
+        "The repeated door flow suggests panel-line efficiency, but edge quality and visible-surface expectations remain high.",
+        "Decorative side products create recipe variation that could make a purely narrow line harder to justify.",
+        "Available floor space is limited, so drying and cure balance matters as much as application speed.",
+      ],
+      evaluationSteps: [
+        "Separate repeated flat products from flexible side programs before deciding that one line must serve everything.",
+        "Compare panel-oriented throughput gains against the quality and flexibility value of robotic spray for visible parts.",
+        "Validate footprint, flash-off, and curing balance so the chosen architecture still works in the real plant layout.",
+      ],
+      outcomeSignals: [
+        "A healthy outcome shows a clear product-family split, a fitting application method, and a line concept that matches visible-surface expectations.",
+        "If the project still treats all furniture products as one undifferentiated flow, the selected equipment scope will likely be unstable.",
+      ],
+    },
+    relatedLinks: [
+      {
+        label: "How Much Floor Space Does an Automated Paint Line Need?",
+        href: "/resources/faq/how-much-floor-space-does-an-automated-paint-line-need",
+        description: "Planning FAQ for translating finish ambition into a real line footprint.",
+      },
+      {
+        label: "Paint Defects Guide",
+        href: "/resources/knowledge/paint-defects-guide",
+        description: "Support page for the visible-surface defects that matter most in furniture finishing.",
+      },
+      {
+        label: "HVLP Spray Gun Guide",
+        href: "/resources/knowledge/hvlp-spray-gun-guide",
+        description: "Supporting guide for the spray technology often evaluated in furniture programs.",
+      },
+      {
+        label: "Robotic Painting System Integration",
+        href: "/solutions/robotic-painting-system",
+        description: "Broader commercial page for buyers whose furniture program still needs a more flexible full-cell scope.",
+      },
+    ],
+    extraPaths: [
+      "/resources/faq/how-much-floor-space-does-an-automated-paint-line-need",
+      "/resources/knowledge/paint-defects-guide",
+      "/resources/knowledge/hvlp-spray-gun-guide",
+      "/solutions/robotic-painting-system",
     ],
   },
   "metal-parts-finishing": {
@@ -777,8 +1034,31 @@ export const topicClusters: Record<string, TopicCluster> = {
 
 export const topicClusterList = Object.values(topicClusters);
 
+const preferredTopicClusterByPath: Record<string, keyof typeof topicClusters> = {
+  "/solutions/paint-booth-automation": "paint-booth-design",
+  "/solutions/robotic-painting-system": "robotic-painting",
+  "/solutions/paint-robot-integration": "paint-robot-selection",
+  "/solutions/panel-coating-finishing-systems": "furniture-coating",
+  "/industries/metal-parts-finishing": "metal-parts-finishing",
+  "/industries/automotive-exterior-parts": "flame-treatment",
+  "/industries/furniture-woodwork": "furniture-coating",
+  "/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems": "robotic-painting",
+  "/resources/knowledge/when-robotic-paint-automation-makes-sense": "robotic-painting",
+  "/resources/faq/what-parts-are-suitable-for-robotic-painting": "robotic-painting",
+  "/resources/knowledge/robotic-painting-cost-guide": "robotic-painting",
+  "/resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic": "furniture-coating",
+  "/resources/faq/how-much-floor-space-does-an-automated-paint-line-need": "furniture-coating",
+  "/resources/knowledge/paint-defects-guide": "metal-parts-finishing",
+};
+
 export function getTopicClusterByPath(pathname: string) {
   const normalizedPath = normalizePublicPath(pathname);
+  const preferredClusterSlug = preferredTopicClusterByPath[normalizedPath];
+
+  if (preferredClusterSlug) {
+    return topicClusters[preferredClusterSlug];
+  }
+
   return topicClusterList.find((cluster) => getTopicClusterPaths(cluster).includes(normalizedPath));
 }
 

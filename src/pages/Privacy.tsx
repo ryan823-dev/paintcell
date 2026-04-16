@@ -1,9 +1,11 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
+import { companyProfile } from "@/lib/siteTrust";
 
 export default function Privacy() {
   const { t } = useI18n();
   const page = t.legalPages?.privacy || {};
+  const lastUpdated = companyProfile.legalLastUpdated;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -11,12 +13,17 @@ export default function Privacy() {
     "name": page.title || "Privacy Policy",
     "description": page.metaDesc || "Privacy Policy for TDPaintCell - how we collect, use, and protect your personal information.",
     "inLanguage": "en",
+    "publisher": {
+      "@type": "Organization",
+      "name": companyProfile.legalName,
+      "email": companyProfile.primaryEmail,
+    },
   };
 
   return (
     <ResourcePageLayout
       title={page.title || "Privacy Policy"}
-      metaTitle={`${page.title || "Privacy Policy"} | TDPaintCell`}
+      metaTitle={`${page.title || "Privacy Policy"} | ${companyProfile.productName}`}
       metaDescription={page.metaDesc || "Privacy Policy for TDPaintCell - how we collect, use, and protect your personal information."}
       breadcrumbs={[
         { label: page.title || "Privacy Policy" },
@@ -25,7 +32,11 @@ export default function Privacy() {
       canonicalPath="/privacy"
       showCTA={false}
     >
-      <p className="text-muted-foreground mb-8">{page.lastUpdated || "Last updated"}: 2026-01-01</p>
+      <p className="text-muted-foreground mb-3">{page.lastUpdated || "Last updated"}: {lastUpdated}</p>
+      <p className="text-muted-foreground mb-8">
+        This policy applies to website activity and inquiry handling by {companyProfile.legalName},
+        operating publicly as {companyProfile.brandName}.
+      </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.overview?.title || "Overview"}</h2>
       <p className="text-muted-foreground">{page.overview?.content || ""}</p>
@@ -69,7 +80,7 @@ export default function Privacy() {
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.rights?.title || "Your rights"}</h2>
       <p className="text-muted-foreground">{page.rights?.content || ""}</p>
       <p className="text-muted-foreground">
-        {page.rights?.contact || "To exercise rights, contact:"} <a href="mailto:engineering@tdpaint.com" className="text-primary hover:underline">engineering@tdpaint.com</a>.
+        {page.rights?.contact || "To exercise rights, contact:"} <a href={`mailto:${companyProfile.primaryEmail}`} className="text-primary hover:underline">{companyProfile.primaryEmail}</a>.
       </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.children?.title || "Children's privacy"}</h2>
@@ -80,7 +91,7 @@ export default function Privacy() {
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.contact?.title || "Contact"}</h2>
       <p className="text-muted-foreground">
-        {page.contact?.content || "For privacy requests and questions, contact:"} <a href="mailto:engineering@tdpaint.com" className="text-primary hover:underline">engineering@tdpaint.com</a>.
+        {page.contact?.content || "For privacy requests and questions, contact:"} <a href={`mailto:${companyProfile.primaryEmail}`} className="text-primary hover:underline">{companyProfile.primaryEmail}</a>.
       </p>
     </ResourcePageLayout>
   );

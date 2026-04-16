@@ -5,19 +5,19 @@ export default function WhenRoboticPaintAutomationMakesSense() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: "When Does a Robotic Paint Automation System Make Sense?",
+    headline: "When Does Robotic Painting Make Sense?",
     description: "Decision guide for when robotic paint automation is justified in manufacturing and finishing projects.",
   };
 
   return (
     <ResourcePageLayout
-      title="When Does a Robotic Paint Automation System Make Sense?"
-      metaTitle="When Does a Robotic Paint Automation System Make Sense? | Decision Guide"
+      title="When Does Robotic Painting Make Sense?"
+      metaTitle="When Does Robotic Painting Make Sense? | ROI and Fit Signals"
       metaDescription="Use this decision guide to judge when robotic paint automation is worth it based on throughput, finish consistency, part families, and labor pressure."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Knowledge" },
-        { label: "When Does a Robotic Paint Automation System Make Sense?" },
+        { label: "When Does Robotic Painting Make Sense?" },
       ]}
       structuredData={structuredData}
       canonicalPath="/resources/knowledge/when-robotic-paint-automation-makes-sense"
@@ -25,6 +25,14 @@ export default function WhenRoboticPaintAutomationMakesSense() {
       <p className="text-lg text-muted-foreground mb-8">
         Robotic paint automation makes sense when the business needs more than lower labor cost. The strongest cases
         combine repeatability, finish risk, throughput pressure, and a product mix that can be organized into workable recipes.
+      </p>
+      <p className="text-muted-foreground mb-8">
+        If the line is already close to automation-ready, the next commercial review is the
+        {" "}
+        <Link to="/solutions/robotic-painting-system" className="text-primary underline underline-offset-4">
+          robotic paint automation system
+        </Link>
+        .
       </p>
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">The green-light signals</h2>
@@ -77,7 +85,8 @@ export default function WhenRoboticPaintAutomationMakesSense() {
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Pages to read next</h2>
       <ul className="space-y-3 text-muted-foreground">
-        <li><Link to="/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems" className="text-primary underline underline-offset-4">Manual vs Semi-Automatic vs Robotic Painting Systems</Link></li>
+        <li><Link to="/solutions/robotic-painting-system" className="text-primary underline underline-offset-4">Robotic Paint Automation System</Link></li>
+        <li><Link to="/resources/knowledge/manual-vs-semi-auto-vs-robotic-painting-systems" className="text-primary underline underline-offset-4">Manual vs Semi-Automatic vs Robotic Painting</Link></li>
         <li><Link to="/resources/faq/what-parts-are-suitable-for-robotic-painting" className="text-primary underline underline-offset-4">What Parts Are Suitable for Robotic Painting?</Link></li>
         <li><Link to="/industries/metal-parts-finishing" className="text-primary underline underline-offset-4">Metal Parts Finishing</Link></li>
       </ul>

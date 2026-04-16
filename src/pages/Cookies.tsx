@@ -1,9 +1,11 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
+import { companyProfile } from "@/lib/siteTrust";
 
 export default function Cookies() {
   const { t } = useI18n();
   const page = t.legalPages?.cookies || {};
+  const lastUpdated = companyProfile.legalLastUpdated;
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -11,12 +13,17 @@ export default function Cookies() {
     "name": page.title || "Cookie Policy",
     "description": page.metaDesc || "Cookie Policy for TDPaintCell - how we use cookies and similar technologies.",
     "inLanguage": "en",
+    "publisher": {
+      "@type": "Organization",
+      "name": companyProfile.legalName,
+      "email": companyProfile.primaryEmail,
+    },
   };
 
   return (
     <ResourcePageLayout
       title={page.title || "Cookie Policy"}
-      metaTitle={`${page.title || "Cookie Policy"} | TDPaintCell`}
+      metaTitle={`${page.title || "Cookie Policy"} | ${companyProfile.productName}`}
       metaDescription={page.metaDesc || "Cookie Policy for TDPaintCell - how we use cookies and similar technologies."}
       breadcrumbs={[
         { label: page.title || "Cookie Policy" },
@@ -25,7 +32,11 @@ export default function Cookies() {
       canonicalPath="/cookies"
       showCTA={false}
     >
-      <p className="text-muted-foreground mb-8">{page.lastUpdated || "Last updated"}: 2026-01-01</p>
+      <p className="text-muted-foreground mb-3">{page.lastUpdated || "Last updated"}: {lastUpdated}</p>
+      <p className="text-muted-foreground mb-8">
+        This cookie notice applies to site functionality operated by {companyProfile.legalName},
+        publicly presented as {companyProfile.brandName}.
+      </p>
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.what?.title || "What are cookies"}</h2>
       <p className="text-muted-foreground">{page.what?.content || ""}</p>
@@ -53,7 +64,7 @@ export default function Cookies() {
 
       <h2 className="text-xl font-semibold mt-8 mb-3">{page.contact?.title || "Contact"}</h2>
       <p className="text-muted-foreground">
-        {page.contact?.content || "For questions:"} <a href="mailto:engineering@tdpaint.com" className="text-primary hover:underline">engineering@tdpaint.com</a>.
+        {page.contact?.content || "For questions:"} <a href={`mailto:${companyProfile.primaryEmail}`} className="text-primary hover:underline">{companyProfile.primaryEmail}</a>.
       </p>
     </ResourcePageLayout>
   );

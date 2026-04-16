@@ -41,10 +41,27 @@ function syncRobotsTag(shouldNoindex: boolean) {
   const robotsTags = Array.from(
     document.head.querySelectorAll('meta[name="robots"]'),
   ) as HTMLMetaElement[];
+  const pageManagedRobotsTags = robotsTags.filter(
+    (tag) => tag.getAttribute(SEO_ENFORCER_ATTRIBUTE) !== "true",
+  );
+  const hasPageLevelNoindex = pageManagedRobotsTags.some((tag) =>
+    tag.content.toLowerCase().includes("noindex"),
+  );
+
+  if (hasPageLevelNoindex) {
+    for (const tag of robotsTags) {
+      if (tag.getAttribute(SEO_ENFORCER_ATTRIBUTE) === "true") {
+        tag.remove();
+      }
+    }
+    return;
+  }
 
   if (!shouldNoindex) {
     for (const tag of robotsTags) {
-      tag.remove();
+      if (tag.getAttribute(SEO_ENFORCER_ATTRIBUTE) === "true") {
+        tag.remove();
+      }
     }
     return;
   }

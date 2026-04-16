@@ -1,18 +1,19 @@
+import { companyProfile } from "@/lib/siteTrust";
 import type { HomeContent } from "./types";
 
 export const homeContent: HomeContent = {
   seo: {
-    metaTitle: "Robotic Painting Systems & Paint Booth Automation | TD",
+    metaTitle: "TD Painting Systems | Robotic Painting and Paint Booth Automation",
     metaDescription:
-      "Eliminate manual spraying variability with turnkey robotic painting cells and paint booth automation. 500+ systems deployed across 30+ countries.",
+      `Eliminate manual spraying variability with turnkey robotic painting cells and paint booth automation. ${companyProfile.systemsDeployed}+ systems deployed across ${companyProfile.countriesServed}+ countries.`,
     ogDescription:
-      "System-level integration of robotic spray painting cells and paint booth automation. 500+ systems deployed, 15+ years of experience, and projects delivered across 30+ countries.",
+      `System-level integration of robotic spray painting cells and paint booth automation. ${companyProfile.systemsDeployed}+ systems deployed, ${companyProfile.yearsExperience}+ years of experience, and projects delivered across ${companyProfile.countriesServed}+ countries.`,
     twitterDescription:
-      "System-level integration of robotic spray painting cells and paint booth automation. 500+ systems deployed across 30+ countries.",
+      `System-level integration of robotic spray painting cells and paint booth automation. ${companyProfile.systemsDeployed}+ systems deployed across ${companyProfile.countriesServed}+ countries.`,
     organizationDescription:
       "International industrial coating system expert providing turnkey painting shops, robotic workstations, paint supply systems, and technical services.",
     websiteName: "TD Painting Systems - Industrial Coating System Expert",
-    webpageName: "Robotic Painting Systems & Paint Booth Automation | TD",
+    webpageName: "TD Painting Systems | Robotic Painting and Paint Booth Automation",
   },
   projectInterface: {
     status: {
@@ -43,11 +44,11 @@ export const homeContent: HomeContent = {
   },
   hero: {
     badge: "International Industrial Coating System Expert",
-    title: "Complete Industrial Coating Solutions",
+    title: "TD Painting Systems",
     introPrimary:
-      "TD Painting Systems delivers comprehensive industrial coating solutions spanning the full value chain: from complete turnkey painting shops and robotic workstations to paint supply systems, spare parts, and expert technical services.",
+      "TD Painting Systems delivers industrial painting systems across the full value chain: turnkey painting shops, robotic workstations, paint supply systems, spare parts, and technical services.",
     introSecondary:
-      "With 500+ systems deployed across 30+ countries, we serve automotive body shops, parts paint lines, and industrial manufacturing facilities. Our integrated approach delivers consistent quality, optimized throughput, and reduced total cost of ownership.",
+      `With ${companyProfile.systemsDeployed}+ systems deployed across ${companyProfile.countriesServed}+ countries, we serve automotive body shops, parts paint lines, and industrial manufacturing facilities. Our integrated approach delivers consistent quality, optimized throughput, and reduced total cost of ownership.`,
     highlight:
       "Whether you need a complete painting shop design, a single robotic cell, paint supply equipment, or ongoing maintenance support, we provide the expertise and equipment to meet your industrial coating requirements.",
   },
@@ -63,10 +64,10 @@ export const homeContent: HomeContent = {
   },
   trustStats: {
     items: [
-      { numericValue: 500, suffix: "+", label: "Systems Deployed" },
-      { numericValue: 25, suffix: "+", label: "Years Experience" },
-      { numericValue: 30, suffix: "+", label: "Countries Served" },
-      { numericValue: 98, suffix: "%", label: "Customer Satisfaction" },
+      { numericValue: companyProfile.systemsDeployed, suffix: "+", label: "Systems Deployed" },
+      { numericValue: companyProfile.yearsExperience, suffix: "+", label: "Years Experience" },
+      { numericValue: companyProfile.countriesServed, suffix: "+", label: "Countries Served" },
+      { numericValue: companyProfile.engineeringTeamSize, suffix: "", label: "Engineering Team" },
     ],
   },
   applications: {
@@ -260,24 +261,24 @@ export const homeContent: HomeContent = {
     talkToEngineer: "Talk to an engineer",
     uploadDrawings: "Upload part drawings",
     uploadMessage: "I'd like to share part drawings for a robotic painting feasibility assessment.",
-    footnote: "Free initial assessment | No commitment | Response within 24 hours",
+    footnote: companyProfile.responseFootnote,
   },
   references: {
     label: "Project references",
     title: "Project References",
     viewAllLabel: "View Case Studies",
     cards: [
-      { industry: "Automotive", metric: "Reject rate 8.2% to 1.2%", detail: "Dual-robot electrostatic cell" },
-      { industry: "Heavy Equipment", metric: "Warranty claims down to 5%", detail: "7th-axis rail system with HVLP process" },
-      { industry: "Electronics", metric: "Color change 2 hr to 12 min", detail: "16-color automatic manifold" },
-      { industry: "Aerospace", metric: "Zero non-conformances", detail: "Full AS9100D compliance workflow" },
+      { industry: "Automotive OEM", metric: "200,000 vehicles/year capacity", detail: "32-robot complete vehicle body painting line" },
+      { industry: "EV Plastic Parts", metric: "65-96 sec per fixture", detail: "ABB line with integrated flame treatment" },
+      { industry: "Tier 1 Exterior Parts", metric: "26+ robots on dual-color line", detail: "Water-based exterior trim and bumper references" },
+      { industry: "International Project", metric: "VINFAST Thailand deployment", detail: "Yaskawa MPX2600 exterior-parts project" },
     ],
   },
   eeat: {
     authorLabel: "Author",
-    authorValue: "TD Engineering Team",
+    authorValue: companyProfile.authorTeamName,
     updatedLabel: "Last updated",
-    updatedValue: "2026-02-12",
+    updatedValue: companyProfile.trustReviewDate,
     scopeLabel: "Scope",
     scopeValue:
       "Robotic painting system integration and paint booth automation for automotive components and industrial finishing. Specifications depend on application and site classification, including ATEX where required.",

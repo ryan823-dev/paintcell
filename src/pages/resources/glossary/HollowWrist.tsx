@@ -1,12 +1,15 @@
 import { ResourcePageLayout, AnswerBox, RelatedResources } from "@/components/resources";
 import { ContentSection, BulletList } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
+import { getPageMetadata } from "@/data/pageMetadata";
 
 export default function HollowWrist() {
   const { t } = useI18n();
+  const pageMeta = getPageMetadata("/resources/glossary/hollow-wrist");
   const term = t.glossaryTerms?.hollowWrist || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
+  const pageTitle = term.title || "Hollow Wrist Robot";
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -14,16 +17,21 @@ export default function HollowWrist() {
     "name": term.metaTitle || "Hollow Wrist Robot | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of hollow wrist robot design and why it's essential for paint applications.",
     "inLanguage": "en",
+    ...(pageMeta?.updatedAt ? { "dateModified": pageMeta.updatedAt } : {}),
+    "author": {
+      "@type": "Organization",
+      "name": pageMeta?.authorName || "TD Engineering Team",
+    },
   };
 
   return (
     <ResourcePageLayout
-      title={term.title || "Hollow Wrist Robot"}
+      title={pageTitle}
       metaTitle={term.metaTitle || "Hollow Wrist Robot | Paint Cell Glossary"}
       metaDescription={term.metaDesc || "Definition of hollow wrist robot design and why it's essential for paint applications."}
       breadcrumbs={[
         { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
-        { label: term.title || "Hollow Wrist" },
+        { label: pageTitle },
       ]}
       structuredData={structuredData}
     >
@@ -51,6 +59,47 @@ export default function HollowWrist() {
             "Process equipment must be matched to hollow wrist capacity",
           ]}
         />
+      </ContentSection>
+
+      <ContentSection title="Best for / not ideal for / decision changes when">
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Best for</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Dedicated paint robots that need clean hose routing, high path freedom, and low snag risk around complex parts and booth fixtures.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Not ideal for</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Buyers treating hollow-wrist design as a standalone quality guarantee, even when reach, payload, ATEX rating, and process package still do not fit the line.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Decision changes when</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              The decision changes when hose bundle size, atomizer type, multi-gun scope, or rail integration exceeds the robot's internal routing capacity.
+            </p>
+          </div>
+        </div>
+      </ContentSection>
+
+      <ContentSection title="Common misread and field check">
+        <div className="space-y-4">
+          <div className="rounded-xl border border-border bg-muted/30 p-5">
+            <p className="mb-2 font-medium text-foreground">Common misread</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Teams often assume "paint robot" automatically means the hose routing problem is solved. In reality,
+              the internal passage still has to match the real hose set, cable count, solvent routing, and end-of-arm package.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-muted/30 p-5">
+            <p className="mb-2 font-medium text-foreground">How to confirm on site</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Check the robot datasheet for internal routing diameter, list the actual paint and air bundle, and verify full-motion clearance with the chosen atomizer and bracket before final robot selection.
+            </p>
+          </div>
+        </div>
       </ContentSection>
 
       <RelatedResources

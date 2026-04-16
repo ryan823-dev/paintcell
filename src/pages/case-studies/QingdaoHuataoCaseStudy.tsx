@@ -3,10 +3,12 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Button } from "@/components/ui/button";
 import { AnswerBox, ContentSection, ResourcePageLayout } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
+import { getPageMetadata } from "@/data/pageMetadata";
 
 export default function QingdaoHuataoCaseStudy() {
   const { locale } = useI18n();
   const isZh = locale.startsWith("zh");
+  const pageMeta = getPageMetadata("/case-studies/qingdao-huatao");
 
   const copy = isZh
     ? {
@@ -174,6 +176,7 @@ export default function QingdaoHuataoCaseStudy() {
     headline: copy.headline,
     description: copy.description,
     inLanguage: locale,
+    ...(pageMeta?.updatedAt ? { dateModified: pageMeta.updatedAt } : {}),
     author: {
       "@type": "Organization",
       name: "TD Robotic Painting Systems",
@@ -205,6 +208,36 @@ export default function QingdaoHuataoCaseStudy() {
   const projectVideosTitle = "Project Videos";
   const projectVideosDescription =
     "Three project clips covering facility layout, centralized paint supply, and spray booth/conveyor details from the Qingdao Huatao installation.";
+  const verificationTitle = isZh ? "项目核验信息" : "Project verification snapshot";
+  const verificationItems = isZh
+    ? [
+        { label: "项目时间", value: "交付阶段未公开披露具体起止月份；当前页面按既有项目归档和调试总结整理。" },
+        { label: "指标口径", value: "95%+ 可利用率和 99% 一次合格率按调试/初期运行记录整理；15% 产能提升和 50% 用工下降为项目复盘估算，不是第三方审计值。" },
+        { label: "当前状态", value: "依据项目视频档案与内部回访记录，产线已投运；公开运行状态未做独立第三方复核。" },
+        { label: "验证材料入口", value: "本页下方 3 个项目视频可作为布局、供漆和喷房/输送细节的核验入口。" },
+      ]
+    : [
+        {
+          label: "Project timing",
+          value:
+            "The public case summary does not disclose exact start and completion months. This page is based on archived project records and commissioning summaries.",
+        },
+        {
+          label: "Measured vs estimated",
+          value:
+            "Equipment availability and first-pass-yield figures reflect commissioning or early-run records. Capacity increase and labor reduction figures are directional project-review estimates, not third-party audited values.",
+        },
+        {
+          label: "Current operating status",
+          value:
+            "Internal follow-up records and the published project video archive indicate the line entered service. Ongoing public operating status has not been independently verified after handover.",
+        },
+        {
+          label: "Verification material",
+          value:
+            "Use the three project videos below as the verification entry point for facility layout, centralized paint supply, and booth/conveyor details.",
+        },
+      ];
 
   return (
     <ResourcePageLayout
@@ -214,6 +247,12 @@ export default function QingdaoHuataoCaseStudy() {
       breadcrumbs={copy.breadcrumbs}
       structuredData={structuredData}
       canonicalPath="/case-studies/qingdao-huatao"
+      trustMeta={{
+        updatedAt: pageMeta?.updatedAt,
+        sourceBasis:
+          pageMeta?.sourceBasis ||
+          "Compiled from TD project records, commissioning summaries, and the published Qingdao Huatao project videos.",
+      }}
     >
       <AnswerBox>{copy.answer}</AnswerBox>
 
@@ -246,6 +285,17 @@ export default function QingdaoHuataoCaseStudy() {
               <outcome.icon className="mx-auto mb-2 h-8 w-8 text-primary" />
               <div className="text-2xl font-bold text-primary">{outcome.value}</div>
               <div className="text-sm text-muted-foreground">{outcome.label}</div>
+            </div>
+          ))}
+        </div>
+      </ContentSection>
+
+      <ContentSection title={verificationTitle}>
+        <div className="grid gap-4 md:grid-cols-2">
+          {verificationItems.map((item) => (
+            <div key={item.label} className="rounded-lg bg-muted/30 p-4">
+              <h4 className="mb-2 font-semibold">{item.label}</h4>
+              <p className="text-sm leading-relaxed text-muted-foreground">{item.value}</p>
             </div>
           ))}
         </div>

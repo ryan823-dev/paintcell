@@ -4,12 +4,17 @@ import { getIndexableUrlsForPath, isAlwaysNoindexPath, normalizePublicPath } fro
 import { solutions } from "../src/data/solutionData";
 import { industries } from "../src/data/industryData";
 import { getAllTopicClusterPaths } from "../src/data/topicClusters";
+import { dynamicArticleRedirectSlugs } from "../src/data/dynamicArticleSeo";
 import videoLibrary from "../src/data/videoLibrary";
+import { STATIC_VIDEO_UPDATED_AT } from "../src/data/publicCmsConstants";
+import { getPageMetadata, toDateOnly } from "../src/data/pageMetadata";
+import { companyProfile } from "../src/lib/siteTrust";
 import { isStaticVideoPlayable } from "../src/lib/videoAssets";
 
 const APP_FILE_PATH = path.resolve("src/App.tsx");
 const OUTPUT_FILE_PATH = path.resolve("public/sitemap.xml");
 const ENV_PATH = path.resolve(".env");
+const DEFAULT_LASTMOD = companyProfile.trustReviewDate;
 
 const EXCLUDED_STATIC_PATHS = new Set<string>([
   "/solutions/auto-body-painting",
@@ -31,6 +36,11 @@ interface SitemapEnv {
   publishableKey?: string;
   publicProductsCmsEnabled: boolean;
   publicVideosCmsEnabled: boolean;
+}
+
+interface SitemapUrlEntry {
+  lastModified: string;
+  url: string;
 }
 
 function normalizeEnvValue(value: string): string {
@@ -152,11 +162,7 @@ function extractStaticPublicPaths(appSource: string): string[] {
 
     const normalizedPath = normalizePublicPath(routePath);
 
-    if (isAlwaysNoindexPath(normalizedPath)) {
-      continue;
-    }
-
-    if (EXCLUDED_STATIC_PATHS.has(normalizedPath)) {
+    if (isAlwaysNoindexPath(normalizedPath) || EXCLUDED_STATIC_PATHS.has(normalizedPath)) {
       continue;
     }
 
@@ -166,40 +172,75 @@ function extractStaticPublicPaths(appSource: string): string[] {
   return Array.from(paths);
 }
 
-async function extractKnownDynamicPaths(env: SitemapEnv): Promise<string[]> {
+function resolveRowLastModified(row: Record<string, unknown>) {
+  return (
+    toDateOnly(typeof row.updated_at === "string" ? row.updated_at : null) ||
+    toDateOnly(typeof row.published_at === "string" ? row.published_at : null) ||
+    null
+  );
+}
+
+function buildStaticLastModified(pathname: string) {
+  return getPageMetadata(pathname)?.updatedAt || DEFAULT_LASTMOD;
+}
+
+async function extractKnownDynamicPaths(env: SitemapEnv): Promise<{
+  lastModifiedByPath: Map<string, string>;
+  paths: string[];
+}> {
   const paths = new Set<string>();
+  const lastModifiedByPath = new Map<string, string>();
+
+  const addPath = (pathname: string, lastModified?: string | null) => {
+    const normalizedPath = normalizePublicPath(pathname);
+    paths.add(normalizedPath);
+
+    if (lastModified) {
+      lastModifiedByPath.set(normalizedPath, lastModified);
+    }
+  };
 
   Object.keys(solutions).forEach((slug) => {
-    paths.add(normalizePublicPath(`/solutions/${slug}`));
+    addPath(`/solutions/${slug}`);
   });
 
   Object.entries(industries).forEach(([slug, data]) => {
     if (!data.comingSoon) {
-      paths.add(normalizePublicPath(`/industries/${slug}`));
+      addPath(`/industries/${slug}`);
     }
   });
 
   getAllTopicClusterPaths().forEach((pathname) => {
-    paths.add(normalizePublicPath(pathname));
+    addPath(pathname);
   });
 
   SERVICE_SLUGS.forEach((slug) => {
-    paths.add(normalizePublicPath(`/services/${slug}`));
+    addPath(`/services/${slug}`);
   });
 
   videoLibrary.forEach((video) => {
     if (!env.publicVideosCmsEnabled && isStaticVideoPlayable(video)) {
-      paths.add(normalizePublicPath(`/videos/${video.id}`));
+      addPath(`/videos/${video.id}`, toDateOnly(STATIC_VIDEO_UPDATED_AT));
     }
   });
 
   const [solutionRows, industryRows, resourceRows, productRows, videoRows] = await Promise.all([
-    fetchSupabaseRows(env, "solution_pages", { select: "slug", slug: "not.is.null" }),
-    fetchSupabaseRows(env, "industry_pages", { select: "slug,coming_soon", slug: "not.is.null" }),
-    fetchSupabaseRows(env, "resources_posts", { select: "slug,category", slug: "not.is.null", status: "eq.published" }),
+    fetchSupabaseRows(env, "solution_pages", {
+      select: "slug,updated_at",
+      slug: "not.is.null",
+    }),
+    fetchSupabaseRows(env, "industry_pages", {
+      select: "slug,coming_soon,updated_at",
+      slug: "not.is.null",
+    }),
+    fetchSupabaseRows(env, "resources_posts", {
+      select: "slug,category,published_at,updated_at",
+      slug: "not.is.null",
+      status: "eq.published",
+    }),
     env.publicProductsCmsEnabled
       ? fetchSupabaseRows(env, "products_posts", {
-          select: "slug",
+          select: "slug,published_at,updated_at",
           slug: "not.is.null",
           status: "eq.published",
           is_visible: "eq.true",
@@ -207,7 +248,7 @@ async function extractKnownDynamicPaths(env: SitemapEnv): Promise<string[]> {
       : Promise.resolve([]),
     env.publicVideosCmsEnabled
       ? fetchSupabaseRows(env, "videos", {
-          select: "slug",
+          select: "slug,published_at,updated_at",
           slug: "not.is.null",
           status: "eq.published",
           is_visible: "eq.true",
@@ -218,7 +259,7 @@ async function extractKnownDynamicPaths(env: SitemapEnv): Promise<string[]> {
   solutionRows.forEach((row) => {
     const slug = typeof row.slug === "string" ? row.slug : "";
     if (slug) {
-      paths.add(normalizePublicPath(`/solutions/${slug}`));
+      addPath(`/solutions/${slug}`, resolveRowLastModified(row));
     }
   });
 
@@ -226,14 +267,15 @@ async function extractKnownDynamicPaths(env: SitemapEnv): Promise<string[]> {
     const slug = typeof row.slug === "string" ? row.slug : "";
     const comingSoon = row.coming_soon === true;
     if (slug && !comingSoon) {
-      paths.add(normalizePublicPath(`/industries/${slug}`));
+      addPath(`/industries/${slug}`, resolveRowLastModified(row));
     }
   });
 
   resourceRows.forEach((row) => {
     const slug = typeof row.slug === "string" ? row.slug : "";
     const category = typeof row.category === "string" ? row.category : "";
-    if (!slug) {
+
+    if (!slug || dynamicArticleRedirectSlugs.has(slug)) {
       return;
     }
 
@@ -242,33 +284,36 @@ async function extractKnownDynamicPaths(env: SitemapEnv): Promise<string[]> {
         ? `/resources/glossary/${slug}`
         : `/resources/articles/${slug}`;
 
-    paths.add(normalizePublicPath(resourcePath));
+    addPath(resourcePath, resolveRowLastModified(row));
   });
 
   productRows.forEach((row) => {
     const slug = typeof row.slug === "string" ? row.slug : "";
     if (slug) {
-      paths.add(normalizePublicPath(`/products/${slug}`));
+      addPath(`/products/${slug}`, resolveRowLastModified(row));
     }
   });
 
   videoRows.forEach((row) => {
     const slug = typeof row.slug === "string" ? row.slug : "";
     if (slug) {
-      paths.add(normalizePublicPath(`/videos/${slug}`));
+      addPath(`/videos/${slug}`, resolveRowLastModified(row));
     }
   });
 
-  return Array.from(paths);
+  return {
+    lastModifiedByPath,
+    paths: Array.from(paths),
+  };
 }
 
-function buildSitemapXml(urlEntries: string[], lastModified: string): string {
-  const urlNodes = urlEntries
-    .map((url) =>
+function buildSitemapXml(entries: SitemapUrlEntry[]): string {
+  const urlNodes = entries
+    .map((entry) =>
       [
         "  <url>",
-        `    <loc>${url}</loc>`,
-        `    <lastmod>${lastModified}</lastmod>`,
+        `    <loc>${entry.url}</loc>`,
+        `    <lastmod>${entry.lastModified}</lastmod>`,
         "  </url>",
       ].join("\n"),
     )
@@ -288,19 +333,27 @@ async function main() {
   const env = await loadSitemapEnv();
   const appSource = await readFile(APP_FILE_PATH, "utf8");
   const staticPaths = extractStaticPublicPaths(appSource);
-  const dynamicPaths = await extractKnownDynamicPaths(env);
+  const { paths: dynamicPaths, lastModifiedByPath } = await extractKnownDynamicPaths(env);
   const publicPaths = Array.from(new Set([...staticPaths, ...dynamicPaths]));
-  const lastModified = new Date().toISOString().slice(0, 10);
 
-  const urlEntries = publicPaths.flatMap((pathname) => getIndexableUrlsForPath(pathname));
+  const urlEntries = publicPaths.flatMap((pathname) => {
+    const lastModified = lastModifiedByPath.get(pathname) || buildStaticLastModified(pathname);
+    return getIndexableUrlsForPath(pathname).map((url) => ({
+      lastModified,
+      url,
+    }));
+  });
 
-  const uniqueSortedUrls = Array.from(new Set(urlEntries)).sort();
-  const xml = buildSitemapXml(uniqueSortedUrls, lastModified);
+  const uniqueSortedEntries = Array.from(
+    new Map(urlEntries.map((entry) => [entry.url, entry])).values(),
+  ).sort((left, right) => left.url.localeCompare(right.url));
+
+  const xml = buildSitemapXml(uniqueSortedEntries);
 
   await mkdir(path.dirname(OUTPUT_FILE_PATH), { recursive: true });
   await writeFile(OUTPUT_FILE_PATH, xml, "utf8");
 
-  console.log(`Generated sitemap with ${uniqueSortedUrls.length} URLs at ${OUTPUT_FILE_PATH}`);
+  console.log(`Generated sitemap with ${uniqueSortedEntries.length} URLs at ${OUTPUT_FILE_PATH}`);
 }
 
 main().catch((error) => {

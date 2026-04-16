@@ -1,4 +1,5 @@
-import { getStaticVideoSourceUrl } from "../lib/videoAssets";
+import { SITE_URL, getStaticVideoSourceUrl, resolveSiteAssetUrl } from "../lib/videoAssets";
+import { companyProfile } from "../lib/siteTrust";
 
 /**
  * Video Library - Video metadata for OSS-hosted content
@@ -15,6 +16,21 @@ export interface VideoMetadata {
   duration?: string;
   ossPath: string;
   thumbnailPath?: string;
+}
+
+export interface VideoSchemaInput {
+  id?: string;
+  slug?: string;
+  title: string;
+  description: string;
+  keywords?: string[] | null;
+  duration?: string | null;
+  durationSeconds?: number | null;
+  contentUrl?: string | null;
+  embedUrl?: string | null;
+  thumbnailPath?: string | null;
+  thumbnailUrl?: string | null;
+  uploadDate?: string | null;
 }
 
 /**
@@ -300,29 +316,95 @@ export function getVideosByCategory(category: VideoMetadata['category']): VideoM
   return videoLibrary.filter(video => video.category === category);
 }
 
+function isVideoMetadata(video: VideoMetadata | VideoSchemaInput): video is VideoMetadata {
+  return "ossPath" in video;
+}
+
+function toIsoDurationFromSeconds(totalSeconds: number): string {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  let duration = "PT";
+
+  if (hours > 0) duration += `${hours}H`;
+  if (minutes > 0) duration += `${minutes}M`;
+  if (seconds > 0 || duration === "PT") duration += `${seconds}S`;
+
+  return duration;
+}
+
+function normalizeVideoDuration(duration?: string | null, durationSeconds?: number | null): string | undefined {
+  if (typeof durationSeconds === "number" && durationSeconds > 0) {
+    return toIsoDurationFromSeconds(durationSeconds);
+  }
+
+  if (!duration) {
+    return undefined;
+  }
+
+  if (duration.startsWith("PT")) {
+    return duration;
+  }
+
+  const timeMatch = duration.match(/^(?:(\d+):)?([0-5]?\d):([0-5]\d)$/);
+  if (!timeMatch) {
+    return undefined;
+  }
+
+  const [, hoursText, minutesText, secondsText] = timeMatch;
+  const totalSeconds =
+    Number(hoursText || 0) * 3600 + Number(minutesText || 0) * 60 + Number(secondsText || 0);
+
+  return totalSeconds > 0 ? toIsoDurationFromSeconds(totalSeconds) : undefined;
+}
+
 /**
  * Generate VideoObject schema for SEO
  */
-export function generateVideoSchema(video: VideoMetadata, baseUrl: string = 'https://tdpaint.com') {
-  const contentUrl = getStaticVideoSourceUrl(video);
+export function generateVideoSchema(
+  video: VideoMetadata | VideoSchemaInput,
+  baseUrl: string = SITE_URL,
+) {
+  const pageSlug = isVideoMetadata(video) ? video.id : video.slug || video.id;
+  const pageUrl = pageSlug ? `${baseUrl}/videos/${pageSlug}` : undefined;
+  const contentUrl = isVideoMetadata(video)
+    ? getStaticVideoSourceUrl(video) || undefined
+    : resolveSiteAssetUrl(video.contentUrl) || undefined;
+  const thumbnailUrl = isVideoMetadata(video)
+    ? resolveSiteAssetUrl(video.thumbnailPath) || undefined
+    : resolveSiteAssetUrl(video.thumbnailUrl || video.thumbnailPath) || undefined;
+  const uploadDate = isVideoMetadata(video) ? undefined : video.uploadDate || undefined;
+  const duration = normalizeVideoDuration(
+    video.duration,
+    isVideoMetadata(video) ? undefined : video.durationSeconds,
+  );
+  const keywords =
+    Array.isArray(video.keywords) && video.keywords.length > 0
+      ? video.keywords.join(", ")
+      : undefined;
+  const embedUrl = isVideoMetadata(video)
+    ? pageUrl
+    : video.embedUrl || pageUrl;
 
   return {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
     'name': video.title,
     'description': video.description,
-    'keywords': video.keywords.join(', '),
-    'thumbnailUrl': video.thumbnailPath ? `${baseUrl}${video.thumbnailPath}` : undefined,
-    'uploadDate': new Date().toISOString().split('T')[0],
-    'duration': video.duration,
-    'contentUrl': contentUrl || undefined,
-    'embedUrl': `${baseUrl}/videos/${video.id}`,
+    'url': pageUrl,
+    'keywords': keywords,
+    'thumbnailUrl': thumbnailUrl,
+    'uploadDate': uploadDate,
+    'duration': duration,
+    'contentUrl': contentUrl,
+    'embedUrl': embedUrl,
     'publisher': {
       '@type': 'Organization',
-      'name': 'TDpaint',
+      '@id': `${baseUrl}/#organization`,
+      'name': companyProfile.brandName,
       'logo': {
         '@type': 'ImageObject',
-        'url': `${baseUrl}/logo.png`
+        'url': `${baseUrl}/images/td-logo.png`
       }
     }
   };

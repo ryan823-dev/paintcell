@@ -22,8 +22,10 @@ import {
   MessageSquare, FileText, Upload, User, CalendarDays, HelpCircle
 } from "lucide-react";
 import { deliverySteps } from "@/data/industryData";
+import { getPageMetadata } from "@/data/pageMetadata";
 import { useHomeContent } from "@/hooks/useHomeContent";
 import { useCanonicalUrl, useRouteLocale } from "@/hooks/useRouteLocale";
+import { companyProfile } from "@/lib/siteTrust";
 
 interface Benefit {
   icon: typeof Target;
@@ -77,6 +79,7 @@ export default function Index() {
   const projectInterfaceCopy = homeContent.projectInterface;
   const trustStatsCopy = homeContent.trustStats;
   const homeUrl = useCanonicalUrl("/");
+  const homePageMeta = getPageMetadata("/");
   const localizedFaqs = faqCopy.items;
   const localizedIndustryEntries = industryEntries.map((entry, index) => ({
     ...entry,
@@ -114,11 +117,11 @@ export default function Index() {
       "@context": "https://schema.org",
       "@type": "Organization",
       "@id": `${DOMAIN}/#organization`,
-      name: "TD Painting Systems",
+      name: companyProfile.brandName,
       url: DOMAIN,
       logo: `${DOMAIN}/images/og-social-share.png`,
       description: homeContent.seo.organizationDescription,
-      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: "info@tdpaint.com" },
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: companyProfile.primaryEmail },
     },
     {
       "@context": "https://schema.org",
@@ -138,6 +141,7 @@ export default function Index() {
       isPartOf: { "@id": `${homeUrl}#website` },
       about: { "@id": `${DOMAIN}/#organization` },
       inLanguage: locale,
+      ...(homePageMeta?.updatedAt ? { dateModified: homePageMeta.updatedAt } : {}),
     },
     {
       "@context": "https://schema.org",
@@ -293,12 +297,39 @@ export default function Index() {
                     {heroCopy.introPrimary || "TD Painting Systems delivers comprehensive industrial coating solutions spanning the full value chain: from complete turnkey painting shops and robotic workstations to paint supply systems, spare parts, and expert technical services."}
                   </p>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
-                    {heroCopy.introSecondary || "With 500+ systems deployed across 30+ countries, we serve automotive body shops, parts paint lines, and industrial manufacturing facilities. Our integrated approach delivers consistent quality, optimized throughput, and reduced total cost of ownership."}
+                    {heroCopy.introSecondary || `With ${companyProfile.systemsDeployed}+ systems deployed across ${companyProfile.countriesServed}+ countries, we serve automotive body shops, parts paint lines, and industrial manufacturing facilities. Our integrated approach delivers consistent quality, optimized throughput, and reduced total cost of ownership.`}
+                  </p>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
+                    For a broader view of{" "}
+                    <Link to="/solutions" className="text-accent hover:text-accent/80 underline">
+                      industrial painting systems
+                    </Link>
+                    , start with the solutions hub before narrowing into booth, robot, or process-specific pages.
                   </p>
                   <div className="border-l-2 border-accent/40 pl-4">
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {heroCopy.highlight || "Whether you need a complete painting shop design, a single robotic cell, paint supply equipment, or ongoing maintenance support, we provide the expertise and equipment to meet your industrial coating requirements."}
                     </p>
+                  </div>
+                  <div className="mt-8 grid gap-4 md:grid-cols-3">
+                    <div className="rounded-2xl border border-border bg-card p-5">
+                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Best fit</p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        Projects that need a defined robotic painting, booth-automation, or industrial-finishing integration scope.
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-border bg-card p-5">
+                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Not ideal for</p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        One-off low-volume requests that only need a generic equipment quote without stable process inputs or site review.
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-border bg-card p-5">
+                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Prepare before inquiry</p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">
+                        Bring part family, finish target, takt or throughput, changeover pattern, and current booth or layout constraints.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </FadeIn>
@@ -659,11 +690,11 @@ export default function Index() {
               <div className="flex flex-wrap gap-6 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1.5">
                   <User className="h-3.5 w-3.5" />
-                  {eeatCopy.authorLabel || "Author"}: {eeatCopy.authorValue || "TD Engineering Team"}
+                  {eeatCopy.authorLabel || "Author"}: {eeatCopy.authorValue || companyProfile.authorTeamName}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <CalendarDays className="h-3.5 w-3.5" />
-                  {eeatCopy.updatedLabel || "Last updated"}: {eeatCopy.updatedValue || "2026-02-12"}
+                  {eeatCopy.updatedLabel || "Last updated"}: {homePageMeta?.updatedAt || eeatCopy.updatedValue || companyProfile.trustReviewDate}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <FileText className="h-3.5 w-3.5" />

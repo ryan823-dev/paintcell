@@ -5,19 +5,19 @@ export default function FurnitureCoatingSystemsComparison() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: "Furniture Coating Systems: Roller, Spray, or Robotic Line?",
+    headline: "Roller vs Spray vs Robotic for Furniture Finishing",
     description: "Comparison guide for roller, spray, and robotic furniture coating systems.",
   };
 
   return (
     <ResourcePageLayout
-      title="Furniture Coating Systems: Roller, Spray, or Robotic Line?"
-      metaTitle="Furniture Coating Systems: Roller, Spray, or Robotic Line?"
+      title="Roller vs Spray vs Robotic for Furniture Finishing"
+      metaTitle="Roller vs Spray vs Robotic for Furniture Finishing"
       metaDescription="Compare roller coating, spray coating, and robotic furniture coating lines by finish quality, flexibility, and production fit."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Knowledge" },
-        { label: "Furniture Coating Systems: Roller, Spray, or Robotic Line?" },
+        { label: "Roller vs Spray vs Robotic for Furniture Finishing" },
       ]}
       structuredData={structuredData}
       canonicalPath="/resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic"
@@ -25,6 +25,19 @@ export default function FurnitureCoatingSystemsComparison() {
       <p className="text-lg text-muted-foreground mb-8">
         Furniture coating systems should be chosen by finish target and product mix first. Roller, spray, and robotic
         lines each solve a different problem, and the wrong choice usually shows up as rework, bottlenecks, or changeover pain.
+      </p>
+      <p className="text-muted-foreground mb-8">
+        If the wider project is still being scoped, start with
+        {" "}
+        <Link to="/industries/furniture-woodwork" className="text-primary underline underline-offset-4">
+          furniture coating systems
+        </Link>
+        . If flat repeated products dominate the mix, move next to
+        {" "}
+        <Link to="/solutions/panel-coating-finishing-systems" className="text-primary underline underline-offset-4">
+          panel coating and finishing systems
+        </Link>
+        .
       </p>
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Roller lines fit repeatable flat work</h2>
@@ -45,7 +58,7 @@ export default function FurnitureCoatingSystemsComparison() {
         fixtures and programming. This is usually where the main
         <Link to="/industries/furniture-woodwork" className="ml-1 text-primary underline underline-offset-4">furniture coating systems</Link>
         page and the panel-focused
-        <Link to="/solutions/panel-coating-finishing-systems" className="ml-1 text-primary underline underline-offset-4">panel coating solution</Link>
+        <Link to="/solutions/panel-coating-finishing-systems" className="ml-1 text-primary underline underline-offset-4">panel coating and finishing systems</Link>
         begin to overlap.
       </p>
       <p className="text-muted-foreground mb-8">

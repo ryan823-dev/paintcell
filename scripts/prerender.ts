@@ -2,9 +2,10 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { JSDOM } from "jsdom";
-import { isValidLocale, locales } from "../src/i18n/types";
+import { defaultLocale, isValidLocale, localeHtmlLangs, type Locale } from "../src/i18n/types";
 import {
   getIndexableLocalesForPath,
+  getPrerenderLocalesForPath,
   normalizePublicPath,
   stripLocalePrefix,
 } from "../src/lib/seo";
@@ -12,10 +13,13 @@ import {
 const SITE_URL = "https://tdpaint.com";
 const DIST_DIR = path.resolve("dist");
 const FALLBACK_HTML_PATH = path.join(DIST_DIR, "index.html");
-const DEFAULT_LOCALE = "en";
+const DEFAULT_LOCALE = defaultLocale;
 const ROUTE_TIMEOUT_MS = 60_000;
-const ROUTE_POLL_INTERVAL_MS = 100;
-const ROUTE_STABLE_POLLS = 3;
+const ROUTE_POLL_INTERVAL_MS = 50;
+const ROUTE_STABLE_POLLS = 2;
+const ROUTE_MIN_READY_AGE_MS = 50;
+const ROUTE_NETWORK_IDLE_MS = 50;
+const EXTRA_PRERENDER_PATHS = ["/thank-you"] as const;
 const PUBLIC_PAGE_PREFIXES = [
   "/about",
   "/applications",
@@ -41,6 +45,18 @@ const RUNTIME_ERROR_PATTERNS = [
 
 let stdoutAvailable = true;
 let stderrAvailable = true;
+
+interface PrerenderRuntimeState {
+  lastNetworkSettledAt: number;
+  lastRouteChangeAt: number;
+  pendingNetworkRequests: number;
+}
+
+const prerenderRuntimeState: PrerenderRuntimeState = {
+  lastNetworkSettledAt: Date.now(),
+  lastRouteChangeAt: Date.now(),
+  pendingNetworkRequests: 0,
+};
 
 function markStreamClosed(error: unknown, streamType: "stdout" | "stderr") {
   const code = (error as NodeJS.ErrnoException | undefined)?.code;
@@ -132,21 +148,51 @@ function getDocumentText(root: HTMLElement | null) {
   return root?.textContent?.replace(/\s+/g, " ").trim() || "";
 }
 
+function getPreferredMetaContent(
+  document: Document,
+  attribute: "name" | "property",
+  key: string,
+) {
+  const tags = Array.from(
+    document.head.querySelectorAll(`meta[${attribute}="${key}"]`),
+  ) as HTMLMetaElement[];
+
+  const preferredTag =
+    tags.find((tag) => tag.getAttribute("data-rh") === "true") ||
+    tags[tags.length - 1] ||
+    null;
+
+  return preferredTag?.content?.trim() || "";
+}
+
 function getRouteDebugState(document: Document) {
   const root = document.getElementById("root");
+  const main = document.querySelector("#root main");
   const h1 = document.querySelector("#root h1");
+  const description = getPreferredMetaContent(document, "name", "description");
+  const pendingNetworkRequests = prerenderRuntimeState.pendingNetworkRequests;
+  const routeReadyAgeMs = Date.now() - prerenderRuntimeState.lastRouteChangeAt;
 
   return {
     bodyText: getDocumentText(root),
     canonical: document.head.querySelector('link[rel="canonical"]')?.getAttribute("href") || "",
     currentPath: normalizeRoutePath(new URL(document.URL).pathname),
+    description,
     h1Text: h1?.textContent?.trim() || "",
     hasArticle: Boolean(document.querySelector("#root article")),
     hasH1: Boolean(h1),
-    hasMain: Boolean(document.querySelector("#root main")),
+    htmlLang: document.documentElement.lang || "",
+    hasMain: Boolean(main),
+    isNetworkIdle:
+      pendingNetworkRequests === 0 &&
+      Date.now() - prerenderRuntimeState.lastNetworkSettledAt >= ROUTE_NETWORK_IDLE_MS,
     localeReady: document.documentElement.dataset.localeReady || "",
+    mainText: getDocumentText(main as HTMLElement | null),
+    mainTextLength: getDocumentText(main as HTMLElement | null).length,
+    pendingNetworkRequests,
     robots: (document.head.querySelector('meta[name="robots"]') as HTMLMetaElement | null)?.content || "",
     rootChildren: root?.childElementCount || 0,
+    routeReadyAgeMs,
     textLength: getDocumentText(root).length,
     title: document.title.trim(),
   };
@@ -159,10 +205,12 @@ function getRouteSeoExpectation(routePath: string) {
   const publicPath = normalizePublicPath(stripLocalePrefix(normalizedRoutePath));
   const expectedPath = routePath === "/" ? `/${DEFAULT_LOCALE}` : normalizedRoutePath;
   const expectedLocale = routeLocale ?? DEFAULT_LOCALE;
+  const expectedHtmlLang = localeHtmlLangs[expectedLocale];
   const requiresNoindex =
     routeLocale !== null && !getIndexableLocalesForPath(publicPath).includes(routeLocale);
 
   return {
+    expectedHtmlLang,
     expectedLocale,
     expectedPath,
     requiresNoindex,
@@ -170,19 +218,32 @@ function getRouteSeoExpectation(routePath: string) {
 }
 
 function isRouteReady(routePath: string, debugState: ReturnType<typeof getRouteDebugState>) {
-  const { expectedLocale, expectedPath, requiresNoindex } = getRouteSeoExpectation(routePath);
+  const { expectedHtmlLang, expectedLocale, expectedPath, requiresNoindex } = getRouteSeoExpectation(routePath);
+  const publicPath = normalizePublicPath(stripLocalePrefix(expectedPath));
+  const requiresArticleReadiness = publicPath.startsWith("/resources/articles/");
   const hasStructuredContent =
-    debugState.hasH1 || debugState.hasMain || debugState.hasArticle || debugState.textLength > 200;
+    debugState.hasH1 || debugState.hasArticle || debugState.mainTextLength > 120;
   const robotsValue = debugState.robots.toLowerCase();
   const robotsReady = requiresNoindex ? robotsValue.includes("noindex") : !robotsValue.includes("noindex");
+  const metadataReady = Boolean(debugState.title);
+  const articleReady = requiresArticleReadiness
+    ? debugState.hasH1 &&
+      debugState.hasMain &&
+      debugState.mainTextLength > 400 &&
+      debugState.description.length > 40
+    : true;
 
   return Boolean(
     debugState.rootChildren > 0 &&
     debugState.currentPath === expectedPath &&
     debugState.canonical &&
+    debugState.htmlLang === expectedHtmlLang &&
+    debugState.isNetworkIdle &&
     debugState.localeReady === expectedLocale &&
+    debugState.routeReadyAgeMs >= ROUTE_MIN_READY_AGE_MS &&
     robotsReady &&
-    debugState.title &&
+    metadataReady &&
+    articleReady &&
     hasStructuredContent,
   );
 }
@@ -196,6 +257,11 @@ function isNotFoundDocument(debugState: ReturnType<typeof getRouteDebugState>) {
     bodyText.includes("page not found") ||
     bodyText.includes("oops! page not found")
   );
+}
+
+function markRouteTransition() {
+  prerenderRuntimeState.lastRouteChangeAt = Date.now();
+  prerenderRuntimeState.lastNetworkSettledAt = Date.now();
 }
 
 function createAlwaysVisibleIntersectionObserverClass(window: Window & typeof globalThis) {
@@ -344,20 +410,51 @@ function setupPrerenderGlobals(window: Window & typeof globalThis) {
       }
     }
   }
+
+  const baseFetch =
+    typeof globalThis.fetch === "function" ? globalThis.fetch.bind(globalThis) : null;
+
+  if (baseFetch) {
+    // Keep async CMS-driven routes from serializing while their fetches are still in flight.
+    const trackedFetch: typeof fetch = async (...args) => {
+      prerenderRuntimeState.pendingNetworkRequests += 1;
+
+      try {
+        return await baseFetch(...args);
+      } finally {
+        prerenderRuntimeState.pendingNetworkRequests = Math.max(
+          0,
+          prerenderRuntimeState.pendingNetworkRequests - 1,
+        );
+        prerenderRuntimeState.lastNetworkSettledAt = Date.now();
+      }
+    };
+
+    assignGlobal("fetch", trackedFetch);
+    Object.defineProperty(window, "fetch", {
+      configurable: true,
+      writable: true,
+      value: trackedFetch,
+    });
+  }
 }
 
 async function parseRoutesFromSitemap(): Promise<string[]> {
   const sitemapPath = path.join(DIST_DIR, "sitemap.xml");
   const sitemapXml = await readFile(sitemapPath, "utf8");
   const matches = sitemapXml.matchAll(/<loc>https:\/\/tdpaint\.com(\/[^<]*)<\/loc>/g);
-  const routes = new Set<string>(["/"]);
+  const publicPaths = new Set<string>(["/", ...EXTRA_PRERENDER_PATHS]);
 
   for (const match of matches) {
     const routePath = normalizeRoutePath(match[1] || "/");
     const publicPath = normalizePublicPath(stripLocalePrefix(routePath));
+    publicPaths.add(publicPath);
+  }
 
-    routes.add(routePath);
-    for (const locale of locales) {
+  const routes = new Set<string>(["/"]);
+
+  for (const publicPath of Array.from(publicPaths).sort()) {
+    for (const locale of getPrerenderLocalesForPath(publicPath)) {
       routes.add(`/${locale}${publicPath === "/" ? "" : publicPath}`);
     }
   }
@@ -409,7 +506,8 @@ function syncMetaTag(
 function normalizePrerenderedDocument(document: Document) {
   const currentUrl = new URL(document.URL);
   const currentPath = currentUrl.pathname;
-  const locale = currentPath.split("/").filter(Boolean)[0] || DEFAULT_LOCALE;
+  const localeSegment = currentPath.split("/").filter(Boolean)[0];
+  const locale: Locale = isValidLocale(localeSegment) ? localeSegment : DEFAULT_LOCALE;
   const normalizedSiteUrl = SITE_URL.replace(/\/$/, "");
   const canonicalFallback = `${SITE_URL}${currentPath}`.replace(/\/$/, "") || SITE_URL;
   const canonicalTags = Array.from(
@@ -449,12 +547,28 @@ function normalizePrerenderedDocument(document: Document) {
     });
   }
 
-  document.documentElement.lang = locale;
+  document.documentElement.lang = localeHtmlLangs[locale];
   document.querySelectorAll('script[data-page-schema="true"]').forEach((node) => node.remove());
 
-  const title = document.title.trim();
-  const description =
-    (document.head.querySelector('meta[name="description"]') as HTMLMetaElement | null)?.content || "";
+  const h1Text = document.querySelector("#root h1")?.textContent?.replace(/\s+/g, " ").trim() || "";
+  const leadParagraph =
+    Array.from(document.querySelectorAll("#root main p"))
+      .map((node) => node.textContent?.replace(/\s+/g, " ").trim() || "")
+      .find((text) => text.length >= 60) || "";
+  const fallbackDescription = (leadParagraph || getDocumentText(document.querySelector("#root main") as HTMLElement | null))
+    .slice(0, 200)
+    .trim();
+  let title = document.title.trim();
+  let description = getPreferredMetaContent(document, "name", "description");
+
+  if ((!title || (!description && h1Text && !title.toLowerCase().includes(h1Text.toLowerCase()))) && h1Text) {
+    title = `${h1Text} | TD Painting Systems`;
+    document.title = title;
+  }
+
+  if (!description && fallbackDescription) {
+    description = fallbackDescription;
+  }
 
   syncMetaTag(document, "name", "description", description);
 
@@ -563,7 +677,9 @@ async function waitForRouteReady(
       const signature = JSON.stringify({
         canonical: debugState.canonical,
         currentPath: debugState.currentPath,
+        description: debugState.description,
         h1Text: debugState.h1Text,
+        htmlLang: debugState.htmlLang,
         textLength: debugState.textLength,
         title: debugState.title,
       });
@@ -632,12 +748,14 @@ async function main() {
 
   logInfo(`Prerendering ${routes.length} routes from ${SITE_URL} with JSDOM...`);
 
+  markRouteTransition();
   await import(pathToFileURL(entryModulePath).href);
 
   for (const [index, routePath] of routes.entries()) {
     logInfo(`  [${index + 1}/${routes.length}] ${routePath}`);
 
     if (index > 0) {
+      markRouteTransition();
       window.history.replaceState({}, "", routePath);
       window.dispatchEvent(new window.PopStateEvent("popstate"));
     }

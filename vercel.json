@@ -96,6 +96,36 @@
       "permanent": true
     },
     {
+      "source": "/resources/articles/robotic-painting-systems-guide",
+      "destination": "/en/solutions/robotic-painting-system",
+      "permanent": true
+    },
+    {
+      "source": "/:lang/resources/articles/robotic-painting-systems-guide",
+      "destination": "/:lang/solutions/robotic-painting-system",
+      "permanent": true
+    },
+    {
+      "source": "/resources/articles/robot-paint-booth",
+      "destination": "/en/solutions/paint-booth-automation",
+      "permanent": true
+    },
+    {
+      "source": "/:lang/resources/articles/robot-paint-booth",
+      "destination": "/:lang/solutions/paint-booth-automation",
+      "permanent": true
+    },
+    {
+      "source": "/resources/articles/atex-spray-painting-booth-guide",
+      "destination": "/en/resources/knowledge/atex-spray-painting-booth",
+      "permanent": true
+    },
+    {
+      "source": "/:lang/resources/articles/atex-spray-painting-booth-guide",
+      "destination": "/:lang/resources/knowledge/atex-spray-painting-booth",
+      "permanent": true
+    },
+    {
       "source": "/resources/:path*",
       "destination": "/en/resources/:path*",
       "permanent": true

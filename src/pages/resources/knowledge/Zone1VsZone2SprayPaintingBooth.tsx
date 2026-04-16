@@ -5,19 +5,19 @@ export default function Zone1VsZone2SprayPaintingBooth() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: "Zone 1 vs Zone 2 in Spray Painting Booth Design",
+    headline: "Zone 1 vs Zone 2 for Spray Booths",
     description: "Practical comparison of Zone 1 and Zone 2 logic in ATEX spray painting booth design.",
   };
 
   return (
     <ResourcePageLayout
-      title="Zone 1 vs Zone 2 in Spray Painting Booth Design"
-      metaTitle="Zone 1 vs Zone 2 in Spray Painting Booth Design | ATEX Comparison"
+      title="Zone 1 vs Zone 2 for Spray Booths"
+      metaTitle="Zone 1 vs Zone 2 for Spray Booths | ATEX Scope Comparison"
       metaDescription="Understand the practical difference between Zone 1 and Zone 2 in spray painting booth design, equipment choice, and retrofit scope."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Knowledge" },
-        { label: "Zone 1 vs Zone 2 in Spray Painting Booth Design" },
+        { label: "Zone 1 vs Zone 2 for Spray Booths" },
       ]}
       structuredData={structuredData}
       canonicalPath="/resources/knowledge/zone-1-vs-zone-2-spray-painting-booth"
@@ -36,6 +36,14 @@ export default function Zone1VsZone2SprayPaintingBooth() {
       <p className="text-muted-foreground mb-8">
         The safer way to frame the issue is through classified volume, paint and solvent behavior, airflow reliability,
         and the components that sit inside or interface with the booth envelope.
+      </p>
+      <p className="text-muted-foreground mb-8">
+        For the main reference page, start with
+        {" "}
+        <Link to="/resources/knowledge/atex-spray-painting-booth" className="text-primary underline underline-offset-4">
+          ATEX spray booth zone classification
+        </Link>
+        .
       </p>
 
       <h2 className="text-2xl font-semibold text-foreground mb-4">Why the zone decision affects cost and scope</h2>

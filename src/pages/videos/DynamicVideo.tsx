@@ -5,6 +5,7 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ResourcePageLayout } from "@/components/resources";
+import { generateVideoSchema } from "@/data/videoLibrary";
 import { supabase } from "@/integrations/supabase/client";
 import { resolveSiteAssetUrl } from "@/lib/videoAssets";
 import NotFound from "@/pages/NotFound";
@@ -149,16 +150,17 @@ export default function DynamicVideo() {
       ? `https://player.vimeo.com/video/${vimeoId}`
       : null;
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    name: title,
+  const structuredData = generateVideoSchema({
+    slug: video.slug,
+    title,
     description: metaDescription,
-    uploadDate: video.published_at || undefined,
-    thumbnailUrl: resolvedThumbnailUrl || undefined,
+    keywords: video.keywords,
+    uploadDate: video.published_at,
+    thumbnailUrl: resolvedThumbnailUrl,
     embedUrl: embedUrl || undefined,
-    contentUrl: resolvedVideoUrl || undefined,
-  };
+    contentUrl: resolvedVideoUrl,
+    durationSeconds: video.duration_seconds,
+  });
 
   return (
     <ResourcePageLayout

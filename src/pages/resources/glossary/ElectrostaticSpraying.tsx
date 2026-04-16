@@ -7,23 +7,24 @@ export default function ElectrostaticSpraying() {
   const term = t.glossaryTerms?.electrostaticSpraying || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
+  const pageTitle = term.title || "Electrostatic Spraying";
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": term.metaTitle || "Electrostatic Painting | Paint Cell Glossary",
+    "name": term.metaTitle || "Electrostatic Spraying | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of electrostatic painting and why it matters in robotic paint cell applications.",
     "inLanguage": "en",
   };
 
   return (
     <ResourcePageLayout
-      title={term.title || "Electrostatic Painting"}
-      metaTitle={term.metaTitle || "Electrostatic Painting | Paint Cell Glossary"}
+      title={pageTitle}
+      metaTitle={term.metaTitle || "Electrostatic Spraying | Paint Cell Glossary"}
       metaDescription={term.metaDesc || "Definition of electrostatic painting and why it matters in robotic paint cell applications."}
       breadcrumbs={[
         { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
-        { label: term.title || "Electrostatic Painting" },
+        { label: pageTitle },
       ]}
       structuredData={structuredData}
     >

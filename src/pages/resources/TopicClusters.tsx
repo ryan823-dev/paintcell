@@ -7,7 +7,7 @@ export default function TopicClusters() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Paint Topic Clusters",
-    "description": "Topic clusters for ATEX spray painting booth, flame treatment, paint booth design, paint robot selection, and metal parts finishing.",
+    "description": "Topic clusters for robotic painting, furniture coating, ATEX spray painting booth, flame treatment, paint booth design, and other high-intent coating themes.",
     "hasPart": topicClusterList.map((cluster, index) => ({
       "@type": "WebPage",
       "position": index + 1,
@@ -19,8 +19,8 @@ export default function TopicClusters() {
   return (
     <ResourcePageLayout
       title="Paint Topic Clusters"
-      metaTitle="Paint Topic Clusters | ATEX, Flame Treatment, Booth Design, Robot Selection"
-      metaDescription="Structured topic clusters built around existing exposure themes: ATEX spray painting booth, flame treatment, paint booth design, paint robot selection, and metal parts finishing."
+      metaTitle="Paint Topic Clusters | Robotic Painting, Furniture Coating, ATEX, Booth Design"
+      metaDescription="Structured topic clusters built around robotic painting, furniture coating, ATEX spray painting booth, flame treatment, paint booth design, metal parts finishing, and related commercial themes."
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Topic Clusters" },

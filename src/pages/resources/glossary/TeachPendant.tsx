@@ -7,23 +7,24 @@ export default function TeachPendant() {
   const term = t.glossaryTerms?.teachPendant || {};
   const sections = t.glossaryTerms?.sectionTitles || {};
   const breadcrumbs = t.resources?.breadcrumbs || {};
+  const pageTitle = term.title || "Teach Pendant";
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": term.metaTitle || "Robot Teach Pendant | Paint Cell Glossary",
+    "name": term.metaTitle || "Teach Pendant | Paint Cell Glossary",
     "description": term.metaDesc || "Definition of robot teach pendant and its use in programming robotic painting systems.",
     "inLanguage": "en",
   };
 
   return (
     <ResourcePageLayout
-      title={term.title || "Robot Teach Pendant"}
-      metaTitle={term.metaTitle || "Robot Teach Pendant | Paint Cell Glossary"}
+      title={pageTitle}
+      metaTitle={term.metaTitle || "Teach Pendant | Paint Cell Glossary"}
       metaDescription={term.metaDesc || "Definition of robot teach pendant and its use in programming robotic painting systems."}
       breadcrumbs={[
         { label: breadcrumbs.glossary || "Glossary", href: "/resources/glossary" },
-        { label: term.title || "Teach Pendant" },
+        { label: pageTitle },
       ]}
       structuredData={structuredData}
     >

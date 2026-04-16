@@ -8,6 +8,7 @@ import { LocaleLayout, RootRedirect } from "@/i18n/LocaleLayout";
 import { Hreflang } from "@/components/seo/Hreflang";
 import { Loader2 } from "lucide-react";
 import { defaultLocale } from "@/i18n/types";
+import { getDynamicArticleRedirectTarget } from "@/data/dynamicArticleSeo";
 
 // Lazy load public pages
 const Index = lazy(() => import("./pages/Index"));
@@ -27,13 +28,14 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 
 // Lazy load Engineering Library pages
+const ResourcesIndex = lazy(() => import("./pages/resources/ResourcesIndex"));
 const EngineeringLibrary = lazy(() => import("./pages/resources/EngineeringLibrary"));
 const GuidesChecklists = lazy(() => import("./pages/resources/GuidesChecklists"));
 const Insights = lazy(() => import("./pages/resources/Insights"));
 const FAQs = lazy(() => import("./pages/resources/FAQs"));
 const PaintCellFeasibilityChecks = lazy(() => import("./pages/resources/PaintCellFeasibilityChecks"));
 const AutomationBoundary = lazy(() => import("./pages/resources/AutomationBoundary"));
-const DynamicArticle = lazy(() => import("./pages/resources/DynamicArticle"));
+const DynamicArticlePage = lazy(() => import("./pages/resources/DynamicArticle"));
 const TopicClusters = lazy(() => import("./pages/resources/TopicClusters"));
 const TopicClusterHub = lazy(() => import("./pages/resources/TopicClusterHub"));
 const TopicClusterFAQ = lazy(() => import("./pages/resources/TopicClusterFAQ"));
@@ -224,6 +226,17 @@ function LegacySolutionRedirect({ target }: { target: string }) {
   return <Navigate to={`/${lang || defaultLocale}${target}`} replace />;
 }
 
+function DynamicArticleRoute() {
+  const { lang, slug } = useParams<{ lang: string; slug: string }>();
+  const redirectTarget = getDynamicArticleRedirectTarget(slug);
+
+  if (redirectTarget) {
+    return <Navigate to={`/${lang || defaultLocale}${redirectTarget}`} replace />;
+  }
+
+  return <DynamicArticlePage />;
+}
+
 /**
  * All public page routes rendered inside the locale-prefixed Layout.
  * Paths are relative to the parent `/:lang` route.
@@ -246,6 +259,7 @@ function PublicRoutes() {
       <Route path="cookies" element={<Cookies />} />
 
       {/* Engineering Library routes */}
+      <Route path="resources" element={<ResourcesIndex />} />
       <Route path="resources/engineering-library" element={<EngineeringLibrary />} />
       <Route path="resources/engineering-library/guides-checklists" element={<GuidesChecklists />} />
       <Route path="resources/engineering-library/insights" element={<Insights />} />
@@ -304,7 +318,7 @@ function PublicRoutes() {
       <Route path="resources/knowledge/when-robotic-paint-automation-makes-sense" element={<WhenRoboticPaintAutomationMakesSense />} />
 
       {/* Dynamic database-driven article (Vertax CMS push pipeline) */}
-      <Route path="resources/articles/:slug" element={<DynamicArticle />} />
+      <Route path="resources/articles/:slug" element={<DynamicArticleRoute />} />
       <Route path="resources/articles/common-atex-classification-mistakes-spray-booth-projects" element={<CommonATEXClassificationMistakes />} />
       <Route path="resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
       <Route path="resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />

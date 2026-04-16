@@ -1,10 +1,10 @@
 import videoLibrary, { type VideoMetadata } from "@/data/videoLibrary";
+import { STATIC_VIDEO_UPDATED_AT } from "@/data/publicCmsConstants";
 import {
   getStaticVideoSourceUrl,
   isStaticVideoPlayable,
   resolveSiteAssetUrl,
 } from "@/lib/videoAssets";
-const STATIC_VIDEO_UPDATED_AT = "2026-04-14T00:00:00.000Z";
 
 export const publicCmsAvailability = {
   products: import.meta.env.VITE_ENABLE_PUBLIC_PRODUCTS_CMS === "true",

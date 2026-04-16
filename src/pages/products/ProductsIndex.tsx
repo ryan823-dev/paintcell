@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import {
   Settings, Wrench, Gauge, Box, Cpu, Package,
-  ChevronRight, FileText, ArrowRight, Bot
+  ChevronRight, FileText, ArrowRight, Bot, ListChecks,
+  CircleOff, ArrowRightLeft, ClipboardList, Ruler, ShieldAlert
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
 import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 import { publicCmsAvailability } from "@/lib/publicCms";
+import { getPageMetadata } from "@/data/pageMetadata";
 
 const productCategoryKeys = [
   { key: "rotaryBells", icon: Settings, href: "/products/rotary-bells", brands: ["SAMES KREMLIN PPH707", "Ransburg Robobell", "Dürr EcoBell"] },
@@ -32,10 +34,85 @@ const featuredBrands = [
   { name: "Siemens", category: "PLC & Controls" },
 ];
 
+const selectionSummary = [
+  {
+    icon: ListChecks,
+    eyebrow: "Best for",
+    title: "Projects that already know the automation boundary",
+    description:
+      "Use this page when you have already decided the line needs a defined equipment stack and now need to map process conditions to product families.",
+  },
+  {
+    icon: CircleOff,
+    eyebrow: "Not ideal for",
+    title: "Teams still deciding whether to automate at all",
+    description:
+      "If the real question is manual vs semi-automatic vs robotic, a product list is too early. Start with the solution or feasibility pages first.",
+  },
+  {
+    icon: ArrowRightLeft,
+    eyebrow: "Decision changes when",
+    title: "Chemistry, changeover, or takt assumptions move",
+    description:
+      "Model choice changes quickly when paint type, color-count, finish target, part size, or cleaning frequency changes during scope definition.",
+  },
+] as const;
+
+const requiredInputs = [
+  {
+    icon: ClipboardList,
+    title: "Part family and finish target",
+    description:
+      "Visible Class A surfaces, corrosion-protection coating, or utility-grade finish will drive atomizer type, control depth, and process tolerance.",
+  },
+  {
+    icon: Ruler,
+    title: "Geometry, reach, and presentation method",
+    description:
+      "Model choice depends on part envelope, required spray angle, robot reach, hose routing, fixture repeatability, and whether the part is indexed or conveyed.",
+  },
+  {
+    icon: ArrowRightLeft,
+    title: "Takt, batch size, and color-change frequency",
+    description:
+      "The right bell, gun, pump, or color-change block depends on whether the line runs long batches or frequent short runs with cleaning loss pressure.",
+  },
+  {
+    icon: ShieldAlert,
+    title: "Coating chemistry and site constraints",
+    description:
+      "Solvent vs water-based paint, viscosity window, ATEX classification, available utilities, and controls standards can eliminate product families early.",
+  },
+] as const;
+
+const modelMappings = [
+  {
+    scenario: "High-volume exterior plastic parts with tight finish consistency",
+    mapping: "ABB IRB 5500 + electrostatic rotary bell + centralized color change",
+    why: "Best fit when the line needs repeatable Class A appearance, stable film build, and disciplined multi-color production.",
+  },
+  {
+    scenario: "Medium-size automotive or appliance parts with frequent geometry variation",
+    mapping: "FANUC MPX 2600/3500 + gun-based spray package + recipe-based controls",
+    why: "Useful when reach, path speed, and changeover control matter more than maximum bell throughput.",
+  },
+  {
+    scenario: "Large metal structures, rails, or heavy pre-treatment tasks",
+    mapping: "ABB IRB 6700 or rail-mounted robot + heavy-duty fluid handling + PLC integration",
+    why: "Better for larger envelopes, heavier end-of-arm loads, and jobs where handling scope matters as much as spraying.",
+  },
+  {
+    scenario: "Short-run or retrofit lines that still need simpler fluid handling",
+    mapping: "Air-spray or HVLP gun package + pump/pressure-tank supply + staged controls upgrade",
+    why: "Often the safer step when the line needs cleaner presentation and process discipline before a full robotic bell system is justified.",
+  },
+] as const;
+
 export default function ProductsIndex() {
   const { t } = useI18n();
   const page = t.productsPage || {};
   const publicProductCmsEnabled = publicCmsAvailability.products;
+  const pageMeta = getPageMetadata("/products");
   const robotModels = page.robotModels || [
     {
       brand: "ABB",
@@ -108,14 +185,19 @@ export default function ProductsIndex() {
                     <Package className="h-5 w-5 text-accent" />
                   </div>
                   <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent">
-                    {page.badge || "Product Catalog"}
+                    {page.badge || "Product Selection Guide"}
                   </span>
                 </div>
                 <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-                  {page.heroTitle || "Coating Equipment & Parts"}
+                  {page.heroTitle || "Select the Right Paint-System Equipment Stack"}
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground mb-6 max-w-3xl">
-                  {page.heroSubtitle || "Quality spray equipment, pumps, control systems, and spare parts from leading manufacturers. Technical support and fast delivery for your coating operations."}
+                  {page.heroSubtitle || "Use this page when you already know the project needs a defined paint-cell equipment stack and now need to narrow which atomizer, fluid-handling, robot, and controls family actually fits the job."}
+                </p>
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground mb-6">
+                  Product selection is usually wrong when teams start from brand preference or a single model number.
+                  The better sequence is: confirm part family, finish target, takt, changeover, and coating chemistry first,
+                  then map those constraints to equipment families and only then compare specific models.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Button asChild size="lg" className="rounded-xl">
@@ -133,8 +215,119 @@ export default function ProductsIndex() {
                     </Link>
                   </Button>
                 </div>
+                <div className="mt-6 max-w-3xl rounded-2xl border border-border bg-muted/30 p-5">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                    Selection basis
+                  </p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Updated on {pageMeta?.updatedAt || "2026-04-16"}.
+                    This page is for narrowing equipment families, not for replacing process review.
+                    Final model choice still depends on coating chemistry, part presentation, changeover logic,
+                    controls standards, and site compliance constraints.
+                  </p>
+                </div>
               </div>
             </FadeIn>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-20 border-b border-border">
+          <div className="container-wide">
+            <FadeIn>
+              <div className="mb-10 max-w-3xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                  Decision first
+                </p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
+                  Decide the fit before you compare brands
+                </h2>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  The best product page is not a catalog. It should tell you whether you are even solving the right problem,
+                  where equipment selection is likely to go wrong, and which inputs can change the answer.
+                </p>
+              </div>
+            </FadeIn>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {selectionSummary.map((item, index) => (
+                <FadeIn key={item.title} delay={index * 0.06}>
+                  <div className="h-full rounded-2xl border border-border bg-card p-6">
+                    <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      {item.eyebrow}
+                    </p>
+                    <h3 className="mb-3 text-lg font-semibold">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-20 border-b border-border bg-muted/30">
+          <div className="container-wide">
+            <FadeIn>
+              <div className="mb-10 max-w-3xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                  Inputs to confirm
+                </p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
+                  Confirm these four inputs before choosing any model
+                </h2>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  If any of these inputs are still vague, model names are premature. This is the minimum information set
+                  needed before a product recommendation becomes reliable.
+                </p>
+              </div>
+            </FadeIn>
+            <div className="grid gap-4 md:grid-cols-2">
+              {requiredInputs.map((item, index) => (
+                <FadeIn key={item.title} delay={index * 0.06}>
+                  <div className="h-full rounded-2xl border border-border bg-background p-6">
+                    <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mb-3 text-lg font-semibold">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-20 border-b border-border">
+          <div className="container-wide">
+            <FadeIn>
+              <div className="mb-10 max-w-3xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                  Typical mapping
+                </p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
+                  Typical scenario-to-model mapping
+                </h2>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  These are starting points, not fixed prescriptions. The mapping changes when finish class, color count,
+                  solvent strategy, or part handling changes.
+                </p>
+              </div>
+            </FadeIn>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {modelMappings.map((item, index) => (
+                <FadeIn key={item.scenario} delay={index * 0.06}>
+                  <div className="h-full rounded-2xl border border-border bg-card p-6">
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      Scenario
+                    </p>
+                    <h3 className="mb-3 text-lg font-semibold">{item.scenario}</h3>
+                    <p className="mb-3 text-sm font-medium text-foreground">{item.mapping}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{item.why}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -144,11 +337,15 @@ export default function ProductsIndex() {
             <FadeIn>
               <div className="mb-12">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                  {page.categoriesLabel || "Categories"}
+                  {page.categoriesLabel || "Equipment Families"}
                 </p>
                 <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
-                  {page.categoriesTitle || "Product Categories"}
+                  {page.categoriesTitle || "Browse by equipment family"}
                 </h2>
+                <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                  Once the decision boundary is clear, use these categories to drill into the specific hardware family
+                  that needs commercial comparison or technical clarification.
+                </p>
                 <div className="h-px w-12 bg-accent/50" />
               </div>
             </FadeIn>

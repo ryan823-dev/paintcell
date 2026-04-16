@@ -19,7 +19,7 @@ const staticGlossaryTerms: GlossaryTerm[] = [
   { slug: "color-changeover", title: "Color Changeover" },
   { slug: "cure-time", title: "Cure Time" },
   { slug: "dry-film-thickness", title: "Dry Film Thickness (DFT)" },
-  { slug: "electrostatic-spraying", title: "Electrostatic Painting" },
+  { slug: "electrostatic-spraying", title: "Electrostatic Spraying" },
   { slug: "film-build", title: "Film Build" },
   { slug: "flash-off-time", title: "Flash-off Time" },
   { slug: "gun-distance", title: "Gun Distance" },
