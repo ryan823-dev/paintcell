@@ -22,6 +22,17 @@
       "has": [
         {
           "type": "host",
+          "value": "www.tdpaint.com"
+        }
+      ],
+      "destination": "https://tdpaint.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
           "value": "tdpaintcell.com"
         }
       ],
@@ -37,6 +48,81 @@
         }
       ],
       "destination": "https://tdpaint.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/en/about",
+      "permanent": true
+    },
+    {
+      "source": "/applications",
+      "destination": "/en/applications",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/:path*",
+      "destination": "/en/case-studies/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/cookies",
+      "destination": "/en/cookies",
+      "permanent": true
+    },
+    {
+      "source": "/industries/:path*",
+      "destination": "/en/industries/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/paint-cells",
+      "destination": "/en/paint-cells",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/en/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/products/:path*",
+      "destination": "/en/products/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/quote",
+      "destination": "/en/quote",
+      "permanent": true
+    },
+    {
+      "source": "/resources/:path*",
+      "destination": "/en/resources/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/services/:path*",
+      "destination": "/en/services/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/solutions/:path*",
+      "destination": "/en/solutions/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "/en/terms",
+      "permanent": true
+    },
+    {
+      "source": "/thank-you",
+      "destination": "/en/thank-you",
+      "permanent": true
+    },
+    {
+      "source": "/videos/:path*",
+      "destination": "/en/videos/:path*",
       "permanent": true
     }
   ]

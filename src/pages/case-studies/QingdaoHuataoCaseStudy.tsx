@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { CheckCircle2, Zap, Clock, Users, Award, Play } from "lucide-react";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Button } from "@/components/ui/button";
@@ -216,10 +215,6 @@ export default function QingdaoHuataoCaseStudy() {
       structuredData={structuredData}
       canonicalPath="/case-studies/qingdao-huatao"
     >
-      <Helmet>
-        <link rel="canonical" href="https://tdpaint.com/case-studies/qingdao-huatao" />
-      </Helmet>
-
       <AnswerBox>{copy.answer}</AnswerBox>
 
       <ContentSection title={copy.overviewTitle}>

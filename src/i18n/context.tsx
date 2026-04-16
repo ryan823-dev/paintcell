@@ -52,6 +52,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     document.documentElement.lang = localeHtmlLangs[locale];
+    document.documentElement.dataset.currentLocale = locale;
+    document.documentElement.dataset.localeReady = "";
 
     loadTranslation(locale)
       .then((nextTranslation) => {
@@ -60,6 +62,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         startTransition(() => {
           setTranslation(nextTranslation);
         });
+        document.documentElement.dataset.localeReady = locale;
       })
       .catch((error) => {
         console.error(`Failed to resolve translations for locale "${locale}".`, error);
@@ -68,10 +71,14 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         startTransition(() => {
           setTranslation(getFallbackTranslation());
         });
+        document.documentElement.dataset.localeReady = locale;
       });
 
     return () => {
       cancelled = true;
+      if (document.documentElement.dataset.currentLocale === locale) {
+        delete document.documentElement.dataset.localeReady;
+      }
     };
   }, [locale]);
 
