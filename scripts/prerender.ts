@@ -3,7 +3,7 @@ import { createServer } from "node:http";
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { chromium, type Page } from "playwright";
+import { chromium, type Browser, type Page } from "playwright";
 
 const SITE_URL = "https://tdpaint.com";
 const DIST_DIR = path.resolve("dist");
@@ -11,6 +11,8 @@ const FALLBACK_HTML_PATH = path.join(DIST_DIR, "index.html");
 const require = createRequire(import.meta.url);
 const PLAYWRIGHT_PACKAGE_JSON_PATH = require.resolve("playwright/package.json");
 const PLAYWRIGHT_CLI_PATH = path.join(path.dirname(PLAYWRIGHT_PACKAGE_JSON_PATH), "cli.js");
+const IS_VERCEL_BUILD = process.env.VERCEL === "1";
+const PRERENDER_STRICT = process.env.PRERENDER_STRICT === "1";
 
 const MIME_TYPES: Record<string, string> = {
   ".css": "text/css; charset=utf-8",
@@ -175,10 +177,7 @@ async function installChromiumBrowser() {
   if (!playwrightInstallPromise) {
     playwrightInstallPromise = (async () => {
       logInfo("Playwright Chromium not found. Installing browser for prerender...");
-      const installArgs =
-        process.platform === "linux"
-          ? [PLAYWRIGHT_CLI_PATH, "install", "--with-deps", "chromium"]
-          : [PLAYWRIGHT_CLI_PATH, "install", "chromium"];
+      const installArgs = [PLAYWRIGHT_CLI_PATH, "install", "chromium"];
 
       await runProcess(process.execPath, installArgs);
       logInfo("Playwright Chromium installation complete.");
@@ -224,6 +223,23 @@ async function launchChromiumBrowser() {
     await installChromiumBrowser();
     return chromium.launch({ headless: true });
   }
+}
+
+function isPrerenderInfrastructureError(error: unknown) {
+  const message = formatLogMessage(error);
+
+  return [
+    "Executable doesn't exist",
+    "error while loading shared libraries",
+    "libnspr4.so",
+    "apt-get: command not found",
+    "Installing dependencies...",
+    "Installation process exited with code: 127",
+  ].some((pattern) => message.includes(pattern));
+}
+
+function shouldSkipPrerender(error: unknown) {
+  return IS_VERCEL_BUILD && !PRERENDER_STRICT && isPrerenderInfrastructureError(error);
 }
 
 async function parseRoutesFromSitemap(): Promise<string[]> {
@@ -443,23 +459,38 @@ async function main() {
     routeFilter ? routePath === routeFilter : true,
   );
   const fallbackServer = await createFallbackServer();
-  const browser = await launchChromiumBrowser();
-  const page = await browser.newPage();
+  let browser: Browser | null = null;
+  let page: Page | null = null;
   const pageErrors: string[] = [];
 
-  page.on("pageerror", (error) => {
-    pageErrors.push(`pageerror: ${error.message}`);
-  });
-
-  page.on("console", (message) => {
-    if (message.type() === "error") {
-      pageErrors.push(`console: ${message.text()}`);
-    }
-  });
-
-  logInfo(`Prerendering ${routes.length} routes from ${SITE_URL}...`);
-
   try {
+    try {
+      browser = await launchChromiumBrowser();
+    } catch (error) {
+      if (shouldSkipPrerender(error)) {
+        logError("Skipping prerender on Vercel because Playwright system dependencies are unavailable in the build environment.");
+        logError("Set PRERENDER_STRICT=1 to make this failure blocking again.");
+        logError(error);
+        return;
+      }
+
+      throw error;
+    }
+
+    page = await browser.newPage();
+
+    page.on("pageerror", (error) => {
+      pageErrors.push(`pageerror: ${error.message}`);
+    });
+
+    page.on("console", (message) => {
+      if (message.type() === "error") {
+        pageErrors.push(`console: ${message.text()}`);
+      }
+    });
+
+    logInfo(`Prerendering ${routes.length} routes from ${SITE_URL}...`);
+
     for (const [index, routePath] of routes.entries()) {
       logInfo(`  [${index + 1}/${routes.length}] ${routePath}`);
       await prerenderRoute(page, fallbackServer.baseUrl, routePath);
@@ -471,8 +502,8 @@ async function main() {
         logError(`  ${pageError}`);
       }
     }
-    await page.close();
-    await browser.close();
+    await page?.close();
+    await browser?.close();
     await fallbackServer.close();
   }
 
