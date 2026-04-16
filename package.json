@@ -13,7 +13,7 @@
     "postbuild": "npm run prerender",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "prerender": "npx tsx scripts/prerender.ts",
+    "prerender": "node --import tsx scripts/prerender.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"
