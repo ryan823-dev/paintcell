@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { QuoteFormData } from "@/types/quote";
 import { ChatMessageType } from "./ChatMessage";
+
+const LEAD_NOTIFICATION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-quote-notification`;
 
 interface ContactFormModalProps {
   open: boolean;
@@ -34,6 +35,34 @@ export function ContactFormModal({
     role: "",
     country: "",
   });
+
+  const submitInquiry = async (submissionData: Record<string, unknown>) => {
+    const response = await fetch(LEAD_NOTIFICATION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      },
+      body: JSON.stringify(submissionData),
+    });
+
+    if (response.ok) {
+      return;
+    }
+
+    const errorPayload = await response.json().catch(() => null);
+    const errorMessage =
+      (errorPayload &&
+        typeof errorPayload === "object" &&
+        ("error" in errorPayload || "message" in errorPayload) &&
+        String(
+          (errorPayload as { error?: string; message?: string }).error ||
+          (errorPayload as { error?: string; message?: string }).message,
+        )) ||
+      `Failed to submit inquiry (${response.status})`;
+
+    throw new Error(errorMessage);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,18 +92,7 @@ export function ContactFormModal({
       };
 
       // Submit lead via edge function (handles DB insert + email notification)
-      const { error } = await supabase.functions.invoke('send-quote-notification', {
-        body: submissionData
-      });
-
-      if (error) {
-        // Log only in development
-        if (import.meta.env.DEV) {
-          console.error("Submission error:", error);
-        }
-        toast.error("Failed to submit inquiry. Please try again.");
-        return;
-      }
+      await submitInquiry(submissionData);
 
       toast.success("Inquiry submitted successfully! Our team will be in touch.");
       onSuccess();

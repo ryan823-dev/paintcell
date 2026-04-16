@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { supabase } from "@/integrations/supabase/client";
+import { Toaster } from "@/components/ui/toaster";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +42,8 @@ const categoryConfig: Record<VideoCategory, { title: string; description: string
     icon: BookOpen,
   },
 };
+
+const videoCategories = Object.keys(categoryConfig) as VideoCategory[];
 
 interface VideoRow {
   id: string;
@@ -123,7 +126,7 @@ export default function VideosIndex() {
   }, [page.errorDescription, page.errorTitle, publicVideoCmsEnabled]);
 
   useEffect(() => {
-    const firstCategoryWithContent = (Object.keys(localizedCategoryConfig) as VideoCategory[]).find((key) =>
+    const firstCategoryWithContent = videoCategories.find((key) =>
       videos.some((video) => video.category === key),
     );
 
@@ -133,7 +136,7 @@ export default function VideosIndex() {
   }, [videos]);
 
   const videosByCategory = new Map<VideoCategory, VideoRow[]>();
-  (Object.keys(localizedCategoryConfig) as VideoCategory[]).forEach((key) => videosByCategory.set(key, []));
+  videoCategories.forEach((key) => videosByCategory.set(key, []));
   videos.forEach((video) => {
     if (!video.category) return;
     const list = videosByCategory.get(video.category) || [];
@@ -143,6 +146,7 @@ export default function VideosIndex() {
 
   return (
     <>
+      <Toaster />
       <Helmet>
         <title>{page.metaTitle || "Videos | TD Painting Systems"}</title>
         <meta name="description" content={metaDescription} />
@@ -188,14 +192,14 @@ export default function VideosIndex() {
             ) : (
               <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as VideoCategory)} className="space-y-6">
                 <TabsList className="flex flex-wrap h-auto gap-1">
-                  {(Object.keys(localizedCategoryConfig) as VideoCategory[]).map((key) => (
+                  {videoCategories.map((key) => (
                     <TabsTrigger key={key} value={key} className="text-sm">
                       {localizedCategoryConfig[key].title}
                     </TabsTrigger>
                   ))}
                 </TabsList>
 
-                {(Object.keys(localizedCategoryConfig) as VideoCategory[]).map((key) => {
+                {videoCategories.map((key) => {
                   const config = localizedCategoryConfig[key];
                   const Icon = config.icon;
                   const list = videosByCategory.get(key) || [];

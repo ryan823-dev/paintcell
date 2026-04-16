@@ -1,4 +1,4 @@
-export const ruOverlay: Record<string, any> = {
+export const ruOverlay = {
   "common": {
     "home": "Главная",
     "solutions": "Решения",

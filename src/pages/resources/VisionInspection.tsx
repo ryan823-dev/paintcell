@@ -1,5 +1,6 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 export default function VisionInspection() {
@@ -178,18 +179,18 @@ export default function VisionInspection() {
 
       <ContentSection title={"Related Resources"}>
         <div className="grid md:grid-cols-2 gap-4">
-          <a href="/resources/knowledge/paint-defects-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          <Link to="/resources/knowledge/paint-defects-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Paint Defects Guide"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Detailed guide on common coating defects, causes, and prevention measures"}
             </p>
-          </a>
-          <a href="/resources/knowledge/paint-booth-design-basics" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          </Link>
+          <Link to="/resources/knowledge/paint-booth-design-basics" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Paint Booth Design Basics"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Paint booth design factors and their impact on coating quality"}
             </p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
     </ResourcePageLayout>);

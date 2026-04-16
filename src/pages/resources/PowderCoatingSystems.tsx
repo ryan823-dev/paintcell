@@ -1,5 +1,6 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 export default function PowderCoatingSystems() {
@@ -295,18 +296,18 @@ export default function PowderCoatingSystems() {
 
       <ContentSection title={"Related Resources"}>
         <div className="grid md:grid-cols-2 gap-4">
-          <a href="/resources/knowledge/paint-technology-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          <Link to="/resources/knowledge/paint-technology-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Coating Technology Guide"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Comparison of liquid and powder coating technologies"}
             </p>
-          </a>
-          <a href="/resources/glossary/powder-coating" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
-            <h4 className="font-medium">{"Powder Coating Glossary"}</h4>
+          </Link>
+          <Link to="/resources/knowledge/powder-coating-systems" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+            <h4 className="font-medium">{"Powder Coating Systems Guide"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
-              {"Definitions of powder coating terminology"}
+              {"Overview of powder coating process terms, equipment, and selection factors"}
             </p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
     </ResourcePageLayout>);

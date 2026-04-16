@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState, useEffect } from "react";
+import { useState, useEffect, type ComponentType } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -6,12 +6,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { stripLocalePrefix } from "@/lib/seo";
 import { useSiteShellContent } from "@/hooks/useSiteShellContent";
-
-const AIChatDrawer = lazy(() =>
-  import("./AIChatDrawer").then((module) => ({
-    default: module.AIChatDrawer,
-  })),
-);
 
 export interface PageContext {
   currentPath: string;
@@ -22,10 +16,19 @@ export interface PageContext {
   };
 }
 
+interface AIChatDrawerProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  initialProjectMessage?: string | null;
+  pageContext?: PageContext;
+}
+
 export function FloatingAssistantButton() {
   const location = useLocation();
   const currentPublicPath = stripLocalePrefix(location.pathname);
   const [isOpen, setIsOpen] = useState(false);
+  const [ChatDrawer, setChatDrawer] = useState<ComponentType<AIChatDrawerProps> | null>(null);
+  const [isLoadingDrawer, setIsLoadingDrawer] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [projectMessage, setProjectMessage] = useState<string | null>(null);
   const [pageContext, setPageContext] = useState<PageContext>({ currentPath: currentPublicPath });
@@ -34,7 +37,7 @@ export function FloatingAssistantButton() {
   const isHomepage = currentPublicPath === "/";
   const assistantCta = shell.assistant.cta;
 
-  const openAssistant = () => {
+  const openAssistant = async () => {
     const msg = sessionStorage.getItem("project-init-message");
     if (msg) {
       setProjectMessage(msg);
@@ -56,6 +59,24 @@ export function FloatingAssistantButton() {
       currentPath: currentPublicPath,
       ...(nextIndustryContext ? { industryContext: nextIndustryContext } : {}),
     }));
+
+    if (!ChatDrawer) {
+      setIsLoadingDrawer(true);
+
+      try {
+        const module = await import("./AIChatDrawer");
+        setChatDrawer(() => module.AIChatDrawer);
+      } catch (error) {
+        if (import.meta.env.DEV) {
+          console.error("Failed to load AI chat drawer:", error);
+        }
+        setIsLoadingDrawer(false);
+        return;
+      }
+
+      setIsLoadingDrawer(false);
+    }
+
     setIsOpen(true);
   };
 
@@ -96,6 +117,7 @@ export function FloatingAssistantButton() {
             >
               <Button
                 onClick={openAssistant}
+                disabled={isLoadingDrawer}
                 className={cn(
                   "h-auto py-3.5 px-6 rounded-full",
                   "bg-accent hover:bg-accent/90",
@@ -134,8 +156,8 @@ export function FloatingAssistantButton() {
       </AnimatePresence>
 
       {/* Chat Drawer */}
-      <Suspense fallback={null}>
-        <AIChatDrawer
+      {ChatDrawer ? (
+        <ChatDrawer
           open={isOpen}
           onOpenChange={(open) => {
             setIsOpen(open);
@@ -144,7 +166,7 @@ export function FloatingAssistantButton() {
           initialProjectMessage={projectMessage}
           pageContext={pageContext}
         />
-      </Suspense>
+      ) : null}
     </>
   );
 }

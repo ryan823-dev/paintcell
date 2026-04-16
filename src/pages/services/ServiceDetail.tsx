@@ -10,6 +10,7 @@ import {
   Bot, Cog, Code, Monitor, Building, Video
 } from "lucide-react";
 import { useI18n } from "@/i18n/context";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const DOMAIN = "https://tdpaint.com";
 
@@ -82,6 +83,8 @@ export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useI18n();
   const page = t.serviceDetail || {};
+  const canonicalPath = slug ? `/services/${slug}` : "/services";
+  const canonicalUrl = useCanonicalUrl(canonicalPath);
   
   const serviceConfig = slug ? serviceKeyMap[slug] : null;
   const data = serviceConfig ? page[serviceConfig.translationKey] : null;
@@ -117,7 +120,7 @@ export default function ServiceDetail() {
       <Helmet>
         <title>{data.title || ""} | TD Painting Systems</title>
         <meta name="description" content={data.description || "Professional technical services for industrial coating systems including solution design, project management, commissioning, and maintenance."} />
-        <link rel="canonical" href={`${DOMAIN}/services/${slug}`} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="bg-background">

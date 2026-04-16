@@ -24,6 +24,62 @@ interface KBSection {
   content: string;
 }
 
+const KB_MOJIBAKE_PATTERN = /[\u9225\u8111\u5364\u6e2d\u8652\u6389\ufffd]/u;
+
+const KB_NOISE_RULES: Array<{ label: string; pattern: RegExp }> = [
+  { label: "IMPORTANT marker", pattern: /^\s*-?\s*IMPORTANT:/im },
+  { label: "INSTRUCTION marker", pattern: /^\s*-?\s*INSTRUCTION:/im },
+  { label: "answering guidance", pattern: /^\s*-\s*When asked about/im },
+];
+
+function normalizeKbText(text: string): string {
+  return text
+    .replace(/Ø(?=\s*\d)/g, "diameter ")
+    .replace(/[μµ]/g, "u")
+    .replace(/±/g, "+/-")
+    .replace(/×/g, "x")
+    .replace(/\s*→\s*/g, " -> ")
+    .replace(/\s*—\s*/g, " - ")
+    .replace(/–/g, "-")
+    .replace(/°C/g, " degC")
+    .replace(/°/g, " deg")
+    .replace(/²/g, "2")
+    .replace(/…/g, "...")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function sanitizeSections(sections: KBSection[]): KBSection[] {
+  return sections.map((section) => ({
+    title: normalizeKbText(section.title),
+    content: normalizeKbText(section.content),
+  }));
+}
+
+function assertCleanSections(sectionGroup: string, sections: KBSection[]) {
+  const findings: string[] = [];
+
+  sections.forEach((section) => {
+    if (KB_MOJIBAKE_PATTERN.test(section.content)) {
+      findings.push(`${sectionGroup} "${section.title}" still contains mojibake characters`);
+    }
+
+    KB_NOISE_RULES.forEach(({ label, pattern }) => {
+      pattern.lastIndex = 0;
+      if (pattern.test(section.content)) {
+        findings.push(`${sectionGroup} "${section.title}" still contains ${label}`);
+      }
+    });
+  });
+
+  if (findings.length) {
+    throw new Error(findings.join("\n"));
+  }
+}
+
 // ─── Extract industries ─────────────────────────────────────────────────────
 
 function extractIndustries(): KBSection[] {
@@ -204,7 +260,7 @@ Spray equipment: SAMES KREMLIN, Graco, Ransburg, Binks-Maple
 Controls: Siemens (PLC), Allen-Bradley (Rockwell)
 Fluid systems: Timmer, Lactec
 
-IMPORTANT: When users ask about specific equipment, reference our product pages at /products and specific categories. Help them understand the right combination for their application rather than just listing specs.`,
+Product selection depends on finish target, paint chemistry, throughput, and color-change requirements.`,
     },
     {
       title: "Services We Provide",
@@ -245,7 +301,7 @@ Service coverage:
 - Feasibility Checklist (/resources/tools-templates/feasibility-checklist): Self-assessment for automation readiness
 - Quote Request (/quote): 26-step configurator wizard that captures all 6 dimensions of requirements
 
-INSTRUCTION: When users ask questions that a webpage can answer in more depth, proactively suggest the relevant page link. For example: "We have a detailed guide on this topic — you can read more at /resources/knowledge/how-to-choose-paint-robot". This helps users self-serve while showing the depth of our expertise.`,
+These resources support early research, active evaluation, and RFQ preparation.`,
     },
     {
       title: "Core Technology Advantages",
@@ -290,10 +346,10 @@ INSTRUCTION: When users ask questions that a webpage can answer in more depth, p
     },
     {
       title: "Reference Projects",
-      content: `- Complete vehicle body painting: 32 Yaskawa robots, 200K units/year capacity (Kaifeng)
-- Plastic bumper line: 8 ABB IRB5500 + 25 Binks Maple supply systems (Leapmotor)
-- Engineering machinery: 4 Kawasaki 7-axis + Graco high-pressure electrostatic (Zhuhai)
-- International: VINFAST Thailand project with Yaskawa MPX2600 + Iwata supply`,
+      content: `- Complete vehicle body painting: 32 Yaskawa robots, 200K units/year capacity for a China OEM program
+- Plastic bumper line: 8 ABB IRB5500 robots with 25 Binks Maple supply systems for an EV bumper project
+- Engineering machinery: 4 Kawasaki 7-axis robots with Graco high-pressure electrostatic equipment
+- International program: Yaskawa MPX2600 with Iwata supply for a Southeast Asia installation`,
     },
     {
       title: "Market Experience & Track Record",
@@ -314,12 +370,7 @@ Industry Mix:
 - 40% industrial & parts suppliers (tier-1 components, heavy equipment, general industrial)
 - Full lifecycle support: 60% new line builds, 33% line modifications/upgrades, 7% capacity expansions
 
-Capability Positioning:
-- When asked about experience: Reference 30+ city coverage and scale range to demonstrate breadth
-- When asked about automotive: Emphasize 60%+ OEM focus and 200K+ units/year capacity track record
-- When asked about scale: Can handle anything from 1-robot cell to 169-robot mega-line
-- When asked about project types: Majority new builds, but significant retrofit/upgrade capability
-- IMPORTANT: Do not mention specific competitor names, customer names, or pricing from market data`,
+These figures show experience ranging from single-robot cells to 169-robot paint shops, with a strong concentration in automotive OEM work and meaningful retrofit capability.`,
     },
     {
       title: "Rotary Atomizer Technical Knowledge",
@@ -348,8 +399,7 @@ Based on industry portfolio analysis (1,000+ robots deployed across 45+ vehicle 
 - Robot technology evolution: IRB5400 era (2002-2008) → IRB5500 era (2008-2014) → Current multi-brand
 - Typical OEM line: 6-48 robots per line for standard capacity, 60-130+ for high-volume plants
 - Applications covered: exterior spraying, interior cavity spraying, sealing/adhesive, door opening, wipe-down
-- Major automotive regions served: Changchun, Beijing, Shanghai, Wuhan, Chongqing, Guangzhou, Chengdu, Nanjing
-- IMPORTANT: Present as general industry knowledge, never cite specific customer names or project details`,
+- Major automotive regions served: Changchun, Beijing, Shanghai, Wuhan, Chongqing, Guangzhou, Chengdu, Nanjing`,
     },
   ];
 }
@@ -357,12 +407,17 @@ Based on industry portfolio analysis (1,000+ robots deployed across 45+ vehicle 
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 function main() {
-  const industrySections = extractIndustries();
-  const solutionSections = extractSolutions();
-  const statics = staticSections();
+  const generatedAt = new Date().toISOString();
+  const industrySections = sanitizeSections(extractIndustries());
+  const solutionSections = sanitizeSections(extractSolutions());
+  const statics = sanitizeSections(staticSections());
+
+  assertCleanSections("industry", industrySections);
+  assertCleanSections("solution", solutionSections);
+  assertCleanSections("static", statics);
 
   const kb = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
     version: "auto",
     industries: industrySections,
     solutions: solutionSections,
@@ -395,14 +450,14 @@ function main() {
 
   // 3. Generate a TypeScript constants file that the Edge Function can import
   const tsContent = `// AUTO-GENERATED by scripts/generate-kb.ts — DO NOT EDIT MANUALLY
-// Generated at: ${new Date().toISOString()}
+// Generated at: ${generatedAt}
 // Re-generate with: npx tsx scripts/generate-kb.ts
 
 export const GENERATED_KNOWLEDGE = ${JSON.stringify(md)};
 
 export const KB_INDUSTRIES = ${JSON.stringify(industrySections)} as const;
 export const KB_SOLUTIONS = ${JSON.stringify(solutionSections)} as const;
-export const KB_GENERATED_AT = "${new Date().toISOString()}";
+export const KB_GENERATED_AT = "${generatedAt}";
 `;
 
   const tsPath = path.resolve(

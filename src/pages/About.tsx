@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, Award, Users, Globe, Wrench, Building2, Rocket, Calendar, MapPin, ShieldCheck, Car, Factory, Zap, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const DOMAIN = "https://tdpaint.com";
 
-const schemas = [
+const getSchemas = (canonicalUrl: string, homeUrl: string) => [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -48,21 +49,21 @@ const schemas = [
   {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    "@id": `${DOMAIN}/about#webpage`,
+    "@id": `${canonicalUrl}#webpage`,
     name: "About TD Robotic Painting Systems",
     description: "Learn about TD's 15+ years of experience engineering robotic painting systems. 500+ systems deployed across 30+ countries serving automotive OEMs and industrial manufacturers.",
-    url: `${DOMAIN}/about`,
-    isPartOf: { "@id": `${DOMAIN}/#website` },
+    url: canonicalUrl,
+    isPartOf: { "@id": `${homeUrl}#website` },
     about: { "@id": `${DOMAIN}/#organization` },
     mainEntity: { "@id": `${DOMAIN}/#organization` },
   },
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "@id": `${DOMAIN}/about#breadcrumb`,
+    "@id": `${canonicalUrl}#breadcrumb`,
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-      { "@type": "ListItem", position: 2, name: "About", item: `${DOMAIN}/about` },
+      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+      { "@type": "ListItem", position: 2, name: "About", item: canonicalUrl },
     ],
   },
 ];
@@ -108,6 +109,9 @@ const keyClients = [
 
 export default function About() {
   const { t } = useI18n();
+  const homeUrl = useCanonicalUrl("/");
+  const canonicalUrl = useCanonicalUrl("/about");
+  const schemas = getSchemas(canonicalUrl, homeUrl);
 
   const stats = [
     { value: "500+", label: t.about?.systemsDeployed || "Systems Deployed" },
@@ -128,11 +132,11 @@ export default function About() {
       <Helmet>
         <title>About TD Robotic Painting Systems — 15+ Years of Automation Excellence</title>
         <meta name="description" content="TD Robotic Painting Systems (Shanghai Tudou Technology): 15+ years engineering robotic painting and paint booth automation. Serving Chery, Geely, NIO, Leapmotor and 500+ systems deployed." />
-        <link rel="canonical" href={`${DOMAIN}/about`} />
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="About TD Robotic Painting Systems — 15+ Years of Automation Excellence" />
         <meta property="og:description" content="15+ years engineering robotic painting and paint booth automation. Serving automotive OEMs and industrial manufacturers with 500+ systems deployed." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`${DOMAIN}/about`} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={`${DOMAIN}/images/og-social-share.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About TD Robotic Painting Systems" />

@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaint.com";
-
 export default function FlameTreatment() {
   const { t } = useI18n();
 
@@ -91,8 +89,8 @@ export default function FlameTreatment() {
       {/* Hero image */}
       <div className="rounded-lg overflow-hidden mb-10 border border-border">
         <img 
-          src="/images/flame-treatment-robot.jpg" 
-          alt="Robotic flame treatment system for automotive plastic parts"
+          src="/images/automotive-parts-painting.png" 
+          alt="Automotive plastic parts prepared for robotic coating and surface treatment"
           className="w-full h-auto"
         />
       </div>
@@ -226,6 +224,30 @@ export default function FlameTreatment() {
             </AccordionItem>
           ))}
         </Accordion>
+      </section>
+
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-4">Read Next</h2>
+        <ul className="space-y-3 text-muted-foreground">
+          <li>
+            <Link to="/resources/knowledge/flame-treatment-vs-plasma-treatment" className="text-primary underline underline-offset-4">
+              Flame treatment vs plasma treatment
+            </Link>
+            {" "}for pretreatment method selection.
+          </li>
+          <li>
+            <Link to="/resources/knowledge/integrated-flame-treatment-cell-vs-pretreatment-line" className="text-primary underline underline-offset-4">
+              Integrated flame-treatment cell vs pretreatment line
+            </Link>
+            {" "}for layout and handling strategy.
+          </li>
+          <li>
+            <Link to="/resources/knowledge/paint-technology-guide" className="text-primary underline underline-offset-4">
+              Paint technology guide
+            </Link>
+            {" "}for coating and adhesion context.
+          </li>
+        </ul>
       </section>
 
       {/* CTA */}

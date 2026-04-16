@@ -1,4 +1,4 @@
-export const idOverlay: Record<string, any> = {
+export const idOverlay = {
   "common": {
     "home": "Beranda",
     "solutions": "Solusi",

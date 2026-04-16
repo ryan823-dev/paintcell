@@ -1,6 +1,9 @@
 import videoLibrary, { type VideoMetadata } from "@/data/videoLibrary";
-
-const SITE_URL = "https://tdpaint.com";
+import {
+  getStaticVideoSourceUrl,
+  isStaticVideoPlayable,
+  resolveSiteAssetUrl,
+} from "@/lib/videoAssets";
 const STATIC_VIDEO_UPDATED_AT = "2026-04-14T00:00:00.000Z";
 
 export const publicCmsAvailability = {
@@ -32,13 +35,6 @@ export interface PublicVideoDetail extends PublicVideoRow {
   published_at: string | null;
 }
 
-function toAbsoluteSiteUrl(value: string | null | undefined): string | null {
-  if (!value) return null;
-  if (/^https?:\/\//i.test(value)) return value;
-  if (value.startsWith("//")) return `https:${value}`;
-  return `${SITE_URL}/${value.replace(/^\/+/, "")}`;
-}
-
 function getStaticVideoSlug(video: Pick<VideoMetadata, "id">): string {
   return video.id;
 }
@@ -51,8 +47,8 @@ function mapVideoToPublicDetail(video: VideoMetadata, index: number): PublicVide
     slug: getStaticVideoSlug(video),
     description: video.description,
     category: video.category,
-    video_url: toAbsoluteSiteUrl(video.ossPath) || "",
-    thumbnail_url: toAbsoluteSiteUrl(video.thumbnailPath),
+    video_url: getStaticVideoSourceUrl(video) || "",
+    thumbnail_url: resolveSiteAssetUrl(video.thumbnailPath),
     duration_seconds: null,
     keywords: video.keywords,
     transcript: null,
@@ -65,7 +61,9 @@ function mapVideoToPublicDetail(video: VideoMetadata, index: number): PublicVide
 }
 
 export function getStaticPublicVideoRows(): PublicVideoRow[] {
-  return videoLibrary.map((video, index) => mapVideoToPublicDetail(video, index));
+  return videoLibrary
+    .filter((video) => isStaticVideoPlayable(video))
+    .map((video, index) => mapVideoToPublicDetail(video, index));
 }
 
 export function getStaticPublicVideoBySlug(slug: string): PublicVideoDetail | null {
@@ -74,5 +72,10 @@ export function getStaticPublicVideoBySlug(slug: string): PublicVideoDetail | nu
     return null;
   }
 
-  return mapVideoToPublicDetail(videoLibrary[index], index);
+  const video = videoLibrary[index];
+  if (!isStaticVideoPlayable(video)) {
+    return null;
+  }
+
+  return mapVideoToPublicDetail(video, index);
 }

@@ -1,13 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import { QuoteWizard } from "@/components/quote/QuoteWizard";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 import { getQuoteContent } from "@/content/quote";
 import { buildLocalizedUrl } from "@/lib/seo";
-import { useRouteLocale } from "@/hooks/useRouteLocale";
+import { useCanonicalUrl, useRouteLocale } from "@/hooks/useRouteLocale";
 
 export default function Quote() {
   const locale = useRouteLocale();
   const quote = getQuoteContent(locale);
-  const quoteUrl = buildLocalizedUrl(locale, "/quote");
+  const quoteUrl = useCanonicalUrl("/quote");
   const homeUrl = buildLocalizedUrl(locale, "/");
 
   return (
@@ -60,6 +61,7 @@ export default function Quote() {
       <div className="container-wide pb-16">
         <QuoteWizard content={quote.wizard} />
       </div>
+      <Sonner />
     </div>
   );
 }

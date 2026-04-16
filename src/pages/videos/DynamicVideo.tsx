@@ -6,10 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ResourcePageLayout } from "@/components/resources";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveSiteAssetUrl } from "@/lib/videoAssets";
 import NotFound from "@/pages/NotFound";
 import { getStaticPublicVideoBySlug, publicCmsAvailability } from "@/lib/publicCms";
-
-const DOMAIN = "https://tdpaint.com";
 
 interface VideoData {
   id: string;
@@ -37,10 +36,7 @@ const categoryLabels: Record<string, string> = {
 };
 
 const resolveAssetUrl = (value: string | null) => {
-  if (!value) return null;
-  if (/^https?:\/\//i.test(value)) return value;
-  if (value.startsWith("//")) return `https:${value}`;
-  return `${DOMAIN}/${value.replace(/^\/+/, "")}`;
+  return resolveSiteAssetUrl(value);
 };
 
 const getYoutubeId = (value: string) => {

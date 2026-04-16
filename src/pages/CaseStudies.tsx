@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { ChevronRight, ArrowRight, Car, Truck, Rocket, MapPin, Zap, Play, Image, BarChart3, Factory, Bot, Wrench } from "lucide-react";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const DOMAIN = "https://tdpaint.com";
 
@@ -58,6 +59,8 @@ const oemGallery = [
 
 export default function CaseStudies() {
   const { t } = useI18n();
+  const homeUrl = useCanonicalUrl("/");
+  const canonicalUrl = useCanonicalUrl("/case-studies");
   const cs = t.caseStudies || {};
 
   const caseStudies = [
@@ -82,11 +85,11 @@ export default function CaseStudies() {
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "@id": `${DOMAIN}/case-studies#webpage`,
+      "@id": `${canonicalUrl}#webpage`,
       name: "Robotic Painting Automation Case Studies",
       description: "Real implementations demonstrating measurable improvements in quality, throughput, and operational efficiency across automotive and industrial applications.",
-      url: `${DOMAIN}/case-studies`,
-      isPartOf: { "@id": `${DOMAIN}/#website` },
+      url: canonicalUrl,
+      isPartOf: { "@id": `${homeUrl}#website` },
       mainEntity: {
         "@type": "ItemList",
         itemListElement: caseStudies.map((study, index) => ({
@@ -106,10 +109,10 @@ export default function CaseStudies() {
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": `${DOMAIN}/case-studies#breadcrumb`,
+      "@id": `${canonicalUrl}#breadcrumb`,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-        { "@type": "ListItem", position: 2, name: "Case Studies", item: `${DOMAIN}/case-studies` },
+        { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: "Case Studies", item: canonicalUrl },
       ],
     },
   ];
@@ -156,11 +159,11 @@ export default function CaseStudies() {
       <Helmet>
         <title>Case Studies — Robotic Painting Automation Success Stories | TD</title>
         <meta name="description" content="Explore real-world robotic painting automation implementations. Case studies from automotive OEM and Tier-1 suppliers showing measurable improvements in quality, throughput, and ROI." />
-        <link rel="canonical" href={`${DOMAIN}/case-studies`} />
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="Case Studies — Robotic Painting Automation Success Stories | TD" />
         <meta property="og:description" content="Real-world robotic painting automation case studies across automotive and industrial applications." />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`${DOMAIN}/case-studies`} />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={`${DOMAIN}/images/projects/body-painting-yaskawa.jpg`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Robotic Painting Automation Case Studies | TD" />
@@ -172,7 +175,7 @@ export default function CaseStudies() {
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "@id": `${DOMAIN}/case-studies#videos`,
+          "@id": `${canonicalUrl}#videos`,
           "name": "Robotic Painting Project Videos",
           "itemListElement": projectVideos.map((v, i) => ({
             "@type": "ListItem",

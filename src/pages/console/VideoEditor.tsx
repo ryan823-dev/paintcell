@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -69,13 +69,7 @@ export default function VideoEditor() {
   // For managing keywords as comma-separated input
   const [keywordsInput, setKeywordsInput] = useState("");
 
-  useEffect(() => {
-    if (!isNew && id) {
-      fetchVideo(id);
-    }
-  }, [id, isNew]);
-
-  const fetchVideo = async (videoId: string) => {
+  const fetchVideo = useCallback(async (videoId: string) => {
     const { data, error } = await supabase
       .from("videos")
       .select("*")
@@ -102,7 +96,13 @@ export default function VideoEditor() {
       setKeywordsInput((data.keywords || []).join(", "));
     }
     setLoading(false);
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!isNew && id) {
+      void fetchVideo(id);
+    }
+  }, [fetchVideo, id, isNew]);
 
   const generateSlug = (title: string) => {
     return title

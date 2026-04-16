@@ -1,5 +1,6 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Factory, Users, Zap, Globe, CheckCircle, TrendingUp, Shield } from "lucide-react";
 export default function ThailandMarketPage() {
@@ -202,12 +203,12 @@ export default function ThailandMarketPage() {
           We provide detailed feasibility studies and competitive solutions for the Thai market.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <a href="/quote" className="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
+          <Link to="/quote" className="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
             Request Feasibility Study
-          </a>
-          <a href="/industries/automotive-painting" className="bg-primary-foreground/20 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-foreground/30 transition-colors">
+          </Link>
+          <Link to="/industries/automotive-painting" className="bg-primary-foreground/20 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-foreground/30 transition-colors">
             View Automotive Solutions
-          </a>
+          </Link>
         </div>
       </div>
     </ResourcePageLayout>);

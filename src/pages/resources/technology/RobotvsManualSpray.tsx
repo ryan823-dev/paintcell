@@ -1,4 +1,5 @@
 import { AnswerBox, ContentSection, ResourcePageLayout } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -335,8 +336,8 @@ export default function RobotvsManualSpray() {
 
       <ContentSection title="Related Resources">
         <div className="grid gap-4 md:grid-cols-3">
-          <a
-            href="/resources/knowledge/robotic-painting-cost-guide"
+          <Link
+            to="/resources/knowledge/robotic-painting-cost-guide"
             className="block rounded-lg border p-4 transition-colors hover:border-primary/50"
           >
             <Badge variant="outline" className="mb-2">
@@ -344,9 +345,9 @@ export default function RobotvsManualSpray() {
             </Badge>
             <h4 className="font-medium">{"Robotic Painting Cost Guide"}</h4>
             <p className="mt-1 text-sm text-muted-foreground">{"System costs and ROI breakdown"}</p>
-          </a>
-          <a
-            href="/resources/knowledge/how-to-choose-paint-robot"
+          </Link>
+          <Link
+            to="/resources/knowledge/how-to-choose-paint-robot"
             className="block rounded-lg border p-4 transition-colors hover:border-primary/50"
           >
             <Badge variant="outline" className="mb-2">
@@ -354,9 +355,9 @@ export default function RobotvsManualSpray() {
             </Badge>
             <h4 className="font-medium">{"How to Choose a Paint Robot"}</h4>
             <p className="mt-1 text-sm text-muted-foreground">{"Key selection parameters and tradeoffs"}</p>
-          </a>
-          <a
-            href="/resources/knowledge/robot-path-optimization"
+          </Link>
+          <Link
+            to="/resources/knowledge/robot-path-optimization"
             className="block rounded-lg border p-4 transition-colors hover:border-primary/50"
           >
             <Badge variant="outline" className="mb-2">
@@ -364,7 +365,7 @@ export default function RobotvsManualSpray() {
             </Badge>
             <h4 className="font-medium">{"Robot Path Optimization"}</h4>
             <p className="mt-1 text-sm text-muted-foreground">{"How to maximize efficiency and finish quality"}</p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
 

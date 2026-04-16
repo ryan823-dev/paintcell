@@ -2,26 +2,30 @@ import type { Locale } from "../types";
 import { en } from "./en";
 import { enOverlay } from "./overlays/en";
 
-export type TranslationKeys = Record<string, any>;
+export type TranslationPrimitive = string | number | boolean | null;
+export type TranslationValue = TranslationPrimitive | TranslationValue[] | TranslationKeys;
+export type TranslationKeys = Record<string, TranslationValue>;
 
 const cache = new Map<Locale, Promise<TranslationKeys>>();
 
-function deepMerge<T extends Record<string, any>>(target: T, ...sources: Record<string, any>[]): T {
-  const output = target as Record<string, any>;
+function isTranslationObject(value: unknown): value is TranslationKeys {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function deepMerge<T extends TranslationKeys>(target: T, ...sources: TranslationKeys[]): T {
+  const output: TranslationKeys = target;
 
   for (const source of sources) {
-    if (!source || typeof source !== "object") continue;
+    if (!isTranslationObject(source)) continue;
 
     for (const [key, value] of Object.entries(source)) {
+      const existingValue = output[key];
+
       if (
-        value &&
-        typeof value === "object" &&
-        !Array.isArray(value) &&
-        output[key] &&
-        typeof output[key] === "object" &&
-        !Array.isArray(output[key])
+        isTranslationObject(value) &&
+        isTranslationObject(existingValue)
       ) {
-        output[key] = deepMerge({ ...output[key] }, value);
+        output[key] = deepMerge({ ...existingValue }, value);
       } else {
         output[key] = value;
       }

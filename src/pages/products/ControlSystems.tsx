@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const DOMAIN = "https://tdpaint.com";
 
@@ -78,6 +79,9 @@ const industry40Features = [
 export default function ControlSystems() {
   const { t } = useI18n();
   const cs = t.controlSystems || {};
+  const homeUrl = useCanonicalUrl("/");
+  const productsUrl = useCanonicalUrl("/products");
+  const canonicalUrl = useCanonicalUrl("/products/control-systems");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -87,7 +91,7 @@ export default function ControlSystems() {
     {
       "@context": "https://schema.org",
       "@type": "Product",
-      "@id": `${DOMAIN}/products/control-systems#product`,
+      "@id": `${canonicalUrl}#product`,
       name: "Industrial Paint Control Systems",
       description: "PLC-based control systems, HMI interfaces, and MES integration for robotic painting automation.",
       brand: { "@type": "Brand", name: "TD Robotic Painting Systems" },
@@ -96,21 +100,21 @@ export default function ControlSystems() {
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": `${DOMAIN}/products/control-systems#breadcrumb`,
+      "@id": `${canonicalUrl}#breadcrumb`,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-        { "@type": "ListItem", position: 2, name: "Products", item: `${DOMAIN}/products` },
-        { "@type": "ListItem", position: 3, name: "Control Systems", item: `${DOMAIN}/products/control-systems` },
+        { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: "Products", item: productsUrl },
+        { "@type": "ListItem", position: 3, name: "Control Systems", item: canonicalUrl },
       ],
     },
-  ], []);
+  ], [canonicalUrl, homeUrl, productsUrl]);
 
   return (
     <>
       <Helmet>
         <title>{cs.metaTitle || "Smart Control Systems for Paint Automation | TD"}</title>
         <meta name="description" content={cs.metaDescription || "Industrial control systems for robotic painting automation. PLC control, HMI interfaces, MES integration, data logging, and Industry 4.0 connectivity for paint process optimization."} />
-        <link rel="canonical" href={`${DOMAIN}/products/control-systems`} />
+        <link rel="canonical" href={canonicalUrl} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
         ))}

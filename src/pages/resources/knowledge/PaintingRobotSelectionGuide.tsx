@@ -431,11 +431,11 @@ export default function PaintingRobotSelectionGuide() {
                 </Link>
               </FadeIn>
               <FadeIn delay={0.2}>
-                <Link to="/resources/tools/roi-calculator" className="block p-6 rounded-xl border border-border bg-card hover:border-accent/30 transition-colors">
+                <Link to="/resources/knowledge/paint-robot-reach-vs-payload" className="block p-6 rounded-xl border border-border bg-card hover:border-accent/30 transition-colors">
                   <DollarSign className="h-8 w-8 text-accent mb-4"/>
-                  <h3 className="font-semibold mb-2">{"ROI Calculator"}</h3>
+                  <h3 className="font-semibold mb-2">{"Paint Robot Reach vs Payload"}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {"Calculate return on investment for robotic painting"}
+                    {"Focused trade-off guide for sizing the robot correctly"}
                   </p>
                 </Link>
               </FadeIn>

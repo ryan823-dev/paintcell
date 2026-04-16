@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
 import { AnswerBox } from "@/components/resources";
@@ -346,10 +347,10 @@ export default function ROICalculator() {
             <p className="text-primary-foreground/80 text-sm mb-4">
               {"Our engineers can provide detailed technical proposals and budget quotes based on your specific requirements."}
             </p>
-            <a href="/quote" className="inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
+            <Link to="/quote" className="inline-flex items-center gap-2 bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
               {"Request Detailed Proposal"}
               <ArrowRight className="h-4 w-4"/>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

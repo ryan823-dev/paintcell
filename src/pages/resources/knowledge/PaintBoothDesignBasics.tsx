@@ -1,163 +1,276 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
-import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Accordion, AccordionContent, AccordionItem, AccordionTrigger
-} from "@/components/ui/accordion";
-import { useMemo } from "react";
-import { useI18n } from "@/i18n";
+
+const designChecks = [
+  {
+    title: "Part family",
+    description:
+      "Start with the largest real work envelope, finish requirement, and fixture logic instead of a nominal part size on a quotation sheet.",
+  },
+  {
+    title: "Airflow strategy",
+    description:
+      "Choose airflow to match finish quality, overspray load, and available building constraints before you place robots or conveyors.",
+  },
+  {
+    title: "Service access",
+    description:
+      "Robot reach only matters if operators can still load parts, change filters, and maintain the cell without creating blind spots.",
+  },
+  {
+    title: "Facility boundary",
+    description:
+      "Makeup air, exhaust, filtration, and fire logic often decide whether a booth design is truly viable in the existing plant.",
+  },
+];
+
+const boothTypeRows = [
+  {
+    type: "Downdraft",
+    bestFit: "Appearance-critical finishes, cleaner spray zones, and projects that can support more booth infrastructure.",
+    optimizes: "Finish consistency, overspray capture near the part, and repeatable robot conditions.",
+    watchOut: "Usually costs more in plenums, pit or floor exhaust scope, and building integration.",
+  },
+  {
+    type: "Crossdraft",
+    bestFit: "Industrial coatings where budget and retrofit simplicity matter more than the highest cosmetic finish.",
+    optimizes: "Lower upfront complexity and easier installation in existing buildings.",
+    watchOut: "Airflow can carry overspray across the part if layout, loading, and spray direction are not disciplined.",
+  },
+  {
+    type: "Side-draft",
+    bestFit: "Large parts, awkward geometries, or facilities where downdraft floor scope is unrealistic.",
+    optimizes: "Practical airflow for bulky work and retrofit-friendly exhaust placement.",
+    watchOut: "Needs careful validation of dead zones, robot approach angles, and operator visibility.",
+  },
+];
+
+const quickAnswers = [
+  {
+    question: "Is downdraft always the best paint booth design?",
+    answer:
+      "No. Downdraft is often the cleanest option, but crossdraft or side-draft can be the better engineering answer when the finish target, part size, or building constraints do not justify full downdraft scope.",
+  },
+  {
+    question: "What usually breaks a retrofit plan first?",
+    answer:
+      "The weak points are normally airflow stability, service clearance, and the hidden facility work around makeup air, exhaust, and controls.",
+  },
+  {
+    question: "Why is booth sizing not just a part-size exercise?",
+    answer:
+      "Because the booth has to fit the part, the robot envelope, maintenance access, loading logic, filtration load, and safe airflow path at the same time.",
+  },
+];
 
 export default function PaintBoothDesignBasics() {
-  const { t } = useI18n();
-  const article = t.knowledge?.paintBoothDesignBasics || {};
-
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": article.metaTitle || "Paint Booth Design Basics for Robotic Spray Painting",
-    "author": { "@type": "Organization", "name": "TD Engineering Team" },
-    "datePublished": "2026-02-01",
-    "dateModified": "2026-02-12",
-    "publisher": { "@type": "Organization", "name": "TD Painting System" },
-    "inLanguage": "en",
-  };
-  
-  const faqs = useMemo(() => [
-    { q: t.knowledgeFaqs.boothDesign.q1, a: t.knowledgeFaqs.boothDesign.a1 },
-    { q: t.knowledgeFaqs.boothDesign.q2, a: t.knowledgeFaqs.boothDesign.a2 },
-    { q: t.knowledgeFaqs.boothDesign.q3, a: t.knowledgeFaqs.boothDesign.a3 },
-    { q: t.knowledgeFaqs.boothDesign.q4, a: t.knowledgeFaqs.boothDesign.a4 },
-  ], [t]);
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map(f => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a }
-    }))
-  };
-
   const structuredData = {
-    ...articleSchema,
-    ...faqSchema
-  };
-
-  const handleConsultation = () => {
-    sessionStorage.setItem("project-init-message", "I need guidance on paint booth design for my robotic painting project.");
-    const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
-    if (btn) btn.click();
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        headline: "Paint Booth Design Basics for Robotic Painting Projects",
+        description:
+          "Decision-oriented guide to paint booth design covering booth type selection, sizing inputs, retrofit checks, ventilation, and filtration dependencies.",
+        author: { "@type": "Organization", name: "TD Engineering Team" },
+        publisher: { "@type": "Organization", name: "TD Painting System" },
+        inLanguage: "en",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: quickAnswers.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
     <ResourcePageLayout
-      title={article.title || "Paint Booth Design Basics for Robotic Spray Painting"}
-      metaTitle={article.metaTitle || "Paint Booth Design Basics | Technical Insights | TD"}
-      metaDescription={article.metaDesc || "Expert guide on paint booth design for robotic spray painting. Covers airflow types, sizing methodology, ventilation requirements, and common design mistakes."}
+      title="Paint Booth Design Basics for Robotic Painting Projects"
+      metaTitle="Paint Booth Design Basics | Booth Type, Sizing, Retrofit Decisions"
+      metaDescription="Learn the paint booth design basics that actually change project scope: downdraft vs crossdraft vs side-draft, sizing inputs, retrofit limits, ventilation, and filtration."
       breadcrumbs={[
-        { label: "Engineering Library", href: "/resources/engineering-library" },
+        { label: "Resources", href: "/resources/engineering-library" },
         { label: "Knowledge" },
-        { label: article.title || "Paint Booth Design Basics" },
+        { label: "Paint Booth Design Basics" },
       ]}
       structuredData={structuredData}
       canonicalPath="/resources/knowledge/paint-booth-design-basics"
     >
-      {/* E-E-A-T Header */}
-      <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground mb-6">
-        <span className="flex items-center gap-1"><User className="h-3 w-3" /> TD Engineering Team</span>
-        <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Published: Feb 1, 2026</span>
-        <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Updated: Feb 12, 2026</span>
-        <span className="flex items-center gap-1"><Award className="h-3 w-3" /> ISO 9001 Certified Integrator</span>
-      </div>
-
-      <p className="text-muted-foreground leading-relaxed mb-8 text-base">
-        A well-designed spray booth is the foundation of any robotic painting system. It controls the spray environment, captures overspray, manages ventilation, and ensures compliance with safety regulations. This guide covers fundamental design principles, sizing methodology, common mistakes, and TD's engineering approach.
+      <p className="text-lg text-muted-foreground mb-8">
+        Good booth design starts with process risk, finish target, and part handling logic. If the team jumps
+        straight to steel dimensions or robot placement, the project usually looks cheaper on paper than it is
+        in production.
       </p>
 
-      {/* Section 1 */}
-      <h2 className="text-2xl font-bold mt-12 mb-4">1. Airflow Types & Selection</h2>
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        {[
-          { title: "Downdraft Booth", desc: "Air flows vertically from ceiling plenum to floor exhaust. Provides cleanest spray zone — overspray is pulled away from part surface immediately. Best for: automotive, decorative, and precision finishes.", pros: "Best finish quality, minimal contamination" },
-          { title: "Crossdraft Booth", desc: "Air flows horizontally from intake wall to exhaust wall. Simpler construction, lower installation cost. Acceptable for: industrial protective coatings, primer applications.", pros: "Lower cost, easier retrofit" },
-          { title: "Semi-Downdraft", desc: "Air enters from ceiling at rear, exits at floor in front. Compromise between quality and cost. Good for: medium-quality industrial finishes.", pros: "Balanced cost/quality" },
-          { title: "Side Draft", desc: "Air enters from one wall, exits from opposite wall at floor level. Used for: large parts, heavy machinery painting where full downdraft is impractical.", pros: "Flexible for large parts" },
-        ].map((item, i) => (
-          <Card key={i} className="border-border bg-card">
+      <h2 className="text-2xl font-semibold text-foreground mb-4">Use booth design to answer the real project questions</h2>
+      <p className="text-muted-foreground mb-6">
+        A booth is not just an enclosure around a robot. It is the environment that decides whether airflow,
+        overspray capture, service access, and finish stability will remain predictable after startup.
+      </p>
+      <div className="grid gap-4 md:grid-cols-2 mb-10">
+        {designChecks.map((item) => (
+          <Card key={item.title} className="border-border">
             <CardContent className="p-5">
-              <h3 className="font-semibold text-sm mb-2">{item.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-2">{item.desc}</p>
-              <p className="text-xs text-accent font-medium">Advantage: {item.pros}</p>
+              <h3 className="text-base font-semibold text-foreground mb-2">{item.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Section 2 */}
-      <h2 className="text-2xl font-bold mt-12 mb-4">2. Sizing Methodology</h2>
-      <p className="text-muted-foreground mb-4">Booth dimensions must accommodate three space requirements simultaneously:</p>
-      <ul className="space-y-2 list-disc pl-6 mb-4 text-muted-foreground">
-        <li><strong className="text-foreground">Part clearance</strong> — maximum part dimensions + 600mm clearance each side for spray coverage</li>
-        <li><strong className="text-foreground">Robot envelope</strong> — full robot reach circle + 200mm safety margin from walls</li>
-        <li><strong className="text-foreground">Service access</strong> — 1200mm minimum for robot maintenance and part handling paths</li>
-      </ul>
-      <p className="text-muted-foreground">Height: Minimum 3.5m clear inside for standard robot mounting. Add 1–1.5m for downdraft plenum and lighting. Total booth height typically 4.5–5.5m.</p>
+      <h2 className="text-2xl font-semibold text-foreground mb-4">Compare booth types before you lock the layout</h2>
+      <div className="overflow-x-auto mb-10">
+        <table className="w-full min-w-[720px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="py-3 pr-4 text-left font-semibold text-foreground">Booth type</th>
+              <th className="py-3 px-4 text-left font-semibold text-foreground">Best fit</th>
+              <th className="py-3 px-4 text-left font-semibold text-foreground">What it optimizes</th>
+              <th className="py-3 pl-4 text-left font-semibold text-foreground">Watch-outs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {boothTypeRows.map((row) => (
+              <tr key={row.type} className="border-b border-border align-top">
+                <td className="py-4 pr-4 font-medium text-foreground">{row.type}</td>
+                <td className="py-4 px-4 text-muted-foreground">{row.bestFit}</td>
+                <td className="py-4 px-4 text-muted-foreground">{row.optimizes}</td>
+                <td className="py-4 pl-4 text-muted-foreground">{row.watchOut}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Section 3 */}
-      <h2 className="text-2xl font-bold mt-12 mb-4">3. Common Design Mistakes</h2>
-      <div className="space-y-3 mb-6">
-        {[
-          "Undersizing the booth — squeezing robots into tight booths creates spray quality issues and maintenance access problems",
-          "Inadequate makeup air — exhaust without properly conditioned supply air causes negative pressure and uncontrolled dust ingress",
-          "Ignoring temperature control — paint viscosity changes ±10% per 5°C temperature shift, causing film build variation",
-          "Poor lighting design — inadequate or wrongly positioned lighting makes in-booth quality checks impossible",
-          "Skipping fire suppression — painting booths are inherently fire-risk environments; suppression is not optional",
-        ].map((mistake, i) => (
-          <div key={i} className="flex items-start gap-3 p-4 rounded-lg border border-destructive/20 bg-destructive/5">
-            <span className="text-destructive font-bold text-sm shrink-0">✗</span>
-            <p className="text-sm text-muted-foreground">{mistake}</p>
+      <h2 className="text-2xl font-semibold text-foreground mb-4">Sizing inputs that change the answer</h2>
+      <ul className="space-y-3 text-muted-foreground mb-10">
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>
+            <strong className="text-foreground">Part envelope:</strong> Use the largest paintable part plus fixture,
+            rotation, and loading orientation rather than the catalog dimensions alone.
+          </span>
+        </li>
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>
+            <strong className="text-foreground">Robot envelope:</strong> Validate reach, approach angle, hose routing,
+            and maintenance clearance together. Tight booths create hidden programming and service cost.
+          </span>
+        </li>
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>
+            <strong className="text-foreground">Air and exhaust load:</strong> Overspray volume, coating chemistry, and
+            target face velocity decide whether the booth can stay stable under production load.
+          </span>
+        </li>
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>
+            <strong className="text-foreground">Line interface:</strong> Conveyor pitch, loading method, flash-off logic,
+            and color change strategy often change the preferred booth footprint.
+          </span>
+        </li>
+      </ul>
+
+      <h2 className="text-2xl font-semibold text-foreground mb-4">New booth vs retrofit is usually a facility question</h2>
+      <div className="grid gap-4 md:grid-cols-2 mb-10">
+        <Card className="border-border">
+          <CardContent className="p-5">
+            <h3 className="text-base font-semibold text-foreground mb-3">New booth build is usually stronger when</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>The finish target needs cleaner airflow and more stable environmental control.</li>
+              <li>Robot access, future capacity, or maintenance space would be compromised in the old footprint.</li>
+              <li>Exhaust, filtration, and controls upgrades are large enough that retrofit savings stop being real.</li>
+            </ul>
+          </CardContent>
+        </Card>
+        <Card className="border-border">
+          <CardContent className="p-5">
+            <h3 className="text-base font-semibold text-foreground mb-3">Retrofit can still work when</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>The current booth already has usable airflow capacity and safe access for the intended robot package.</li>
+              <li>Part families and finish requirements are tolerant of the existing booth geometry.</li>
+              <li>Shutdown limits make staged improvement more valuable than a clean-sheet rebuild.</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      <h2 className="text-2xl font-semibold text-foreground mb-4">Three mistakes that keep a booth project half-scoped</h2>
+      <ul className="space-y-3 text-muted-foreground mb-10">
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>Choosing booth type from habit instead of matching it to finish target, building limits, and overspray behavior.</span>
+        </li>
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>Pricing the robot and booth shell before checking ventilation, filtration, and conditioned makeup air scope.</span>
+        </li>
+        <li className="flex items-start gap-3">
+          <span className="mt-2 h-2 w-2 rounded-full bg-primary shrink-0" />
+          <span>Treating maintenance access as optional, which usually becomes a reliability problem after commissioning.</span>
+        </li>
+      </ul>
+
+      <h2 className="text-2xl font-semibold text-foreground mb-4">Quick answers buyers usually need</h2>
+      <div className="space-y-4 mb-10">
+        {quickAnswers.map((item) => (
+          <div key={item.question} className="rounded-xl border border-border p-5">
+            <h3 className="text-base font-semibold text-foreground mb-2">{item.question}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{item.answer}</p>
           </div>
         ))}
       </div>
 
-      {/* Section 4 */}
-      <h2 className="text-2xl font-bold mt-12 mb-4">4. TD's Design Approach</h2>
-      <p className="text-muted-foreground leading-relaxed mb-6">
-        TD designs booths as integrated components of the complete painting system — not isolated enclosures. Every booth design starts with the painting process requirements (part size, paint type, cycle time) and works outward to determine optimal dimensions, airflow, and environmental controls. 3D CFD simulation validates airflow patterns before fabrication.
-      </p>
-
-      {/* FAQ */}
-      <h2 className="text-2xl font-bold mt-12 mb-6">Frequently Asked Questions</h2>
-      <Accordion type="single" collapsible className="space-y-2 mb-12">
-        {faqs.map((faq, i) => (
-          <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-lg px-5 bg-card">
-            <AccordionTrigger className="text-sm font-medium text-left py-4 hover:no-underline">{faq.q}</AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">{faq.a}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-
-      {/* Related */}
-      <div className="flex flex-wrap gap-2 mb-8 text-sm">
-        <span className="text-muted-foreground font-medium">Related:</span>
-        <Link to="/solutions/paint-booth-automation" className="text-accent hover:text-accent/80 inline-flex items-center gap-1">Paint Booth Automation <ArrowRight className="h-3 w-3" /></Link>
-        <Link to="/resources/standards-compliance/ventilation-airflow" className="text-accent hover:text-accent/80 inline-flex items-center gap-1">Ventilation & Airflow Standards <ArrowRight className="h-3 w-3" /></Link>
-      </div>
-
-      {/* CTA */}
-      <div className="pt-8 border-t border-border">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button onClick={handleConsultation} className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-            Get Booth Design Guidance <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-          <Button asChild variant="outline">
-            <Link to="/quote">Configure Your System</Link>
-          </Button>
-        </div>
-      </div>
+      <h2 className="text-2xl font-semibold text-foreground mb-4">Read next</h2>
+      <ul className="space-y-3 text-muted-foreground">
+        <li>
+          <Link to="/resources/knowledge/downdraft-vs-crossdraft-vs-side-draft" className="text-primary underline underline-offset-4">
+            Downdraft vs crossdraft vs side-draft
+          </Link>
+          {" "}for a focused booth-type decision page.
+        </li>
+        <li>
+          <Link to="/resources/knowledge/new-paint-booth-vs-retrofit" className="text-primary underline underline-offset-4">
+            New paint booth vs retrofit
+          </Link>
+          {" "}for the facility and downtime decision.
+        </li>
+        <li>
+          <Link to="/resources/standards-compliance/ventilation-airflow" className="text-primary underline underline-offset-4">
+            Ventilation and airflow
+          </Link>
+          {" "}to validate the facility side of booth scope.
+        </li>
+        <li>
+          <Link to="/resources/equipment/paint-booth-filtration" className="text-primary underline underline-offset-4">
+            Paint booth filtration
+          </Link>
+          {" "}to connect filter strategy with overspray load and maintenance.
+        </li>
+        <li>
+          <Link to="/resources/faq/how-much-floor-space-does-an-automated-paint-line-need" className="text-primary underline underline-offset-4">
+            How much floor space does an automated paint line need?
+          </Link>
+          {" "}for footprint planning.
+        </li>
+        <li>
+          <Link to="/solutions/paint-booth-automation" className="text-primary underline underline-offset-4">
+            Paint booth automation
+          </Link>
+          {" "}when the project is ready to move from layout questions into implementation scope.
+        </li>
+      </ul>
     </ResourcePageLayout>
   );
 }

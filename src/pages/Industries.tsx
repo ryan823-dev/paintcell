@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { industries } from "@/data/industryData";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const industryOrder = [
   "automotive-painting",
@@ -19,17 +20,18 @@ const industryOrder = [
 
 export default function Industries() {
   const { t } = useI18n();
+  const canonicalUrl = useCanonicalUrl("/industries");
 
   return (
     <>
       <Helmet>
         <title>Industry Solutions — Robotic Painting Automation | TD</title>
         <meta name="description" content="Explore robotic painting automation solutions by industry. Automotive, metal parts, appliances, construction machinery, battery coating, medical devices, and more." />
-        <link rel="canonical" href="https://tdpaint.com/industries" />
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="Industry Solutions — Robotic Painting Automation | TD" />
         <meta property="og:description" content="Robotic painting automation solutions for 10+ industries: automotive, metal parts, appliances, construction, and more." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tdpaint.com/industries" />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Industry Solutions — Robotic Painting Automation | TD" />

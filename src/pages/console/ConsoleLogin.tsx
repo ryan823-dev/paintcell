@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Toaster } from "@/components/ui/toaster";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -78,6 +79,7 @@ export default function ConsoleLogin() {
         <title>管理后台 | PaintCell</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
+      <Toaster />
       <div className="min-h-screen flex items-center justify-center bg-muted p-4">
         <Card className="w-full max-w-sm">
           <CardHeader className="text-center pb-4">

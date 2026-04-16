@@ -116,6 +116,32 @@ async function fileExists(filePath: string): Promise<boolean> {
   }
 }
 
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function readAssetWithRetry(filePath: string, attempts = 5, delayMs = 150) {
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      return await readFile(filePath);
+    } catch (error) {
+      const code = (error as NodeJS.ErrnoException).code;
+
+      if (code !== "ENOENT" || attempt === attempts - 1) {
+        if (code === "ENOENT") {
+          return null;
+        }
+
+        throw error;
+      }
+
+      await wait(delayMs);
+    }
+  }
+
+  return null;
+}
+
 async function parseRoutesFromSitemap(): Promise<string[]> {
   const sitemapPath = path.join(DIST_DIR, "sitemap.xml");
   const sitemapXml = await readFile(sitemapPath, "utf8");
@@ -141,10 +167,31 @@ async function createFallbackServer() {
       const isWithinDist = candidatePath.startsWith(DIST_DIR);
       const shouldServeAsset = path.extname(pathname) !== "";
 
-      if (shouldServeAsset && isWithinDist && await fileExists(candidatePath)) {
-        const fileBuffer = await readFile(candidatePath);
-        response.writeHead(200, { "Content-Type": getMimeType(candidatePath) });
-        response.end(fileBuffer);
+      if (shouldServeAsset && isWithinDist) {
+        const fileBuffer = await readAssetWithRetry(candidatePath);
+
+        if (fileBuffer) {
+          response.writeHead(200, { "Content-Type": getMimeType(candidatePath) });
+          response.end(fileBuffer);
+          return;
+        }
+
+        response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+        response.end("Prerender asset not found");
+        logError(`Missing prerender asset: ${pathname}`);
+        return;
+      }
+
+      if (!shouldServeAsset && isWithinDist && await fileExists(candidatePath)) {
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        response.end(fallbackHtml);
+        return;
+      }
+
+      if (shouldServeAsset) {
+        response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+        response.end("Prerender asset out of bounds");
+        logError(`Rejected prerender asset outside dist: ${pathname}`);
         return;
       }
 

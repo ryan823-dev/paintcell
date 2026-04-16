@@ -4,8 +4,14 @@ import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/i18n";
-import { buildLocalizedUrl, getCanonicalLocaleForPath, normalizePublicPath } from "@/lib/seo";
+import {
+  buildLocalizedUrl,
+  getCanonicalLocaleForPath,
+  normalizePublicPath,
+  stripLocalePrefix,
+} from "@/lib/seo";
 import { TopicClusterNavigator } from "@/components/seo/TopicClusterNavigator";
+import { useLocation } from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -42,9 +48,10 @@ export function ResourcePageLayout({
   canonicalPath,
 }: ResourcePageLayoutProps) {
   const { locale, t } = useI18n();
+  const location = useLocation();
   const resourceLayoutT = t.resourceLayout || {};
   const resolvedPath = normalizePublicPath(
-    canonicalPath || breadcrumbs[breadcrumbs.length - 1]?.href || "/",
+    canonicalPath || stripLocalePrefix(location.pathname) || breadcrumbs[breadcrumbs.length - 1]?.href || "/",
   );
   const canonicalLocale = getCanonicalLocaleForPath(resolvedPath, locale);
   const canonicalUrl = buildLocalizedUrl(canonicalLocale, resolvedPath);

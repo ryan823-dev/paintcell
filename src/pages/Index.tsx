@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+} from "react";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -6,20 +12,18 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 import { BenefitDetailModal, BenefitModalContent } from "@/components/home/BenefitDetailModal";
 import { ProjectInterfacePanel } from "@/components/home/ProjectInterfacePanel";
 import { HomeSidebar } from "@/components/home/HomeSidebar";
-import { InlineChatPanel } from "@/components/home/InlineChatPanel";
 import { TrustStats } from "@/components/home/TrustStats";
 import { TrustLogos } from "@/components/home/TrustLogos";
 import { BusinessPyramid } from "@/components/home/BusinessPyramid";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
 import {
   ChevronRight, Target, Zap, Shield, Users, Cog, Box, Settings, Gauge,
-  Car, Refrigerator, Wrench, Factory, CheckCircle2,
+  Car, Refrigerator, Wrench, Factory, CheckCircle2, Loader2,
   MessageSquare, FileText, Upload, User, CalendarDays, HelpCircle
 } from "lucide-react";
-import { buildLocalizedUrl } from "@/lib/seo";
 import { deliverySteps } from "@/data/industryData";
 import { useHomeContent } from "@/hooks/useHomeContent";
-import { useRouteLocale } from "@/hooks/useRouteLocale";
+import { useCanonicalUrl, useRouteLocale } from "@/hooks/useRouteLocale";
 
 interface Benefit {
   icon: typeof Target;
@@ -40,12 +44,21 @@ const industryEntries = [
 const benefitIcons = [Target, Zap, Users, Shield] as const;
 const systemComponentIcons = [Cog, Box, Settings, Gauge] as const;
 
+interface InlineChatPanelProps {
+  initialMessage?: string | null;
+  onClose: () => void;
+}
+
 export default function Index() {
   const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("ai-consultation");
   const [chatActive, setChatActive] = useState(false);
   const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
+  const [InlineChatPanelComponent, setInlineChatPanelComponent] =
+    useState<ComponentType<InlineChatPanelProps> | null>(null);
+  const [isLoadingChatPanel, setIsLoadingChatPanel] = useState(false);
+  const inlineChatPanelImportRef = useRef<Promise<ComponentType<InlineChatPanelProps>> | null>(null);
   const locale = useRouteLocale();
   const homeContent = useHomeContent();
   const heroCopy = homeContent.hero;
@@ -63,7 +76,7 @@ export default function Index() {
   const referencesCopy = homeContent.references;
   const projectInterfaceCopy = homeContent.projectInterface;
   const trustStatsCopy = homeContent.trustStats;
-  const homeUrl = buildLocalizedUrl(locale, "/");
+  const homeUrl = useCanonicalUrl("/");
   const localizedFaqs = faqCopy.items;
   const localizedIndustryEntries = industryEntries.map((entry, index) => ({
     ...entry,
@@ -169,10 +182,33 @@ export default function Index() {
     setIsModalOpen(true);
   };
 
+  const loadInlineChatPanel = useCallback(async () => {
+    if (InlineChatPanelComponent) {
+      return InlineChatPanelComponent;
+    }
+
+    if (!inlineChatPanelImportRef.current) {
+      setIsLoadingChatPanel(true);
+      inlineChatPanelImportRef.current = import("@/components/home/InlineChatPanel")
+        .then((module) => {
+          const ChatPanel = module.InlineChatPanel as ComponentType<InlineChatPanelProps>;
+          setInlineChatPanelComponent(() => ChatPanel);
+          return ChatPanel;
+        })
+        .finally(() => {
+          setIsLoadingChatPanel(false);
+          inlineChatPanelImportRef.current = null;
+        });
+    }
+
+    return inlineChatPanelImportRef.current;
+  }, [InlineChatPanelComponent]);
+
   const handleStartConsultation = () => {
     setIsModalOpen(false);
     setChatActive(true);
     setActiveSection("ai-consultation");
+    void loadInlineChatPanel();
   };
 
   const handleSidebarClick = (id: string) => {
@@ -180,6 +216,7 @@ export default function Index() {
     if (id === "ai-consultation") {
       setChatActive(true);
       setChatInitialMessage(null);
+      void loadInlineChatPanel();
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setChatActive(false);
@@ -192,6 +229,7 @@ export default function Index() {
     if (message) {
       setChatInitialMessage(message);
     }
+    void loadInlineChatPanel();
   };
 
   return (
@@ -220,13 +258,22 @@ export default function Index() {
         <div className="flex-1 min-w-0">
           {/* Hero — AI Project Interface */}
           {chatActive ? (
-            <InlineChatPanel
-              initialMessage={chatInitialMessage}
-              onClose={() => {
-                setChatActive(false);
-                setChatInitialMessage(null);
-              }}
-            />
+            InlineChatPanelComponent ? (
+              <InlineChatPanelComponent
+                initialMessage={chatInitialMessage}
+                onClose={() => {
+                  setChatActive(false);
+                  setChatInitialMessage(null);
+                }}
+              />
+            ) : (
+              <section className="bg-background h-[calc(100vh-3.5rem)] flex items-center justify-center border-b border-border">
+                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {isLoadingChatPanel ? "Loading AI consultation..." : "Preparing AI consultation..."}
+                </div>
+              </section>
+            )
           ) : (
             <ProjectInterfacePanel content={projectInterfaceCopy} onStartChat={handleStartChat} />
           )}

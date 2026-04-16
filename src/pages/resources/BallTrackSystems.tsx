@@ -1,5 +1,6 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 export default function BallTrackSystems() {
@@ -198,18 +199,18 @@ export default function BallTrackSystems() {
 
       <ContentSection title={"Related Resources"}>
         <div className="grid md:grid-cols-2 gap-4">
-          <a href="/resources/knowledge/color-change-systems" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          <Link to="/resources/knowledge/color-change-systems" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Color Change Systems"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Design principles and application practices for quick color change systems"}
             </p>
-          </a>
-          <a href="/resources/knowledge/paint-booth-design-basics" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          </Link>
+          <Link to="/resources/knowledge/paint-booth-design-basics" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Paint Booth Design"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Key points for coordinating paint booth design with conveyor systems"}
             </p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
     </ResourcePageLayout>);

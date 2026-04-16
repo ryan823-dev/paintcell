@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -84,13 +84,7 @@ export default function ProductEditor() {
   // For managing specifications as JSON input
   const [specificationsText, setSpecificationsText] = useState("{}");
 
-  useEffect(() => {
-    if (!isNew && id) {
-      fetchProduct(id);
-    }
-  }, [id, isNew]);
-
-  const fetchProduct = async (productId: string) => {
+  const fetchProduct = useCallback(async (productId: string) => {
     const { data, error } = await supabase
       .from("products_posts")
       .select("*")
@@ -118,7 +112,13 @@ export default function ProductEditor() {
       setSpecificationsText(JSON.stringify(data.specifications || {}, null, 2));
     }
     setLoading(false);
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!isNew && id) {
+      void fetchProduct(id);
+    }
+  }, [fetchProduct, id, isNew]);
 
   const generateSlug = (title: string) => {
     return title

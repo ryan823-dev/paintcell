@@ -1,6 +1,7 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
 import { AnswerBox } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 export default function HVLPvsRotaryBell() {
@@ -269,27 +270,27 @@ export default function HVLPvsRotaryBell() {
       {/* Related Resources */}
       <ContentSection title={"Related Resources"}>
         <div className="grid md:grid-cols-3 gap-4">
-          <a href="/resources/technology/spray-gun-technology" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          <Link to="/resources/technology/spray-gun-technology" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <Badge variant="outline" className="mb-2">{"Technology"}</Badge>
             <h4 className="font-medium">{"Spray Gun Technology Guide"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Air atomized, airless, electrostatic comparison"}
             </p>
-          </a>
-          <a href="/resources/equipment/electrostatic-bell-atomizers" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          </Link>
+          <Link to="/resources/equipment/electrostatic-bell-atomizers" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <Badge variant="outline" className="mb-2">{"Equipment"}</Badge>
             <h4 className="font-medium">{"Electrostatic Bell Atomizers"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Bell atomizer operation and selection"}
             </p>
-          </a>
-          <a href="/resources/knowledge/hvlp-spray-gun-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          </Link>
+          <Link to="/resources/knowledge/hvlp-spray-gun-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <Badge variant="outline" className="mb-2">{"Selection"}</Badge>
             <h4 className="font-medium">{"HVLP Spray Gun Guide"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"HVLP selection and application tips"}
             </p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
 

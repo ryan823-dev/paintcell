@@ -1,4 +1,4 @@
-export const jaOverlay: Record<string, any> = {
+export const jaOverlay = {
   "common": {
     "home": "ホーム",
     "solutions": "ソリューション",

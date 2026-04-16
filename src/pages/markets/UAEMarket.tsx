@@ -1,5 +1,6 @@
 import { ResourcePageLayout } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Factory, Building, Sun, Globe, CheckCircle, TrendingUp, Shield } from "lucide-react";
 export default function UAEMarketPage() {
@@ -202,12 +203,12 @@ export default function UAEMarketPage() {
           We deliver solutions that meet Middle East quality standards and business practices.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <a href="/quote" className="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
+          <Link to="/quote" className="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors">
             Request Consultation
-          </a>
-          <a href="/industries/automotive-painting" className="bg-primary-foreground/20 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-foreground/30 transition-colors">
+          </Link>
+          <Link to="/industries/automotive-painting" className="bg-primary-foreground/20 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-foreground/30 transition-colors">
             View Industry Solutions
-          </a>
+          </Link>
         </div>
       </div>
     </ResourcePageLayout>);

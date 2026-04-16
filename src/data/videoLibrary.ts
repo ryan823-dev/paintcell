@@ -1,3 +1,5 @@
+import { getStaticVideoSourceUrl } from "../lib/videoAssets";
+
 /**
  * Video Library - Video metadata for OSS-hosted content
  * Professional English titles and descriptions for SEO and AI reference
@@ -216,6 +218,54 @@ export const videoLibrary: VideoMetadata[] = [
     category: 'case-study',
     ossPath: 'videos/case-studies/baosteel-wheel-coating.mp4'
   },
+  {
+    id: 'qingdao-huatao-facility-tour',
+    filename: 'qingdao-huatao-part1.mp4',
+    title: 'Qingdao Huatao Paint Line Facility Tour - Part 1',
+    description: 'Facility walkthrough for the Qingdao Huatao automotive parts coating project. This video introduces the overall paint line layout, multi-station robotic spray booths, and the production arrangement used for coated interior and exterior plastic components.',
+    keywords: [
+      'Qingdao Huatao',
+      'paint line facility tour',
+      'automotive parts coating',
+      'robotic spray booth',
+      'paint line layout',
+      'ABB painting robot'
+    ],
+    category: 'case-study',
+    ossPath: 'videos/case-studies/qingdao-huatao-part1.mp4'
+  },
+  {
+    id: 'qingdao-huatao-centralized-paint-supply',
+    filename: 'qingdao-huatao-part2.mp4',
+    title: 'Qingdao Huatao Centralized Paint Supply System - Part 2',
+    description: 'Overview of the centralized paint supply installation used in the Qingdao Huatao project. The clip highlights pressure tanks, stainless piping, circulation strategy, and paint delivery integration supporting automated multi-station coating.',
+    keywords: [
+      'Qingdao Huatao',
+      'centralized paint supply',
+      'paint circulation',
+      'automotive coating line',
+      'paint delivery system',
+      'multi-station coating'
+    ],
+    category: 'case-study',
+    ossPath: 'videos/case-studies/qingdao-huatao-part2.mp4'
+  },
+  {
+    id: 'qingdao-huatao-spray-booth-interior',
+    filename: 'qingdao-huatao-part3.mp4',
+    title: 'Qingdao Huatao Spray Booth Interior and Conveyor System - Part 3',
+    description: 'Interior view of the Qingdao Huatao spray booth showing conveyor flow, booth structure, and the safety and control interfaces used to support stable automated coating operations for automotive parts.',
+    keywords: [
+      'Qingdao Huatao',
+      'spray booth interior',
+      'conveyor system',
+      'paint booth controls',
+      'automotive paint line',
+      'coating line safety'
+    ],
+    category: 'case-study',
+    ossPath: 'videos/case-studies/qingdao-huatao-part3.mp4'
+  },
 
   // === Pigging / Color Change System Videos ===
   {
@@ -254,6 +304,8 @@ export function getVideosByCategory(category: VideoMetadata['category']): VideoM
  * Generate VideoObject schema for SEO
  */
 export function generateVideoSchema(video: VideoMetadata, baseUrl: string = 'https://tdpaint.com') {
+  const contentUrl = getStaticVideoSourceUrl(video);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
@@ -263,8 +315,8 @@ export function generateVideoSchema(video: VideoMetadata, baseUrl: string = 'htt
     'thumbnailUrl': video.thumbnailPath ? `${baseUrl}${video.thumbnailPath}` : undefined,
     'uploadDate': new Date().toISOString().split('T')[0],
     'duration': video.duration,
-    'contentUrl': `${baseUrl}/${video.ossPath}`,
-    'embedUrl': `${baseUrl}/player/${video.id}`,
+    'contentUrl': contentUrl || undefined,
+    'embedUrl': `${baseUrl}/videos/${video.id}`,
     'publisher': {
       '@type': 'Organization',
       'name': 'TDpaint',

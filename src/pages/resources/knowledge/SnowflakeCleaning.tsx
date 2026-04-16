@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaint.com";
-
 export default function SnowflakeCleaning() {
   const { t } = useI18n();
 
@@ -91,8 +89,8 @@ export default function SnowflakeCleaning() {
       {/* Hero image */}
       <div className="rounded-lg overflow-hidden mb-10 border border-border">
         <img 
-          src="/images/snowflake-cleaning-system.jpg" 
-          alt="Robotic snowflake cleaning system for paint booth maintenance"
+          src="/images/spray-booth-interior.png" 
+          alt="Spray booth interior used as a reference for automated cleaning and maintenance planning"
           className="w-full h-auto"
         />
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 import {
   Loader2,
   LogOut,
@@ -150,6 +151,7 @@ export default function ConsoleLayout() {
       <Helmet>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
+      <Toaster />
       <div className="min-h-screen bg-background">
         {/* Header */}
         <header className="sticky top-0 z-50 border-b bg-card">

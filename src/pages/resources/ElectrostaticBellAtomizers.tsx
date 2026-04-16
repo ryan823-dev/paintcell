@@ -1,5 +1,6 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 export default function ElectrostaticBellAtomizers() {
@@ -259,18 +260,18 @@ export default function ElectrostaticBellAtomizers() {
 
       <ContentSection title={"Related Resources"}>
         <div className="grid md:grid-cols-2 gap-4">
-          <a href="/resources/glossary/electrostatic-spray" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          <Link to="/resources/glossary/electrostatic-spraying" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Electrostatic Spraying Glossary"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Definitions of electrostatic spraying terminology"}
             </p>
-          </a>
-          <a href="/resources/knowledge/robot-path-optimization" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          </Link>
+          <Link to="/resources/knowledge/robot-path-optimization" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Robot Path Optimization"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Programming tips for electrostatic bell robots"}
             </p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
     </ResourcePageLayout>);

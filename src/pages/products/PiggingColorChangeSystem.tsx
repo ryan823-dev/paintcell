@@ -13,8 +13,7 @@ import {
   BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { FadeIn } from "@/components/animations";
-
-const DOMAIN = "https://tdpaint.com";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const piggingSystems = [
   {
@@ -78,6 +77,10 @@ const applications = [
 ];
 
 export default function PiggingColorChangeSystem() {
+  const homeUrl = useCanonicalUrl("/");
+  const productsUrl = useCanonicalUrl("/products");
+  const canonicalUrl = useCanonicalUrl("/products/pigging-color-change-system");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -86,7 +89,7 @@ export default function PiggingColorChangeSystem() {
     {
       "@context": "https://schema.org",
       "@type": "Product",
-      "@id": `${DOMAIN}/products/pigging-color-change-system#product`,
+      "@id": `${canonicalUrl}#product`,
       name: "Pigging Color Change System",
       description: "Pigging color change systems for efficient multi-color painting operations. Fast changeover, minimal waste, maximum paint recovery.",
       brand: { "@type": "Brand", name: "TD Robotic Painting Systems" },
@@ -96,21 +99,21 @@ export default function PiggingColorChangeSystem() {
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": `${DOMAIN}/products/pigging-color-change-system#breadcrumb`,
+      "@id": `${canonicalUrl}#breadcrumb`,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-        { "@type": "ListItem", position: 2, name: "Products", item: `${DOMAIN}/products` },
-        { "@type": "ListItem", position: 3, name: "Pigging System", item: `${DOMAIN}/products/pigging-color-change-system` },
+        { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: "Products", item: productsUrl },
+        { "@type": "ListItem", position: 3, name: "Pigging System", item: canonicalUrl },
       ],
     },
-  ], []);
+  ], [canonicalUrl, homeUrl, productsUrl]);
 
   return (
     <>
       <Helmet>
         <title>Pigging Color Change System | Fast Multi-Color Paint Changeover</title>
         <meta name="description" content="Pigging color change systems with 95%+ paint recovery, 80% solvent reduction, under 90s change time. LACTEC and TIMMER solutions available." />
-        <link rel="canonical" href={`${DOMAIN}/products/pigging-color-change-system`} />
+        <link rel="canonical" href={canonicalUrl} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
         ))}
@@ -172,10 +175,11 @@ export default function PiggingColorChangeSystem() {
             </FadeIn>
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="rounded-xl border border-border bg-card overflow-hidden aspect-video">
-                <video className="w-full h-full object-cover" controls preload="metadata">
-                  <source src={`${DOMAIN}/videos/knowledge/pigging-color-change-demo.mp4`} type="video/mp4" />
-                  Your browser does not support video playback.
-                </video>
+                <img
+                  src="/images/control-cabinet-hmi.png"
+                  alt="Pigging color change system controls and paint line interface"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-4">Pigging Technology Principle</h3>

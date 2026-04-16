@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/accordion";
 import { useI18n } from "@/i18n";
 
-const DOMAIN = "https://tdpaint.com";
-
 export default function PaintSupplySystems() {
   const { t } = useI18n();
 
@@ -58,6 +56,25 @@ export default function PaintSupplySystems() {
     ...faqSchema
   };
 
+  const referenceHighlights = [
+    {
+      image: "/images/control-cabinet-hmi.png",
+      alt: "Paint supply controls and circulation system interface",
+      title: "Endura-Flo Quick Cleaning",
+      description: "Reference layout for fast cleaning sequences, recipe switching, and operator confirmation during color changes.",
+      href: "/products/control-systems",
+      cta: "See control integration",
+    },
+    {
+      image: "/images/electrostatic-spray-gun.png",
+      alt: "Industrial fluid handling and precision spray equipment",
+      title: "E-Flo DC Electric Pump",
+      description: "Precision fluid delivery setup for stable pressure control, repeatable dosing, and efficient multi-color production.",
+      href: "/videos",
+      cta: "Browse video library",
+    },
+  ];
+
   const handleConsultation = () => {
     sessionStorage.setItem("project-init-message", "I need information about paint supply systems and color change equipment.");
     const btn = document.querySelector('[data-assistant-trigger]') as HTMLButtonElement;
@@ -91,40 +108,30 @@ export default function PaintSupplySystems() {
       {/* Hero image */}
       <div className="rounded-lg overflow-hidden mb-10 border border-border">
         <img 
-          src="/images/paint-supply-circulation.jpg" 
-          alt="Centralized paint circulation system with color change valves"
+          src="/images/control-cabinet-hmi.png" 
+          alt="Paint supply control cabinet and circulation system interface"
           className="w-full h-auto"
         />
       </div>
 
-      {/* Video Demo */}
+      {/* Reference Highlights */}
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">Video Demo: Paint Supply Technology</h2>
+        <h2 className="text-2xl font-semibold mb-4">Reference Highlights: Paint Supply Technology</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="rounded-lg overflow-hidden border border-border bg-muted/30">
-            <video controls className="w-full" poster="/images/video-thumbnails/paint-pump-1.jpg">
-              <source src="/videos/endura-flo-cleaning-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="p-4">
-              <h3 className="font-semibold mb-2">Endura-Flo Quick Cleaning</h3>
-              <p className="text-sm text-muted-foreground">
-                Pneumatic diaphragm pump with rapid cleaning capability reduces color change time by 50%.
-              </p>
+          {referenceHighlights.map((item) => (
+            <div key={item.title} className="rounded-lg overflow-hidden border border-border bg-muted/30">
+              <img src={item.image} alt={item.alt} className="w-full aspect-video object-cover bg-muted" />
+              <div className="p-4">
+                <h3 className="font-semibold mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {item.description}
+                </p>
+                <Button asChild variant="outline" className="mt-4">
+                  <Link to={item.href}>{item.cta}</Link>
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="rounded-lg overflow-hidden border border-border bg-muted/30">
-            <video controls className="w-full" poster="/images/video-thumbnails/paint-pump-2.jpg">
-              <source src="/videos/e-flo-dc-intro.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="p-4">
-              <h3 className="font-semibold mb-2">E-Flo DC Electric Pump</h3>
-              <p className="text-sm text-muted-foreground">
-                Advanced electric pump technology with precise pressure control and energy efficiency.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 

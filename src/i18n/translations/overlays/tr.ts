@@ -1,4 +1,4 @@
-export const trOverlay: Record<string, any> = {
+export const trOverlay = {
   "common": {
     "home": "Ana sayfa",
     "solutions": "Çözümler",

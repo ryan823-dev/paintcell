@@ -90,17 +90,17 @@ export function Header() {
           items: [
             {
               name: solutionMenu.autoBodyPainting?.title || "",
-              href: "/solutions/auto-body-painting",
+              href: "/solutions/turnkey-painting-shop",
               description: solutionMenu.autoBodyPainting?.description || "",
             },
             {
               name: solutionMenu.partsPainting?.title || "",
-              href: "/solutions/parts-painting",
+              href: "/solutions/robotic-painting-system",
               description: solutionMenu.partsPainting?.description || "",
             },
             {
               name: solutionMenu.industrialCoating?.title || "",
-              href: "/solutions/industrial-coating",
+              href: "/industries/construction-machinery",
               description: solutionMenu.industrialCoating?.description || "",
             },
             {

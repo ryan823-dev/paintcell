@@ -7,9 +7,10 @@ interface RequirementSummaryProps {
   summary: string;
   onSubmit: () => void;
   onBack: () => void;
+  isSubmitting?: boolean;
 }
 
-export function RequirementSummary({ summary, onSubmit, onBack }: RequirementSummaryProps) {
+export function RequirementSummary({ summary, onSubmit, onBack, isSubmitting = false }: RequirementSummaryProps) {
   return (
     <Card className="border-primary/20 bg-primary/5">
       <CardHeader className="pb-3">
@@ -35,10 +36,11 @@ export function RequirementSummary({ summary, onSubmit, onBack }: RequirementSum
         <Button
           size="sm"
           onClick={onSubmit}
+          disabled={isSubmitting}
           className="gap-1.5 bg-accent hover:bg-accent/90 text-accent-foreground"
         >
           <Send className="h-3.5 w-3.5" />
-          Submit Inquiry
+          {isSubmitting ? "Loading Form..." : "Submit Inquiry"}
         </Button>
       </CardFooter>
     </Card>

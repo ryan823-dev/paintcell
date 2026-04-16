@@ -1,4 +1,4 @@
-export const ptOverlay: Record<string, any> = {
+export const ptOverlay = {
   "common": {
     "home": "Início",
     "solutions": "Soluções",

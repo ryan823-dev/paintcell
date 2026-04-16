@@ -1,4 +1,4 @@
-export const enOverlay: Record<string, any> = {
+export const enOverlay = {
   "common": {
     "home": "Home",
     "solutions": "Solutions",

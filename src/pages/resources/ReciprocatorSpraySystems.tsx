@@ -1,5 +1,6 @@
 import { ResourcePageLayout, AnswerBox } from "@/components/resources";
 import { ContentSection } from "@/components/resources";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 export default function ReciprocatorSpraySystems() {
@@ -267,18 +268,18 @@ export default function ReciprocatorSpraySystems() {
 
       <ContentSection title={"Related Resources"}>
         <div className="grid md:grid-cols-2 gap-4">
-          <a href="/resources/knowledge/paint-booth-design-basics" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          <Link to="/resources/knowledge/paint-booth-design-basics" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Paint Booth Design Basics"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Booth layout design for reciprocator installation"}
             </p>
-          </a>
-          <a href="/resources/knowledge/paint-technology-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
+          </Link>
+          <Link to="/resources/knowledge/paint-technology-guide" className="block p-4 border rounded-lg hover:border-primary/50 transition-colors">
             <h4 className="font-medium">{"Spray Technology Guide"}</h4>
             <p className="text-sm text-muted-foreground mt-1">
               {"Comparison and selection of atomization technologies"}
             </p>
-          </a>
+          </Link>
         </div>
       </ContentSection>
     </ResourcePageLayout>);

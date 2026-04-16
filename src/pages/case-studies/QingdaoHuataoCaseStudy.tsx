@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
-import { CheckCircle2, Zap, Clock, Users, Award } from "lucide-react";
+import { CheckCircle2, Zap, Clock, Users, Award, Play } from "lucide-react";
+import { LocalizedLink as Link } from "@/components/LocalizedLink";
+import { Button } from "@/components/ui/button";
 import { AnswerBox, ContentSection, ResourcePageLayout } from "@/components/resources";
 import { useI18n } from "@/i18n/context";
 
@@ -180,6 +182,31 @@ export default function QingdaoHuataoCaseStudy() {
     },
   };
 
+  const projectVideos = [
+    {
+      slug: "qingdao-huatao-facility-tour",
+      title: "Paint Line Facility Tour - Part 1",
+      description:
+        "Walkthrough of the overall Qingdao Huatao coating line layout, including the robotic spray booth arrangement and project-level facility flow.",
+    },
+    {
+      slug: "qingdao-huatao-centralized-paint-supply",
+      title: "Centralized Paint Supply - Part 2",
+      description:
+        "Overview of the centralized paint supply installation, covering tank layout, circulation piping, and paint delivery integration for the robotic line.",
+    },
+    {
+      slug: "qingdao-huatao-spray-booth-interior",
+      title: "Spray Booth Interior - Part 3",
+      description:
+        "Interior view of the spray booth showing conveyor flow, booth structure, and the safety and control interfaces used during automated production.",
+    },
+  ];
+
+  const projectVideosTitle = "Project Videos";
+  const projectVideosDescription =
+    "Three project clips covering facility layout, centralized paint supply, and spray booth/conveyor details from the Qingdao Huatao installation.";
+
   return (
     <ResourcePageLayout
       title={copy.title}
@@ -245,6 +272,24 @@ export default function QingdaoHuataoCaseStudy() {
           {copy.quote}
         </blockquote>
         <p className="mt-2 text-sm text-muted-foreground">{copy.quoteAuthor}</p>
+      </ContentSection>
+
+      <ContentSection title={projectVideosTitle}>
+        <p className="mb-6 text-sm text-muted-foreground">{projectVideosDescription}</p>
+        <div className="grid gap-4 md:grid-cols-3">
+          {projectVideos.map((video) => (
+            <div key={video.slug} className="rounded-lg bg-muted/30 p-4">
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Play className="h-5 w-5" />
+              </div>
+              <h4 className="mb-2 font-semibold">{video.title}</h4>
+              <p className="text-sm text-muted-foreground">{video.description}</p>
+              <Button asChild variant="outline" className="mt-4 w-full">
+                <Link to={`/videos/${video.slug}`}>Watch Video</Link>
+              </Button>
+            </div>
+          ))}
+        </div>
       </ContentSection>
 
       <ContentSection title={copy.relatedTitle}>

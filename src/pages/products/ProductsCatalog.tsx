@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Navigate } from "react-router-dom";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { supabase } from "@/integrations/supabase/client";
+import { Toaster } from "@/components/ui/toaster";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -123,6 +124,7 @@ function ProductsCatalogContent({ canonicalUrl }: { canonicalUrl: string }) {
 
   return (
     <>
+      <Toaster />
       <Helmet>
         <title>Products Catalog | TD Painting Systems</title>
         <meta

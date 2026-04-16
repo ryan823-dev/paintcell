@@ -1,7 +1,4 @@
 import { Suspense, lazy } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -12,11 +9,9 @@ import { Hreflang } from "@/components/seo/Hreflang";
 import { Loader2 } from "lucide-react";
 import { defaultLocale } from "@/i18n/types";
 
-// Eager load critical pages
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-
-// Lazy load other public pages
+// Lazy load public pages
+const Index = lazy(() => import("./pages/Index"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 const Quote = lazy(() => import("./pages/Quote"));
 const ThankYou = lazy(() => import("./pages/ThankYou"));
 const Applications = lazy(() => import("./pages/Applications"));
@@ -88,8 +83,12 @@ const FeasibilityChecklist = lazy(() => import("./pages/resources/tools/Feasibil
 const HowToChoosePaintRobot = lazy(() => import("./pages/resources/knowledge/HowToChoosePaintRobot"));
 const RoboticPaintingCostGuide = lazy(() => import("./pages/resources/knowledge/RoboticPaintingCostGuide"));
 const PaintBoothDesignBasics = lazy(() => import("./pages/resources/knowledge/PaintBoothDesignBasics"));
+const DowndraftVsCrossdraftVsSideDraft = lazy(() => import("./pages/resources/knowledge/DowndraftVsCrossdraftVsSideDraft"));
+const NewPaintBoothVsRetrofit = lazy(() => import("./pages/resources/knowledge/NewPaintBoothVsRetrofit"));
 const PaintTechnologyGuide = lazy(() => import("./pages/resources/knowledge/PaintTechnologyGuide"));
 const FlameTreatment = lazy(() => import("./pages/resources/knowledge/FlameTreatment"));
+const FlameTreatmentVsPlasmaTreatment = lazy(() => import("./pages/resources/knowledge/FlameTreatmentVsPlasmaTreatment"));
+const IntegratedFlameTreatmentCellVsPretreatmentLine = lazy(() => import("./pages/resources/knowledge/IntegratedFlameTreatmentCellVsPretreatmentLine"));
 const ATEXSprayPaintingBooth = lazy(() => import("./pages/resources/knowledge/ATEXSprayPaintingBooth"));
 const ManualVsSemiAutoVsRoboticPaintingSystems = lazy(() => import("./pages/resources/knowledge/ManualVsSemiAutoVsRoboticPaintingSystems"));
 const WhenRoboticPaintAutomationMakesSense = lazy(() => import("./pages/resources/knowledge/WhenRoboticPaintAutomationMakesSense"));
@@ -103,6 +102,8 @@ const PaintDefectsGuide = lazy(() => import("./pages/resources/knowledge/PaintDe
 const ColorChangeSystems = lazy(() => import("./pages/resources/knowledge/ColorChangeSystems"));
 const PaintSupplyKnowledge = lazy(() => import("./pages/resources/knowledge/PaintSupplySystems"));
 const HVLPSprayGunGuide = lazy(() => import("./pages/resources/knowledge/HVLPSprayGunGuide"));
+const HollowWristVsNonHollowWristPainting = lazy(() => import("./pages/resources/knowledge/HollowWristVsNonHollowWristPainting"));
+const PaintRobotReachVsPayload = lazy(() => import("./pages/resources/knowledge/PaintRobotReachVsPayload"));
 const PaintingRobotSelectionGuide = lazy(() => import("./pages/resources/knowledge/PaintingRobotSelectionGuide"));
 const ROICalculator = lazy(() => import("./pages/resources/tools/ROICalculator"));
 
@@ -217,6 +218,12 @@ function LegacyProductRedirect() {
   return <Navigate to={`/${lang || defaultLocale}/products/${slug}`} replace />;
 }
 
+function LegacySolutionRedirect({ target }: { target: string }) {
+  const { lang } = useParams<{ lang: string }>();
+
+  return <Navigate to={`/${lang || defaultLocale}${target}`} replace />;
+}
+
 /**
  * All public page routes rendered inside the locale-prefixed Layout.
  * Paths are relative to the parent `/:lang` route.
@@ -301,11 +308,15 @@ function PublicRoutes() {
       <Route path="resources/articles/common-atex-classification-mistakes-spray-booth-projects" element={<CommonATEXClassificationMistakes />} />
       <Route path="resources/knowledge/robotic-painting-cost-guide" element={<RoboticPaintingCostGuide />} />
       <Route path="resources/knowledge/paint-booth-design-basics" element={<PaintBoothDesignBasics />} />
+      <Route path="resources/knowledge/downdraft-vs-crossdraft-vs-side-draft" element={<DowndraftVsCrossdraftVsSideDraft />} />
+      <Route path="resources/knowledge/new-paint-booth-vs-retrofit" element={<NewPaintBoothVsRetrofit />} />
       <Route path="resources/knowledge/paint-technology-guide" element={<PaintTechnologyGuide />} />
       <Route path="resources/knowledge/atex-spray-painting-booth" element={<ATEXSprayPaintingBooth />} />
       <Route path="resources/knowledge/zone-1-vs-zone-2-spray-painting-booth" element={<Zone1VsZone2SprayPaintingBooth />} />
       <Route path="resources/knowledge/how-to-design-atex-compliant-spray-painting-booth" element={<HowToDesignATEXCompliantSprayPaintingBooth />} />
       <Route path="resources/knowledge/flame-treatment" element={<FlameTreatment />} />
+      <Route path="resources/knowledge/flame-treatment-vs-plasma-treatment" element={<FlameTreatmentVsPlasmaTreatment />} />
+      <Route path="resources/knowledge/integrated-flame-treatment-cell-vs-pretreatment-line" element={<IntegratedFlameTreatmentCellVsPretreatmentLine />} />
       <Route path="resources/knowledge/metal-parts-finishing-guide" element={<MetalPartsFinishingGuide />} />
       <Route path="resources/knowledge/furniture-coating-systems-roller-vs-spray-vs-robotic" element={<FurnitureCoatingSystemsComparison />} />
       <Route path="resources/knowledge/snowflake-cleaning" element={<SnowflakeCleaning />} />
@@ -314,6 +325,8 @@ function PublicRoutes() {
       <Route path="resources/knowledge/color-change-systems" element={<ColorChangeSystems />} />
       <Route path="resources/knowledge/paint-supply-systems" element={<PaintSupplyKnowledge />} />
       <Route path="resources/knowledge/hvlp-spray-gun-guide" element={<HVLPSprayGunGuide />} />
+      <Route path="resources/knowledge/hollow-wrist-vs-non-hollow-wrist-painting" element={<HollowWristVsNonHollowWristPainting />} />
+      <Route path="resources/knowledge/paint-robot-reach-vs-payload" element={<PaintRobotReachVsPayload />} />
       <Route path="resources/knowledge/painting-robot-selection-guide" element={<PaintingRobotSelectionGuide />} />
 
       {/* Quality & Equipment articles (Batch 1) */}
@@ -349,6 +362,18 @@ function PublicRoutes() {
       <Route path="solutions/turnkey-painting-shop" element={<TurnkeyPaintingShop />} />
       <Route path="solutions/paint-supply-systems" element={<PaintSupplySystems />} />
       <Route path="solutions/paint-process-flow" element={<PaintProcessFlow />} />
+      <Route
+        path="solutions/auto-body-painting"
+        element={<LegacySolutionRedirect target="/solutions/turnkey-painting-shop" />}
+      />
+      <Route
+        path="solutions/parts-painting"
+        element={<LegacySolutionRedirect target="/solutions/robotic-painting-system" />}
+      />
+      <Route
+        path="solutions/industrial-coating"
+        element={<LegacySolutionRedirect target="/industries/construction-machinery" />}
+      />
       <Route path="solutions/:slug" element={<SolutionPage />} />
 
       {/* Products pages */}
@@ -394,9 +419,6 @@ const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
         <BrowserRouter>
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -440,7 +462,6 @@ const App = () => (
             </Routes>
           </Suspense>
         </BrowserRouter>
-      </TooltipProvider>
       </I18nProvider>
     </QueryClientProvider>
   </HelmetProvider>

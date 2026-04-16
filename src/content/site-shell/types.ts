@@ -1,3 +1,14 @@
+export interface SiteShellMenuCard {
+  title: string;
+  description: string;
+}
+
+export type SiteShellMenuEntry = string | SiteShellMenuCard | SiteShellMenuMap;
+
+export interface SiteShellMenuMap {
+  [key: string]: SiteShellMenuEntry;
+}
+
 export interface SiteShellContent {
   nav: Record<string, string>;
   header: {
@@ -7,7 +18,7 @@ export interface SiteShellContent {
     byApplication: string;
     engineeringServices: string;
     supportServices: string;
-    menus: Record<string, any>;
+    menus: SiteShellMenuMap;
   };
   footer: Record<string, string>;
   assistant: {

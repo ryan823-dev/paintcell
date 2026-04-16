@@ -4,6 +4,7 @@ import { ChevronRight, Sparkles, Cpu, Shield, Palette, Wifi, Flame, Bot, MapPin,
 import { Card, CardContent } from "@/components/ui/card";
 import { solutions } from "@/data/solutionData";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 const solutionOrder = [
   "robotic-painting-system",
@@ -96,17 +97,18 @@ const scaleBreakdown = [
 
 export default function Solutions() {
   const { t } = useI18n();
+  const canonicalUrl = useCanonicalUrl("/solutions");
 
   return (
     <>
       <Helmet>
         <title>Industrial Painting Systems for Manufacturing | Automation Solutions | TD</title>
         <meta name="description" content="Industrial painting systems for manufacturing, including robotic paint automation systems, paint booth automation, paint robot integration, and panel coating line planning." />
-        <link rel="canonical" href="https://tdpaint.com/solutions" />
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="Industrial Painting Systems for Manufacturing | TD" />
         <meta property="og:description" content="Industrial painting systems covering robotic paint automation, booth automation, robot integration, and panel finishing solutions." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tdpaint.com/solutions" />
+        <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Industrial Painting Systems for Manufacturing | TD" />

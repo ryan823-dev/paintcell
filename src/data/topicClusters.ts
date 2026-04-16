@@ -336,10 +336,25 @@ export const topicClusters: Record<string, TopicCluster> = {
     },
     relatedLinks: [
       {
+        label: "Flame Treatment vs Plasma Treatment",
+        href: "/resources/knowledge/flame-treatment-vs-plasma-treatment",
+        description: "Comparison page for choosing between thermal and non-thermal adhesion activation.",
+      },
+      {
+        label: "Integrated Flame-treatment Cell vs Pretreatment Line",
+        href: "/resources/knowledge/integrated-flame-treatment-cell-vs-pretreatment-line",
+        description: "Layout decision page for choosing between a shared cell and a separate pretreatment line.",
+      },
+      {
         label: "Paint Technology Guide",
         href: "/resources/knowledge/paint-technology-guide",
         description: "Broader context on substrate, coating chemistry, and process behavior.",
       },
+    ],
+    extraPaths: [
+      "/resources/knowledge/flame-treatment-vs-plasma-treatment",
+      "/resources/knowledge/integrated-flame-treatment-cell-vs-pretreatment-line",
+      "/resources/knowledge/paint-technology-guide",
     ],
   },
   "paint-booth-design": {
@@ -449,6 +464,16 @@ export const topicClusters: Record<string, TopicCluster> = {
     },
     relatedLinks: [
       {
+        label: "Downdraft vs Crossdraft vs Side-draft",
+        href: "/resources/knowledge/downdraft-vs-crossdraft-vs-side-draft",
+        description: "Comparison page for choosing the booth airflow pattern that fits the project.",
+      },
+      {
+        label: "New Paint Booth vs Retrofit",
+        href: "/resources/knowledge/new-paint-booth-vs-retrofit",
+        description: "Decision page for judging when retrofit savings are real and when a new booth is the cleaner answer.",
+      },
+      {
         label: "Ventilation and Airflow",
         href: "/resources/standards-compliance/ventilation-airflow",
         description: "Detailed supporting article for booth airflow constraints.",
@@ -465,6 +490,8 @@ export const topicClusters: Record<string, TopicCluster> = {
       },
     ],
     extraPaths: [
+      "/resources/knowledge/downdraft-vs-crossdraft-vs-side-draft",
+      "/resources/knowledge/new-paint-booth-vs-retrofit",
       "/resources/standards-compliance/ventilation-airflow",
       "/resources/equipment/paint-booth-filtration",
       "/resources/faq/how-much-floor-space-does-an-automated-paint-line-need",
@@ -577,6 +604,16 @@ export const topicClusters: Record<string, TopicCluster> = {
     },
     relatedLinks: [
       {
+        label: "Paint Robot Reach vs Payload",
+        href: "/resources/knowledge/paint-robot-reach-vs-payload",
+        description: "Focused comparison page for the trade-off that usually narrows robot choices first.",
+      },
+      {
+        label: "Hollow Wrist vs Non-hollow Wrist for Painting",
+        href: "/resources/knowledge/hollow-wrist-vs-non-hollow-wrist-painting",
+        description: "Decision page for comparing dress-package practicality and hose-routing risk.",
+      },
+      {
         label: "Painting Robot Selection Guide",
         href: "/resources/knowledge/painting-robot-selection-guide",
         description: "Long-form comparison page covering models, brands, and cost logic.",
@@ -603,6 +640,8 @@ export const topicClusters: Record<string, TopicCluster> = {
       },
     ],
     extraPaths: [
+      "/resources/knowledge/paint-robot-reach-vs-payload",
+      "/resources/knowledge/hollow-wrist-vs-non-hollow-wrist-painting",
       "/resources/knowledge/painting-robot-selection-guide",
       "/resources/knowledge/industrial-robot-brands",
       "/resources/glossary/hollow-wrist",

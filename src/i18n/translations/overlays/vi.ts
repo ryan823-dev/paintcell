@@ -1,4 +1,4 @@
-export const viOverlay: Record<string, any> = {
+export const viOverlay = {
   "common": {
     "home": "Trang chủ",
     "solutions": "Giải pháp",

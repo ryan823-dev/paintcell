@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, type ComponentType } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, FileText, Settings2, GripHorizontal } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useLocalizedNavigate as useNavigate } from "@/hooks/useLocalizedNavigate";
 import { ChatMessage, ChatMessageType } from "./ChatMessage";
 import { RequirementSummary } from "./RequirementSummary";
-import { ContactFormModal } from "./ContactFormModal";
 import { QuoteFormData, initialFormData } from "@/types/quote";
 import type { PageContext } from "./FloatingAssistantButton";
 import { ChatStatusIndicator } from "./ChatStatusIndicator";
@@ -27,7 +27,38 @@ interface AIChatPanelProps {
   ) => Promise<void>;
 }
 
+interface ContactFormModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  formData: QuoteFormData;
+  chatTranscript: ChatMessageType[];
+  summary?: string;
+  onSuccess?: () => void;
+}
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-presales-chat`;
+
+function getReadableChatError(error: unknown) {
+  if (!(error instanceof Error)) {
+    return "Something went wrong while contacting PaintCell AI. Please try again.";
+  }
+
+  const message = error.message || "";
+
+  if (message.includes("401") || message.toLowerCase().includes("unauthorized")) {
+    return "PaintCell AI could not authenticate the request. Please check the API configuration and try again.";
+  }
+
+  if (message.includes("403") || message.toLowerCase().includes("forbidden")) {
+    return "PaintCell AI rejected the request. Please verify the API access settings and try again.";
+  }
+
+  if (message.includes("429") || message.toLowerCase().includes("rate")) {
+    return "PaintCell AI is temporarily rate-limited. Please wait a moment and try again.";
+  }
+
+  return "PaintCell AI could not generate a response right now. Please try again.";
+}
 
 export function AIChatPanel({ onClose, initialMessage, pageContext, customStreamChat }: AIChatPanelProps) {
   const navigate = useNavigate();
@@ -46,6 +77,8 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
   const [summary, setSummary] = useState("");
   const [extractedRequirements, setExtractedRequirements] = useState<Partial<QuoteFormData>>({});
   const [showContactForm, setShowContactForm] = useState(false);
+  const [ContactFormModalComponent, setContactFormModalComponent] = useState<ComponentType<ContactFormModalProps> | null>(null);
+  const [isLoadingContactForm, setIsLoadingContactForm] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
   const [pendingReasoningOpen, setPendingReasoningOpen] = useState(false);
   const [pendingAssistant, setPendingAssistant] = useState<{
@@ -59,28 +92,6 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
   const shouldShowStatusIndicator =
     currentStatus !== 'idle' &&
     (!customStreamChat || !pendingAssistant || (!pendingAssistant.reasoningContent && !pendingAssistant.content));
-
-  const getReadableChatError = (error: unknown) => {
-    if (!(error instanceof Error)) {
-      return "Something went wrong while contacting PaintCell AI. Please try again.";
-    }
-
-    const message = error.message || "";
-
-    if (message.includes("401") || message.toLowerCase().includes("unauthorized")) {
-      return "PaintCell AI could not authenticate the request. Please check the API configuration and try again.";
-    }
-
-    if (message.includes("403") || message.toLowerCase().includes("forbidden")) {
-      return "PaintCell AI rejected the request. Please verify the API access settings and try again.";
-    }
-
-    if (message.includes("429") || message.toLowerCase().includes("rate")) {
-      return "PaintCell AI is temporarily rate-limited. Please wait a moment and try again.";
-    }
-
-    return "PaintCell AI could not generate a response right now. Please try again.";
-  };
 
   const getScrollViewport = useCallback(() => {
     return scrollRef.current?.querySelector("[data-radix-scroll-area-viewport]") as HTMLDivElement | null;
@@ -322,7 +333,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
         updateStatus('idle');
       }, 500); // Brief delay to show completion state
     }
-  }, [customStreamChat, messages, pageContext, updateStatus]);
+  }, [customStreamChat, messages, pageContext, pendingReasoningOpen, scrollToBottom, updateStatus]);
 
   const handleSend = useCallback(() => {
     const trimmed = input.trim();
@@ -405,9 +416,27 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
   };
 
   // Handle submit inquiry
-  const handleSubmitInquiry = () => {
+  const handleSubmitInquiry = useCallback(async () => {
+    if (!ContactFormModalComponent) {
+      setIsLoadingContactForm(true);
+
+      try {
+        const module = await import("./ContactFormModal");
+        setContactFormModalComponent(() => module.ContactFormModal);
+      } catch (error) {
+        if (import.meta.env.DEV) {
+          console.error("Failed to load contact form modal:", error);
+        }
+        toast.error("Failed to load contact form. Please try again.");
+        setIsLoadingContactForm(false);
+        return;
+      }
+
+      setIsLoadingContactForm(false);
+    }
+
     setShowContactForm(true);
-  };
+  }, [ContactFormModalComponent]);
 
   // Build full form data for submission
   const buildFormData = (): QuoteFormData => {
@@ -424,6 +453,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
+      <Sonner />
       {/* Chat Messages */}
       <ScrollArea 
         ref={scrollRef}
@@ -471,6 +501,7 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
               summary={summary}
               onSubmit={handleSubmitInquiry}
               onBack={() => setShowSummary(false)}
+              isSubmitting={isLoadingContactForm}
             />
           )}
         </div>
@@ -570,17 +601,19 @@ export function AIChatPanel({ onClose, initialMessage, pageContext, customStream
       )}
 
       {/* Contact Form Modal */}
-      <ContactFormModal
-        open={showContactForm}
-        onOpenChange={setShowContactForm}
-        formData={buildFormData()}
-        chatTranscript={messages}
-        summary={summary}
-        onSuccess={() => {
-          setShowContactForm(false);
-          onClose();
-        }}
-      />
+      {ContactFormModalComponent ? (
+        <ContactFormModalComponent
+          open={showContactForm}
+          onOpenChange={setShowContactForm}
+          formData={buildFormData()}
+          chatTranscript={messages}
+          summary={summary}
+          onSuccess={() => {
+            setShowContactForm(false);
+            onClose();
+          }}
+        />
+      ) : null}
     </div>
   );
 }

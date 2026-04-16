@@ -1,4 +1,4 @@
-export const tr: Record<string, Record<string, any>> = {
+export const tr = {
   // Header
   nav: {
     industries: "Endüstriler",

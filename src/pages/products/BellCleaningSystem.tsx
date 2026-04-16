@@ -13,23 +13,21 @@ import {
   BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { FadeIn } from "@/components/animations";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
-const DOMAIN = "https://tdpaint.com";
-
-// OSS-hosted videos - see src/data/videoLibrary.ts for metadata
-const demoVideos = [
+const demoHighlights = [
   {
-    src: `${DOMAIN}/videos/knowledge/bell-cleaning-demo-1.mp4`,
+    image: "/images/products/abb-sames-rotary-bell.jpg",
     title: "Rotary Bell Atomizer Cleaning Process Demo - Part 1",
     description: "Step-by-step demonstration of rotary bell atomizer cleaning procedure",
   },
   {
-    src: `${DOMAIN}/videos/knowledge/bell-cleaning-demo-2.mp4`,
+    image: "/images/products/abb-robot-internals.jpg",
     title: "Rotary Bell Atomizer Cleaning Process Demo - Part 2",
     description: "Post-cleaning inspection, cup reassembly, and performance verification",
   },
   {
-    src: `${DOMAIN}/videos/knowledge/rotary-bell-troubleshooting.mp4`,
+    image: "/images/robotic-paint-cell-overview.png",
     title: "Rotary Bell Atomizer Troubleshooting Guide",
     description: "Diagnostic procedures for common rotary bell atomizer issues",
   },
@@ -101,6 +99,10 @@ const compatibilityData = [
 ];
 
 export default function BellCleaningSystem() {
+  const homeUrl = useCanonicalUrl("/");
+  const productsUrl = useCanonicalUrl("/products");
+  const canonicalUrl = useCanonicalUrl("/products/bell-cleaning-system");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -109,7 +111,7 @@ export default function BellCleaningSystem() {
     {
       "@context": "https://schema.org",
       "@type": "Product",
-      "@id": `${DOMAIN}/products/bell-cleaning-system#product`,
+      "@id": `${canonicalUrl}#product`,
       name: "Rotary Bell Cleaning System",
       description: "Automated rotary bell cleaning systems for robotic spray painting. Fast color change support, solvent-efficient operation, and ATEX-certified safety.",
       brand: { "@type": "Brand", name: "TD Robotic Painting Systems" },
@@ -123,30 +125,22 @@ export default function BellCleaningSystem() {
     },
     {
       "@context": "https://schema.org",
-      "@type": "VideoObject",
-      name: "Rotary Bell Cleaning System Demo",
-      description: "Automated cleaning cycle for electrostatic rotary bell atomizers",
-      thumbnailUrl: `${DOMAIN}/images/bell-cleaning-thumbnail.jpg`,
-      contentUrl: `${DOMAIN}/videos/bell-cleaning-demo-1.mp4`,
-    },
-    {
-      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": `${DOMAIN}/products/bell-cleaning-system#breadcrumb`,
+      "@id": `${canonicalUrl}#breadcrumb`,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${DOMAIN}/` },
-        { "@type": "ListItem", position: 2, name: "Products", item: `${DOMAIN}/products` },
-        { "@type": "ListItem", position: 3, name: "Bell Cleaning System", item: `${DOMAIN}/products/bell-cleaning-system` },
+        { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: "Products", item: productsUrl },
+        { "@type": "ListItem", position: 3, name: "Bell Cleaning System", item: canonicalUrl },
       ],
     },
-  ], []);
+  ], [canonicalUrl, homeUrl, productsUrl]);
 
   return (
     <>
       <Helmet>
         <title>Rotary Bell Cleaning System | Automated Atomizer Cleaning</title>
         <meta name="description" content="Automated rotary bell cleaning systems for fast color change and efficient atomizer maintenance. Compatible with ABB, Dürr, SAMES, and more. ATEX certified." />
-        <link rel="canonical" href={`${DOMAIN}/products/bell-cleaning-system`} />
+        <link rel="canonical" href={canonicalUrl} />
         {schemas.map((s, i) => (
           <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
         ))}
@@ -227,28 +221,15 @@ export default function BellCleaningSystem() {
                 Product Demonstrations
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-8">
-                Cleaning Process Videos
+                Cleaning Process Highlights
               </h2>
             </FadeIn>
             <div className="grid md:grid-cols-3 gap-6">
-              {demoVideos.map((video, index) => (
+              {demoHighlights.map((video, index) => (
                 <FadeIn key={index} delay={index * 0.1}>
                   <div className="rounded-xl border border-border bg-card overflow-hidden">
                     <div className="aspect-video bg-muted relative">
-                      <video
-                        className="w-full h-full object-cover"
-                        controls
-                        preload="metadata"
-                        poster={`/images/bell-cleaning-thumb-${index + 1}.jpg`}
-                      >
-                        <source src={video.src} type="video/mp4" />
-                        Your browser does not support video playback.
-                      </video>
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-14 h-14 rounded-full bg-accent/90 flex items-center justify-center">
-                          <Play className="h-6 w-6 text-accent-foreground ml-1" />
-                        </div>
-                      </div>
+                      <img src={video.image} alt={video.title} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-4">
                       <h3 className="font-semibold text-sm mb-1">{video.title}</h3>
@@ -259,7 +240,7 @@ export default function BellCleaningSystem() {
               ))}
             </div>
             <p className="text-xs text-muted-foreground mt-4">
-              Note: Videos show standard cleaning process. Actual configuration may vary by bell model and customer requirements.
+              Reference frames summarize the standard cleaning workflow. Final sequence details vary by bell model, solvent strategy, and customer validation criteria.
             </p>
           </div>
         </section>

@@ -1,4 +1,4 @@
-export const thOverlay: Record<string, any> = {
+export const thOverlay = {
   "common": {
     "home": "หน้าแรก",
     "solutions": "โซลูชัน",

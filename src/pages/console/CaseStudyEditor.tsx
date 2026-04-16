@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -45,13 +45,7 @@ export default function CaseStudyEditor() {
   const [solutionScopeText, setSolutionScopeText] = useState("");
   const [validationText, setValidationText] = useState("");
 
-  useEffect(() => {
-    if (!isNew && id) {
-      fetchCaseStudy(id);
-    }
-  }, [id, isNew]);
-
-  const fetchCaseStudy = async (csId: string) => {
+  const fetchCaseStudy = useCallback(async (csId: string) => {
     const { data, error } = await supabase
       .from("case_studies")
       .select("*")
@@ -72,7 +66,13 @@ export default function CaseStudyEditor() {
       setValidationText((data.validation_acceptance || []).join("\n"));
     }
     setLoading(false);
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!isNew && id) {
+      void fetchCaseStudy(id);
+    }
+  }, [fetchCaseStudy, id, isNew]);
 
   const generateSlug = (title: string) => {
     return title

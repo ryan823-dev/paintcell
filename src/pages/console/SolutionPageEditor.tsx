@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Loader2, Trash2 } from "lucide-react";
 import { SaveButton } from "@/components/console";
@@ -108,13 +108,11 @@ export default function SolutionPageEditor() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState<SolutionPageForm>(defaultForm);
 
-  useEffect(() => {
-    if (!isNew && id) {
-      void fetchPage();
+  const fetchPage = useCallback(async () => {
+    if (!id) {
+      return;
     }
-  }, [id, isNew]);
 
-  const fetchPage = async () => {
     const { data, error } = await supabase
       .from("solution_pages")
       .select("*")
@@ -144,7 +142,13 @@ export default function SolutionPageEditor() {
 
     setForm(nextForm);
     setLoading(false);
-  };
+  }, [id, navigate]);
+
+  useEffect(() => {
+    if (!isNew && id) {
+      void fetchPage();
+    }
+  }, [fetchPage, id, isNew]);
 
   const handleSave = async () => {
     if (!form.slug) {

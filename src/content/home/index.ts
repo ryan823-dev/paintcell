@@ -46,19 +46,109 @@ const automationBenefitTranslationKeys = [
   },
 ] as const;
 
+type SystemOverviewTranslationKey =
+  (typeof systemOverviewTranslationKeys)[number]["titleKey" | "descriptionKey"];
+
+type AutomationBenefitTranslationKey =
+  (typeof automationBenefitTranslationKeys)[number]["titleKey" | "descriptionKey" | "microLineKey"];
+
+type StaticHomeTranslationKey =
+  | "sectionArchitecture"
+  | "completeSolution"
+  | "exploreSolutions"
+  | "sectionRationale"
+  | "whyRoboticPainting"
+  | "sectionReference"
+  | "projectReferences"
+  | "viewCaseStudies";
+
+type HomeTranslationKey =
+  | SystemOverviewTranslationKey
+  | AutomationBenefitTranslationKey
+  | StaticHomeTranslationKey;
+
+type HomeTranslation = Partial<Record<HomeTranslationKey, string>>;
+
+type BenefitDetailKey =
+  | "engineeringAnchor"
+  | "typicalUseCase"
+  | "keyConstraints"
+  | "whatWeNeedToAssess";
+
+type BenefitTranslationKey = (typeof automationBenefitTranslationKeys)[number]["key"];
+
+type LocalizedBenefitDetail = Partial<Pick<HomeBenefitCard, BenefitDetailKey>>;
+
+interface HomePageTranslation {
+  metaTitle?: string;
+  metaDescription?: string;
+  ogDescription?: string;
+  twitterDescription?: string;
+  hero?: Partial<HomeContent["hero"]>;
+  offering?: Partial<HomeContent["offering"]>;
+  trackRecord?: Partial<HomeContent["trackRecord"]>;
+  applications?: {
+    label?: string;
+    title?: string;
+    items?: Array<Partial<HomeApplicationItem>>;
+  };
+  capabilities?: {
+    label?: string;
+    title?: string;
+    items?: string[];
+    links?: Partial<HomeContent["capabilities"]["links"]>;
+  };
+  systemOverview?: {
+    label?: string;
+    title?: string;
+    ctaLabel?: string;
+    items?: Array<Partial<HomeSystemOverviewItem>>;
+  };
+  deployment?: {
+    label?: string;
+    title?: string;
+    note?: string;
+    steps?: Array<Partial<HomeDeliveryStep>>;
+  };
+  automation?: {
+    label?: string;
+    title?: string;
+    points?: string[];
+    benefits?: Array<Partial<HomeBenefitCard>>;
+  };
+  cta?: Partial<HomeContent["cta"]>;
+  references?: {
+    label?: string;
+    title?: string;
+    cards?: Array<Partial<HomeReferenceCard>>;
+  };
+  eeat?: Partial<HomeContent["eeat"]>;
+  faq?: {
+    label?: string;
+    title?: string;
+    items?: HomeContent["faq"]["items"];
+  };
+  benefits?: Partial<Record<BenefitTranslationKey, LocalizedBenefitDetail>>;
+}
+
 function overlayItems<T>(
   fallbackItems: T[],
   localizedItems: unknown,
-  mergeItem: (fallbackItem: T, localizedItem: any) => T,
+  mergeItem: (fallbackItem: T, localizedItem: Partial<T>) => T,
 ): T[] {
   if (!Array.isArray(localizedItems) || localizedItems.length !== fallbackItems.length) {
     return fallbackItems;
   }
 
-  return fallbackItems.map((fallbackItem, index) => mergeItem(fallbackItem, localizedItems[index]));
+  return fallbackItems.map((fallbackItem, index) =>
+    mergeItem(fallbackItem, (localizedItems[index] as Partial<T> | undefined) || {}),
+  );
 }
 
-function buildSystemOverviewItems(home: Record<string, any>, page: Record<string, any>): HomeSystemOverviewItem[] {
+function buildSystemOverviewItems(
+  home: HomeTranslation,
+  page: HomePageTranslation,
+): HomeSystemOverviewItem[] {
   return enHomeContent.systemOverview.items.map((fallbackItem, index) => {
     const localizedItem = page.systemOverview?.items?.[index];
     const keyConfig = systemOverviewTranslationKeys[index];
@@ -72,7 +162,10 @@ function buildSystemOverviewItems(home: Record<string, any>, page: Record<string
   });
 }
 
-function buildAutomationBenefits(home: Record<string, any>, page: Record<string, any>): HomeBenefitCard[] {
+function buildAutomationBenefits(
+  home: HomeTranslation,
+  page: HomePageTranslation,
+): HomeBenefitCard[] {
   return enHomeContent.automation.benefits.map((fallbackBenefit, index) => {
     const localizedBenefit = page.automation?.benefits?.[index];
     const keyConfig = automationBenefitTranslationKeys[index];
@@ -127,8 +220,8 @@ function pickString(
 }
 
 function buildHomeContentFromTranslations(translation: TranslationKeys): HomeContent {
-  const page = translation.homePage || {};
-  const home = translation.home || {};
+  const page = (translation.homePage as HomePageTranslation | undefined) || {};
+  const home = (translation.home as HomeTranslation | undefined) || {};
 
   return {
     ...enHomeContent,

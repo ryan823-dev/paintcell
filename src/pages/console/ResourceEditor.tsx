@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -66,13 +66,7 @@ export default function ResourceEditor() {
     return defaultResource;
   });
 
-  useEffect(() => {
-    if (!isNew && id) {
-      fetchResource(id);
-    }
-  }, [id, isNew]);
-
-  const fetchResource = async (resourceId: string) => {
+  const fetchResource = useCallback(async (resourceId: string) => {
     const { data, error } = await supabase
       .from("resources_posts")
       .select("*")
@@ -90,7 +84,13 @@ export default function ResourceEditor() {
       setResource(data);
     }
     setLoading(false);
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!isNew && id) {
+      void fetchResource(id);
+    }
+  }, [fetchResource, id, isNew]);
 
   const generateSlug = (title: string) => {
     return title

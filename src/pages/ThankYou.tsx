@@ -3,11 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowLeft, BookOpen, MessageSquare } from "lucide-react";
 import { useI18n } from "@/i18n";
-import { buildLocalizedUrl } from "@/lib/seo";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
 
 export default function ThankYou() {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const thankYouT = t.thankYou || {};
+  const canonicalUrl = useCanonicalUrl("/thank-you");
 
   return (
     <div className="bg-background min-h-screen">
@@ -21,7 +22,7 @@ export default function ThankYou() {
           }
         />
         <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href={buildLocalizedUrl(locale, "/thank-you")} />
+        <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
       <div className="container-wide py-16 md:py-24">
