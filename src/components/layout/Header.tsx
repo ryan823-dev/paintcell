@@ -255,7 +255,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/90">
       <nav className="flex h-14 items-center">
         <Link to="/" className="flex items-center gap-3 shrink-0 pl-4 pr-6" onClick={handleLogoClick}>
           <img src={tdLogo} alt={`${brandName} logo`} className="h-9 w-9 rounded-lg object-cover" />
@@ -295,7 +295,7 @@ export function Header() {
 
               {activeDropdown === group.name && (
                 <div className="absolute top-full left-0 pt-2">
-                  <div className="min-w-[480px] rounded-xl border border-border bg-background p-4 shadow-xl">
+                  <div className="min-w-[480px] rounded-xl border border-border bg-card p-4 shadow-[0_22px_56px_hsl(var(--foreground)/0.10)]">
                     <div className="grid grid-cols-2 gap-6">
                       {group.columns.map((column) => (
                         <div key={column.title}>
@@ -386,7 +386,7 @@ export function Header() {
       </nav>
 
       {mobileMenuOpen ? (
-        <div className="max-h-[80vh] overflow-y-auto border-t border-border bg-background md:hidden">
+        <div className="max-h-[80vh] overflow-y-auto border-t border-border bg-card md:hidden">
           <div className="space-y-4 py-4">
             {megaMenuItems.map((group) => (
               <div key={group.name} className="px-4">

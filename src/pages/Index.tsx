@@ -590,28 +590,28 @@ export default function Index() {
           </section>
 
           {/* Project Initiation — Dark CTA Section */}
-          <section id="project-initiation" className="py-14 md:py-18 border-t border-border section-dark relative overflow-hidden">
+          <section id="project-initiation" className="py-14 md:py-18 border-t border-border bg-muted/35 relative overflow-hidden">
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-accent/[0.08] blur-[100px]" />
-              <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-accent/[0.05] blur-[80px] translate-x-1/4 translate-y-1/4" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-primary/[0.05] blur-[100px]" />
+              <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/[0.035] blur-[84px] translate-x-1/4 translate-y-1/4" />
             </div>
             <div className="container-wide relative">
               <FadeIn>
-                <div className="max-w-3xl mx-auto text-center">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-accent mb-2">{ctaCopy.label || "Get started"}</p>
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3 text-white">{ctaCopy.title || "Start your robotic painting project"}</h2>
-                  <p className="text-sm text-white/60 mb-8">
+                <div className="max-w-3xl mx-auto text-center rounded-[28px] border border-border bg-card/95 px-6 py-8 shadow-[0_18px_48px_hsl(var(--foreground)/0.08)] md:px-10 md:py-10">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-primary mb-2">{ctaCopy.label || "Get started"}</p>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3 text-heading">{ctaCopy.title || "Start your robotic painting project"}</h2>
+                  <p className="text-sm text-muted-foreground mb-8">
                     {ctaCopy.subtitle || "Tell us about your parts, coating requirements, and production needs."}
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
                     <Button
                       onClick={() => handleStartChat()}
-                      className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2 h-12 px-8 text-sm rounded-xl shadow-[0_4px_20px_-2px_hsl(192_70%_36%/0.5)] hover:shadow-[0_6px_28px_-2px_hsl(192_70%_36%/0.6)] transition-all duration-300"
+                      className="bg-primary hover:bg-accent text-primary-foreground font-semibold gap-2 h-12 px-8 text-sm rounded-xl shadow-[0_12px_28px_hsl(var(--primary)/0.18)] transition-all duration-300"
                     >
                       <MessageSquare className="h-4 w-4" />
                       {ctaCopy.startAssessment}
                     </Button>
-                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
+                    <Button asChild variant="outline" className="gap-2 h-12 px-8 text-sm rounded-xl border-border bg-card text-heading hover:bg-muted hover:text-heading">
                       <Link to="/quote">
                         <FileText className="h-4 w-4" />
                         {ctaCopy.talkToEngineer}
@@ -619,14 +619,14 @@ export default function Index() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="gap-2 h-12 px-8 text-sm rounded-xl border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                      className="gap-2 h-12 px-8 text-sm rounded-xl border-border bg-card text-heading hover:bg-muted hover:text-heading"
                       onClick={() => handleStartChat(ctaCopy.uploadMessage)}
                     >
                       <Upload className="h-4 w-4" />
                       {ctaCopy.uploadDrawings}
                     </Button>
                   </div>
-                  <p className="text-xs text-white/40">
+                  <p className="text-xs text-muted-foreground">
                     {ctaCopy.footnote}
                   </p>
                 </div>
