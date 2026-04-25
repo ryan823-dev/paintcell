@@ -31,7 +31,7 @@ const jsonLdSchemas_static = [
     "url": DOMAIN,
     "logo": `${DOMAIN}/images/td-logo.png`,
     "description": "Engineering and integration of robotic painting systems and paint booth automation.",
-    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@tdpaint.com" },
+    "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "engineering@tdpaint.com" },
   },
   {
     "@context": "https://schema.org",
