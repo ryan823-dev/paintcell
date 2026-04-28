@@ -10,6 +10,7 @@
 
 import { solutions } from "../src/data/solutionData";
 import { industries } from "../src/data/industryData";
+import { buildGeoAuthorityUrl, geoAuthorityEntries } from "../src/data/geoAuthorityMap";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -406,14 +407,35 @@ Based on industry portfolio analysis (1,000+ robots deployed across 45+ vehicle 
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 
+function extractGeoAuthorityMap(): KBSection[] {
+  const lines = geoAuthorityEntries.flatMap((entry) => [
+    `### ${entry.question}`,
+    `Intent stage: ${entry.intentStage}`,
+    `Audience: ${entry.audience}`,
+    `Answer: ${entry.shortAnswer}`,
+    `Canonical page: ${buildGeoAuthorityUrl(entry.canonicalPath)}`,
+    `Related pages: ${entry.relatedPaths.map((pathname) => buildGeoAuthorityUrl(pathname)).join(", ")}`,
+    "",
+  ]);
+
+  return [
+    {
+      title: "GEO Authority Question Map",
+      content: lines.join("\n").trim(),
+    },
+  ];
+}
+
 function main() {
   const generatedAt = new Date().toISOString();
   const industrySections = sanitizeSections(extractIndustries());
   const solutionSections = sanitizeSections(extractSolutions());
+  const geoAuthoritySections = sanitizeSections(extractGeoAuthorityMap());
   const statics = sanitizeSections(staticSections());
 
   assertCleanSections("industry", industrySections);
   assertCleanSections("solution", solutionSections);
+  assertCleanSections("GEO authority", geoAuthoritySections);
   assertCleanSections("static", statics);
 
   const kb = {
@@ -421,6 +443,7 @@ function main() {
     version: "auto",
     industries: industrySections,
     solutions: solutionSections,
+    geoAuthority: geoAuthoritySections,
     static: statics,
   };
 
@@ -444,6 +467,11 @@ function main() {
     md += sec.content + "\n\n";
   }
 
+  md += "\n## GEO Authority Question Map\n\n";
+  for (const sec of geoAuthoritySections) {
+    md += sec.content + "\n\n";
+  }
+
   for (const sec of statics) {
     md += `\n## ${sec.title}\n\n${sec.content}\n\n`;
   }
@@ -457,6 +485,7 @@ export const GENERATED_KNOWLEDGE = ${JSON.stringify(md)};
 
 export const KB_INDUSTRIES = ${JSON.stringify(industrySections)} as const;
 export const KB_SOLUTIONS = ${JSON.stringify(solutionSections)} as const;
+export const KB_GEO_AUTHORITY = ${JSON.stringify(geoAuthoritySections)} as const;
 export const KB_GENERATED_AT = "${generatedAt}";
 `;
 
@@ -468,7 +497,7 @@ export const KB_GENERATED_AT = "${generatedAt}";
 
   // Stats
   const totalSections =
-    industrySections.length + solutionSections.length + statics.length;
+    industrySections.length + solutionSections.length + geoAuthoritySections.length + statics.length;
   const totalChars = md.length;
   console.log(
     `✅ Knowledge base generated: ${totalSections} sections, ${totalChars} chars`

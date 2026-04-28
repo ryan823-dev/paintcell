@@ -17,12 +17,13 @@ export default function TopicClusterScenario() {
     "name": cluster.scenario.label,
     "description": cluster.scenario.description,
   };
+  const metaDescription = `${cluster.scenario.description} Scenario focus: ${cluster.scenarioDetails.summary}`;
 
   return (
     <ResourcePageLayout
       title={cluster.scenario.label}
       metaTitle={`${cluster.keyword} Scenario | Project Framing for ${cluster.keyword}`}
-      metaDescription={cluster.metaDescription}
+      metaDescription={metaDescription}
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Topic Clusters", href: "/resources/topics" },

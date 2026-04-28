@@ -1,4 +1,5 @@
-import { ResourcePageLayout } from "@/components/resources";
+import { AnswerBox, ResourcePageLayout } from "@/components/resources";
+import { GeoAnswerLinks } from "@/components/seo/GeoAnswerLinks";
 import { LocalizedLink as Link } from "@/components/LocalizedLink";
 import { ChevronRight, ArrowRight, User, Calendar, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -72,6 +73,19 @@ export default function RoboticPaintingCostGuide() {
         <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Updated: Feb 12, 2026</span>
         <span className="flex items-center gap-1"><Award className="h-3 w-3" /> ISO 9001 Certified Integrator</span>
       </div>
+
+      <AnswerBox>
+        <span data-speakable="quick-answer">
+          <strong>Quick answer:</strong> Robotic painting system cost depends on part size, robot count, booth scope, spray technology, paint supply, safety classification, color change requirements, and integration complexity.
+        </span>
+      </AnswerBox>
+
+      <GeoAnswerLinks
+        currentPath="/resources/knowledge/robotic-painting-cost-guide"
+        heading="Cost questions this guide answers"
+        intro="Use these linked answers to move from budget planning into ROI, RFQ preparation, and system-scope decisions."
+        className="mb-10"
+      />
 
       <p className="text-muted-foreground leading-relaxed mb-8 text-base">
         Understanding the true cost of robotic painting automation requires looking beyond the equipment price tag. This guide breaks down capital investment components, ongoing operating costs, ROI calculation methodology, and strategies for optimizing your automation investment.

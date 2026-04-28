@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { SolutionData } from "@/data/solutionData";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { GeoAnswerLinks } from "@/components/seo/GeoAnswerLinks";
+import { getPrimaryGeoAuthorityEntry } from "@/data/geoAuthorityMap";
 import { buildLocalizedUrl } from "@/lib/seo";
 import { useCanonicalLocaleForPath, useCanonicalUrl } from "@/hooks/useRouteLocale";
 
@@ -34,6 +36,7 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
   const pageUrl = useCanonicalUrl(pagePath);
   const homeUrl = buildLocalizedUrl(canonicalLocale, "/");
   const solutionsUrl = buildLocalizedUrl(canonicalLocale, "/solutions");
+  const primaryGeoAnswer = getPrimaryGeoAuthorityEntry(pagePath);
 
   // Build standardized JSON-LD schemas with @id linking
   const schemas: Record<string, unknown>[] = [
@@ -152,6 +155,23 @@ export function SolutionPageTemplate({ data }: SolutionPageTemplateProps) {
             </div>
           </div>
         </section>
+
+        {primaryGeoAnswer && (
+          <section className="border-b border-border">
+            <div className="container-narrow py-10 md:py-12">
+              <div className="bg-primary/5 border-l-4 border-primary px-5 py-4 rounded-r-md">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  Quick answer
+                </p>
+                <h2 className="text-lg md:text-xl font-bold mb-2">{primaryGeoAnswer.question}</h2>
+                <p data-speakable="quick-answer" className="text-sm md:text-base leading-relaxed text-foreground">
+                  {primaryGeoAnswer.shortAnswer}
+                </p>
+              </div>
+              <GeoAnswerLinks currentPath={pagePath} />
+            </div>
+          </section>
+        )}
 
         {/* Definition Block */}
         <section className="border-b border-border">

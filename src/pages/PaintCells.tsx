@@ -13,18 +13,24 @@ import {
 import { ChevronRight, Cog, Layers, Wind, Gauge, Shield, Zap, RefreshCw, Settings } from "lucide-react";
 import heroPaintCells from "@/assets/hero-paint-cells.jpg";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
+
+const metaTitle = "Robotic Paint Cell Solutions | Workstation Automation | TD";
+const metaDescription =
+  "Plan robotic paint cell workstations with robot, spray equipment, booth airflow, controls, safety validation, commissioning, and support scope.";
 
 const cellFaqs = [
   { q: "What is a robotic paint cell and how does it differ from a paint booth?", a: "A robotic paint cell is a fully integrated workstation that combines an industrial robot, paint equipment, ventilation, and process controls in a single engineered package. Unlike a standalone paint booth that only provides an enclosed paint environment, a paint cell delivers a complete turnkey automation solution ready for production." },
   { q: "What automation level is right for my production volume?", a: "Semi-automatic cells suit low-to-medium volumes where operators load parts manually and the robot handles painting. Fully automatic cells are ideal for high-volume, continuous production with conveyor integration and automatic part handling. Phased automation lets you start semi-automatic and upgrade incrementally as demand grows." },
-  { q: "How long does it take to install and commission a paint cell?", a: "Typical installation takes 4–8 weeks depending on cell complexity, site preparation, and integration requirements. This includes mechanical setup, robot programming, paint parameter tuning, safety validation, and operator training. Modular pre-engineered cells can reduce this timeline significantly." },
-  { q: "What maintenance does a robotic paint cell require?", a: "Routine maintenance includes daily tip cleaning, weekly filter inspections, monthly robot calibration checks, and quarterly full-system audits. Paint supply lines, pumps, and regulators need periodic service. Most facilities schedule a comprehensive preventive maintenance session every 6–12 months to maintain peak performance." },
+  { q: "How long does it take to install and commission a paint cell?", a: "Typical installation takes 4-8 weeks depending on cell complexity, site preparation, and integration requirements. This includes mechanical setup, robot programming, paint parameter tuning, safety validation, and operator training. Modular pre-engineered cells can reduce this timeline significantly." },
+  { q: "What maintenance does a robotic paint cell require?", a: "Routine maintenance includes daily tip cleaning, weekly filter inspections, monthly robot calibration checks, and quarterly full-system audits. Paint supply lines, pumps, and regulators need periodic service. Most facilities schedule a comprehensive preventive maintenance session every 6-12 months to maintain peak performance." },
 ];
 
 
 export default function PaintCells() {
   const { t } = useI18n();
   const p = t.paintCells || {};
+  const canonicalUrl = useCanonicalUrl("/paint-cells");
 
   const systemComponents = [
     { icon: Cog, title: p.industrialRobot || "Industrial Robot", description: p.industrialRobotDesc || "", specs: [p.robotSpec1 || "", p.robotSpec2 || "", p.robotSpec3 || "", p.robotSpec4 || ""] },
@@ -48,6 +54,21 @@ export default function PaintCells() {
 
   return (
     <>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={metaTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content="https://tdpaint.com/images/og-social-share.png" />
+      </Helmet>
+
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <motion.img src={heroPaintCells} alt="Complete robotic painting workstation cell" className="absolute inset-0 w-full h-full object-cover" initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.2, ease: "easeOut" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/50" />

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "check-public-cms": "npx tsx scripts/check-public-cms.ts",
+    "generate-geo-answer-map": "npx tsx scripts/generate-geo-answer-map.ts",
     "generate-kb": "npx tsx scripts/generate-kb.ts",
     "generate-sitemap": "npx tsx scripts/generate-sitemap.ts",
     "validate-prerendered-seo": "node --import tsx scripts/validate-prerendered-seo.ts",
-    "prebuild": "npm run check-public-cms && npm run generate-kb && npm run generate-sitemap",
+    "prebuild": "npm run check-public-cms && npm run generate-geo-answer-map && npm run generate-kb && npm run generate-sitemap",
     "dev": "vite",
     "build": "vite build",
     "postbuild": "npm run prerender && npm run validate-prerendered-seo",

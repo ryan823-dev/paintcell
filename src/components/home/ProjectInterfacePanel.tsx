@@ -73,9 +73,9 @@ export function ProjectInterfacePanel({ content, onStartChat }: ProjectInterface
             <Sparkles className="h-3 w-3" />
             {content.badge}
           </div>
-          <h1 className="text-2xl md:text-3xl lg:text-[2.5rem] xl:text-[2.75rem] font-bold mb-4 leading-tight text-heading">
+          <h2 className="text-2xl md:text-3xl lg:text-[2.5rem] xl:text-[2.75rem] font-bold mb-4 leading-tight text-heading">
             {content.title}
-          </h1>
+          </h2>
           <p className="text-body text-sm md:text-base leading-relaxed max-w-3xl mx-auto">
             {content.description}
           </p>

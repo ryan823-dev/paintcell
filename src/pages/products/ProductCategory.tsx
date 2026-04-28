@@ -182,6 +182,110 @@ const categoryData: Record<string, {
   },
 };
 
+const categoryGeoCopy: Record<string, {
+  metaDescription: string;
+  answer: string;
+  bestFit: string;
+  selectionFactors: string[];
+  projectInputs: string[];
+}> = {
+  "rotary-bells": {
+    metaDescription:
+      "Compare electrostatic rotary bells for robotic painting cells, including bell speed, cup size, voltage, waterborne fit, maintenance access, and integration requirements.",
+    answer:
+      "Rotary bells are high-speed electrostatic atomizers used when a robotic painting cell needs high transfer efficiency, stable film build, and repeatable Class A or industrial finish quality.",
+    bestFit:
+      "Best fit for medium- to high-volume parts with repeatable geometry, controlled booth airflow, and enough project scope to validate paint chemistry, electrostatics, and cleaning routines together.",
+    selectionFactors: [
+      "Confirm coating type, solids content, target film build, and whether waterborne isolation is required.",
+      "Match bell cup size, speed range, voltage package, and robot wrist routing to the part geometry.",
+      "Validate cleaning cycle, color-change frequency, spare bell cups, turbines, and preventive maintenance access.",
+    ],
+    projectInputs: [
+      "Part drawings or photos",
+      "Paint system and finish target",
+      "Throughput and color-change pattern",
+      "Robot brand, wrist type, and booth classification",
+    ],
+  },
+  "spray-guns": {
+    metaDescription:
+      "Compare HVLP, air spray, electrostatic, and robotic spray guns for industrial paint cells by finish quality, transfer efficiency, coating type, and automation fit.",
+    answer:
+      "Spray guns are selected around atomization quality, transfer efficiency, coating chemistry, available utilities, and whether the process is manual, semi-automatic, or robot-mounted.",
+    bestFit:
+      "Best fit for projects where part mix, coating type, and finish tolerance need a practical balance between equipment cost, process stability, and maintenance simplicity.",
+    selectionFactors: [
+      "Use HVLP or air spray for flexible low- to medium-volume work where setup simplicity matters.",
+      "Use electrostatic guns when wrap-around coverage and transfer efficiency justify voltage controls and grounding checks.",
+      "Use robotic spray guns when repeatable paths, automatic triggering, and booth interlocks are part of the cell scope.",
+    ],
+    projectInputs: [
+      "Coating data sheet",
+      "Required finish class",
+      "Manual or robotic application mode",
+      "Available air, fluid, and safety interfaces",
+    ],
+  },
+  "paint-pumps": {
+    metaDescription:
+      "Select paint pumps for industrial paint supply systems by coating viscosity, pressure range, flow stability, recirculation, 2K mixing, and maintenance requirements.",
+    answer:
+      "Paint pumps keep coating pressure and flow stable from the supply room to spray guns or rotary bells; the right pump depends on viscosity, pressure, flow rate, recirculation, and mixing requirements.",
+    bestFit:
+      "Best fit for paint supply upgrades, robotic cells, centralized supply rooms, and lines where unstable pressure or pulsation is already causing finish variation.",
+    selectionFactors: [
+      "Use diaphragm pumps for many low- to medium-viscosity circulation and transfer duties.",
+      "Use piston or metering pumps when high pressure, high viscosity, or controlled 2K ratio delivery is required.",
+      "Check pulsation, seal compatibility, cleaning routine, explosion protection, and spare-part availability before final selection.",
+    ],
+    projectInputs: [
+      "Paint viscosity and solvent compatibility",
+      "Flow rate per applicator",
+      "Line length and pressure drop",
+      "Number of colors and 2K ratio requirements",
+    ],
+  },
+  "color-change": {
+    metaDescription:
+      "Plan color change systems for robotic paint lines, including valve blocks, flush boxes, recipe control, solvent waste, cycle time, and contamination prevention.",
+    answer:
+      "Color change systems route paint, solvent, and air through controlled valve blocks so a robotic painting line can switch colors with predictable cycle time, low waste, and low contamination risk.",
+    bestFit:
+      "Best fit for high-mix production where color-change time, purge volume, and repeatability affect takt time, coating cost, and first-pass quality.",
+    selectionFactors: [
+      "Define the real number of active colors, daily change frequency, and acceptable purge volume.",
+      "Place valve blocks and flush boxes close enough to applicators to reduce dead volume and cleaning time.",
+      "Connect color recipes, solvent handling, interlocks, and waste collection to the main cell control logic.",
+    ],
+    projectInputs: [
+      "Color list and change sequence",
+      "Target changeover time",
+      "Solvent and paint chemistry",
+      "Applicator count and booth layout",
+    ],
+  },
+  "spare-parts": {
+    metaDescription:
+      "Plan spare parts and consumables for robotic painting systems, including seals, nozzles, bell cups, turbines, service kits, and preventive maintenance stock.",
+    answer:
+      "Spare parts planning protects paint-cell uptime by stocking the wear items that directly affect atomization, pressure stability, color-change reliability, and rotary bell performance.",
+    bestFit:
+      "Best fit for plants that already operate spray equipment or robotic cells and need predictable maintenance windows instead of emergency part sourcing.",
+    selectionFactors: [
+      "Separate critical uptime parts from routine consumables so inventory is tied to production risk.",
+      "Track seals, nozzles, tips, bell cups, turbines, bearings, and service kits by applicator model.",
+      "Base stock levels on shifts, color-change frequency, coating abrasiveness, and supplier lead time.",
+    ],
+    projectInputs: [
+      "Equipment model list",
+      "Current failure or wear history",
+      "Operating hours per week",
+      "Required response time for line stoppages",
+    ],
+  },
+};
+
 interface ProductCategoryProps {
   categoryKey?: string;
 }
@@ -192,6 +296,7 @@ export default function ProductCategory({ categoryKey }: ProductCategoryProps) {
   const canonicalPath = category ? `/products/${category}` : "/products";
   const canonicalUrl = useCanonicalUrl(canonicalPath);
   const data = category ? categoryData[category] : null;
+  const geoCopy = category ? categoryGeoCopy[category] : null;
 
   if (!data) {
     return (
@@ -214,7 +319,7 @@ export default function ProductCategory({ categoryKey }: ProductCategoryProps) {
     <>
       <Helmet>
         <title>{data.title} | TD Painting Systems</title>
-        <meta name="description" content={data.description || "Industrial coating equipment for automotive and industrial applications."} />
+        <meta name="description" content={geoCopy?.metaDescription || data.description || "Industrial coating equipment for automotive and industrial applications."} />
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
@@ -241,6 +346,42 @@ export default function ProductCategory({ categoryKey }: ProductCategoryProps) {
             </FadeIn>
           </div>
         </section>
+
+        {geoCopy ? (
+          <section className="py-10 md:py-12 border-b border-border bg-muted/20">
+            <div className="container-wide">
+              <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Direct answer
+                  </p>
+                  <p className="text-base leading-relaxed text-foreground">{geoCopy.answer}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{geoCopy.bestFit}</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Prepare before inquiry
+                  </p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {geoCopy.projectInputs.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-5 grid gap-3 md:grid-cols-3">
+                {geoCopy.selectionFactors.map((item) => (
+                  <div key={item} className="rounded-xl border border-border bg-card p-5 text-sm leading-relaxed text-muted-foreground">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {/* Products */}
         <section className="py-12 md:py-16 border-b border-border">

@@ -236,7 +236,13 @@ export default function DynamicArticle() {
       ) : null}
 
       <article className="prose prose-slate max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-a:text-primary">
-        <ReactMarkdown>{body}</ReactMarkdown>
+        <ReactMarkdown
+          components={{
+            h1: ({ children, ...props }) => <h2 {...props}>{children}</h2>,
+          }}
+        >
+          {body}
+        </ReactMarkdown>
       </article>
     </ResourcePageLayout>
   );

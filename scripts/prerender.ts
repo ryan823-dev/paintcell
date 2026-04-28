@@ -19,6 +19,8 @@ const ROUTE_POLL_INTERVAL_MS = 50;
 const ROUTE_STABLE_POLLS = 2;
 const ROUTE_MIN_READY_AGE_MS = 50;
 const ROUTE_NETWORK_IDLE_MS = 50;
+const ENTRY_IMPORT_RETRY_COUNT = 5;
+const ENTRY_IMPORT_RETRY_DELAY_MS = 1_000;
 const EXTRA_PRERENDER_PATHS = ["/thank-you"] as const;
 const PUBLIC_PAGE_PREFIXES = [
   "/about",
@@ -136,6 +138,34 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function importEntryModuleWithRetry(entryModulePath: string) {
+  const entryModuleUrl = pathToFileURL(entryModulePath).href;
+  let lastError: unknown = null;
+
+  for (let attempt = 1; attempt <= ENTRY_IMPORT_RETRY_COUNT; attempt += 1) {
+    try {
+      await import(`${entryModuleUrl}?prerenderAttempt=${attempt}`);
+      return;
+    } catch (error) {
+      lastError = error;
+
+      if (
+        attempt >= ENTRY_IMPORT_RETRY_COUNT ||
+        (error as NodeJS.ErrnoException | undefined)?.code !== "ERR_MODULE_NOT_FOUND"
+      ) {
+        throw error;
+      }
+
+      logInfo(
+        `Entry module import failed because a build chunk was not ready yet. Retrying ${attempt}/${ENTRY_IMPORT_RETRY_COUNT - 1}...`,
+      );
+      await wait(ENTRY_IMPORT_RETRY_DELAY_MS);
+    }
+  }
+
+  throw lastError;
+}
+
 function assignGlobal(key: string, value: unknown) {
   Object.defineProperty(globalThis, key, {
     configurable: true,
@@ -203,7 +233,6 @@ function getRouteSeoExpectation(routePath: string) {
   const routeSegments = normalizedRoutePath.split("/").filter(Boolean);
   const routeLocale = isValidLocale(routeSegments[0]) ? routeSegments[0] : null;
   const publicPath = normalizePublicPath(stripLocalePrefix(normalizedRoutePath));
-  const expectedPath = routePath === "/" ? `/${DEFAULT_LOCALE}` : normalizedRoutePath;
   const expectedLocale = routeLocale ?? DEFAULT_LOCALE;
   const expectedHtmlLang = localeHtmlLangs[expectedLocale];
   const requiresNoindex =
@@ -212,7 +241,7 @@ function getRouteSeoExpectation(routePath: string) {
   return {
     expectedHtmlLang,
     expectedLocale,
-    expectedPath,
+    expectedPath: normalizedRoutePath,
     requiresNoindex,
   };
 }
@@ -329,6 +358,8 @@ function cleanupTemplateDocument(document: Document) {
 }
 
 function setupPrerenderGlobals(window: Window & typeof globalThis) {
+  assignGlobal("__PAINTCELL_PRERENDER__", true);
+
   for (const key of [
     "window",
     "self",
@@ -360,6 +391,22 @@ function setupPrerenderGlobals(window: Window & typeof globalThis) {
   assignGlobal("IntersectionObserver", createAlwaysVisibleIntersectionObserverClass(window));
   assignGlobal("ResizeObserver", createResizeObserverClass());
   assignGlobal("IS_REACT_ACT_ENVIRONMENT", false);
+
+  const originalRemoveChild = window.Node.prototype.removeChild;
+
+  if (typeof originalRemoveChild === "function") {
+    window.Node.prototype.removeChild = function (this: Node, child: Node) {
+      if (child.parentNode !== this) {
+        if (child.parentNode) {
+          return originalRemoveChild.call(child.parentNode, child);
+        }
+
+        return child;
+      }
+
+      return originalRemoveChild.call(this, child);
+    };
+  }
 
   window.innerWidth = 1440;
   window.innerHeight = 900;
@@ -421,6 +468,20 @@ function setupPrerenderGlobals(window: Window & typeof globalThis) {
 
       try {
         return await baseFetch(...args);
+      } catch (error) {
+        const requestUrl = getFetchRequestUrl(args[0]);
+        const message = error instanceof Error ? error.message : String(error);
+        logInfo(
+          `Skipped network fetch during prerender${requestUrl ? ` (${requestUrl})` : ""}: ${message}`,
+        );
+
+        return new Response("[]", {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            "X-PaintCell-Prerender-Fallback": "1",
+          },
+        });
       } finally {
         prerenderRuntimeState.pendingNetworkRequests = Math.max(
           0,
@@ -439,6 +500,22 @@ function setupPrerenderGlobals(window: Window & typeof globalThis) {
   }
 }
 
+function getFetchRequestUrl(input: Parameters<typeof fetch>[0]): string {
+  if (typeof input === "string") {
+    return input;
+  }
+
+  if (input instanceof URL) {
+    return input.href;
+  }
+
+  if (typeof Request !== "undefined" && input instanceof Request) {
+    return input.url;
+  }
+
+  return "";
+}
+
 async function parseRoutesFromSitemap(): Promise<string[]> {
   const sitemapPath = path.join(DIST_DIR, "sitemap.xml");
   const sitemapXml = await readFile(sitemapPath, "utf8");
@@ -451,7 +528,7 @@ async function parseRoutesFromSitemap(): Promise<string[]> {
     publicPaths.add(publicPath);
   }
 
-  const routes = new Set<string>(["/"]);
+  const routes = new Set<string>([]);
 
   for (const publicPath of Array.from(publicPaths).sort()) {
     for (const locale of getPrerenderLocalesForPath(publicPath)) {
@@ -503,7 +580,33 @@ function syncMetaTag(
   });
 }
 
+function collapseDuplicateRootAppShells(document: Document) {
+  const root = document.getElementById("root");
+
+  if (!root || root.children.length <= 1) {
+    return;
+  }
+
+  const children = Array.from(root.children);
+  const allChildrenLookLikeAppShells = children.every(
+    (child) =>
+      child instanceof HTMLElement &&
+      child.classList.contains("min-h-screen") &&
+      child.classList.contains("flex") &&
+      child.classList.contains("flex-col"),
+  );
+
+  if (!allChildrenLookLikeAppShells) {
+    return;
+  }
+
+  const latestShell = children[children.length - 1];
+  root.replaceChildren(latestShell);
+}
+
 function normalizePrerenderedDocument(document: Document) {
+  collapseDuplicateRootAppShells(document);
+
   const currentUrl = new URL(document.URL);
   const currentPath = currentUrl.pathname;
   const localeSegment = currentPath.split("/").filter(Boolean)[0];
@@ -711,7 +814,8 @@ async function waitForRouteReady(
 }
 
 async function main() {
-  const routeFilter = process.env.PRERENDER_FILTER?.trim();
+  const routeFilterInput = process.env.PRERENDER_FILTER?.trim();
+  const routeFilter = routeFilterInput === "/" ? `/${DEFAULT_LOCALE}` : routeFilterInput;
   const routes = (await parseRoutesFromSitemap()).filter((routePath) =>
     routeFilter ? routePath === routeFilter : true,
   );
@@ -749,7 +853,7 @@ async function main() {
   logInfo(`Prerendering ${routes.length} routes from ${SITE_URL} with JSDOM...`);
 
   markRouteTransition();
-  await import(pathToFileURL(entryModulePath).href);
+  await importEntryModuleWithRetry(entryModulePath);
 
   for (const [index, routePath] of routes.entries()) {
     logInfo(`  [${index + 1}/${routes.length}] ${routePath}`);

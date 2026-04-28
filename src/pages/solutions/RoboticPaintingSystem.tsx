@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { AIChatDrawer } from "@/components/ai-assistant/AIChatDrawer";
 import { ExploreLinks } from "@/components/seo/ExploreLinks";
+import { GeoAnswerLinks } from "@/components/seo/GeoAnswerLinks";
 import { useI18n } from "@/i18n";
+import { getPrimaryGeoAuthorityEntry } from "@/data/geoAuthorityMap";
 import { getPageMetadata } from "@/data/pageMetadata";
 
 const DOMAIN = "https://tdpaint.com";
@@ -81,6 +83,7 @@ export default function RoboticPaintingSystem() {
   const { t } = useI18n();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerMessage, setDrawerMessage] = useState<string | null>(null);
+  const primaryGeoAnswer = getPrimaryGeoAuthorityEntry("/solutions/robotic-painting-system");
 
   const faqs = useMemo(() => [
     { q: t.solutionFaqs.roboticPaintingSystem.q1, a: t.solutionFaqs.roboticPaintingSystem.a1 },
@@ -203,6 +206,23 @@ export default function RoboticPaintingSystem() {
             </div>
           </div>
         </section>
+
+        {primaryGeoAnswer && (
+          <section className="border-b border-border">
+            <div className="container-narrow py-10 md:py-12">
+              <div className="bg-primary/5 border-l-4 border-primary px-5 py-4 rounded-r-md">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  Quick answer
+                </p>
+                <h2 className="text-lg md:text-xl font-bold mb-2">{primaryGeoAnswer.question}</h2>
+                <p data-speakable="quick-answer" className="text-sm md:text-base leading-relaxed text-foreground">
+                  {primaryGeoAnswer.shortAnswer}
+                </p>
+              </div>
+              <GeoAnswerLinks currentPath="/solutions/robotic-painting-system" />
+            </div>
+          </section>
+        )}
 
         {/* Definition Block */}
         <section className="border-b border-border ">

@@ -39,11 +39,16 @@ export default function TopicClusterFAQ() {
     return <NotFound />;
   }
 
+  const metaDescription = `${cluster.faq.description} Covers ${cluster.faqItems
+    .slice(0, 2)
+    .map((faq) => faq.question)
+    .join("; ")}.`;
+
   return (
     <ResourcePageLayout
       title={cluster.faq.label}
       metaTitle={`${cluster.keyword} FAQ | ${cluster.keyword} Questions and Answers`}
-      metaDescription={cluster.metaDescription}
+      metaDescription={metaDescription}
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Topic Clusters", href: "/resources/topics" },

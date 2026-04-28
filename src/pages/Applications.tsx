@@ -13,18 +13,24 @@ import {
 import { ChevronRight, Car, Cpu, Building2, Plane, Truck, Package } from "lucide-react";
 import heroApplications from "@/assets/hero-applications.jpg";
 import { useI18n } from "@/i18n";
+import { useCanonicalUrl } from "@/hooks/useRouteLocale";
+
+const metaTitle = "Robotic Painting Applications by Industry | TD Painting Systems";
+const metaDescription =
+  "Explore robotic painting applications for automotive parts, appliances, aerospace components, commercial vehicles, and industrial equipment coating lines.";
 
 const appFaqs = [
   { q: "What types of products can robotic painting systems handle?", a: "Robotic painting systems are versatile and can coat automotive components, electronics housings, aerospace parts, commercial vehicles, industrial equipment, and general manufactured goods. Multi-axis robots adjust spray patterns for complex geometries, curved surfaces, and varying part sizes." },
   { q: "How does robotic painting improve quality over manual methods?", a: "Robots deliver consistent film thickness, uniform coverage, and repeatable paths every cycle. This eliminates human variability, reduces defects such as runs, sags, and orange peel, and typically achieves first-pass yield rates above 95%." },
-  { q: "Can one robotic paint cell handle multiple product types?", a: "Yes. Modern paint cells support quick-change fixtures, programmable spray recipes, and automatic color-change systems, allowing a single cell to process different part families with minimal changeover time—often under 5 minutes." },
-  { q: "What ROI can manufacturers expect from robotic painting?", a: "Most installations achieve full payback within 18–36 months through reduced paint waste (transfer efficiency gains of 20–40%), lower rework rates, decreased labor costs, and higher throughput. Energy savings from optimized booth airflow add further long-term value." },
+  { q: "Can one robotic paint cell handle multiple product types?", a: "Yes. Modern paint cells support quick-change fixtures, programmable spray recipes, and automatic color-change systems, allowing a single cell to process different part families with minimal changeover time, often under 5 minutes." },
+  { q: "What ROI can manufacturers expect from robotic painting?", a: "Most installations achieve full payback within 18-36 months through reduced paint waste (transfer efficiency gains of 20-40%), lower rework rates, decreased labor costs, and higher throughput. Energy savings from optimized booth airflow add further long-term value." },
 ];
 
 
 export default function Applications() {
   const { t } = useI18n();
   const a = t.applications || {};
+  const canonicalUrl = useCanonicalUrl("/applications");
 
   const applications = [
     {
@@ -61,6 +67,21 @@ export default function Applications() {
 
   return (
     <>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://tdpaint.com/images/og-social-share.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={metaTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content="https://tdpaint.com/images/og-social-share.png" />
+      </Helmet>
+
       <section className="relative h-[300px] md:h-[400px] overflow-hidden">
         <motion.img src={heroApplications} alt="Industrial robotic painting applications" className="absolute inset-0 w-full h-full object-cover" initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.2, ease: "easeOut" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/50" />

@@ -136,7 +136,15 @@ async function fetchSupabaseRows(
       Authorization: `Bearer ${env.publishableKey}`,
       Accept: "application/json",
     },
+  }).catch((error: unknown) => {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(`Skipped ${table} sitemap fetch: ${message}`);
+    return null;
   });
+
+  if (!response) {
+    return [];
+  }
 
   if (!response.ok) {
     const details = await response.text();

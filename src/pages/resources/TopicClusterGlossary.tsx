@@ -23,12 +23,16 @@ export default function TopicClusterGlossary() {
       "description": term.definition,
     })),
   };
+  const metaDescription = `${cluster.glossary.description} Defines ${cluster.glossaryTerms
+    .slice(0, 3)
+    .map((term) => term.term)
+    .join(", ")} for ${cluster.keyword} project planning.`;
 
   return (
     <ResourcePageLayout
       title={cluster.glossary.label}
       metaTitle={`${cluster.keyword} Glossary | Terms That Support ${cluster.keyword}`}
-      metaDescription={cluster.metaDescription}
+      metaDescription={metaDescription}
       breadcrumbs={[
         { label: "Resources", href: "/resources/engineering-library" },
         { label: "Topic Clusters", href: "/resources/topics" },

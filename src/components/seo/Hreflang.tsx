@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { defaultLocale } from "@/i18n/types";
 import {
   buildLocalizedUrl,
   getIndexableLocalesForPath,
@@ -8,6 +7,7 @@ import {
   stripLocalePrefix,
 } from "@/lib/seo";
 import { useLocation } from "react-router-dom";
+import { defaultLocale } from "@/i18n/types";
 
 export function Hreflang() {
   const location = useLocation();

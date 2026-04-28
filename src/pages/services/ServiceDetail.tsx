@@ -79,6 +79,98 @@ const serviceKeyMap: Record<string, { translationKey: string; icon: typeof Users
   "consulting": { translationKey: "consultingService", icon: Users },
 };
 
+const serviceGeoCopy: Record<string, {
+  metaDescription: string;
+  answer: string;
+  bestFit: string;
+  assessmentInputs: string[];
+}> = {
+  "solution-design": {
+    metaDescription:
+      "Solution design for robotic painting and coating systems, covering layout, process flow, robot and booth interfaces, utilities, controls, safety, and project scope definition.",
+    answer:
+      "Solution design turns coating requirements into an engineering scope: layout, process flow, robot and booth selection, utilities, controls architecture, safety boundaries, and project deliverables.",
+    bestFit:
+      "Best fit before equipment purchasing, retrofit budgeting, or RFQ comparison, especially when part mix, takt time, booth condition, and compliance requirements are still being defined.",
+    assessmentInputs: [
+      "Part family, dimensions, and finish requirements",
+      "Target throughput, shifts, and changeover pattern",
+      "Existing booth, utilities, layout, and EHS constraints",
+      "Preferred robot, applicator, PLC, or supplier standards",
+    ],
+  },
+  "project-management": {
+    metaDescription:
+      "Project management for coating system installations, coordinating engineering, procurement, vendors, site readiness, installation, commissioning, quality checks, and handover.",
+    answer:
+      "Project management coordinates the coating-system delivery path from engineering approval through procurement, installation, commissioning, documentation, and production handover.",
+    bestFit:
+      "Best fit for multi-vendor paint-cell projects where schedule, interface ownership, site readiness, and commissioning dependencies need one accountable delivery plan.",
+    assessmentInputs: [
+      "Approved scope and equipment list",
+      "Site milestone dates and shutdown windows",
+      "Vendor responsibilities and acceptance criteria",
+      "Documentation and reporting requirements",
+    ],
+  },
+  commissioning: {
+    metaDescription:
+      "Commissioning for robotic painting systems, including robot path programming, spray parameter setup, airflow checks, recipe validation, operator training, and production startup.",
+    answer:
+      "Commissioning converts installed equipment into a stable production process by validating robot paths, spray parameters, airflow, recipes, interlocks, quality results, and operator routines.",
+    bestFit:
+      "Best fit when equipment is mechanically installed but the line still needs process tuning, production validation, handover documentation, and early ramp-up support.",
+    assessmentInputs: [
+      "Installed equipment and controls status",
+      "Paint data sheets and target film-build range",
+      "Trial parts, fixtures, and quality acceptance rules",
+      "Operator, maintenance, and production startup schedule",
+    ],
+  },
+  maintenance: {
+    metaDescription:
+      "Maintenance and support for coating systems, covering preventive maintenance, spare parts planning, remote diagnostics, emergency troubleshooting, performance checks, and upgrades.",
+    answer:
+      "Maintenance support keeps coating systems stable by combining preventive service, spare parts planning, troubleshooting, remote diagnostics, and performance checks around production risk.",
+    bestFit:
+      "Best fit for operating plants that need to reduce unplanned downtime, stabilize finish quality, and plan maintenance around applicators, pumps, robots, booths, and controls.",
+    assessmentInputs: [
+      "Equipment model list and operating hours",
+      "Recent downtime, alarms, or quality defects",
+      "Current maintenance schedule and spare stock",
+      "Required response time and support coverage",
+    ],
+  },
+  training: {
+    metaDescription:
+      "Operator and maintenance training for robotic painting systems, covering safe operation, startup, shutdown, recipe use, basic troubleshooting, preventive maintenance, and programming support.",
+    answer:
+      "Training helps operators and technicians run a coating system safely and consistently, covering daily operation, recipe handling, quality checks, troubleshooting, maintenance, and programming basics.",
+    bestFit:
+      "Best fit before production handover, after staff turnover, or when a plant needs to standardize operating routines across shifts.",
+    assessmentInputs: [
+      "Trainee roles and current skill level",
+      "System type and installed equipment list",
+      "Operating procedures and safety requirements",
+      "Preferred on-site, in-house, or remote training format",
+    ],
+  },
+  consulting: {
+    metaDescription:
+      "Engineering consulting for industrial coating operations, including process audits, capacity planning, quality troubleshooting, automation feasibility, technology selection, and ROI review.",
+    answer:
+      "Engineering consulting diagnoses coating-process problems and upgrade options before a full project scope is locked, using audits, capacity checks, quality review, and automation feasibility analysis.",
+    bestFit:
+      "Best fit when a plant has recurring defects, throughput limits, uncertain automation ROI, or several possible upgrade paths that need engineering comparison.",
+    assessmentInputs: [
+      "Current process flow and bottleneck description",
+      "Defect examples, quality data, or rework rate",
+      "Capacity target and labor constraints",
+      "Budget range and decision timeline",
+    ],
+  },
+};
+
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useI18n();
@@ -88,6 +180,7 @@ export default function ServiceDetail() {
   
   const serviceConfig = slug ? serviceKeyMap[slug] : null;
   const data = serviceConfig ? page[serviceConfig.translationKey] : null;
+  const geoCopy = slug ? serviceGeoCopy[slug] : null;
 
   if (!data || !serviceConfig) {
     return (
@@ -119,7 +212,7 @@ export default function ServiceDetail() {
     <>
       <Helmet>
         <title>{data.title || ""} | TD Painting Systems</title>
-        <meta name="description" content={data.description || "Professional technical services for industrial coating systems including solution design, project management, commissioning, and maintenance."} />
+        <meta name="description" content={geoCopy?.metaDescription || data.description || "Professional technical services for industrial coating systems including solution design, project management, commissioning, and maintenance."} />
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
 
@@ -151,6 +244,35 @@ export default function ServiceDetail() {
             </FadeIn>
           </div>
         </section>
+
+        {geoCopy ? (
+          <section className="py-10 md:py-12 border-b border-border bg-muted/20">
+            <div className="container-wide">
+              <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Direct answer
+                  </p>
+                  <p className="text-base leading-relaxed text-foreground">{geoCopy.answer}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{geoCopy.bestFit}</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                    Inputs we need
+                  </p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {geoCopy.assessmentInputs.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {/* Deliverables */}
         <section className="py-12 md:py-16 border-b border-border">
